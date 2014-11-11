@@ -58,7 +58,7 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 			self.actionGurdar_como.triggered.connect(self.saveAs)
 			self.actionAbrir.triggered.connect(self.open)
 			self.actionNuevo.triggered.connect(self.new)
-			self.actionLimpiar.triggered.connect(self.limpiar)
+			self.actionLimpiar.triggered.connect(self.limpiarall)
 			self.actionDfgfh.triggered.connect(self.salir)			
 			self.actionImprimir.triggered.connect(self.imprimir)
 			self.actionDsdsda.triggered.connect(self.previusly)
@@ -111,6 +111,8 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 					lang.setText(QtCore.QString.fromUtf8(fileMatch.group(1)))
 					lang.triggered.connect(partial(self.changeLang, QtCore.QString.fromUtf8(fileMatch.group(1))))
 					lang.setStatusTip(QtGui.QApplication.translate("MainWindow", "Change the language to ", None, QtGui.QApplication.UnicodeUTF8)+ '" '+QtCore.QString.fromUtf8(fileMatch.group(1))+' "')
+			
+			self.thereAreCanges=False
 			
 			self.config=config
 			conf=self.config.load()
@@ -183,9 +185,7 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 			
 			if dir:
 				self.directorioArchivo=dir
-				self.open(True)
-				
-			self.thereAreCanges=False
+				self.open(True)			
 			
 			self.form1.showMaximized()
 			self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"Ready"))
@@ -200,7 +200,10 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 			def decorador(fun):
 				def interna(*arg):
 					arg[0].form1.setCursor(QtCore.Qt.WaitCursor)
-					fun(arg[0])
+					if len(arg)==1:
+						fun(arg[0])
+					else:
+						fun(arg[0],arg[1])
 					arg[0].form1.setCursor(QtCore.Qt.ArrowCursor)
 				return interna
 			return decorador
@@ -1552,8 +1555,11 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 				pass
 			
 		
-		@cursorAction()
 		@seguro(QtGui.QApplication.translate('MainWindow','Are you sure you want to delete all the information?'))	
+		def limpiarall(self):
+			self.limpiar()
+		
+		@cursorAction()		
 		def limpiar(self):
 			"""Borra toda la informacion en la tabla"""
 			for i in range(self.treeWidget.topLevelItemCount()):

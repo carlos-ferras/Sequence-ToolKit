@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QtHelpProject version="1.0">
+    <namespace>com.trolltech.examples.simpletextviewer</namespace>
+    <virtualFolder>doc</virtualFolder>
+    <filterSection>
+        <toc>
+            <section title="GenSec" ref="index.html">
+                <section title="Page1" ref="./page1.html"></section>
+		</section>
+            </toc>
+        <keywords>
+            <keyword name="Display" ref="./index.html"/>
+            <keyword name="Rich text" ref="./index.html"/>
+            <keyword name="Plain text" ref="./index.html"/>
+            <keyword name="page" ref="./page1.html"/>
+            </keywords>
+        <files>
+            <file>index.html</file>
+            <file>page1.html</file>
+	    <file>img/logo_help.png</file>
+	    <file>img/mainwindow.png</file>
+	    <file>img/logo.png</file>
+            </files>
+        </filterSection>
+    </QtHelpProject>

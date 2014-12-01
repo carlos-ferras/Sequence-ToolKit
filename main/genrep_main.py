@@ -37,8 +37,8 @@ class UI_GenRep(UI_GenSec_Base):
 	def __init__(self,config,dir=False,parent=None):
 		UI_GenSec_Base.__init__(self,config,'GenRep','pixmaps/genrep.png',dir)
 
-		X=[1,5,10,15,16,20,40]
-		Y=[1000,200,100,66.4,62.5,50,25]
+		X=[]
+		Y=[]
 		self.create_graphic(X,Y)
 
 		self.header=self.treeWidget.header()			
@@ -59,14 +59,8 @@ class UI_GenRep(UI_GenSec_Base):
 	def create_graphic(self,X,Y):
 		self.pan=False
 		self.zoom=False
-		self.canvas = Lienzo(X,Y,self.verticalLayoutWidget)		
-		self.canvas.mousePressEvent=SpanSelector(
-								self.canvas.allGraphic,
-								self.canvas.onselect,
-								'horizontal',
-								useblit=True,
-								rectprops=dict(alpha=0.5, facecolor='#c0c0c0') 
-								)
+		self.canvas = Lienzo(X,Y,self.verticalLayoutWidget)
+		
 								
 		def onClick(event):
 			if event.button==1 and (not self.pan) and (not self.zoom):
@@ -94,8 +88,6 @@ class UI_GenRep(UI_GenSec_Base):
 				except:
 					pass
 				
-		self.canvas.mpl_connect('button_press_event', onClick)		
-		
 		def enter_axes(event):
 			if event.inaxes.get_title()=='Signal' or event.inaxes.get_title()=='Background' :
 				self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"Slect area to change"))
@@ -105,9 +97,6 @@ class UI_GenRep(UI_GenSec_Base):
 			if event.inaxes.get_title()=='Signal' or event.inaxes.get_title()=='Background' :
 				self.form1.statusBar().showMessage(' ')
 				self.form1.setCursor(QtCore.Qt.ArrowCursor)
-				
-		self.canvas.mpl_connect('axes_enter_event', enter_axes)
-		self.canvas.mpl_connect('axes_leave_event', leave_axes)
 		
 		ToolBarr = NavigationToolbar(self.canvas, self.verticalLayoutWidget)
 		self.verticalLayoutWidget.setStyleSheet(TOOLBUTTON_STYLE)
@@ -188,30 +177,22 @@ class UI_GenRep(UI_GenSec_Base):
 		xmin1_label=QtGui.QLabel('start')		
 		xmin1_label.setStyleSheet('color:green')
 		xmin1_sb = QtGui.QDoubleSpinBox()
-		xmin1_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Start channel to signal'))
-		xmin1_sb.setMinimum(min(X))
-		xmin1_sb.setMaximum(max(X))	
+		xmin1_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Start channel to signal'))	
 		
 		xmax1_label=QtGui.QLabel('end')
 		xmax1_label.setStyleSheet('color:green')
 		xmax1_sb = QtGui.QDoubleSpinBox()
 		xmax1_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'End channel to signal'))
-		xmax1_sb.setMinimum(min(X))
-		xmax1_sb.setMaximum(max(X))
 		
 		xmin2_label=QtGui.QLabel('start')
 		xmin2_label.setStyleSheet('color:#1A297D')
 		xmin2_sb = QtGui.QDoubleSpinBox()
 		xmin2_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Start channel to Background'))
-		xmin2_sb.setMinimum(min(X))
-		xmin2_sb.setMaximum(max(X))
 		
 		xmax2_label=QtGui.QLabel('end')
 		xmax2_label.setStyleSheet('color:#1A297D')
 		xmax2_sb = QtGui.QDoubleSpinBox()
 		xmax2_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'End channel to Background'))
-		xmax2_sb.setMinimum(min(X))
-		xmax2_sb.setMaximum(max(X))
 		
 		self.verticalLayout.addWidget(xmin1_label,1,0,1,1)
 		self.verticalLayout.addWidget(xmin1_sb,2,0,1,1)
@@ -244,15 +225,35 @@ class UI_GenRep(UI_GenSec_Base):
 			self.canvas.activeBackground=True
 			if xmax2_sb.value() >=xmin2_sb.value():
 				self.canvas.onselect(xmin2_sb.value(),xmax2_sb.value())
-
+				
+		if self.canvas.allGraphic_X!=[] and self.canvas.allGraphic_Y!=[]:
+			self.canvas.mousePressEvent=SpanSelector(
+								self.canvas.allGraphic,
+								self.canvas.onselect,
+								'horizontal',
+								useblit=True,
+								rectprops=dict(alpha=0.5, facecolor='#c0c0c0') 
+								)
 			
-		xmin1_sb.valueChanged.connect(partial(x1_sb_change,1))
-		xmax1_sb.valueChanged.connect(partial(x1_sb_change,2))
-		xmin2_sb.valueChanged.connect(partial(x2_sb_change,1))
-		xmax2_sb.valueChanged.connect(partial(x2_sb_change,2))	
-		self.canvas.signal_change.connect(fill_x_1)
-		self.canvas.background_change.connect(fill_x_2)
-	
+			self.canvas.mpl_connect('button_press_event', onClick)
+			self.canvas.mpl_connect('axes_enter_event', enter_axes)
+			self.canvas.mpl_connect('axes_leave_event', leave_axes)
+			
+			xmin1_sb.setMinimum(min(X))
+			xmin1_sb.setMaximum(max(X))
+			xmax1_sb.setMinimum(min(X))
+			xmax1_sb.setMaximum(max(X))
+			xmin2_sb.setMinimum(min(X))
+			xmin2_sb.setMaximum(max(X))
+			xmax2_sb.setMinimum(min(X))
+			xmax2_sb.setMaximum(max(X))
+			
+			xmin1_sb.valueChanged.connect(partial(x1_sb_change,1))
+			xmax1_sb.valueChanged.connect(partial(x1_sb_change,2))
+			xmin2_sb.valueChanged.connect(partial(x2_sb_change,1))
+			xmax2_sb.valueChanged.connect(partial(x2_sb_change,2))	
+			self.canvas.signal_change.connect(fill_x_1)
+			self.canvas.background_change.connect(fill_x_2)
 
 	#****************************************************************************************
 	def fillActions(self):
@@ -595,11 +596,19 @@ class UI_GenRep(UI_GenSec_Base):
 		if item.isSelected():
 			for column in range(self.comandos+1)[2:]:
 				if self.header.model().headerData(column,QtCore.Qt.Horizontal).toString()==headerName:
-					print column
-					X=[1,5,10,15]
-					Y=[1000,200,100,66.4]
+					info=self.processData[str(self.selected_row[0])+','+str(column)]
+					
+					print info['Curva1']
+					print "********************************"
+					print info['Curva2'] 
+					print "********************************"
+					print info['Curva3'] 
+					"""
+					X=[1,5,10,15,16,20,40]
+					Y=[1000,200,100,66.4,62.5,50,25]
+					
 					self.create_graphic(X,Y)
-
+					"""
    
 class Animation(QtCore.QPropertyAnimation):
     LinearPath, CirclePath = range(2)

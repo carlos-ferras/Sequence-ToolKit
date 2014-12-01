@@ -18,21 +18,15 @@ class Lienzo(FigureCanvas):
 		self.fig = Figure(figsize=(10,4))
 		self.allGraphic = self.fig.add_subplot(111,axisbg='#ffffff')	
 		
+		self.allGraphic_X=X
+		self.allGraphic_Y=Y
+			
 		self.activeSignal=True
 		self.activeBackground=False
 		
-		self.allGraphic_X=X
-		self.allGraphic_Y=Y
-		self.Signal_X=min(X)
-		self.Signal_Y=False
-		self.Background_X=max(X)
-		self.Background_Y=False
-		
-		self.allGraphic.plot(self.allGraphic_X, self.allGraphic_Y, '-')
-		self.allGraphic.set_xlim(min(self.allGraphic_X), max(self.allGraphic_X))
 		self.allGraphic.grid(True)
-		self.allGraphic.set_xlabel('Channel',color='b', size = 14)		
-
+		self.allGraphic.set_xlabel('Channel',color='b', size = 14)
+		
 		self.divider = make_axes_locatable(self.allGraphic)
 
 		self.Signal = self.divider.append_axes("left", 1.4, pad=0.4, sharey=self.allGraphic)
@@ -63,9 +57,18 @@ class Lienzo(FigureCanvas):
 		FigureCanvas.setSizePolicy(self,QtGui.QSizePolicy.Expanding,QtGui.QSizePolicy.Expanding)
 		FigureCanvas.updateGeometry(self)
 		
-		self.onselect(min(self.allGraphic_X),min(self.allGraphic_X))
-		self.activeBackground=True
-		self.onselect(max(self.allGraphic_X),max(self.allGraphic_X))
+		if X!=[] and Y!=[]:			
+			self.Signal_X=min(X)
+			self.Signal_Y=False
+			self.Background_X=max(X)
+			self.Background_Y=False
+		
+			self.allGraphic.plot(self.allGraphic_X, self.allGraphic_Y, '-')
+			self.allGraphic.set_xlim(min(self.allGraphic_X), max(self.allGraphic_X))
+		
+			self.onselect(min(self.allGraphic_X),min(self.allGraphic_X))
+			self.activeBackground=True
+			self.onselect(max(self.allGraphic_X),max(self.allGraphic_X))
 		
 	
 	def calc_m(self,x1,y1,x2,y2):

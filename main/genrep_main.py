@@ -174,22 +174,22 @@ class UI_GenRep(UI_GenSec_Base):
 		self.canvas.fig.set_facecolor('#f0f0f0')
 		ToolBarr.setStyleSheet('background:#f0f0f0;')
 		
-		xmin1_label=QtGui.QLabel('start')		
+		xmin1_label=QtGui.QLabel('low')		
 		xmin1_label.setStyleSheet('color:green')
 		xmin1_sb = QtGui.QDoubleSpinBox()
 		xmin1_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Start channel to signal'))	
 		
-		xmax1_label=QtGui.QLabel('end')
+		xmax1_label=QtGui.QLabel('high')
 		xmax1_label.setStyleSheet('color:green')
 		xmax1_sb = QtGui.QDoubleSpinBox()
 		xmax1_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'End channel to signal'))
 		
-		xmin2_label=QtGui.QLabel('start')
+		xmin2_label=QtGui.QLabel('low')
 		xmin2_label.setStyleSheet('color:#1A297D')
 		xmin2_sb = QtGui.QDoubleSpinBox()
 		xmin2_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Start channel to Background'))
 		
-		xmax2_label=QtGui.QLabel('end')
+		xmax2_label=QtGui.QLabel('high')
 		xmax2_label.setStyleSheet('color:#1A297D')
 		xmax2_sb = QtGui.QDoubleSpinBox()
 		xmax2_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'End channel to Background'))

@@ -31,7 +31,7 @@ class Lienzo(FigureCanvas):
 
 		self.Signal = self.divider.append_axes("left", 1.4, pad=0.4, sharey=self.allGraphic)
 		self.line1, = self.Signal.plot([], [], '-',color='b')
-		self.Signal.set_title('Signal',color='g',position=(0.5,1.05))
+		self.Signal.set_title('Signal(SG)',color='g',position=(0.5,1.05))
 		self.Signal.grid(True)
 		self.Signal.text(
 			-0.4,
@@ -44,7 +44,7 @@ class Lienzo(FigureCanvas):
 	
 		self.Background = self.divider.append_axes("right", 1.4, pad=0.4, sharey=self.allGraphic)
 		self.line2, = self.Background.plot([], [], '-',color='b')
-		self.Background.set_title('Background',color='#1A297D',position=(0.5,1.05))
+		self.Background.set_title('Background(BG)',color='#1A297D',position=(0.5,1.05))
 		self.Background.grid(True)
 
 		plt.setp(self.allGraphic.get_yticklabels() + self.Background.get_yticklabels(),visible=False)

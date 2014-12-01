@@ -20,7 +20,7 @@
 from PyQt4   import QtCore
 from PyQt4 import QtGui
 
-def about(self):	
+def about(self,name,title,description,version,appIcon):	
 	_fromUtf8 = QtCore.QString.fromUtf8
 	self.groupBox_343 = QtGui.QGroupBox()
 	
@@ -37,11 +37,11 @@ def about(self):
 	self.label_344 = QtGui.QLabel(self.groupBox_343)
 	self.label_344.setGeometry(QtCore.QRect(10, 0, 140, 150))
 	self.label_344.setText(_fromUtf8(""))
-	self.label_344.setPixmap(QtGui.QPixmap(_fromUtf8("pixmaps/genvis.png")))
+	self.label_344.setPixmap(QtGui.QPixmap(appIcon))
 	self.label_344.setScaledContents(True)
 	self.label_344.setObjectName(_fromUtf8("label_344"))
 	self.label_345 = QtGui.QLabel(self.groupBox_343)
-	self.label_345.setGeometry(QtCore.QRect(160, 0, 191, 51))
+	self.label_345.setGeometry(QtCore.QRect(160, 0, 200, 51))
 	font = QtGui.QFont()
 	font.setFamily(_fromUtf8("Novason"))
 	font.setPointSize(30)
@@ -123,17 +123,16 @@ def about(self):
 	self.pushButton_349.setText(QtGui.QApplication.translate("MainWindow", 'Credits', None, QtGui.QApplication.UnicodeUTF8))
 	self.pushButton_350.setText(QtGui.QApplication.translate("MainWindow", 'Contact the Developers', None, QtGui.QApplication.UnicodeUTF8))
 		
-	
-	self.label_345.setText("GenVis")
+	self.label_345.setText(name)
 	self.textEdit_346.setHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 	"<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" /><style type=\"text/css\">\n"
 	"p, li { white-space: pre-wrap; }\n"
 	"</style></head><body style=\" font-family:\'Novason\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-	"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Novason\'; font-size:12pt; font-weight:600;\">"+QtGui.QApplication.translate("MainWindow", "Sequence Generator", None, QtGui.QApplication.UnicodeUTF8)+"</span></p>\n"
-	"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Novason\'; font-size:12pt; font-weight:600;\">1.0.0</span></p>\n"
-	"<p style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Novason\';\">"+QtGui.QApplication.translate("MainWindow", "This application generates a xml file with the data used by the LF02 automated luminescence reader to run a measuring sequence.", None, QtGui.QApplication.UnicodeUTF8)+"</span></p>\n"
+	"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Novason\'; font-size:12pt; font-weight:600;\">"+title+"</span></p>\n"
+	"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Novason\'; font-size:12pt; font-weight:600;\">"+version+"</span></p>\n"
+	"<p style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Novason\';\">"+description+"</span></p>\n"
 	"</span></p></body></html>")
-	self.groupBox_343.setWindowTitle("GenVis")
+	self.groupBox_343.setWindowTitle(name)
 	self.groupBox_343.show()
 	
 	def licencia():

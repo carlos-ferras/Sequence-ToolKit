@@ -292,10 +292,22 @@ class SEQ:
 		
 	def createSample(self,sample_id):
 		"""Ordena que se cree una muestra"""
-		sample=Sample(sample_id).Sample_ID
-		self.seq.appendChild(sample)
 		self.setDateMod()
+		s_ids=self.xml.getElementsByTagName("seq")[0].getElementsByTagName('Sample_ID')
+		sample=Sample(sample_id).Sample_ID
+		if len(s_ids)>0:
+			for sam in s_ids:
+				value= sam.attributes['sample'].value
+				if int(value)==int(sample_id):
+					return sam
+				
+				if int(value)>int(sample_id):
+					self.seq.insertBefore(sample,sam)
+					return sample
+		
+		self.seq.appendChild(sample)
 		return sample
+
 		
 	def createProcess(self,process_id,parameters,data,column):
 		"""Ordena crear un comando"""

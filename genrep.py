@@ -18,10 +18,12 @@
 #~ along with LF02_package.  If not, see <http://www.gnu.org/licenses/>.
 
 
+
+#  self.statusBar().showMessage("All hail matplotlib!", 2000)
 import sys
 from PyQt4 import QtCore  
 from PyQt4 import QtGui 
-from genvis_main import UI_GenVis
+from main.genrep_main import UI_GenRep
 from config import config
 
 if __name__ == '__main__':
@@ -35,7 +37,7 @@ if __name__ == '__main__':
 	if locale=='' or locale=='locale' or locale=='None':	
 		locale =unicode(QtCore.QLocale.system().name())
 	translator=QtCore.QTranslator()
-	translator.load("Locale/gensec_"+locale)
+	translator.load("Locale/LF02_package_"+locale)
 	app.installTranslator(translator)
 	
 	qtTranslator=QtCore.QTranslator()
@@ -48,10 +50,10 @@ if __name__ == '__main__':
 	
 	windows =[]
 	for dir in  dirs:
-		w=UI_GenVis(conf,dir)
+		w=UI_GenRep(conf,dir)
 		windows.append(w)
 	for current_child_window in windows:
-             current_child_window
+             current_child_window.form1.showMaximized()
 		
 	sys.exit(app.exec_())
 	

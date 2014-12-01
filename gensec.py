@@ -20,7 +20,7 @@
 import sys
 from PyQt4 import QtCore  
 from PyQt4 import QtGui 
-from gensec_main import UI_GenSec
+from main.gensec_main import UI_GenSec
 from config import config
 
 if __name__ == "__main__": 
@@ -34,7 +34,7 @@ if __name__ == "__main__":
 	if locale=='' or locale=='locale' or locale=='None':	
 		locale =unicode(QtCore.QLocale.system().name())
 	translator=QtCore.QTranslator()
-	translator.load("Locale/gensec_"+locale)
+	translator.load("Locale/LF02_package_"+locale)
 	app.installTranslator(translator)
 	
 	qtTranslator=QtCore.QTranslator()
@@ -50,7 +50,7 @@ if __name__ == "__main__":
 		w=UI_GenSec(conf,dir)
 		windows.append(w)
 	for current_child_window in windows:
-             current_child_window
+		current_child_window.form1.showMaximized()
 		
 	sys.exit(app.exec_())
 	

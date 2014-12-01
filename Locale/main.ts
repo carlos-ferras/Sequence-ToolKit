@@ -134,7 +134,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="468"/>
+        <location filename="gensec_main.py" line="512"/>
         <source>Unknown</source>
         <translation>Desconocido</translation>
     </message>
@@ -144,37 +144,37 @@
         <translation>Aplicar</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="449"/>
+        <location filename="gensec_main.py" line="493"/>
         <source>Save changes?</source>
         <translation>¿Desea guardar los cambios?</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="451"/>
+        <location filename="gensec_main.py" line="495"/>
         <source>No</source>
         <translation>No</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="452"/>
+        <location filename="gensec_main.py" line="496"/>
         <source>Yes</source>
         <translation>Si</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="517"/>
+        <location filename="gensec_main.py" line="561"/>
         <source>Open</source>
         <translation>Abrir</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="735"/>
+        <location filename="gensec_main.py" line="800"/>
         <source>File</source>
         <translation>Archivo</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="547"/>
+        <location filename="gensec_main.py" line="589"/>
         <source>Invalid file</source>
         <translation>Archivo no válido</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="653"/>
+        <location filename="gensec_main.py" line="695"/>
         <source>The file could not be opened correctly, were recovered only general data.</source>
         <translation>El archivo no se pudo abrir correctamente, se recuperaron sólo datos generales.</translation>
     </message>
@@ -184,12 +184,12 @@
         <translation>Guardar</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="789"/>
+        <location filename="gensec_main.py" line="856"/>
         <source>Unable to perform the operation, the process </source>
         <translation>No se ha podido realizar la operación, el proceso </translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="789"/>
+        <location filename="gensec_main.py" line="856"/>
         <source> does not support merging</source>
         <translation> no es compatible con la unión</translation>
     </message>
@@ -199,97 +199,97 @@
         <translation>Comando</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="794"/>
+        <location filename="gensec_main.py" line="861"/>
         <source> is empty</source>
         <translation> está vacío</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="970"/>
+        <location filename="gensec_main.py" line="1037"/>
         <source>This column is locked</source>
         <translation>Esta columna está bloqueada</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1139"/>
+        <location filename="gensec_main.py" line="1210"/>
         <source>The irradiation process with external source must be set to an empty column.</source>
         <translation>El proceso irradiación con fuente externa se debe establecer en una columna vacía.</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1429"/>
+        <location filename="gensec_main.py" line="1503"/>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1032"/>
+        <location filename="gensec_main.py" line="1103"/>
         <source>The Name field should contain only text</source>
         <translation>El campo Nombre debería contener solo texto</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1429"/>
+        <location filename="gensec_main.py" line="1503"/>
         <source>Owner</source>
         <translation>Propietario</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1046"/>
+        <location filename="gensec_main.py" line="1117"/>
         <source>The Owner field should contain only text</source>
         <translation>The Owner field should cont</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1051"/>
+        <location filename="gensec_main.py" line="1122"/>
         <source>Nitrogen</source>
         <translation>Nitrogeno</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1429"/>
+        <location filename="gensec_main.py" line="1503"/>
         <source>Nitrogen Use</source>
         <translation>Uso de Nitrogeno</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1429"/>
+        <location filename="gensec_main.py" line="1503"/>
         <source>Dose Rate</source>
         <translation>Tasa de Dosis</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1429"/>
+        <location filename="gensec_main.py" line="1503"/>
         <source>External Dose Rate</source>
         <translation>Tasa de Dosis Externa</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1429"/>
+        <location filename="gensec_main.py" line="1503"/>
         <source>Protocol</source>
         <translation>Protocolo</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1093"/>
+        <location filename="gensec_main.py" line="1164"/>
         <source>The Protocol field must be a string of 16 characters</source>
         <translation>El Campo Protocolo debe ser una cadena de 16 caracteres</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1429"/>
+        <location filename="gensec_main.py" line="1503"/>
         <source>Reader ID</source>
         <translation>ID del Lector</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1131"/>
+        <location filename="gensec_main.py" line="1202"/>
         <source>Column wiht command</source>
         <translation>La columna con el comando</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1131"/>
+        <location filename="gensec_main.py" line="1202"/>
         <source> is locked</source>
         <translation>está bloqueada</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1267"/>
+        <location filename="gensec_main.py" line="1341"/>
         <source>Row Number</source>
         <translation>Número de Fila</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1267"/>
+        <location filename="gensec_main.py" line="1341"/>
         <source>Row</source>
         <translation>Fila</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1429"/>
+        <location filename="gensec_main.py" line="1503"/>
         <source>Created</source>
         <translation>Creada</translation>
     </message>
@@ -304,27 +304,22 @@
         <translation>Muestra</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1574"/>
+        <location filename="gensec_main.py" line="1651"/>
         <source>The column parameter must be a number greater than 0</source>
         <translation>El parámetro columna debe ser un número mayor que 0</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1633"/>
+        <location filename="gensec_main.py" line="1743"/>
         <source>samples ranges must be low to high, and should not have repeated elements.</source>
         <translation>Los rangos de muestras deben ser de menor a mayor, y no deben tener elementos repetidos.</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1642"/>
+        <location filename="gensec_main.py" line="1772"/>
         <source>There are repeated number in sample sequence</source>
         <translation>Hay un número repetido de la secuencia de muestras</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1648"/>
-        <source>There are repeated number in the sequence of input samples</source>
-        <translation>Hay un número repetido en la secuencia de muestras de entrada</translation>
-    </message>
-    <message>
-        <location filename="gensec_main.py" line="1630"/>
+        <location filename="gensec_main.py" line="1740"/>
         <source>Samples must have the structure [1-3,4,5]
 only contains ranges and numbers separated by commas</source>
         <translation>Las muestras deben tener la estructura [1-3,4,5]
@@ -336,12 +331,12 @@ sólo contiene rangos y números separados por comas</translation>
         <translation>Adicionar Comando</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1722"/>
+        <location filename="gensec_main.py" line="1848"/>
         <source>Add Group</source>
         <translation>Adicionar Grupo</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="397"/>
+        <location filename="MainWindows_gensec.py" line="406"/>
         <source>Merge</source>
         <translation>Unir</translation>
     </message>
@@ -361,17 +356,17 @@ sólo contiene rangos y números separados por comas</translation>
         <translation>&amp;Opciones</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="487"/>
+        <location filename="MainWindows_gensec.py" line="497"/>
         <source>&amp;GenSec Options</source>
         <translation>Opciones de &amp;GenSec</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="488"/>
+        <location filename="MainWindows_gensec.py" line="498"/>
         <source>&amp;Merge Colors</source>
         <translation>Color&amp;es</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="490"/>
+        <location filename="MainWindows_gensec.py" line="500"/>
         <source>&amp;Sequence Options</source>
         <translation>Opciones de &amp;Secuencia</translation>
     </message>
@@ -381,7 +376,7 @@ sólo contiene rangos y números separados por comas</translation>
         <translation>Ay&amp;uda</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="492"/>
+        <location filename="MainWindows_gensec.py" line="502"/>
         <source>&amp;New</source>
         <translation>&amp;Nuevo</translation>
     </message>
@@ -391,17 +386,17 @@ sólo contiene rangos y números separados por comas</translation>
         <translation>&amp;Abrir</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="494"/>
+        <location filename="MainWindows_gensec.py" line="504"/>
         <source>&amp;Save</source>
         <translation>&amp;Guardar</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="495"/>
+        <location filename="MainWindows_gensec.py" line="505"/>
         <source>Save &amp;as..</source>
         <translation>Guardar &amp;como..</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="496"/>
+        <location filename="MainWindows_gensec.py" line="506"/>
         <source>&amp;Preview</source>
         <translation>&amp;Vista Previa</translation>
     </message>
@@ -411,7 +406,7 @@ sólo contiene rangos y números separados por comas</translation>
         <translation>&amp;Salir</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="498"/>
+        <location filename="MainWindows_gensec.py" line="508"/>
         <source>&amp;Paste</source>
         <translation>&amp;Pegar</translation>
     </message>
@@ -421,12 +416,12 @@ sólo contiene rangos y números separados por comas</translation>
         <translation>&amp;Copiar</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="500"/>
+        <location filename="MainWindows_gensec.py" line="510"/>
         <source>Cl&amp;ear Seleccion</source>
         <translation>&amp;Limpiar Selección</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="501"/>
+        <location filename="MainWindows_gensec.py" line="512"/>
         <source>C&amp;ut</source>
         <translation>Cor&amp;tar</translation>
     </message>
@@ -441,7 +436,7 @@ sólo contiene rangos y números separados por comas</translation>
         <translation>&amp;Imprimir</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="508"/>
+        <location filename="MainWindows_gensec.py" line="519"/>
         <source>&amp;Clear All</source>
         <translation>Limpiar &amp;Todo</translation>
     </message>
@@ -461,57 +456,57 @@ sólo contiene rangos y números separados por comas</translation>
         <translation>&amp;Opacidad de al Ventana</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="513"/>
+        <location filename="MainWindows_gensec.py" line="524"/>
         <source>&amp;Run Command</source>
         <translation>&amp;Ejecutar Comando</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="515"/>
+        <location filename="MainWindows_gensec.py" line="526"/>
         <source>Add &amp;Row</source>
         <translation>Adicionar &amp;Fila</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="516"/>
+        <location filename="MainWindows_gensec.py" line="527"/>
         <source>Add Colu&amp;mn</source>
         <translation>Adicionar &amp;Columna</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="517"/>
+        <location filename="MainWindows_gensec.py" line="528"/>
         <source>&amp;Select Row</source>
         <translation>&amp;Seleccionar Fila</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="518"/>
+        <location filename="MainWindows_gensec.py" line="529"/>
         <source>&amp;Name</source>
         <translation>&amp;Nombre</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="519"/>
+        <location filename="MainWindows_gensec.py" line="530"/>
         <source>&amp;Owner</source>
         <translation>&amp;Propietario</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="520"/>
+        <location filename="MainWindows_gensec.py" line="531"/>
         <source>Nitrogen &amp;Use</source>
         <translation>&amp;Uso de Nitrógeno</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="521"/>
+        <location filename="MainWindows_gensec.py" line="532"/>
         <source>&amp;Dose Rate</source>
         <translation>&amp;Tasa de Dosis</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="522"/>
+        <location filename="MainWindows_gensec.py" line="533"/>
         <source>&amp;External Dose Rate</source>
         <translation>Tasa de Dosis &amp;Externa</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="523"/>
+        <location filename="MainWindows_gensec.py" line="534"/>
         <source>&amp;Protocol</source>
         <translation>Pr&amp;otocolo</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="524"/>
+        <location filename="MainWindows_gensec.py" line="535"/>
         <source>&amp;Reader ID</source>
         <translation>&amp;Id del Lector</translation>
     </message>
@@ -621,17 +616,17 @@ sólo contiene rangos y números separados por comas</translation>
         <translation>Vista Previa</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="502"/>
+        <location filename="MainWindows_gensec.py" line="513"/>
         <source>Color &amp;1</source>
         <translation>Color &amp;1</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="503"/>
+        <location filename="MainWindows_gensec.py" line="514"/>
         <source>Color &amp;2</source>
         <translation>Color &amp;2</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="504"/>
+        <location filename="MainWindows_gensec.py" line="515"/>
         <source>Color &amp;3</source>
         <translation>Color &amp;3</translation>
     </message>
@@ -874,12 +869,12 @@ p, li { white-space: pre-wrap; }
         <translation>Listo</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="745"/>
+        <location filename="gensec_main.py" line="812"/>
         <source>The document has been saved</source>
         <translation>El documento se ha guardado </translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="725"/>
+        <location filename="gensec_main.py" line="789"/>
         <source>The document has been opened</source>
         <translation>El documento ha sido abierto </translation>
     </message>
@@ -939,7 +934,7 @@ p, li { white-space: pre-wrap; }
         <translation>Borra el contenido de las filas de selección </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="209"/>
+        <location filename="MainWindows_gensec.py" line="218"/>
         <source>Cut the current selection content to the clipboard</source>
         <translation>Corta el contenido actual de selección en el portapapeles </translation>
     </message>
@@ -959,7 +954,7 @@ p, li { white-space: pre-wrap; }
         <translation>Imprime la tabla actual </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="245"/>
+        <location filename="MainWindows_gensec.py" line="254"/>
         <source>Delete all the content of the table</source>
         <translation>Elimina todo el contenido de la tabla </translation>
     </message>
@@ -979,62 +974,62 @@ p, li { white-space: pre-wrap; }
         <translation>Cambir la opacidad de la ventana </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="315"/>
+        <location filename="MainWindows_gensec.py" line="324"/>
         <source>Add one row at end of the table</source>
         <translation>Añade una fila al final de la tabla </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="324"/>
+        <location filename="MainWindows_gensec.py" line="333"/>
         <source>Add one column at end of the table</source>
         <translation>Añade una columna a la final de la tabla </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="333"/>
+        <location filename="MainWindows_gensec.py" line="342"/>
         <source>Select one row of the table</source>
         <translation>Selecciona una fila de la tabla </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="341"/>
+        <location filename="MainWindows_gensec.py" line="350"/>
         <source>Change the sequence&apos;s name</source>
         <translation>Cambia el nombre de la secuencia </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="349"/>
+        <location filename="MainWindows_gensec.py" line="358"/>
         <source>Change the name of the sequence&apos;s owner</source>
         <translation>Cambia el nombre del propietario de la secuencia </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="357"/>
+        <location filename="MainWindows_gensec.py" line="366"/>
         <source>Change the use of nitrogen in the sequence</source>
         <translation>Cambia el uso de nitrógeno en la secuencia </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="365"/>
+        <location filename="MainWindows_gensec.py" line="374"/>
         <source>Change the dose rate of the sequence</source>
         <translation>Cambia la tasa de dosis de la secuencia </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="373"/>
+        <location filename="MainWindows_gensec.py" line="382"/>
         <source>Change the external dose rate of the sequence</source>
         <translation>Cambia la tasa de dosis externa de la secuencia  </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="381"/>
+        <location filename="MainWindows_gensec.py" line="390"/>
         <source>Change the protocol of the sequence</source>
         <translation>Cambia el protocolo de la secuencia  </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="389"/>
+        <location filename="MainWindows_gensec.py" line="398"/>
         <source>Show the sequence&apos;s  reader id</source>
         <translation>Muestra el identificador del lector de la secuencia  </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="399"/>
+        <location filename="MainWindows_gensec.py" line="408"/>
         <source>Merge several commands in the same proces_order</source>
         <translation>Combina varios comandos en el mismo proces_order  </translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="346"/>
+        <location filename="gensec_main.py" line="390"/>
         <source>Invalid color, the color must be different to black and white</source>
         <translation>Color inválido, el color debe ser diferente a blanco y negro</translation>
     </message>
@@ -1204,12 +1199,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="406"/>
+        <location filename="MainWindows_gensec.py" line="415"/>
         <source>Split</source>
         <translation>Separar</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="408"/>
+        <location filename="MainWindows_gensec.py" line="417"/>
         <source>Split the selected merges </source>
         <translation>Separa las uniones seleccionadas</translation>
     </message>
@@ -1224,7 +1219,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="514"/>
+        <location filename="MainWindows_gensec.py" line="525"/>
         <source>&amp;Run Sequence analyzer</source>
         <translation>&amp;Ejecutar el analizador de secuencia</translation>
     </message>
@@ -1239,12 +1234,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="290"/>
+        <location filename="MainWindows_gensec.py" line="299"/>
         <source>Set all states to &apos;pend&apos;, clean all &apos;data&apos; tags of all process and restores name, datecreation and reader ID of the sequence.</source>
         <translation>Cambia todos los estados a &apos;pend&apos;, borra todas las etiquetas &apos;data&apos; y restaura los valores del nombre, fecha de creacion y ID del lector de la secuencia. </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="512"/>
+        <location filename="MainWindows_gensec.py" line="523"/>
         <source>Rese&amp;t</source>
         <translation>Res&amp;taurar</translation>
     </message>
@@ -1259,41 +1254,61 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="212"/>
+        <location filename="gensec_main.py" line="213"/>
         <source>Attention!</source>
         <translation>Atención!</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1062"/>
+        <location filename="gensec_main.py" line="1133"/>
         <source>Dose Rate (Gy/s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1073"/>
+        <location filename="gensec_main.py" line="1144"/>
         <source>External Dose Rate (Gy/s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="224"/>
+        <location filename="gensec_main.py" line="268"/>
         <source>Continue with reset?</source>
         <translation>¿Continuar la restauración?</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="291"/>
+        <location filename="gensec_main.py" line="335"/>
         <source>Unable to launch GenVis</source>
         <translation>No se puede iniciar GenVis</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1556"/>
+        <location filename="gensec_main.py" line="1629"/>
         <source>Are you sure you want to delete all the information?</source>
         <translation>¿Seguro que quieres borrar toda la información?</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1654"/>
+        <location filename="gensec_main.py" line="1776"/>
         <source>Samples must have the structure [1-3,4,5]
 only contains ranges and numbers between 1-24 separated by commas</source>
         <translation>Las muestras deben tener la estructura [1-3,4,5]
 sólo contiene rangos y números entre 1-24 separadas por comas</translation>
+    </message>
+    <message>
+        <location filename="gensec_main.py" line="1213"/>
+        <source>The irradiation process with external source can not be defined when a sample appears in more than one row.</source>
+        <translation>El proceso irradiación confuente externa no puede ser definido cuando un número de muestra aparece en más d euna fila. </translation>
+    </message>
+    <message>
+        <location filename="gensec_main.py" line="1767"/>
+        <source>Incompatible sample declaration</source>
+        <translation>Declaración de muestra incompatible</translation>
+    </message>
+    <message>
+        <location filename="MainWindows_gensec.py" line="209"/>
+        <source>Sorts the contents of the table by the number of samples</source>
+        <translation>Ordena el contenido de la tabla por el número de la muestra</translation>
+    </message>
+    <message>
+        <location filename="MainWindows_gensec.py" line="511"/>
+        <source>&amp;Order by Sample</source>
+        <translation>&amp;Ordenar por Muestra</translation>
     </message>
 </context>
 </TS>

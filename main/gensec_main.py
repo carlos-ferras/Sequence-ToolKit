@@ -17,60 +17,32 @@
 #~ You should have received a copy of the GNU General Public License
 #~ along with LF02_package.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
-import re
-from PyQt4 import QtCore  
-from PyQt4 import QtGui 
+
 import threading
-from functools import partial
-from UI.style import *
-from UI import MainWindows_gensec as mainWindows
+from gensec_base import *
 import time
 import datetime
 
 from Dialogs.operationsWid import operationsWid 
 from Dialogs.fontSelect import fontS 
 from Dialogs.priview import priview
-from Dialogs.about_gensec import about
 from Dialogs.process import eslWin,irraWin,ilumWin,lmosWin,oslWin,pauseWin,poslWin,pre_heatWin, tlWin
 from GenSecLib import createXML,loadXML
 
-class UI_GenSec(mainWindows.Ui_MainWindow): 
-		def __init__(self,config,dir=False, parent=None):
-			self.form1 =QtGui.QMainWindow()
-			self.setupUi(self.form1)		
+class UI_GenSec(UI_GenSec_Base): 
+		def __init__(self,config,dir=False, parent=None):			
+			UI_GenSec_Base.__init__(self,config,'GenSec','pixmaps/gensec.png',dir)
 			
-			self.form1.show()
-			self.form1.setCursor(QtCore.Qt.WaitCursor)
-				
-			self.comandos=8
-			self.grupos=0
-			
-			self.form1.closeEvent=self.onCloseEvent
-			self.header=self.treeWidget.header()			
-			self.header.setClickable(True)
-			self.header.sectionClicked.connect(self.headerAction)
-			self.header.setStyleSheet(HEADER)
 			self.treeWidget.itemDoubleClicked.connect(self.itemAction)
 			self.treeWidget.itemSelectionChanged.connect(self.mergeActive)
 			
-			self.actionGurdar.triggered.connect(self.save)
-			self.actionGurdar_como.triggered.connect(self.saveAs)
-			self.actionAbrir.triggered.connect(self.open)
-			self.actionNuevo.triggered.connect(self.new)
-			self.actionLimpiar.triggered.connect(self.limpiarall)
-			self.actionDfgfh.triggered.connect(self.salir)			
-			self.actionImprimir.triggered.connect(self.imprimir)
-			self.actionDsdsda.triggered.connect(self.previusly)
 			self.actionAdicionar_Fila.triggered.connect(self.addGroup)
 			self.actionAdicionar_Columna.triggered.connect(self.addComand)
+			self.actionLimpiar.triggered.connect(self.limpiarall)
+			self.actionDsdsda.triggered.connect(self.previusly)
+			self.actionOrder.triggered.connect(self.orderBySample)
 			self.actionBorrar.triggered.connect(self.delete)
-			self.actionSeleccionar_Fila.triggered.connect(self.selectRow)
-			self.actionFuente.triggered.connect(self.font)
-			self.actionPegar.triggered.connect(self.paste)
-			self.actionCopiar.triggered.connect(self.copy)
-			self.actionCortar.triggered.connect(self.cut)
-			self.actionAcerda_de.triggered.connect(partial(about,self.form1))
+			self.actionAcerda_de.triggered.connect(partial(about,self.form1,'GenSec',QtGui.QApplication.translate("MainWindow", 'Sequence Generator', None, QtGui.QApplication.UnicodeUTF8),QtGui.QApplication.translate("MainWindow", 'This application generates a xml file with the data used by the LF02 automated luminescence reader to run a measuring sequence.', None, QtGui.QApplication.UnicodeUTF8),'1.0.0',"pixmaps/gensec.png"))
 			self.actionNombre.triggered.connect(self.Nombre)
 			self.actionPropietario.triggered.connect(self.Propietario)
 			self.actionUso_de_Nitr_geno.triggered.connect(self.Nitrogeno)
@@ -78,149 +50,285 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 			self.actionTasa_de_Dosis_Externa.triggered.connect(self.DosisExterna)
 			self.actionProtocolo.triggered.connect(self.Protocolo)
 			self.actionReaderId.triggered.connect(self.ReaderId)
-			self.actionEjecutar_Comando.triggered.connect(self.runCommand)
-			self.actionAyuda.triggered.connect(self.help)
-			self.actionDir_defecto.triggered.connect(self.defaultLocation)
-			self.actionOpacity.triggered.connect(self.setOpacity)	
 			self.actionColor1.triggered.connect(partial(self.changeColor,1))
 			self.actionColor2.triggered.connect(partial(self.changeColor,2))
 			self.actionColor3.triggered.connect(partial(self.changeColor,3))
 			self.toolButton_6.triggered.connect(self.merge)
 			self.toolButton_7.triggered.connect(self.cancelMerge)
-			self.actionEjecutar_Analyzer.triggered.connect(self.runAnalyzer)
-			
-			lang= QtGui.QAction(self.form1)
-			lang.setObjectName("lang")
-			self.menuLanguage.addAction(lang)
-			lang.setText(QtGui.QApplication.translate("MainWindow", 'locale', None, QtGui.QApplication.UnicodeUTF8))
-			lang.triggered.connect(partial(self.changeLang, 'locale'))
-			lang.setStatusTip(QtGui.QApplication.translate("MainWindow", "Change the language to default language on your PC", None, QtGui.QApplication.UnicodeUTF8))
-			lang= QtGui.QAction(self.form1)
-			lang.setObjectName("lang")
-			self.menuLanguage.addAction(lang)
-			lang.setText('en')
-			lang.triggered.connect(partial(self.changeLang, 'en'))
-			lang.setStatusTip(QtGui.QApplication.translate("MainWindow", "Change the language to ", None, QtGui.QApplication.UnicodeUTF8)+'" en "')
-			for filePath in os.listdir('Locale'):
-			    fileName  = os.path.basename(filePath)
-			    fileMatch = re.match("gensec_([a-z]{2,}).qm", fileName)
-			    if fileMatch:
-					lang= QtGui.QAction(self.form1)
-					lang.setObjectName("lang")
-					self.menuLanguage.addAction(lang)
-					lang.setText(QtCore.QString.fromUtf8(fileMatch.group(1)))
-					lang.triggered.connect(partial(self.changeLang, QtCore.QString.fromUtf8(fileMatch.group(1))))
-					lang.setStatusTip(QtGui.QApplication.translate("MainWindow", "Change the language to ", None, QtGui.QApplication.UnicodeUTF8)+ '" '+QtCore.QString.fromUtf8(fileMatch.group(1))+' "')
-			
-			self.thereAreCanges=False
-			
-			self.config=config
-			conf=self.config.load()
-			if conf:
-				self.fuente=conf[0]
-				self.size=conf[1]
-				self.fileLocation=conf[2]
-				if self.fileLocation=='None':
-					self.fileLocation=''
-				self.opacity=float(conf[3])
-				self.col1=conf[4]
-				self.col2=conf[5]
-				self.col3=conf[6]
-				self.lang=conf[7]
-				self.processDefaults=conf[8]
-				
-				font = QtGui.QFont()
-				font.setFamily(self.fuente)
-				font.setPointSize(self.size)
-				self.treeWidget.setFont(font)
-				
-				self.form1.setWindowOpacity(self.opacity)
-			else:
-				self.fuente='Novason'
-				self.size=12
-				self.fileLocation=''
-				self.opacity=1				
-				self.col1='#6695df'
-				self.col2='#4e72aa'
-				self.col3='#8665df'				
-				self.lang=''
-				self.processDefaults=[False,False,False,False,False,False,False,[False,False],False]
-
-			widget=QtGui.QDesktopWidget()
-			mainScreenSize = widget.availableGeometry(widget.primaryScreen())
-			H= mainScreenSize.height()-78
-			if self.size>11:
-				cant=int(H/((self.size*2)))+1
-				if self.size<16:
-					cant-=2
-				elif self.size>47:
-					pass
-				else:
-					cant-=1
-			else:
-				cant=27
-				#cant=int(H/24)
-			for group in range(cant):
-				self.addGroup()
-			
-			self.changeColors()	
-			
-			self.directorioArchivo=''
-			
-			self.nombre=''
-			self.propietario=''
-			self.nitrogeno=0
-			self.dosis=0
-			self.dosisE=0
-			self.datecrea=''
-			self.protocolo=''
-			self.id_lector=QtGui.QApplication.translate('MainWindow','Unknown')
-			
-			self.processData={}			
-			self.clipboard=[]
-			self.processClipboard=''
-			self.externalIrradiation=[]
-			self.externalIrradiationDefined=[]
-			self.inMerge=[]			
-			
-			if dir:
-				self.directorioArchivo=dir
-				self.open(True)			
-			
-			self.form1.showMaximized()
-			self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"Ready"))
-			self.form1.setCursor(QtCore.Qt.ArrowCursor)		
-			self.treeWidget.customContextMenuRequested.connect(self.popup)			
 			self.actionReset.triggered.connect(self.reset)
-			self.assistant= QtCore.QProcess()
-			self.process_order_by_sample={}
+			self.header.sectionClicked.connect(self.headerAction)
+			
+			self.changeColors()
+			
+			self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"Ready"),2000)
+			self.form1.setCursor(QtCore.Qt.ArrowCursor)		
+			self.treeWidget.customContextMenuRequested.connect(self.popup)					
 		
-		
-		def cursorAction():
-			def decorador(fun):
-				def interna(*arg):
-					arg[0].form1.setCursor(QtCore.Qt.WaitCursor)
-					if len(arg)==1:
-						fun(arg[0])
-					else:
-						fun(arg[0],arg[1])
-					arg[0].form1.setCursor(QtCore.Qt.ArrowCursor)
-				return interna
-			return decorador
+		def fillActions(self):
+			
+			self.form1.setCentralWidget(self.treeWidget)
+			
+			self.actionEjecutar_GenSec.setVisible(False)
+			
+			#Limpiar---------------------------------------------------
+			self.actionLimpiar = QtGui.QAction(self.form1)
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("pixmaps/icons/clear.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.actionLimpiar.setIconVisibleInMenu(True)
+			self.actionLimpiar.setIcon(icon)
+			self.actionLimpiar.setShortcut("Ctrl+Q")
+			self.actionLimpiar.setStatusTip(QtGui.QApplication.translate("MainWindow", "Delete all the content of the table", None, QtGui.QApplication.UnicodeUTF8))
+			self.menuArchivo.insertAction(self.actionImprimir,self.actionLimpiar)
+			self.actionLimpiar.setText(QtGui.QApplication.translate("MainWindow", "&Clear All", None, QtGui.QApplication.UnicodeUTF8))
+			#Vista Previa------------------------------------------
+			self.actionDsdsda = QtGui.QAction(self.form1)
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("pixmaps/icons/preview.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.actionDsdsda.setIconVisibleInMenu(True)
+			self.actionDsdsda.setIcon(icon)
+			self.actionDsdsda.setShortcut("Ctrl+W")
+			self.actionDsdsda.setStatusTip(QtGui.QApplication.translate("MainWindow", "Open a PreView of the xml file", None, QtGui.QApplication.UnicodeUTF8))
+			self.menuArchivo.insertAction(self.actionLimpiar,self.actionDsdsda)			
+			self.Standar_ToolBar.insertAction(self.actionImprimir,self.actionDsdsda)
+			self.actionDsdsda.setText(QtGui.QApplication.translate("MainWindow", "&Preview", None, QtGui.QApplication.UnicodeUTF8))
+			
+			self.menuEditar.addSeparator()
+			#Adicionar Fila-----------------------------------------------------------
+			self.actionAdicionar_Fila = QtGui.QAction(self.form1)
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("pixmaps/icons/add_row.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.actionAdicionar_Fila.setIconVisibleInMenu(True)
+			self.actionAdicionar_Fila.setIcon(icon)
+			self.actionAdicionar_Fila.setShortcut("F9")
+			self.actionAdicionar_Fila.setStatusTip(QtGui.QApplication.translate("MainWindow", "Add one row at end of the table", None, QtGui.QApplication.UnicodeUTF8))
+			self.menuEditar.addAction(self.actionAdicionar_Fila)
+			self.actionAdicionar_Fila.setText(QtGui.QApplication.translate("MainWindow", "Add &Row", None, QtGui.QApplication.UnicodeUTF8))
+			#Adicionar Columna----------------------------------------------------
+			self.actionAdicionar_Columna = QtGui.QAction(self.form1)
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("pixmaps/icons/add_column.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.actionAdicionar_Columna.setIconVisibleInMenu(True)
+			self.actionAdicionar_Columna.setIcon(icon)
+			self.actionAdicionar_Columna.setShortcut("F10")
+			self.actionAdicionar_Columna.setStatusTip(QtGui.QApplication.translate("MainWindow", "Add one column at end of the table", None, QtGui.QApplication.UnicodeUTF8))
+			self.menuEditar.addAction(self.actionAdicionar_Columna)	
+			self.actionAdicionar_Columna.setText(QtGui.QApplication.translate("MainWindow", "Add Colu&mn", None, QtGui.QApplication.UnicodeUTF8))
+			#Seleccionar Fila-----------------------------------------------------------------
+			self.actionSeleccionar_Fila = QtGui.QAction(self.form1)
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("pixmaps/icons/select_row.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.actionSeleccionar_Fila.setIconVisibleInMenu(True)
+			self.actionSeleccionar_Fila.setIcon(icon)
+			self.actionSeleccionar_Fila.setShortcut("Alt+S")
+			self.actionSeleccionar_Fila.setStatusTip(QtGui.QApplication.translate("MainWindow", "Select one row of the table", None, QtGui.QApplication.UnicodeUTF8))
+			self.menuEditar.addAction(self.actionSeleccionar_Fila)
+			self.actionSeleccionar_Fila.setText(QtGui.QApplication.translate("MainWindow", "&Select Row", None, QtGui.QApplication.UnicodeUTF8))
+			self.menuEditar.addSeparator()
+			#Order--------------------------------------------------------
+			self.actionOrder = QtGui.QAction(self.form1)
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("pixmaps/icons/order.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.actionOrder.setIconVisibleInMenu(True)
+			self.actionOrder.setIcon(icon)
+			self.actionOrder.setShortcut("Ctrl+T")
+			self.actionOrder.setStatusTip(QtGui.QApplication.translate("MainWindow", "Sorts the contents of the table by the number of samples", None, QtGui.QApplication.UnicodeUTF8))
+			self.menuEditar.addAction(self.actionOrder)
+			self.actionOrder.setText(QtGui.QApplication.translate("MainWindow", "&Order by Sample", None, QtGui.QApplication.UnicodeUTF8))
+			#Borrar--------------------------------------------------------
+			self.actionBorrar = QtGui.QAction(self.form1)
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("pixmaps/icons/clear.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.actionBorrar.setIconVisibleInMenu(True)
+			self.actionBorrar.setIcon(icon)
+			self.actionBorrar.setShortcut("Delete")
+			self.actionBorrar.setStatusTip(QtGui.QApplication.translate("MainWindow", "Delete the content of the selection rows", None, QtGui.QApplication.UnicodeUTF8))
+			self.menuEditar.addAction(self.actionBorrar)
+			self.actionBorrar.setText(QtGui.QApplication.translate("MainWindow", "Cl&ear Seleccion", None, QtGui.QApplication.UnicodeUTF8))
+			
+			#Nombre----------------------------------------------------------------------------
+			self.actionNombre = QtGui.QAction(self.form1)
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("pixmaps/icons/name.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.actionNombre.setIconVisibleInMenu(True)
+			self.actionNombre.setIcon(icon)
+			self.actionNombre.setStatusTip(QtGui.QApplication.translate("MainWindow", "Change the sequence's name", None, QtGui.QApplication.UnicodeUTF8))
+			#Propietario---------------------------------------------------------------
+			self.actionPropietario = QtGui.QAction(self.form1)
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("pixmaps/icons/owner.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.actionPropietario.setIconVisibleInMenu(True)
+			self.actionPropietario.setIcon(icon)
+			self.actionPropietario.setStatusTip(QtGui.QApplication.translate("MainWindow", "Change the name of the sequence's owner", None, QtGui.QApplication.UnicodeUTF8))
+			#Nitrogeno------------------------------------------------------
+			self.actionUso_de_Nitr_geno = QtGui.QAction(self.form1)
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("pixmaps/icons/nitrogen.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.actionUso_de_Nitr_geno.setIconVisibleInMenu(True)
+			self.actionUso_de_Nitr_geno.setIcon(icon)
+			self.actionUso_de_Nitr_geno.setStatusTip(QtGui.QApplication.translate("MainWindow", "Change the use of nitrogen in the sequence", None, QtGui.QApplication.UnicodeUTF8))
+			#Tasa de dosis----------------------------------
+			self.actionT_sa_de_Dosis = QtGui.QAction(self.form1)
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("pixmaps/icons/dose_rate.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.actionT_sa_de_Dosis.setIconVisibleInMenu(True)
+			self.actionT_sa_de_Dosis.setIcon(icon)
+			self.actionT_sa_de_Dosis.setStatusTip(QtGui.QApplication.translate("MainWindow", "Change the dose rate of the sequence", None, QtGui.QApplication.UnicodeUTF8))
+			#Tasa de dosis externa-------------------------------------------
+			self.actionTasa_de_Dosis_Externa = QtGui.QAction(self.form1)
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("pixmaps/icons/ext_dose_rate.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.actionTasa_de_Dosis_Externa.setIconVisibleInMenu(True)
+			self.actionTasa_de_Dosis_Externa.setIcon(icon)
+			self.actionTasa_de_Dosis_Externa.setStatusTip(QtGui.QApplication.translate("MainWindow", "Change the external dose rate of the sequence", None, QtGui.QApplication.UnicodeUTF8))
+			#Protocolo-----------------------------------------------------------
+			self.actionProtocolo = QtGui.QAction(self.form1)
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("pixmaps/icons/protocol.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.actionProtocolo.setIconVisibleInMenu(True)
+			self.actionProtocolo.setIcon(icon)
+			self.actionProtocolo.setStatusTip(QtGui.QApplication.translate("MainWindow", "Change the protocol of the sequence", None, QtGui.QApplication.UnicodeUTF8))
+			#Reader_id-----------------------------------------------------------
+			self.actionReaderId = QtGui.QAction(self.form1)
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("pixmaps/icons/reader_id.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.actionReaderId.setIconVisibleInMenu(True)
+			self.actionReaderId.setIcon(icon)
+			self.actionReaderId.setStatusTip(QtGui.QApplication.translate("MainWindow", "Show the sequence's  reader id", None, QtGui.QApplication.UnicodeUTF8))
+			self.menuOpciones_de_Secuencia = QtGui.QMenu(self.menuOpciones)
+			self.menuOpciones_de_Secuencia.addAction(self.actionNombre)
+			self.menuOpciones_de_Secuencia.addAction(self.actionPropietario)
+			self.menuOpciones_de_Secuencia.addAction(self.actionUso_de_Nitr_geno)
+			self.menuOpciones_de_Secuencia.addAction(self.actionT_sa_de_Dosis)
+			self.menuOpciones_de_Secuencia.addAction(self.actionTasa_de_Dosis_Externa)
+			self.menuOpciones_de_Secuencia.addAction(self.actionProtocolo)
+			self.menuOpciones_de_Secuencia.addAction(self.actionReaderId)
+			self.menuOpciones.insertAction(self.menuOpciones_de_GenSec.menuAction(),self.menuOpciones_de_Secuencia.menuAction())
+			self.actionNombre.setText(QtGui.QApplication.translate("MainWindow", "&Name", None, QtGui.QApplication.UnicodeUTF8))
+			self.actionPropietario.setText(QtGui.QApplication.translate("MainWindow", "&Owner", None, QtGui.QApplication.UnicodeUTF8))
+			self.actionUso_de_Nitr_geno.setText(QtGui.QApplication.translate("MainWindow", "Nitrogen &Use", None, QtGui.QApplication.UnicodeUTF8))
+			self.actionT_sa_de_Dosis.setText(QtGui.QApplication.translate("MainWindow", "&Dose Rate", None, QtGui.QApplication.UnicodeUTF8))
+			self.actionTasa_de_Dosis_Externa.setText(QtGui.QApplication.translate("MainWindow", "&External Dose Rate", None, QtGui.QApplication.UnicodeUTF8))
+			self.actionProtocolo.setText(QtGui.QApplication.translate("MainWindow", "&Protocol", None, QtGui.QApplication.UnicodeUTF8))
+			self.actionReaderId.setText(QtGui.QApplication.translate("MainWindow", "&Reader ID", None, QtGui.QApplication.UnicodeUTF8))
+			self.menuOpciones_de_Secuencia.setTitle(QtGui.QApplication.translate("MainWindow", "&Sequence Options", None, QtGui.QApplication.UnicodeUTF8))
+			
+			#Color1---------------------------------------------------------
+			self.actionColor1= QtGui.QAction(self.form1)
+			#Color2---------------------------------------------------------
+			self.actionColor2= QtGui.QAction(self.form1)
+			#Color3---------------------------------------------------------
+			self.actionColor3= QtGui.QAction(self.form1)		
+			self.menuColor = QtGui.QMenu(self.menuOpciones_de_GenSec)
+			self.menuOpciones_de_GenSec.addAction(self.menuColor.menuAction())	
+			self.menuColor.addAction(self.actionColor1)
+			self.menuColor.addAction(self.actionColor2)
+			self.menuColor.addAction(self.actionColor3)	
+			self.menuColor.setTitle(QtGui.QApplication.translate("MainWindow", "&Merge Colors", None, QtGui.QApplication.UnicodeUTF8))
+			self.actionColor1.setText(QtGui.QApplication.translate("MainWindow", "Color &1", None, QtGui.QApplication.UnicodeUTF8))
+			self.actionColor2.setText(QtGui.QApplication.translate("MainWindow", "Color &2", None, QtGui.QApplication.UnicodeUTF8))
+			self.actionColor3.setText(QtGui.QApplication.translate("MainWindow", "Color &3", None, QtGui.QApplication.UnicodeUTF8))		
 			
 			
-		def seguro(msg):
-			def decorador(fun):
-				def interna(*arg):
-					ret = QtGui.QMessageBox.warning(arg[0].form1,QtGui.QApplication.translate('MainWindow','Attention!'),msg,QtGui.QMessageBox.No,QtGui.QMessageBox.Yes)
-					if ret==QtGui.QMessageBox.Yes:
-						fun(arg[0])
-				return interna
-			return decorador
-			
+			#Merge----------------------------------------------------------------
+			self.toolButton_6 = QtGui.QAction(self.form1)
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("pixmaps/icons/merge.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.toolButton_6.setIcon(icon)
+			self.toolButton_6.setToolTip(QtGui.QApplication.translate("MainWindow",'Merge', None, QtGui.QApplication.UnicodeUTF8))
+			self.toolButton_6.setEnabled(False)
+			self.toolButton_6.setStatusTip(QtGui.QApplication.translate("MainWindow", "Merge several commands in the same proces_order", None, QtGui.QApplication.UnicodeUTF8))
+			#Destroy Merge----------------------------------------------------------------
+			self.toolButton_7 = QtGui.QAction(self.form1)
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("pixmaps/icons/cancel_merge.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.toolButton_7.setIcon(icon)
+			self.toolButton_7.setToolTip(QtGui.QApplication.translate("MainWindow",'Split', None, QtGui.QApplication.UnicodeUTF8))
+			self.toolButton_7.setEnabled(False)
+			self.toolButton_7.setStatusTip(QtGui.QApplication.translate("MainWindow", "Split the selected merges ", None, QtGui.QApplication.UnicodeUTF8))
+			#Reset----------------------------------
+			self.actionReset = QtGui.QAction(self.form1)
+			icon = QtGui.QIcon()
+			icon.addPixmap(QtGui.QPixmap("pixmaps/icons/reset.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+			self.actionReset.setIconVisibleInMenu(True)
+			self.actionReset.setIcon(icon)
+			self.actionReset.setShortcut("Ctrl+K")
+			self.actionReset.setStatusTip(QtGui.QApplication.translate("MainWindow", "Set all states to 'pend', clean all 'data' tags of all process and restores name, datecreation and reader ID of the sequence.", None, QtGui.QApplication.UnicodeUTF8))
+			self.menuOpciones.insertAction(self.actionEjecutar_GenSec,self.actionReset)
+			self.menuOpciones.insertSeparator(self.actionEjecutar_GenSec)
+			self.actionReset.setText(QtGui.QApplication.translate("MainWindow", "Rese&t", None, QtGui.QApplication.UnicodeUTF8))
+			self.Tools_ToolBar.setVisible(True)
+			self.Tools_ToolBar.addAction(self.toolButton_6)
+			self.Tools_ToolBar.addAction(self.toolButton_7)
+			self.Tools_ToolBar.addAction(self.actionReset)
 
-		def runCommand(self):
-			pass
+		
+		def beforeGenRep(self):
+			if not self.isEmpty():
+				import commands
+				try:
+					a=str(commands.getoutput('$HOME'))
+					b=a.split('/')
+					del b[0]
+					c=b[-1].split()
+					del b[-1]
+					if len(c)>1:
+						d=c[0].split(':')
+						e=d[0]
+					else:
+						e=c[0]
+					userRoot=''
+					for i in b:
+						userRoot+='/'+i
+					userRoot+='/'+e
+					dir=userRoot+'/genSecTmp.slf'
+				
+				except:
+					dir='genSecTmp.slf'
+				
+				self.saveAs(dir)					
+				self.dirToOpen=dir
+		
+		def isEmpty(self):
+			for i in range(self.treeWidget.topLevelItemCount()):
+				item = self.treeWidget.topLevelItem( i )
+				if item.text(1):
+					for column in range(self.comandos+1)[2:]:						
+						dato=item.text(column)
+						if dato!='':
+							return False
+			return True
+		
+		@cursorAction()
+		def orderBySample(self,temp=False):
+			if not self.isEmpty():
+				import commands
+				try:
+					a=str(commands.getoutput('$HOME'))
+					b=a.split('/')
+					del b[0]
+					c=b[-1].split()
+					del b[-1]
+					if len(c)>1:
+						d=c[0].split(':')
+						e=d[0]
+					else:
+						e=c[0]
+					userRoot=''
+					for i in b:
+						userRoot+='/'+i
+					userRoot+='/'+e
+					dir=userRoot+'/genSecTmp.slf'
+				
+				except:
+					dir='genSecTmp.slf'
+					
+				temp=self.directorioArchivo
+				self.saveAs(dir)					
+				self.new()	
+				self.directorioArchivo=dir
+				self.open(dir)
+				self.directorioArchivo=temp
+				os.remove(dir)
 			
 		
 		@cursorAction()
@@ -240,18 +348,7 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 				pos=data.split(',')
 				self.setIcon('pend',int(pos[0]),int(pos[1]))					
 			self.thereAreCanges=True
-		
-		
-		def setIcon(self,status,row,column):
-			"""Pone un icono en un item"""
-			self.treeWidget.topLevelItem(row).setIcon(column,QtGui.QIcon('pixmaps/icons/status_'+str(status)+'.png'))
-				
-				
-		def quitIcon(self,row,column):
-			"""Quita el icono de un item"""
-			icon = QtGui.QIcon()
-			self.treeWidget.topLevelItem(row).setIcon(column,QtGui.QIcon(icon))
-		
+
 		
 		def popup(self,pos):
 			"""Menu al dar click derecho"""
@@ -284,31 +381,6 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 
 			action = menu.exec_(self.treeWidget.mapToGlobal(pos))			
 					
-
-		def runAnalyzer(self):
-			"""Ejecuta GenVis"""
-			self.closeAllDialogs()
-			try:
-				QtCore.QProcess.startDetached('python genvis.py')
-			except:
-				self.error(QtGui.QApplication.translate('MainWindow','Unable to launch GenVis'))
-				
-				
-		def help(self):
-			"""Corre la ayuda de la aplicacion"""
-			self.closeAllDialogs()			
-			if (self.assistant.state() != QtCore.QProcess.Running):
-				#app = QLibraryInfo.location(QLibraryInfo.BinariesPath) + QDir.separator()
-				app ="assistant ";
-				args="-collectionFile documentation/asistente.qhc -enableRemoteControl"
-				self.assistant.start(str(app)+str(args))
-				
-			
-		def changeLang(self,lang):
-			"""cambia el idioma por defecto de la aplicacion"""
-			self.lang=lang
-			QtGui.QMessageBox.about(self.form1, "GenSec", QtGui.QApplication.translate('MainWindow','To save the changes you must restart'))
-			
 			
 		def cancelMerge(self):
 			"""rompe los grupos formados por las casillas que estan seleccionadas"""
@@ -371,106 +443,6 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 			self.actionColor3.setIconVisibleInMenu(True)
 			self.actionColor3.setIcon(icon)		
 			
-			
-		def setOpacity(self):
-			"""Abre una ventana para cambiar la opacidad de la ventana"""
-			self.closeAllDialogs()
-			dialog=QtGui.QDialog(self.form1)
-			dialog.setGeometry(QtCore.QRect(0, 0, 170, 70));	
-			
-			horizontalSlider=QtGui.QSlider(dialog)
-			horizontalSlider.setGeometry(QtCore.QRect(5,5, 160, 20));
-			horizontalSlider.setOrientation(QtCore.Qt.Horizontal);
-			horizontalSlider.setMinimum(80)
-			horizontalSlider.setValue(self.opacity*100)
-			
-			def opacity():
-				"""Cambia la opacidad de la ventana"""
-				self.opacity=horizontalSlider.value()/100.0
-				self.form1.setWindowOpacity(self.opacity)
-				dialog.close()
-				
-			def cancel():
-				"""Pone la opacidad como estaba anteriormente a la vista previa"""
-				self.form1.setWindowOpacity(self.opacity)
-				dialog.close()
-				
-			def preview():
-				"""Vista previa de la opacidad que esta modificando el usuario"""
-				o=horizontalSlider.value()/100.0
-				self.form1.setWindowOpacity(o)
-				
-			def hide(event):
-				"""Ajusta la opacidad de la ventana"""
-				self.form1.setWindowOpacity(self.opacity)
-			
-			button=QtGui.QPushButton(QtGui.QApplication.translate('MainWindow','Aply'),dialog)
-			button.setGeometry(QtCore.QRect(108,30, 60, 25));
-			button.clicked.connect(opacity)
-			
-			button2=QtGui.QPushButton(QtGui.QApplication.translate('MainWindow','Cancel'),dialog)
-			button2.setGeometry(QtCore.QRect(40,30, 60, 25));
-			button2.clicked.connect(cancel)
-			
-			horizontalSlider.valueChanged.connect(preview)
-			horizontalSlider.hideEvent =hide
-			
-			dialog.exec_()	
-			
-			
-		def defaultLocation(self):
-			"""Para escoger el directorio por defecto donde se van a guardar los archivos, y de donde seran cargados"""
-			self.closeAllDialogs()
-			self.fileLocation=QtGui.QFileDialog.getExistingDirectory (self.form1,'', self.fileLocation)
-			if not self.fileLocation:
-				self.fileLocation=''
-			
-			
-		def onCloseEvent(self,event):
-			"""Se ejecuta al cerrar la aplicacion, pregunta si desa guardar los cambios"""
-			ret=self.question()
-			if not ret:
-				event.ignore()
-			elif ret==1 :
-				self.closeAllDialogs()
-				self.config.save(self.fuente,self.size,self.fileLocation,self.opacity,self.lang,self.col1,self.col2,self.col3,self.processDefaults)
-				event.accept()
-			else:
-				if self.save():
-					self.closeAllDialogs()
-					self.config.save(self.fuente,self.size,self.fileLocation,self.opacity,self.lang,self.col1,self.col2,self.col3,self.processDefaults)
-					event.accept()
-				else:
-					event.ignore()
-		
-		
-		def question(self):
-			"""Ventana para preguntar si se desean guardar los cambios"""
-			if self.thereAreCanges==True:
-				msgBox = QtGui.QMessageBox(self.form1)
-				msgBox.setWindowTitle('GenSec')
-				msgBox.setText(QtGui.QApplication.translate('MainWindow','Save changes?'))
-				msgBox.addButton(QtGui.QPushButton(QtGui.QApplication.translate('MainWindow','Cancel')), QtGui.QMessageBox.DestructiveRole)
-				msgBox.addButton(QtGui.QPushButton(QtGui.QApplication.translate('MainWindow','No')), QtGui.QMessageBox.NoRole)
-				msgBox.addButton(QtGui.QPushButton(QtGui.QApplication.translate('MainWindow','Yes')), QtGui.QMessageBox.YesRole)
-				ret = msgBox.exec_()
-				return ret
-			else:
-				return 1
-		
-		
-		def cleanGeneralData(self):
-			"""Reinicia alos datos generales a vacios"""
-			self.nombre=''
-			self.propietario=''
-			self.nitrogeno=0
-			self.dosis=0
-			self.dosisE=0
-			self.datecrea=''
-			self.protocolo=''
-			self.id_lector=QtGui.QApplication.translate('MainWindow','Unknown')
-			self.directorioArchivo=''
-		
 		
 		def new(self):
 			"""Borra toda la informacion actual para comenzar desde cero"""
@@ -489,7 +461,7 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 		
 		
 		@cursorAction()
-		def save(self):
+		def save(self,temp=False):
 			"""Guarda la informacion en forma de xml"""
 			self.closeAllDialogs()
 			if self.directorioArchivo=='':
@@ -502,245 +474,19 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 		
 		
 		@cursorAction()
-		def open(self,dir=False):
-			"""Ventana para abrir un documento existente"""
-			self.closeAllDialogs()
-			if not dir:
-				ret=self.question()
-				if not ret:
-					return False
-				elif ret==1 :
-					pass
-				else:
-					if self.save():
-						pass
-					else:
-						return False				
-				self.cleanGeneralData()
-				self.directorioArchivo=QtGui.QFileDialog.getOpenFileName(
-					self.form1,
-					QtGui.QApplication.translate('MainWindow',"Open") +" SLF",
-					self.fileLocation,
-					QtGui.QApplication.translate('MainWindow','File')+' SLF (*.slf)' 
-				)				
-				
-			if self.directorioArchivo:
-				try:
-					myLoader=loadXML.Loader(self.directorioArchivo)
-					list=myLoader.exportExtructure()				
-					
-					if str(list[1][0][1])!='None':
-						self.nombre=list[1][0][1]
-					STATUS=list[1][1][1]
-					self.datecrea=str(list[1][2][1])
-					Datemod=list[1][3][1]
-					self.propietario=str(list[1][4][1])
-					NMuestras=list[1][5][1]
-					self.id_lector=str(list[1][6][1])
-					self.nitrogeno=int(list[1][7][1])
-					self.dosis=float(list[1][8][1])
-					self.dosisE=float(list[1][9][1])
-					if str(list[1][10][1])!='None':
-						self.protocolo=str(list[1][9][1])
-					self.limpiar()
-				except:					
-					self.limpiar()
-					self.cleanGeneralData()
-					self.thereAreCanges=True
-					self.error(QtGui.QApplication.translate('MainWindow','Invalid file'))
-					return False
-				try:					
-					tabla=[]
-					for seq in list[1][11:]:
-						for sample in seq[1]:
-							tupla=['',[]]
-							for process_order in sample[1]:
-								#status
-								st=process_order[1][0][1]
-								#type
-								process_order[1][1][1]
-								#process_order number
-								process_order[2][0][0]
-								process_order_id=int(process_order[2][1][0])
-								
-								merge=[]
-								for process_id in process_order[1][2:]:
-									command={}
-									command['status']=str(st)
-									#param
-									for param in process_id[1][0][1]:
-										#nombre del parametro
-										parametro=str(param[0]).split('\'')[1]
-										#valor
-										valor=param[1]
-										if valor!=None:
-											if parametro=='T1':
-												parametro='final_temp'
-											elif parametro=='dT1':
-												parametro='stabilization'
-											elif parametro=='tT1':
-												parametro='time_final_temp'
-											elif parametro=='ExcV':
-												parametro='excV'
-											elif parametro=='ExcF':
-												parametro='excF'
-												
-											if parametro=='stabilization' or parametro=='excV' or parametro=='excF' or parametro=='final_temp' or parametro=='time_final_temp' or parametro=='heating_rate' or parametro=='time':	
-												valor=float(valor)
-											elif parametro=='datapoints1' or parametro=='datapoints2' or parametro=='datapoints3' or parametro=='start_optical_power' or parametro=='end_optical_power' or parametro=='number_of_scans':	
-												valor=int(valor)
-											command[parametro]=valor
-											
-											command['time_unid']='s'
-
-									#inf
-									command['date_type']=str(process_id[1][1][1][0][1])
-									command['comments']=str(process_id[1][1][1][1][1])
-									
-									#data
-									command['Curva1']=process_id[1][2][1][0][1] if str(process_id[1][2][1][0][1])!='None' else ''
-									command['Curva2']=process_id[1][2][1][1][1] if str(process_id[1][2][1][1][1])!='None' else ''
-									command['Curva3']=process_id[1][2][1][2][1] if str(process_id[1][2][1][2][1])!='None' else ''
-									command['Tiempo1']=process_id[1][2][1][3][1] if str(process_id[1][2][1][3][1])!='None' else ''
-									command['Tiempo2']=process_id[1][2][1][4][1] if str(process_id[1][2][1][4][1])!='None' else ''
-									
-									#process_id id
-									process_id[2][0][1]
-									command['id']=int(process_id[2][1][1])
-									#process_id columna
-									process_id[2][0][0]
-									command['column']=int(process_id[2][1][0])
-									
-									command['process_order_id']=process_order_id
-									
-									if command['id']==1:
-										command['source']='Beta'
-									if command['id']==0:
-										command['source']='External'
-									if command['id']==3 or command['id']==4:
-										command['channels']=command['datapoints1']+command['datapoints2']+command['datapoints3']
-										try:
-											command['timePerCanel']=command['time']/command['channels']
-										except:
-											command['timePerCanel']=0
-									if command['id']==4:
-										try:
-											command['number_scan']=(command['time_final_temp']-command['stabilization'])/command['time']
-										except:
-											command['number_scan']=0
-									if command['id']==5:
-										try:
-											command['timePerCanel']=command['time']/command['datapoints2']
-										except:
-											command['timePerCanel']=0
-									if command['id']==6:
-										#Estos parametros no se de donde salen en el xml
-										command['record_ruring']=0
-										command['light_co_simult']=0
-										try:
-											command['timePerCanel']=command['time']/command['datapoints2']
-										except:
-											command['timePerCanel']=0
-									if command['id']==7:
-										pass
-									
-									merge.append(command)	
-								tupla[1].append(merge)
-							#sample #sample
-							sample[2][0][0]
-							s=sample[2][1][0]
-							
-							tupla[0]=s
-							tabla.append(tupla)
-				except:
-					self.error(QtGui.QApplication.translate('MainWindow','The file could not be opened correctly, were recovered only general data.'))
-					self.thereAreCanges=True
-					return False
-				f=0
-				ultimaFila=self.treeWidget.topLevelItemCount()-1
-
-				before='#000000'
-				affter='#000000'
-				
-				for fila in tabla:
-					if f>ultimaFila:
-						self.addGroup()
-					self.setValue(f,1,fila[0])
-					for merge in fila[1]:	
-						if len(merge)>1:
-							process_order_id=0
-							inMerge=[]
-							color=self.getColor(before,affter)
-							before=str(affter)
-							affter=str(color)
-						
-						for comando in merge:
-							c=comando['column']
-							if c>self.comandos:
-								self.addComand()
-							id=comando['id']						
-							del comando['column']					
-							
-							st=comando['status']
-							self.setIcon(st,f,c)
-							
-							if id==0 and f==0:
-								self.setValue(f,c,'External Irradiation,'+str(comando['time']*self.dosisE)+' Gy')
-								self.externalIrradiation.append(c)
-								self.externalIrradiationDefined.append(f)
-							elif id==1:
-								self.setValue(f,c,'Beta Irradiation,'+str(comando['time'])+' s')
-							elif id==2:
-								self.setValue(f,c,'TL,'+str(comando['final_temp'])+QtCore.QString.fromUtf8(' °C, ')+str(comando['heating_rate'])+QtCore.QString.fromUtf8(' °C/s'))
-							elif id==3:
-								self.setValue(f,c,'OSL,'+str(comando['light_source'])+', '+str(comando['start_optical_power'])+' %')
-							elif id==4:
-								self.setValue(f,c,'POSL,'+str(comando['light_source'])+', '+str(comando['start_optical_power'])+' %')
-							elif id==5:
-								self.setValue(f,c,'LMOSL,'+str(comando['light_source'])+', '+str(comando['end_optical_power'])+' %')
-							elif id==6:
-								self.setValue(f,c,'ESL,'+str(comando['excF'])+' KHz, '+str(comando['excV'])+' V')
-							elif id==7:
-								self.setValue(f,c,'Pre-Heat,'+str(comando['final_temp'])+QtCore.QString.fromUtf8(' °C, ')+str(comando['heating_rate'])+QtCore.QString.fromUtf8(' °C/s'))
-							elif id==8:
-								self.setValue(f,c,'Ilumination,'+str(comando['light_source'])+', '+str(comando['start_optical_power'])+' %')
-							elif id==9:
-								self.setValue(f,c,'Pause,'+str(comando['time'])+' s')
-							
-							if id!=0 or (id==0 and f==0):
-								self.processData[str(f)+','+str(c)]=comando					
-							
-							if len(merge)>1:								
-								inMerge.append(str(f)+','+str(c))
-								parentItem = self.treeWidget.topLevelItem(f)								
-								parentItem.setTextColor(c,QtGui.QColor(color))	
-								
-								if not process_order_id:
-									process_order_id=self.processData[str(f)+','+str(c)]['process_order_id']
-								else:
-									self.processData[str(f)+','+str(c)]['process_order_id']=process_order_id
-								
-						if len(merge)>1:
-							self.inMerge.append(inMerge)
-					f+=1
-				
-				self.thereAreCanges=False
-				self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"The document has been opened"))
-			else:
-				self.directorioArchivo=''		
-		
-		
-		@cursorAction()
-		def saveAs(self):
+		def saveAs(self,dir=False):
 			"""Ventana para guardar un documanto"""
 			self.closeAllDialogs()
 			dialog=QtGui.QFileDialog(self.form1)
-			self.directorioArchivo=dialog.getSaveFileName(
-				self.form1,
-				QtGui.QApplication.translate('MainWindow',"Save"),
-				self.fileLocation,
-				QtGui.QApplication.translate('MainWindow','File')+' SLF (*.slf);; '+QtGui.QApplication.translate('MainWindow','File')+'XML (*.xml)',
-			)	
+			if not dir:
+				self.directorioArchivo=dialog.getSaveFileName(
+					self.form1,
+					QtGui.QApplication.translate('MainWindow',"Save"),
+					self.fileLocation,
+					QtGui.QApplication.translate('MainWindow','File')+' SLF (*.slf *.xml)',
+				)
+			else:
+				self.directorioArchivo=dir
 			if self.directorioArchivo:
 				self.createXML()
 				self.mySEQ.save(str(self.directorioArchivo),True)
@@ -843,53 +589,6 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 			self.inMerge.append(inMerge)
 			self.toolButton_7.setEnabled(True)
 			self.thereAreCanges=True
-			
-		
-		def getColor(self,before,affter):
-			"""Devulve un color diferente a los pasados por parametro"""
-			if (before==self.col3 and affter==self.col1) or (before==self.col1 and affter==self.col3) :
-				return self.col2
-			elif (before==self.col3 and affter==self.col2) or (before==self.col2 and affter==self.col3) :
-				return self.col1
-			elif (before==self.col1 and affter==self.col2) or (before==self.col2 and affter==self.col1):
-				return self.col3
-			elif (before==self.col3 or before==self.col1) or (affter==self.col3 or affter==self.col1):
-				return self.col2
-			else:
-				return self.col1
-		
-		
-		def ordenar(self):
-			"""Ordena por columna las casillas seleccionadas"""
-			aux=[]
-			aux[:]=self.treeWidget.selectedIndexes()[:]
-			for i in range(len(aux)):
-				for j in range(len(aux))[i:]:
-					if aux[i]>aux[j]:
-						temp=aux[i]
-						aux[i]=aux[j]
-						aux[j]=temp
-			return aux
-			
-		
-		def pertenecen_consecutivos(self):
-			"""retorna true si las casillas seleccionadas son de la misma fila y estan de manera consecutiva"""
-			list=self.ordenar()
-			if len(list)==1:
-				return False
-			try:
-				column=list[0].column()
-				if column<2:
-					return False
-			except:
-				return False
-			row=list[0].row()
-			for item in list[1:]:
-				if (item.column()!=(column+1)) or (item.row()!=row):
-					return False
-				column=item.column()
-			return True
-		
 		
 		def mergeActive(self):
 			"""activa el boton merge cuando es posible usarlo, lo desactiva cuando no"""
@@ -965,10 +664,10 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 			"""Guarda los datos de los comandos"""
 			data,all=process.data()
 			if column in self.externalIrradiation:
-				if all['id']==1:
+				if all['id']==1 or all['id']==0:
 					index=self.externalIrradiation.index(column)
 					if self.externalIrradiationDefined[index]==row:
-						self.delete()
+						self.delete()			
 				else:
 					self.error(QtGui.QApplication.translate('MainWindow','This column is locked'))
 					process.form1.close()
@@ -980,6 +679,10 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 					item = self.treeWidget.topLevelItem( i )
 					if item.text(column):
 						self.error(QtGui.QApplication.translate('MainWindow','The irradiation process with external source must be set to an empty column.'))
+						process.form1.close()
+						return False
+					if self.repetidos():
+						self.error(QtGui.QApplication.translate('MainWindow','The irradiation process with external source can not be defined when a sample appears in more than one row.'))
 						process.form1.close()
 						return False
 				self.externalIrradiation.append(column)
@@ -1106,7 +809,7 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 		
 		
 		@cursorAction()
-		def paste(self):
+		def paste(self,temp=False):
 			"""Pega en todas las casillas seleccionadas el texto k esta en el clipboard"""
 			self.form1.statusBar().showMessage("")
 			borrar=[]
@@ -1140,6 +843,9 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 											item2 = self.treeWidget.topLevelItem( i )
 											if item2.text(c_actual):
 												self.error(QtGui.QApplication.translate('MainWindow','The irradiation process with external source must be set to an empty column.'))
+												return False
+											if self.repetidos():
+												self.error(QtGui.QApplication.translate('MainWindow','The irradiation process with external source can not be defined when a sample appears in more than one row.'))
 												return False
 										self.externalIrradiation.append(c_actual)
 										self.externalIrradiationDefined.append(f_actual)
@@ -1175,7 +881,7 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 		
 		
 		@cursorAction()
-		def copy(self):
+		def copy(self,temp=False):
 			"""Copia el texto de la casilla seleccionada en el clipboard"""
 			self.form1.statusBar().showMessage("")
 			if len(self.treeWidget.selectedIndexes())>0:
@@ -1200,7 +906,7 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 		
 		
 		@cursorAction()
-		def cut(self):
+		def cut(self,temp=False):
 			"""Corta el texto en la casilla seleccionada en el clipboard"""
 			self.form1.statusBar().showMessage("")
 			borrar=[]
@@ -1233,55 +939,10 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 							self.setValue(item.row(),item.column(),'')
 				self.delete()
 				self.thereAreCanges=True
-				
-				
-		def font(self):
-			"""Crea la ventana para escoger tipo y tamanno de fuente"""
-			self.closeAllDialogs()
-			try:
-				self.fontS.form1.close()
-			except:
-				pass
-			self.fontS=fontS(self.form1,self.fuente,self.size)
-			self.fontS.pushButton.clicked.connect(self.change)
-			
-			
-		def change(self):
-			"""Cambia el tipo de letra y el tamanno de los elementos de la tabla"""
-			self.fuente=self.fontS.fontComboBox.currentFont().toString().split(',')[0]
-			self.size=self.fontS.spinBox.value()
-			self.fontS.form1.close()
-			font = QtGui.QFont()
-			font.setFamily(self.fuente)
-			font.setPointSize(self.size)
-			font.setBold(False)
-			font.setItalic(False)
-			font.setUnderline(False)
-			font.setWeight(53)
-			font.setStrikeOut(False)
-			font.setKerning(False)
-			font.setStyleStrategy(QtGui.QFont.PreferDefault)
-			self.treeWidget.setFont(font)
-			self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"The font has been changed"))
-			
-			
-		def selectRow(self):
-			"""Selecciona un conjunto de filas, recibe por parametro un estrin de la forma: row,row,row...."""					
-			row, ok = QtGui.QInputDialog.getText(self.form1, QtGui.QApplication.translate('MainWindow','Row Number'), QtGui.QApplication.translate('MainWindow','Row')+':')			
-			if ok:
-				rows=str(row).split(',')
-				for rw in rows:
-					if str(rw).isdigit():
-						row=int(rw)-1
-						try:
-							item = self.treeWidget.topLevelItem(row)
-							item.setSelected(True)
-						except:
-							pass
 			
 			
 		@cursorAction()
-		def delete(self):
+		def delete(self,temp=False):
 			"""Borra la informacion en todas las filas seleccionadas"""
 			self.form1.statusBar().showMessage("")
 			borrar=[]
@@ -1331,6 +992,10 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 								info['doserate']=info['time']*self.dosis
 							elif info['id']==1:
 								info['doserate']=info['time']*self.dosisE
+							
+							if len(self.externalIrradiation)>0:
+								info['process_order_id']=int(info['process_order_id'])+len(sorted([j for j in self.externalIrradiation if j<column]))
+
 							muestra[1].append(info)
 							muestra[1][-1]['column']=column
 						elif column in self.externalIrradiation:							
@@ -1338,7 +1003,7 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 							info=self.processData[str(self.externalIrradiationDefined[index])+','+str(column)]
 							info['doserate']=info['time']*self.dosisE							
 							muestra[1].append(info)
-							muestra[1][-1]['column']=column							
+							muestra[1][-1]['column']=column
 					if muestra[1]!=[]:
 						muestras.append(muestra)
 			return muestras		
@@ -1374,7 +1039,8 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 						samples_id=range(int(val[0]),int(val[-1])+1)
 					for sample_id in samples_id:
 						commands={}
-						Sample_ID=self.mySEQ.createSample(sample_id)				
+						Sample_ID=self.mySEQ.createSample(sample_id)
+						
 						for command in item[1]:
 							st=command['status']
 							group=[]
@@ -1412,7 +1078,7 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 				
 		
 		@cursorAction()
-		def previusly(self):
+		def previusly(self,temp=False):
 			"""Abre la ventana de vista previa"""
 			self.closeAllDialogs()
 			try:
@@ -1453,7 +1119,7 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 							except:
 								text+='°'
 						if text!='':
-							if str(self.processData[str(i)+','+str(column)]['status'])=='exe':
+							if str(self.processData[str(i)+','+str(column)]['status'])=='running':
 								color1='red'
 							elif str(self.processData[str(i)+','+str(column)]['status'])=='pend':
 								color1='#dde000'
@@ -1478,7 +1144,7 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 		
 		
 		@cursorAction()
-		def imprimir(self):
+		def imprimir(self,temp=False):
 			"""Imprime toda la informacion de la aplicacion"""
 			self.closeAllDialogs()
 			printer =QtGui.QPrinter(QtGui.QPrinter.HighResolution)
@@ -1497,22 +1163,8 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 			dialog.show()		
 			
 		
-		def salir(self):
-			"""Cierra la ventana activa, si es La ventana principal, las cierra todas"""
-			self.closeAllDialogs()
-			self.form1.close()
-				
-		
-		def closeAllDialogs(self):
+		def closeRestantDialogs(self):
 			"""Cuando se ejecuta se cierran todas las ventanas de Comandos"""
-			try:
-				self.fontS.form1.close()
-			except:
-				pass
-			try:
-				self.priview.form1.close()
-			except:
-				pass
 			try:
 				self.oper.form1.close()
 			except:
@@ -1558,33 +1210,6 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 		@seguro(QtGui.QApplication.translate('MainWindow','Are you sure you want to delete all the information?'))	
 		def limpiarall(self):
 			self.limpiar()
-		
-		@cursorAction()		
-		def limpiar(self):
-			"""Borra toda la informacion en la tabla"""
-			for i in range(self.treeWidget.topLevelItemCount()):
-				item = self.treeWidget.topLevelItem( i )
-				for column in range(self.comandos+1)[1:]:						
-						item.setText(column,'')
-						item.setTextColor(column,QtGui.QColor('#000000'))
-						self.quitIcon(i,column)
-			self.inMerge=[]
-			self.processData={}
-			self.externalIrradiation=[]
-			self.externalIrradiationDefined=[]
-			
-		
-		def setValue(self,row,column,valor):
-			"""Introduce un valor en determinado campo, column, tiene que ser mayor que 0"""
-			if column<1:
-				raise ValueError(QtGui.QApplication.translate('MainWindow','The column parameter must be a number greater than 0'))
-			item=self.treeWidget.topLevelItem( row )
-			if not item.text(column):
-				item.setTextColor(column,QtGui.QColor('#000000'))
-			item.setText(column,valor)
-			if valor=='':
-				self.quitIcon(row,column)
-			self.thereAreCanges=True
 			
 		
 		def validSample(self,sample):
@@ -1604,15 +1229,26 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 								return self.validSample(sample[i+1:])
 							else:
 								return False
-			else:
-				if sample=='' or sample.isdigit():
-					if int(sample)>0 and int(sample)<24:
-						return True
-			return False				
+			elif sample=='':
+				return True			
+			elif sample.isdigit() and int(sample)>0 and int(sample)<24:
+				return True
+			return False
 			
+			
+		def repetidos(self):
+			allSamples=[]
+			for i in range(self.treeWidget.topLevelItemCount()):
+				item = self.treeWidget.topLevelItem( i )
+				if item.text(1):
+					if len(list(set(allSamples) & set(self.getSamplesList(item.text(1)))))>0:
+						return True
+					allSamples+=self.getSamplesList(item.text(1))
+			return False
+
 		
 		def itemAction(self,item,column):
-			"""Realiza una accion cuando se da doble click en un elemento de la tabla"""
+			"""Realiza una accion cuando se da doble click en un elemento de la tabla"""			
 			self.form1.statusBar().showMessage("")
 			row=self.treeWidget.indexFromItem(item).row()
 			dato=item.text(column)
@@ -1620,9 +1256,8 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 			if column==1:
 				sample, ok = QtGui.QInputDialog.getText(self.form1,QtGui.QApplication.translate('MainWindow','Sample'),QtGui.QApplication.translate('MainWindow','Sample')+':',QtGui.QLineEdit.Normal,dato)
 				if ok:
-                                        try:
-                                                if self.validSample(str(sample)):
-                                                        
+                                        #try:
+					if self.validSample(str(sample)):                                                        
                                                         allSamples=[]
                                                         partes=str(sample).split(',')
                                                         for parte in partes:
@@ -1643,21 +1278,37 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
                                                                         rango=range(int(numeros[0]),int(numeros[-1])+1)
                                                                         for n in rango:
                                                                                 if not n in allSamples:
-                                                                                        allSamples.append(n)
+											if self.externalIrradiation!=[]:
+												if not self.existe(n):
+													allSamples.append(n)
+												else:
+													self.error(QtGui.QApplication.translate('MainWindow','Incompatible sample declaration'))
+													return False
+											else:
+												allSamples.append(n)
                                                                                 else:
                                                                                         self.error(QtGui.QApplication.translate('MainWindow','There are repeated number in sample sequence'))
                                                                                         return False
                                                                 elif str(numeros[0])!='':
                                                                         if not int(numeros[0]) in allSamples:
-                                                                                allSamples.append(int(numeros[0]))
+										if self.externalIrradiation!=[]:
+											if not self.existe(int(numeros[0])):
+												allSamples.append(int(numeros[0]))
+											else:
+												self.error(QtGui.QApplication.translate('MainWindow','Incompatible sample declaration'))
+												return False
+										else:
+											allSamples.append(int(numeros[0]))
                                                                         else:
-                                                                                self.error(QtGui.QApplication.translate('MainWindow','There are repeated number in the sequence of input samples'))
+                                                                                self.error(QtGui.QApplication.translate('MainWindow','There are repeated number in sample sequence'))
                                                                                 return False				
                                                         self.setValue(row,column,str(sample))
-                                                else:
+					else:
                                                         self.error(QtGui.QApplication.translate('MainWindow','Samples must have the structure [1-3,4,5]\nonly contains ranges and numbers between 1-24 separated by commas'))
-                                        except:
+                                        """
+					except:
                                                self.error(QtGui.QApplication.translate('MainWindow','Samples must have the structure [1-3,4,5]\nonly contains ranges and numbers between 1-24 separated by commas')) 
+					"""
 					
 			elif column>1:
 				command=dato.split(',')[0]
@@ -1697,25 +1348,21 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 					self.oper.pushButton_9.clicked.connect(partial(self.irradiation,self.processDefaults[7][1],row,column,self.processDefaults[7][0]))
 					self.oper.pushButton_10.clicked.connect(partial(self.esl,self.processDefaults[4],row,column))
 					
-				
-
-		def headerAction(self, logicalIndex):
-			"""Es quien controla que no se ejecute el metodo addComand desde 
-			el primer header"""
-			self.form1.statusBar().showMessage("")
-			if logicalIndex>1:
-				self.addComand()
-			
-		
-		def addComand(self):
-			"""Adiciona una columna para comandos"""
-			self.closeAllDialogs()
-			self.treeWidget.headerItem().setText(self.comandos+1, (QtGui.QApplication.translate('MainWindow',"Command ")+str(self.comandos)))
-			self.treeWidget.headerItem().setToolTip(self.comandos+1,QtGui.QApplication.translate('MainWindow','Add Command'))
-			hs=self.treeWidget.horizontalScrollBar()
-			hs.setValue(hs.maximum())			
-			self.comandos+=1
-		
+					
+		def selectRow(self):
+			"""Selecciona un conjunto de filas, recibe por parametro un estrin de la forma: row,row,row...."""					
+			row, ok = QtGui.QInputDialog.getText(self.form1, QtGui.QApplication.translate('MainWindow','Row Number'), QtGui.QApplication.translate('MainWindow','Row')+':')			
+			if ok:
+				rows=str(row).split(',')
+				for rw in rows:
+					if str(rw).isdigit():
+						row=int(rw)-1
+						try:
+							item = self.treeWidget.topLevelItem(row)
+							item.setSelected(True)
+						except:
+							pass
+							
 		
 		def addGroup(self):
 			"""Adiciona una fila para otra muestra"""
@@ -1745,15 +1392,11 @@ class UI_GenSec(mainWindows.Ui_MainWindow):
 			vs.setValue(vs.maximum())
 			self.grupos+=1
 			
-		
-		def error(self,text):
-			"""Muestra una ventana de error"""
+		def addComand(self):
+			"""Adiciona una columna para comandos"""
 			self.closeAllDialogs()
-			msgBox = QtGui.QMessageBox(self.form1)
-			msgBox.setWindowTitle(QtGui.QApplication.translate('MainWindow','Error'))
-			msgBox.setStyleSheet(ERROR_STYLE)
-			msgBox.setText(text)
-			msgBox.addButton(QtGui.QPushButton(QtGui.QApplication.translate('MainWindow','Accept')), QtGui.QMessageBox.YesRole)
-			ret = msgBox.exec_()
-	
-	
+			self.treeWidget.headerItem().setText(self.comandos+1, (QtGui.QApplication.translate('MainWindow',"Command ")+str(self.comandos)))
+			self.treeWidget.headerItem().setToolTip(self.comandos+1,QtGui.QApplication.translate('MainWindow','Add Command'))
+			hs=self.treeWidget.horizontalScrollBar()
+			hs.setValue(hs.maximum())			
+			self.comandos+=1

@@ -144,6 +144,24 @@ QToolButton:!enabled  {
 
 """
 
+HEADER_TOOLBUTTON_STYLE2="""
+QToolButton{
+	border-radius: 0px;
+	font:16px;
+	background:qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #6ea1f1, stop: 1 #567dbc);
+}
+
+QToolButton:hover {
+	background:#FFFFFF;
+}
+
+QToolButton:!enabled  {
+	color:#000000;
+}
+
+"""
+
+
 HEADER="""
 QHeaderView::section{
 	border-radius: 0px;

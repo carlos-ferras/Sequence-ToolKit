@@ -264,7 +264,7 @@ class Ui_MainWindow(object):
 		self.menuArchivo.setTitle(QtGui.QApplication.translate("MainWindow", "&File", None, QtGui.QApplication.UnicodeUTF8))
 		self.menuEditar.setTitle(QtGui.QApplication.translate("MainWindow", "&Edit", None, QtGui.QApplication.UnicodeUTF8))
 		self.menuOpciones.setTitle(QtGui.QApplication.translate("MainWindow", "&Options", None, QtGui.QApplication.UnicodeUTF8))
-		self.menuOpciones_de_GenSec.setTitle(QtGui.QApplication.translate("MainWindow", "&GenSec Options", None, QtGui.QApplication.UnicodeUTF8))
+		self.menuOpciones_de_GenSec.setTitle(QtGui.QApplication.translate("MainWindow", "Se&ttings", None, QtGui.QApplication.UnicodeUTF8))
 		self.menuLanguage.setTitle(QtGui.QApplication.translate("MainWindow", "&Select Language", None, QtGui.QApplication.UnicodeUTF8))
 		self.menuAyuda.setTitle(QtGui.QApplication.translate("MainWindow", "&Help", None, QtGui.QApplication.UnicodeUTF8))
 		self.actionNuevo.setText(QtGui.QApplication.translate("MainWindow", "&New", None, QtGui.QApplication.UnicodeUTF8))

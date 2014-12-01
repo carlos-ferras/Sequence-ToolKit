@@ -28,12 +28,14 @@ import time
 import datetime
 
 from Dialogs.operationsWid import operationsWid 
-from Dialogs.fontSelect import fontS 
+from Dialogs.fontSelect import fontS
+from Dialogs.setup import Setup 
 from Dialogs.priview import priview
 from Dialogs.process import eslWin,irraWin,ilumWin,lmosWin,oslWin,pauseWin,poslWin,pre_heatWin, tlWin
 from GenSecLib import createXML,loadXML
+import math
 
-class UI_GenRep(UI_GenSec_Base):
+class UI_GenRep(UI_GenSec_Base):	
 	def __init__(self,config,dir=False,parent=None):
 		UI_GenSec_Base.__init__(self,config,'GenRep','pixmaps/genrep.png',dir)
 
@@ -47,7 +49,8 @@ class UI_GenRep(UI_GenSec_Base):
 		
 		self.form1.resizeEvent = self.onResize
 		self.actionAcerda_de.triggered.connect(partial(about,self.form1,'GenRep',QtGui.QApplication.translate("MainWindow", 'Report Generator', None, QtGui.QApplication.UnicodeUTF8),QtGui.QApplication.translate("MainWindow", 'Description', None, QtGui.QApplication.UnicodeUTF8),'1.0.0',"pixmaps/genrep.png"))
-		
+		self.action_setup.triggered.connect(self.data_setup)
+
 		self.treeWidget_2.itemClicked.connect(self.change_graphic)
 		
 		self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"Ready"),2000)
@@ -56,6 +59,40 @@ class UI_GenRep(UI_GenSec_Base):
 				
 		self.selected_row=[False,False]
 
+
+	def change_graphic(self,item):
+		headerName= str(item.text(0))
+		item = self.treeWidget.topLevelItem(self.selected_row[0])
+		for column in range(self.comandos+1)[2:]:
+			if self.header.model().headerData(column,QtCore.Qt.Horizontal).toString()==headerName:
+				info=self.processData[str(self.selected_row[0])+','+str(column)]
+				"""
+				print info['Curva1']
+				print "********************************"
+				print info['Curva2'] 
+				print "********************************"
+				print info['Curva3'] 				
+				"""
+				temp = info['Curva1'].split(';')[:-1]
+				
+				X=[float(i) for i in temp if float(i)!=0]
+				Y= [math.log10(i) for i in X]
+				
+				self.create_graphic(X,Y)
+		
+			
+	def  data_setup(self):
+		self.setup=Setup(self.form1)
+		#self.setup.pushButton.clicked.connect()
+		#self.setup.form1.close()
+		
+		
+				
+	def afterOpen(self):
+		self.create_graphic([],[])
+		self.clear_lateral_panel()
+		
+	
 	def create_graphic(self,X,Y):
 		self.pan=False
 		self.zoom=False
@@ -65,7 +102,7 @@ class UI_GenRep(UI_GenSec_Base):
 		def onClick(event):
 			if event.button==1 and (not self.pan) and (not self.zoom):
 				try:
-					if event.inaxes.get_title()=='Signal' and not self.canvas.activeBackground:						
+					if event.inaxes.get_title()=='Signal(SG)' and not self.canvas.activeBackground:						
 						if not self.canvas.activeSignal:
 							self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"Signal area is selected"),3000)
 							event.inaxes.patch.set_facecolor('#6C9DEC')
@@ -75,7 +112,7 @@ class UI_GenRep(UI_GenSec_Base):
 							event.inaxes.patch.set_facecolor('#ffffff')
 							event.canvas.draw()
 							self.canvas.activeSignal=False
-					elif event.inaxes.get_title()=='Background' and not self.canvas.activeSignal:
+					elif event.inaxes.get_title()=='Background(BG)' and not self.canvas.activeSignal:
 						if not self.canvas.activeBackground:
 							self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"Background area is selected"),3000)
 							event.inaxes.patch.set_facecolor('#6C9DEC')
@@ -255,7 +292,6 @@ class UI_GenRep(UI_GenSec_Base):
 			self.canvas.signal_change.connect(fill_x_1)
 			self.canvas.background_change.connect(fill_x_2)
 
-	#****************************************************************************************
 	def fillActions(self):
 		#Para la grafica
 		self.verticalLayoutWidget = QtGui.QWidget()
@@ -304,8 +340,7 @@ class UI_GenRep(UI_GenSec_Base):
 		self.down_area_layout.addWidget(self.treeWidget_2,1,2,10,1)
 		
 		self.layout=QtGui.QGridLayout(self.mainWidget)
-		self.layout.setRowMinimumHeight(1,210)		
-		#self.layout.setColumnMinimumWidth(3,100)
+		self.layout.setRowMinimumHeight(1,210)
 		self.layout.setContentsMargins(0, 0, 0, 0)
 		self.layout.addWidget(self.treeWidget, 1, 0, 1, 3)
 		self.layout.addWidget(self.down_area,2,0,1,3)
@@ -342,6 +377,16 @@ class UI_GenRep(UI_GenSec_Base):
 		self.menuEditar.addAction(self.actionSeleccionar_Fila)
 		self.actionSeleccionar_Fila.setText(QtGui.QApplication.translate("MainWindow", "&Select Row", None, QtGui.QApplication.UnicodeUTF8))
 		self.menuEditar.addSeparator()
+		
+		self.action_setup = QtGui.QAction(self.form1)
+		icon = QtGui.QIcon()
+		icon.addPixmap(QtGui.QPixmap("pixmaps/icons/setup.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		self.action_setup.setIconVisibleInMenu(True)
+		self.action_setup.setIcon(icon)
+		#self.action_setup.setShortcut("Ctrl+N")
+		self.action_setup.setStatusTip(QtGui.QApplication.translate("MainWindow", "Defines how they are to be displayed the results", None, QtGui.QApplication.UnicodeUTF8))
+		self.action_setup.setText(QtGui.QApplication.translate("MainWindow", "Set&Up", None, QtGui.QApplication.UnicodeUTF8))
+		self.menuOpciones.insertAction(self.menuOpciones_de_GenSec.menuAction(),self.action_setup)
 		
 	def onResize(self,event):
 		if not self.down_area_visible:
@@ -589,26 +634,6 @@ class UI_GenRep(UI_GenSec_Base):
 						item_2.setText(0,header)
 						self.treeWidget_2.setItemWidget(item_2, 0,QtGui.QWidget())
 						
-						
-	def change_graphic(self,item):
-		headerName= str(item.text(0))
-		item = self.treeWidget.topLevelItem(self.selected_row[0])
-		if item.isSelected():
-			for column in range(self.comandos+1)[2:]:
-				if self.header.model().headerData(column,QtCore.Qt.Horizontal).toString()==headerName:
-					info=self.processData[str(self.selected_row[0])+','+str(column)]
-					
-					print info['Curva1']
-					print "********************************"
-					print info['Curva2'] 
-					print "********************************"
-					print info['Curva3'] 
-					"""
-					X=[1,5,10,15,16,20,40]
-					Y=[1000,200,100,66.4,62.5,50,25]
-					
-					self.create_graphic(X,Y)
-					"""
    
 class Animation(QtCore.QPropertyAnimation):
     LinearPath, CirclePath = range(2)

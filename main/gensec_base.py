@@ -414,6 +414,11 @@ class UI_GenSec_Base(UI_base):
 				self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"The document has been opened"))
 			else:
 				self.directorioArchivo=''
+				
+			self.afterOpen()
+			
+		def afterOpen(self):
+			pass
 		
 		def getColor(self,before,affter):
 			"""Devulve un color diferente a los pasados por parametro"""

@@ -27,10 +27,10 @@ if __name__ == "__main__":
 	app = QtGui.QApplication(sys.argv)
 	
 	conf=config()
-	c=conf.load()
+	c=conf.loadGeneral()
 	locale=''
 	if c:	
-		locale=c[7]
+		locale=c[4]
 	if locale=='' or locale=='locale' or locale=='None':	
 		locale =unicode(QtCore.QLocale.system().name())
 	translator=QtCore.QTranslator()
@@ -47,7 +47,7 @@ if __name__ == "__main__":
 	
 	windows =[]
 	for dir in  dirs:
-		w=UI_GenSec(conf,dir)
+		w=UI_GenSec(dir)
 		windows.append(w)
 	for current_child_window in windows:
 		current_child_window.form1.showMaximized()

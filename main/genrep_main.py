@@ -37,8 +37,8 @@ from GenSecLib import createXML,loadXML
 import math
 
 class UI_GenRep(UI_GenSec_Base):	
-	def __init__(self,config,dir=False,parent=None):
-		UI_GenSec_Base.__init__(self,config,'GenRep','pixmaps/genrep.png',dir)
+	def __init__(self,dir=False,parent=None):
+		UI_GenSec_Base.__init__(self,'GenRep','pixmaps/genrep.png',dir)
 
 		X=[]
 		Y=[]
@@ -54,6 +54,7 @@ class UI_GenRep(UI_GenSec_Base):
 		self.action_profile.triggered.connect(self.data_profile)
 		self.action_group.triggered.connect(self.group)
 		self.action_ungroup.triggered.connect(self.ungroup)
+		self.action_ungroup_all.triggered.connect(self.ungroupall)
 		
 
 		self.treeWidget_2.itemClicked.connect(self.change_graphic)
@@ -63,6 +64,7 @@ class UI_GenRep(UI_GenSec_Base):
 		self.treeWidget.customContextMenuRequested.connect(self.popup)
 				
 		self.selected_row=[False,False]
+		self.inGroup=[]
 
 
 	def change_graphic(self,item):
@@ -445,6 +447,7 @@ class UI_GenRep(UI_GenSec_Base):
 		self.action_ungroup.setIcon(icon)
 		self.action_ungroup.setStatusTip(QtGui.QApplication.translate("MainWindow", "Ungroup the associated processes", None, QtGui.QApplication.UnicodeUTF8))
 		self.action_ungroup.setText(QtGui.QApplication.translate("MainWindow", "Ungroup", None, QtGui.QApplication.UnicodeUTF8))
+		self.action_ungroup.setEnabled(False)
 		
 		self.Tools_ToolBar.setVisible(True)
 		self.Tools_ToolBar.addAction(self.action_profile)
@@ -453,7 +456,7 @@ class UI_GenRep(UI_GenSec_Base):
 		self.Tools_ToolBar.addAction(self.action_ungroup)
 	
 	
-	def colorearGrupo(self,group,colorear):
+	def colorearGrupo(self,group,colorear,dejar):
 		columns=[]
 		row=-1
 		for g in group:
@@ -461,22 +464,89 @@ class UI_GenRep(UI_GenSec_Base):
 			row=int(data[0])
 			columns.append(int(data[1]))
 			
-		delegate = BackgroundColorDelegate(self.treeWidget,columns,colorear) 
+		delegate = BackgroundColorDelegate(self.treeWidget,columns,colorear,dejar) 
 		self.treeWidget.setItemDelegateForRow(row,delegate)
 
 	
+	def dejar(self,row,toGroup):
+		list=[]
+		item = self.treeWidget.topLevelItem(row)
+		for column in range(self.treeWidget.columnCount()):
+			if not (str(row)+','+str(column)) in toGroup:
+				for group in range(len(self.inGroup)):
+					if (str(row)+','+str(column)) in self.inGroup[group]:
+						list.append(column)
+		return list
+		
+		
+	def deleteinGroup(self,borrar):
+		for grupo in borrar:
+			try:
+				del self.inGroup[grupo]					
+			except:
+				pass
+		self.action_ungroup.setEnabled(False)
+	
+	
 	def group(self):
-		toGroup=[]			
+		toGroup=[]
+		borrar=[]
+		row=None
 		for item in self.treeWidget.selectedIndexes():
-			toGroup.append(str(item.row())+','+str(item.column()))
-		self.colorearGrupo(toGroup,True)
+			i = self.treeWidget.topLevelItem(item.row())
+			if i.text(item.column())=='':
+				self.error(QtGui.QApplication.translate('MainWindow','Command ')+str(item.column()-1)+QtGui.QApplication.translate('MainWindow',' is empty'))
+				return False
+			for group in range(len(self.inGroup)):
+				if (str(item.row())+','+str(item.column())) in self.inGroup[group]:
+					self.ungroup()
+					if not group in borrar:
+						borrar.insert(0,group)
+			row=item.row()
+			toGroup.append(str(row)+','+str(item.column()))
+		
+		self.deleteinGroup(borrar)	
+		self.inGroup.append(toGroup)
+		dejar=self.dejar(row,toGroup)
+		self.colorearGrupo(toGroup,True,dejar)
+		self.action_ungroup.setEnabled(True)
 		
 	
 	def ungroup(self):
-		toUngroup=[]			
+		toUngroup=[]
+		borrar=[]
+		row=None
 		for item in self.treeWidget.selectedIndexes():
+			for group in range(len(self.inGroup)):
+				if (str(item.row())+','+str(item.column())) in self.inGroup[group]:
+					if not group in borrar:
+						borrar.insert(0,group)
+			row=item.row()
 			toUngroup.append(str(item.row())+','+str(item.column()))
-		self.colorearGrupo(toUngroup,False)
+		
+		self.deleteinGroup(borrar)	
+		dejar=self.dejar(row,toUngroup)
+		self.colorearGrupo(toUngroup,False,dejar)
+		
+		
+	def ungroupall(self):
+		for group in self.inGroup:		
+			self.colorearGrupo([group[0]],False,[])
+		self.inGroup=[]
+		
+	def groupActive(self):
+			"""activa el boton merge cuando es posible usarlo, lo desactiva cuando no"""
+			if self.pertenecen_consecutivos():
+				self.action_group.setEnabled(True)				
+			else:
+				self.action_group.setEnabled(False)
+			
+			self.action_ungroup.setEnabled(False)
+			for item in self.treeWidget.selectedIndexes():
+				for group in range(len(self.inGroup)):
+					for poss in self.inGroup[group]:
+						if str(item.row())+','+str(item.column())==poss:
+							self.action_ungroup.setEnabled(True)
 	
 	
 	def onResize(self,event):
@@ -504,29 +574,15 @@ class UI_GenRep(UI_GenSec_Base):
 			self.m_anim.setStartValue(QtCore.QPointF(0, self.mainWidget.height()-20))
 			self.down_area_visible=True			
 		self.m_anim.start()
-
-		
-	def groupActive(self):
-			"""activa el boton merge cuando es posible usarlo, lo desactiva cuando no"""
-			if self.pertenecen_consecutivos():
-				self.action_group.setEnabled(True)				
-			else:
-				self.action_group.setEnabled(False)
-			"""
-			self.toolButton_7.setEnabled(False)
-			for item in self.treeWidget.selectedIndexes():
-				for group in range(len(self.inMerge)):
-					for poss in self.inMerge[group]:
-						if str(item.row())+','+str(item.column())==poss:
-							self.toolButton_7.setEnabled(True)
-			"""
+	
 			
 	def popup(self,pos):
 		menu = QtGui.QMenu()
 		menu.addAction(self.actionCopiar)
 		if self.action_group.isEnabled():
 			menu.addAction(self.action_group)
-		menu.addAction(self.action_ungroup)
+		if self.action_ungroup.isEnabled():
+			menu.addAction(self.action_ungroup)
 		action = menu.exec_(self.treeWidget.mapToGlobal(pos))
 		
 	@cursorAction()
@@ -565,7 +621,8 @@ class UI_GenRep(UI_GenSec_Base):
 
 	def onCloseEvent(self,event):
 		self.closeAllDialogs()
-		self.config.save(self.fuente,self.size,self.fileLocation,self.opacity,self.lang)
+		self.config.saveGeneral(self.fuente,self.size,self.fileLocation,self.opacity,self.lang)
+		self.config.saveGenRep()
 		event.accept()
 	
 	
@@ -745,13 +802,14 @@ class UI_GenRep(UI_GenSec_Base):
 
 
 class BackgroundColorDelegate(QtGui.QStyledItemDelegate):
-	def __init__(self, parent,columns,colorear):
+	def __init__(self, parent,columns,colorear,dejar):
 		super(BackgroundColorDelegate, self).__init__(parent)
 		self.columns=columns
 		self.colorear=colorear
+		self.dejar=dejar
 
 	def paint(self, painter, option, index):
-		if index.column() in self.columns and self.colorear:
+		if (index.column() in self.columns and self.colorear) or (index.column() in self.dejar):
 			painter.fillRect(option.rect, QtGui.QColor(255, 188, 0, 130))
 			super(BackgroundColorDelegate, self).paint(painter, option, index)
 		else:			

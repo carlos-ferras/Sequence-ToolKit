@@ -30,8 +30,13 @@ from Dialogs.process import eslWin,irraWin,ilumWin,lmosWin,oslWin,pauseWin,poslW
 from GenSecLib import createXML,loadXML
 
 class UI_GenSec(UI_GenSec_Base): 
-		def __init__(self,config,dir=False, parent=None):			
-			UI_GenSec_Base.__init__(self,config,'GenSec','pixmaps/gensec.png',dir)
+		def __init__(self,dir=False, parent=None):			
+			UI_GenSec_Base.__init__(self,'GenSec','pixmaps/gensec.png',dir)
+			
+			if self.gensec_config:
+				self.processDefaults=self.gensec_config[3]
+			else:
+				self.processDefaults=[False,False,False,False,False,False,False,[False,False],False]
 			
 			self.treeWidget.itemDoubleClicked.connect(self.itemAction)
 			self.treeWidget.itemSelectionChanged.connect(self.mergeActive)
@@ -1162,6 +1167,29 @@ class UI_GenSec(UI_GenSec_Base):
 				self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"The document has been printed"))
 			dialog.show()		
 			
+		
+		def onCloseEvent(self,event):
+			"""Se ejecuta al cerrar la aplicacion, pregunta si desa guardar los cambios"""
+			if self.dirToOpen!='':
+				os.remove(self.dirToOpen)
+				self.dirToOpen=''
+			ret=self.question()
+			if not ret:
+				event.ignore()
+			elif ret==1 :
+				self.closeAllDialogs()
+				self.config.saveGeneral(self.fuente,self.size,self.fileLocation,self.opacity,self.lang)
+				self.config.saveGenSec(self.col1,self.col2,self.col3,self.processDefaults)
+				event.accept()
+			else:
+				if self.save():
+					self.closeAllDialogs()
+					self.config.saveGeneral(self.fuente,self.size,self.fileLocation,self.opacity,self.lang)
+					self.config.saveGenSec(self.col1,self.col2,self.col3,self.processDefaults)
+					event.accept()
+				else:
+					event.ignore()
+		
 		
 		def closeRestantDialogs(self):
 			"""Cuando se ejecuta se cierran todas las ventanas de Comandos"""

@@ -30,8 +30,8 @@ from Dialogs.process import eslWin,irraWin,ilumWin,lmosWin,oslWin,pauseWin,poslW
 from GenSecLib import createXML,loadXML
 
 class UI_GenSec_Base(UI_base): 
-		def __init__(self,config,title,appIcon,dir=False, parent=None):			
-			UI_base.__init__(self,config,title,appIcon)
+		def __init__(self,title,appIcon,dir=False, parent=None):			
+			UI_base.__init__(self,title,appIcon)
 			
 			self.form1.setCursor(QtCore.Qt.WaitCursor)			
 			self.fill()

@@ -24,6 +24,7 @@ from PyQt4 import QtGui
 from functools import partial
 from UI.style import *
 from UI import MainWindows
+from config import config
 
 
 from Dialogs.fontSelect import fontS 
@@ -50,7 +51,7 @@ def seguro(msg):
 	return decorador
 
 class UI_base(MainWindows.Ui_MainWindow): 
-		def __init__(self,config,title,appIcon, parent=None):
+		def __init__(self,title,appIcon, parent=None):
 			self.form1 =QtGui.QMainWindow()
 			self.setupUi(self.form1,title,appIcon)		
 			
@@ -104,20 +105,18 @@ class UI_base(MainWindows.Ui_MainWindow):
 			
 			self.thereAreCanges=False
 			
-			self.config=config
-			conf=self.config.load()
-			if conf:
-				self.fuente=conf[0]
-				self.size=conf[1]
-				self.fileLocation=conf[2]
+			self.config=config()			
+			self.general_config=self.config.loadGeneral()			
+			self.gensec_config=self.config.loadGenSec()
+			
+			if self.general_config:
+				self.fuente=self.general_config[0]
+				self.size=self.general_config[1]
+				self.fileLocation=self.general_config[2]
 				if self.fileLocation=='None':
 					self.fileLocation=''
-				self.opacity=float(conf[3])
-				self.col1=conf[4]
-				self.col2=conf[5]
-				self.col3=conf[6]
-				self.lang=conf[7]
-				self.processDefaults=conf[8]
+				self.opacity=float(self.general_config[3])				
+				self.lang=self.general_config[4]				
 				
 				font = QtGui.QFont()
 				font.setFamily(self.fuente)
@@ -128,12 +127,17 @@ class UI_base(MainWindows.Ui_MainWindow):
 				self.fuente='Novason'
 				self.size=12
 				self.fileLocation=''
-				self.opacity=1				
+				self.opacity=1
+				self.lang=''
+				
+			if self.gensec_config:
+				self.col1=self.gensec_config[0]
+				self.col2=self.gensec_config[1]
+				self.col3=self.gensec_config[2]
+			else:
 				self.col1='#6695df'
 				self.col2='#4e72aa'
-				self.col3='#8665df'				
-				self.lang=''
-				self.processDefaults=[False,False,False,False,False,False,False,[False,False],False]
+				self.col3='#8665df'
 
 			
 			self.directorioArchivo=''
@@ -328,23 +332,7 @@ class UI_base(MainWindows.Ui_MainWindow):
 		
 		def onCloseEvent(self,event):
 			"""Se ejecuta al cerrar la aplicacion, pregunta si desa guardar los cambios"""
-			if self.dirToOpen!='':
-				os.remove(self.dirToOpen)
-				self.dirToOpen=''
-			ret=self.question()
-			if not ret:
-				event.ignore()
-			elif ret==1 :
-				self.closeAllDialogs()
-				self.config.save(self.fuente,self.size,self.fileLocation,self.opacity,self.lang,self.col1,self.col2,self.col3,self.processDefaults)
-				event.accept()
-			else:
-				if self.save():
-					self.closeAllDialogs()
-					self.config.save(self.fuente,self.size,self.fileLocation,self.opacity,self.lang,self.col1,self.col2,self.col3,self.processDefaults)
-					event.accept()
-				else:
-					event.ignore()
+			pass
 		
 		
 		def question(self):

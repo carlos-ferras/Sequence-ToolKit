@@ -129,12 +129,81 @@ class config:
 		
 	
 	def loadGenRep(self):
-		pass
+		if os.path.exists(self.genrepconf):
+			file=open(self.genrepconf,'r')
+			try:
+				config=[1,0,'lineal',-1,-1,-1,-1,'lineal',-1,-1,-1,-1]
+				while True:
+					line =file.readline()
+					if not line:
+						break
+					if not line.find('Curve to show '):
+						try:
+							config[0]=int(line.split("[")[1].split("]")[0])
+						except:
+							pass
+					elif not line.find('Show TL '):
+						try:
+							config[1]=int(line.split("[")[1].split("]")[0])
+						except:
+							pass
+					elif not line.find('Horizontal Scale '):
+						config[2]=str(line.split("[")[1].split("]")[0])
+					elif not line.find('Horizontal Minimum '):
+						try:
+							config[3]=float(line.split("[")[1].split("]")[0])
+						except:
+							pass	
+					elif not line.find('Horizontal Maximum '):
+						try:
+							config[4]=float(line.split("[")[1].split("]")[0])
+						except:
+							pass
+					elif not line.find('Horizontal Greater Unity '):
+						try:
+							config[5]=float(line.split("[")[1].split("]")[0])
+						except:
+							pass
+					elif not line.find('Horizontal Smallest Unity '):
+						try:
+							config[6]=float(line.split("[")[1].split("]")[0])
+						except:
+							pass
+					elif not line.find('Vertical Scale '):
+						config[7]=str(line.split("[")[1].split("]")[0])
+					elif not line.find('Vertical Minimum '):
+						try:
+							config[8]=float(line.split("[")[1].split("]")[0])
+						except:
+							pass
+					elif not line.find('Vertical Maximum '):
+						try:
+							config[9]=float(line.split("[")[1].split("]")[0])
+						except:
+							pass
+					elif not line.find('Vertical Greater Unity '):
+						try:
+							config[10]=float(line.split("[")[1].split("]")[0])
+						except:
+							pass
+					elif not line.find('Vertical Smallest Unity '):
+						try:
+							config[11]=float(line.split("[")[1].split("]")[0])
+						except:
+							pass
+				return config
+			except:
+				return False
+			file.close()
+		return False
 	
 	
-	def saveGenRep(self):
-		pass
-			
+	def saveGenRep(self,curve_to_show,show_tl,h_scale,h_min,h_max,h_great_unit,h_small_unit,v_scale,v_min,v_max,v_great_unit,v_small_unit):
+		file=open(self.genrepconf,'w+').close()
+		file=open(self.genrepconf,'w+')
+		file.write("Curve to show ["+str(curve_to_show)+"]\n"+"Show TL ["+str(show_tl)+"]\n"+"Horizontal Scale ["+str(h_scale)+"]\n"+"Horizontal Minimum ["+str(h_min)+"]\n"+"Horizontal Maximum ["+str(h_max)+"]\n"+"Horizontal Greater Unity ["+str(h_great_unit)+"]\n"+"Horizontal Smallest Unity ["+str(h_small_unit)+"]\n"+"Vertical Scale ["+str(v_scale)+"]\n"+"Vertical Minimum ["+str(v_min)+"]\n"+"Vertical Maximum ["+str(v_max)+"]\n"+"Vertical Greater Unity ["+str(v_great_unit)+"]\n"+"Vertical Smallest Unity ["+str(v_small_unit)+"]\n")
+		file.close()
+		return True
 	
 		
 		

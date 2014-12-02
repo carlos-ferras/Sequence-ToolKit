@@ -32,3 +32,8 @@ class Profile(profile.Ui_Dialog):
 		self.pushButton.clicked.connect(self.form1.close)
 		
 		self.pushButton_2.setShortcut("Enter")
+		
+		self.data=[]
+		
+	def fill_data(self):
+		pass

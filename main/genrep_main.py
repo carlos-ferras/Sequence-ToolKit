@@ -65,6 +65,34 @@ class UI_GenRep(UI_GenSec_Base):
 				
 		self.selected_row=[False,False]
 		self.inGroup=[]
+		
+		self.genrep_config=self.config.loadGenRep()
+		if self.genrep_config:
+			self.curve_to_show=self.genrep_config[0]
+			self.show_tl=self.genrep_config[1]
+			self.h_scale=self.genrep_config[2]
+			self.h_min=self.genrep_config[3]
+			self.h_max=self.genrep_config[4]
+			self.h_great_unit=self.genrep_config[5]
+			self.h_small_unit=self.genrep_config[6]
+			self.v_scale=self.genrep_config[7]
+			self.v_min=self.genrep_config[8]
+			self.v_max=self.genrep_config[9]
+			self.v_great_unit=self.genrep_config[10]
+			self.v_small_unit=self.genrep_config[11]
+		else:
+			self.curve_to_show=1
+			self.show_tl=0
+			self.h_scale='lineal'
+			self.h_min=-1
+			self.h_max=-1
+			self.h_great_unit=-1
+			self.h_small_unit=-1
+			self.v_scale='lineal'
+			self.v_min=-1
+			self.v_max=-1
+			self.v_great_unit=-1
+			self.v_small_unit=-1
 
 
 	def change_graphic(self,item):
@@ -83,16 +111,31 @@ class UI_GenRep(UI_GenSec_Base):
 		
 			
 	def  data_setup(self):
-		self.setup=Setup(self.form1)
-		#self.setup.pushButton.clicked.connect()
-		#self.setup.form1.close()
-		
+		self.setup=Setup(self.curve_to_show,self.show_tl,self.h_scale,self.h_min,self.h_max,self.h_great_unit,self.h_small_unit,self.v_scale,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit,self.form1)
+		self.setup.pushButton.clicked.connect(self.setup_ready)		
 	
+	#---------------------------------
 	def  data_profile(self):
 		self.profile=Profile(self.form1)
 		#self.setup.pushButton.clicked.connect()
-		#self.setup.form1.close()
+		#self.setup.form1.close()		
 		
+	def setup_ready(self):
+		self.setup_data=self.setup.fill_data()
+		self.setup.form1.close()
+		
+		self.curve_to_show=self.setup_data[0]
+		self.show_tl=self.setup_data[1]
+		self.h_scale=self.setup_data[2]
+		self.h_min=self.setup_data[3]
+		self.h_max=self.setup_data[4]
+		self.h_great_unit=self.setup_data[5]
+		self.h_small_unit=self.setup_data[6]
+		self.v_scale=self.setup_data[7]
+		self.v_min=self.setup_data[8]
+		self.v_max=self.setup_data[9]
+		self.v_great_unit=self.setup_data[10]
+		self.v_small_unit=self.setup_data[11]
 					
 	def afterOpen(self):
 		self.create_graphic([],[])
@@ -528,11 +571,13 @@ class UI_GenRep(UI_GenSec_Base):
 		dejar=self.dejar(row,toUngroup)
 		self.colorearGrupo(toUngroup,False,dejar)
 		
-		
+	
+	@seguro(QtGui.QApplication.translate('MainWindow','Are you sure you want to continue, you will lose all associations?'))		
 	def ungroupall(self):
 		for group in self.inGroup:		
 			self.colorearGrupo([group[0]],False,[])
 		self.inGroup=[]
+		
 		
 	def groupActive(self):
 			"""activa el boton merge cuando es posible usarlo, lo desactiva cuando no"""
@@ -621,8 +666,8 @@ class UI_GenRep(UI_GenSec_Base):
 
 	def onCloseEvent(self,event):
 		self.closeAllDialogs()
-		self.config.saveGeneral(self.fuente,self.size,self.fileLocation,self.opacity,self.lang)
-		self.config.saveGenRep()
+		self.config.saveGeneral(self.fuente,self.size,self.fileLocation,self.opacity,self.lang)		
+		self.config.saveGenRep(self.curve_to_show,self.show_tl,self.h_scale,self.h_min,self.h_max,self.h_great_unit,self.h_small_unit,self.v_scale,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit)
 		event.accept()
 	
 	

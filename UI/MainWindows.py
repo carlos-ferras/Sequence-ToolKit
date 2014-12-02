@@ -190,7 +190,7 @@ class Ui_MainWindow(object):
 		self.actionEjecutar_Comando.setIcon(icon)
 		#self.actionEjecutar_Comando.setShortcut("Ctrl+R")
 		self.actionEjecutar_Comando.setObjectName(_fromUtf8("actionEjecutar_Comando"))
-		#Ejecutar Analyzer-------------------------------------------------------------
+		#Ejecutar GenRep -------------------------------------------------------------
 		self.actionEjecutar_GenRep = QtGui.QAction(MainWindow)
 		icon = QtGui.QIcon()
 		icon.addPixmap(QtGui.QPixmap(_fromUtf8("pixmaps/genrep.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)

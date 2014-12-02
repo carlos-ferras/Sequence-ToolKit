@@ -29,7 +29,8 @@ import datetime
 
 from Dialogs.operationsWid import operationsWid 
 from Dialogs.fontSelect import fontS
-from Dialogs.setup import Setup 
+from Dialogs.setup import Setup
+from Dialogs.profile import Profile 
 from Dialogs.priview import priview
 from Dialogs.process import eslWin,irraWin,ilumWin,lmosWin,oslWin,pauseWin,poslWin,pre_heatWin, tlWin
 from GenSecLib import createXML,loadXML
@@ -42,14 +43,18 @@ class UI_GenRep(UI_GenSec_Base):
 		X=[]
 		Y=[]
 		self.create_graphic(X,Y)
-
+		
+		self.treeWidget.itemSelectionChanged.connect(self.groupActive)
 		self.header=self.treeWidget.header()			
 		self.header.setClickable(True)
-		self.header.setStyleSheet(HEADER)	
-		
+		self.header.setStyleSheet(HEADER)		
 		self.form1.resizeEvent = self.onResize
 		self.actionAcerda_de.triggered.connect(partial(about,self.form1,'GenRep',QtGui.QApplication.translate("MainWindow", 'Report Generator', None, QtGui.QApplication.UnicodeUTF8),QtGui.QApplication.translate("MainWindow", 'Description', None, QtGui.QApplication.UnicodeUTF8),'1.0.0',"pixmaps/genrep.png"))
 		self.action_setup.triggered.connect(self.data_setup)
+		self.action_profile.triggered.connect(self.data_profile)
+		self.action_group.triggered.connect(self.group)
+		self.action_ungroup.triggered.connect(self.ungroup)
+		
 
 		self.treeWidget_2.itemClicked.connect(self.change_graphic)
 		
@@ -66,13 +71,7 @@ class UI_GenRep(UI_GenSec_Base):
 		for column in range(self.comandos+1)[2:]:
 			if self.header.model().headerData(column,QtCore.Qt.Horizontal).toString()==headerName:
 				info=self.processData[str(self.selected_row[0])+','+str(column)]
-				"""
-				print info['Curva1']
-				print "********************************"
-				print info['Curva2'] 
-				print "********************************"
-				print info['Curva3'] 				
-				"""
+				
 				temp = info['Curva1'].split(';')[:-1]
 				
 				X=[float(i) for i in temp if float(i)!=0]
@@ -86,13 +85,18 @@ class UI_GenRep(UI_GenSec_Base):
 		#self.setup.pushButton.clicked.connect()
 		#self.setup.form1.close()
 		
+	
+	def  data_profile(self):
+		self.profile=Profile(self.form1)
+		#self.setup.pushButton.clicked.connect()
+		#self.setup.form1.close()
 		
-				
+					
 	def afterOpen(self):
 		self.create_graphic([],[])
 		self.clear_lateral_panel()
 		
-	
+	@cursorAction()
 	def create_graphic(self,X,Y):
 		self.pan=False
 		self.zoom=False
@@ -322,6 +326,7 @@ class UI_GenRep(UI_GenSec_Base):
 		self.treeWidget_2.setExpandsOnDoubleClick(False)
 		self.treeWidget_2.headerItem().setText(0, QtGui.QApplication.translate('MainWindow',"Columns with data"))
 		self.treeWidget_2.header().setDefaultSectionSize(117)
+		self.treeWidget_2.header().setStyleSheet(HEADER)	
 		
 		self.mainWidget=QtGui.QWidget()
 		self.form1.setCentralWidget(self.mainWidget)
@@ -363,10 +368,10 @@ class UI_GenRep(UI_GenSec_Base):
 		
 		self.actionNuevo.setVisible(False)
 		self.actionPegar.setVisible(False)
-		#self.actionCopiar.setVisible(False)
 		self.actionCortar.setVisible(False)
 		
 		#Seleccionar Fila-----------------------------------------------------------------
+		self.menuEditar.addSeparator()
 		self.actionSeleccionar_Fila = QtGui.QAction(self.form1)
 		icon = QtGui.QIcon()
 		icon.addPixmap(QtGui.QPixmap("pixmaps/icons/select_row.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -376,18 +381,104 @@ class UI_GenRep(UI_GenSec_Base):
 		self.actionSeleccionar_Fila.setStatusTip(QtGui.QApplication.translate("MainWindow", "Select one row of the table", None, QtGui.QApplication.UnicodeUTF8))
 		self.menuEditar.addAction(self.actionSeleccionar_Fila)
 		self.actionSeleccionar_Fila.setText(QtGui.QApplication.translate("MainWindow", "&Select Row", None, QtGui.QApplication.UnicodeUTF8))
-		self.menuEditar.addSeparator()
 		
+		#SetUp-------------------------------------------------------------------
 		self.action_setup = QtGui.QAction(self.form1)
 		icon = QtGui.QIcon()
 		icon.addPixmap(QtGui.QPixmap("pixmaps/icons/setup.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 		self.action_setup.setIconVisibleInMenu(True)
 		self.action_setup.setIcon(icon)
-		#self.action_setup.setShortcut("Ctrl+N")
+		self.action_setup.setShortcut("Ctrl+T")
 		self.action_setup.setStatusTip(QtGui.QApplication.translate("MainWindow", "Defines how they are to be displayed the results", None, QtGui.QApplication.UnicodeUTF8))
 		self.action_setup.setText(QtGui.QApplication.translate("MainWindow", "Set&Up", None, QtGui.QApplication.UnicodeUTF8))
 		self.menuOpciones.insertAction(self.menuOpciones_de_GenSec.menuAction(),self.action_setup)
 		
+		#Perfil--------------------------------------------------------------------
+		self.action_profile = QtGui.QAction(self.form1)
+		icon = QtGui.QIcon()
+		icon.addPixmap(QtGui.QPixmap("pixmaps/icons/profile.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		self.action_profile.setIconVisibleInMenu(True)
+		self.action_profile.setIcon(icon)
+		self.action_profile.setShortcut("Ctrl+E")
+		self.action_profile.setStatusTip(QtGui.QApplication.translate("MainWindow", "Define the parameters to report", None, QtGui.QApplication.UnicodeUTF8))
+		self.action_profile.setText(QtGui.QApplication.translate("MainWindow", "Pro&file", None, QtGui.QApplication.UnicodeUTF8))
+		self.menuEditar.insertAction(self.actionSeleccionar_Fila,self.action_profile)
+		
+		#Asociacion-------------------------------------------------------------------
+		self.action_association = QtGui.QAction(self.form1)
+		icon = QtGui.QIcon()
+		icon.addPixmap(QtGui.QPixmap("pixmaps/icons/association.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		self.action_association.setIconVisibleInMenu(True)
+		self.action_association.setIcon(icon)
+		self.action_association.setShortcut("Ctrl+Y")
+		self.action_association.setStatusTip(QtGui.QApplication.translate("MainWindow", "Defines how they are to be displayed the results", None, QtGui.QApplication.UnicodeUTF8))
+		self.action_association.setText(QtGui.QApplication.translate("MainWindow", "&Association by criteria", None, QtGui.QApplication.UnicodeUTF8))
+		self.menuOpciones.insertAction(self.actionEjecutar_GenSec, self.action_association)
+		self.menuOpciones.insertSeparator(self.actionEjecutar_GenSec)
+		
+		#Desagrupar todas-------------------------------------------------------------------
+		self.action_ungroup_all = QtGui.QAction(self.form1)
+		icon = QtGui.QIcon()
+		icon.addPixmap(QtGui.QPixmap("pixmaps/icons/ungroup_all.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		self.action_ungroup_all.setIconVisibleInMenu(True)
+		self.action_ungroup_all.setIcon(icon)
+		self.action_ungroup_all.setShortcut("Ctrl+U")
+		self.action_ungroup_all.setStatusTip(QtGui.QApplication.translate("MainWindow", "Ungroup all the associated processes", None, QtGui.QApplication.UnicodeUTF8))
+		self.action_ungroup_all.setText(QtGui.QApplication.translate("MainWindow", "&Ungroup All", None, QtGui.QApplication.UnicodeUTF8))
+		self.menuOpciones.insertAction(self.action_association, self.action_ungroup_all)
+		
+		#Agrupar--------------------------------------------------------------------
+		self.action_group = QtGui.QAction(self.form1)
+		icon = QtGui.QIcon()
+		icon.addPixmap(QtGui.QPixmap("pixmaps/icons/group.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		self.action_group.setIconVisibleInMenu(True)
+		self.action_group.setIcon(icon)
+		self.action_group.setStatusTip(QtGui.QApplication.translate("MainWindow", "Define the associated processes to a measurement", None, QtGui.QApplication.UnicodeUTF8))
+		self.action_group.setText(QtGui.QApplication.translate("MainWindow", "Group", None, QtGui.QApplication.UnicodeUTF8))
+		self.action_group.setEnabled(False)
+		
+		#Desagrupar--------------------------------------------------------------------
+		self.action_ungroup = QtGui.QAction(self.form1)
+		icon = QtGui.QIcon()
+		icon.addPixmap(QtGui.QPixmap("pixmaps/icons/ungroup.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		self.action_ungroup.setIconVisibleInMenu(True)
+		self.action_ungroup.setIcon(icon)
+		self.action_ungroup.setStatusTip(QtGui.QApplication.translate("MainWindow", "Ungroup the associated processes", None, QtGui.QApplication.UnicodeUTF8))
+		self.action_ungroup.setText(QtGui.QApplication.translate("MainWindow", "Ungroup", None, QtGui.QApplication.UnicodeUTF8))
+		
+		self.Tools_ToolBar.setVisible(True)
+		self.Tools_ToolBar.addAction(self.action_profile)
+		self.Tools_ToolBar.addAction(self.action_setup)
+		self.Tools_ToolBar.addAction(self.action_group)
+		self.Tools_ToolBar.addAction(self.action_ungroup)
+	
+	
+	def colorearGrupo(self,group,colorear):
+		columns=[]
+		row=-1
+		for g in group:
+			data=g.split(',')
+			row=int(data[0])
+			columns.append(int(data[1]))
+			
+		delegate = BackgroundColorDelegate(self.treeWidget,columns,colorear) 
+		self.treeWidget.setItemDelegateForRow(row,delegate)
+
+	
+	def group(self):
+		toGroup=[]			
+		for item in self.treeWidget.selectedIndexes():
+			toGroup.append(str(item.row())+','+str(item.column()))
+		self.colorearGrupo(toGroup,True)
+		
+	
+	def ungroup(self):
+		toUngroup=[]			
+		for item in self.treeWidget.selectedIndexes():
+			toUngroup.append(str(item.row())+','+str(item.column()))
+		self.colorearGrupo(toUngroup,False)
+	
+	
 	def onResize(self,event):
 		if not self.down_area_visible:
 			self.m_anim.setStartValue(QtCore.QPointF(0,self.mainWidget.height()))
@@ -415,9 +506,27 @@ class UI_GenRep(UI_GenSec_Base):
 		self.m_anim.start()
 
 		
+	def groupActive(self):
+			"""activa el boton merge cuando es posible usarlo, lo desactiva cuando no"""
+			if self.pertenecen_consecutivos():
+				self.action_group.setEnabled(True)				
+			else:
+				self.action_group.setEnabled(False)
+			"""
+			self.toolButton_7.setEnabled(False)
+			for item in self.treeWidget.selectedIndexes():
+				for group in range(len(self.inMerge)):
+					for poss in self.inMerge[group]:
+						if str(item.row())+','+str(item.column())==poss:
+							self.toolButton_7.setEnabled(True)
+			"""
+			
 	def popup(self,pos):
 		menu = QtGui.QMenu()
 		menu.addAction(self.actionCopiar)
+		if self.action_group.isEnabled():
+			menu.addAction(self.action_group)
+		menu.addAction(self.action_ungroup)
 		action = menu.exec_(self.treeWidget.mapToGlobal(pos))
 		
 	@cursorAction()
@@ -553,32 +662,32 @@ class UI_GenRep(UI_GenSec_Base):
 		
 	
 	def addComand(self):
-			"""Adiciona una columna para comandos"""
-			self.closeAllDialogs()
-			self.treeWidget.headerItem().setText(self.comandos+1, (QtGui.QApplication.translate('MainWindow',"Command ")+str(self.comandos)))
-			hs=self.treeWidget.horizontalScrollBar()
-			hs.setValue(hs.maximum())			
-			self.comandos+=1
-			
+		"""Adiciona una columna para comandos"""
+		self.closeAllDialogs()
+		self.treeWidget.headerItem().setText(self.comandos+1, (QtGui.QApplication.translate('MainWindow',"Command ")+str(self.comandos)))
+		hs=self.treeWidget.horizontalScrollBar()
+		hs.setValue(hs.maximum())			
+		self.comandos+=1
+		
 			
 	def change(self):
-			"""Cambia el tipo de letra y el tamanno de los elementos de la tabla"""
-			self.fuente=self.fontS.fontComboBox.currentFont().toString().split(',')[0]
-			self.size=self.fontS.spinBox.value()
-			self.fontS.form1.close()
-			font = QtGui.QFont()
-			font.setFamily(self.fuente)
-			font.setPointSize(self.size)
-			font.setBold(False)
-			font.setItalic(False)
-			font.setUnderline(False)
-			font.setWeight(53)
-			font.setStrikeOut(False)
-			font.setKerning(False)
-			font.setStyleStrategy(QtGui.QFont.PreferDefault)
-			self.treeWidget.setFont(font)
-			self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"The font has been changed"))
-			
+		"""Cambia el tipo de letra y el tamanno de los elementos de la tabla"""
+		self.fuente=self.fontS.fontComboBox.currentFont().toString().split(',')[0]
+		self.size=self.fontS.spinBox.value()
+		self.fontS.form1.close()
+		font = QtGui.QFont()
+		font.setFamily(self.fuente)
+		font.setPointSize(self.size)
+		font.setBold(False)
+		font.setItalic(False)
+		font.setUnderline(False)
+		font.setWeight(53)
+		font.setStrikeOut(False)
+		font.setKerning(False)
+		font.setStyleStrategy(QtGui.QFont.PreferDefault)
+		self.treeWidget.setFont(font)
+		self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"The font has been changed"))
+		
 	
 	def setValue(self,row,column,valor):
 		"""Introduce un valor en determinado campo, column, tiene que ser mayor que 0"""
@@ -589,26 +698,26 @@ class UI_GenRep(UI_GenSec_Base):
 			
 	
 	def selectRow(self, ok=False, row=False):
-			"""Selecciona un conjunto de filas, recibe por parametro un estrin de la forma: row,row,row...."""					
-			if not ok:
-				row, ok = QtGui.QInputDialog.getInteger(self.form1, QtGui.QApplication.translate('MainWindow','Row Number'), QtGui.QApplication.translate('MainWindow','Row')+':',0,1)			
-			if ok:				
-				for i in self.treeWidget.selectedIndexes():
-					item = self.treeWidget.topLevelItem(i.row())
-					item.setSelected(False)				
-				row=int(row)-1
-				try:
-					item = self.treeWidget.topLevelItem(row)
-					item.setSelected(True)
-					if self.selected_row[1]:
-						self.selected_row[1].setStyleSheet(HEADER_TOOLBUTTON_STYLE)
-					self.selected_row[1]=self.treeWidget.itemWidget(item,0)
-					self.selected_row[1].setStyleSheet(HEADER_TOOLBUTTON_STYLE2)
-					self.selected_row[0]=row
-					self.clear_lateral_panel()
-					self.fill_lateral_panel()
-				except:
-					pass
+		"""Selecciona un conjunto de filas, recibe por parametro un estrin de la forma: row,row,row...."""					
+		if not ok:
+			row, ok = QtGui.QInputDialog.getInteger(self.form1, QtGui.QApplication.translate('MainWindow','Row Number'), QtGui.QApplication.translate('MainWindow','Row')+':',0,1)			
+		if ok:				
+			for i in self.treeWidget.selectedIndexes():
+				item = self.treeWidget.topLevelItem(i.row())
+				item.setSelected(False)				
+			row=int(row)-1
+			try:
+				item = self.treeWidget.topLevelItem(row)
+				item.setSelected(True)
+				if self.selected_row[1]:
+					self.selected_row[1].setStyleSheet(HEADER_TOOLBUTTON_STYLE)
+				self.selected_row[1]=self.treeWidget.itemWidget(item,0)
+				self.selected_row[1].setStyleSheet(HEADER_TOOLBUTTON_STYLE2)
+				self.selected_row[0]=row
+				self.clear_lateral_panel()
+				self.fill_lateral_panel()
+			except:
+				pass
 					
 					
 	def clear_lateral_panel(self):
@@ -633,42 +742,56 @@ class UI_GenRep(UI_GenSec_Base):
 						item_2.setFlags(QtCore.Qt.ItemIsSelectable|QtCore.Qt.ItemIsEnabled)
 						item_2.setText(0,header)
 						self.treeWidget_2.setItemWidget(item_2, 0,QtGui.QWidget())
-						
-   
+
+
+class BackgroundColorDelegate(QtGui.QStyledItemDelegate):
+	def __init__(self, parent,columns,colorear):
+		super(BackgroundColorDelegate, self).__init__(parent)
+		self.columns=columns
+		self.colorear=colorear
+
+	def paint(self, painter, option, index):
+		if index.column() in self.columns and self.colorear:
+			painter.fillRect(option.rect, QtGui.QColor(255, 188, 0, 130))
+			super(BackgroundColorDelegate, self).paint(painter, option, index)
+		else:			
+			super(BackgroundColorDelegate, self).paint(painter, option, index)
+	
+
 class Animation(QtCore.QPropertyAnimation):
-    LinearPath, CirclePath = range(2)
+	LinearPath, CirclePath = range(2)
 
-    def __init__(self, target, prop):
-        super(Animation, self).__init__(target, prop)
+	def __init__(self, target, prop):
+		super(Animation, self).__init__(target, prop)
 
-        self.setPathType(Animation.LinearPath)
+		self.setPathType(Animation.LinearPath)
 
-    def setPathType(self, pathType):
-        self.m_pathType = pathType
-        self.m_path = QtGui.QPainterPath()
+	def setPathType(self, pathType):
+		self.m_pathType = pathType
+		self.m_path = QtGui.QPainterPath()
 
-    def updateCurrentTime(self, currentTime):
-        if self.m_pathType == Animation.CirclePath:
-            if self.m_path.isEmpty():
-                end = self.endValue()
-                start = self.startValue()
-                self.m_path.moveTo(start)
-                self.m_path.addEllipse(QtCore.QRectF(start, end))
+	def updateCurrentTime(self, currentTime):
+		if self.m_pathType == Animation.CirclePath:
+			if self.m_path.isEmpty():
+				end = self.endValue()
+				start = self.startValue()
+				self.m_path.moveTo(start)
+				self.m_path.addEllipse(QtCore.QRectF(start, end))
 
-            dura = self.duration()
-            if dura == 0:
-                progress = 1.0
-            else:
-                progress = (((currentTime - 1) % dura) + 1) / float(dura)
+			dura = self.duration()
+			if dura == 0:
+				progress = 1.0
+			else:
+				progress = (((currentTime - 1) % dura) + 1) / float(dura)
 
-            easedProgress = self.easingCurve().valueForProgress(progress)
-            if easedProgress > 1.0:
-                easedProgress -= 1.0
-            elif easedProgress < 0:
-                easedProgress += 1.0
+			easedProgress = self.easingCurve().valueForProgress(progress)
+			if easedProgress > 1.0:
+				easedProgress -= 1.0
+			elif easedProgress < 0:
+				easedProgress += 1.0
 
-            pt = self.m_path.pointAtPercent(easedProgress)
-            self.updateCurrentValue(pt)
-            self.valueChanged.emit(pt)
-        else:
-            super(Animation, self).updateCurrentTime(currentTime)
+			pt = self.m_path.pointAtPercent(easedProgress)
+			self.updateCurrentValue(pt)
+			self.valueChanged.emit(pt)
+		else:
+			super(Animation, self).updateCurrentTime(currentTime)

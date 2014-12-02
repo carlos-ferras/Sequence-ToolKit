@@ -17,6 +17,16 @@
 #~ You should have received a copy of the GNU General Public License
 #~ along with LF02_package.  If not, see <http://www.gnu.org/licenses/>.
 
+LABEL_HEADER_STYLE="""
+QLabel{
+	border-radius: 0px;
+	font:16px;
+	background:qlineargradient(spread:pad, x1:0.502, y1:0.966, x2:0.462, y2:0.0397727, stop:0 rgba(220, 220, 220, 255), stop:1 rgba(240, 240, 240, 255));
+	padding-left:20px;
+}
+"""
+
+
 BUTTON_STYLE="""    
 QPushButton  {
 	font-size:14px;

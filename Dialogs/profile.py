@@ -23,17 +23,37 @@ from UI import profile
 
 class Profile(profile.Ui_Dialog):
 	"""Ventana para seleccionar fuente"""
-	def __init__(self,parent=None):
+	def __init__(self,parameters,parent=None):
 		self.form1 =QtGui.QMainWindow(parent)
 		self.setupUi(self.form1)
+		self.fill(parameters)		
 		self.form1.show()
 		
 		self.pushButton.setShortcut("Escape")
 		self.pushButton.clicked.connect(self.form1.close)
 		
 		self.pushButton_2.setShortcut("Enter")
-		
-		self.data=[]
-		
+
+	def fill(self,parameters):
+		for i in parameters:
+			item = self.listWidget.item( i )
+			item.setCheckState(2)			
+	
+	
 	def fill_data(self):
-		pass
+		data=[]
+		for i in range(self.listWidget.count()):
+			item = self.listWidget.item( i )
+			if item.checkState():
+				data.append(i)
+		return data
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

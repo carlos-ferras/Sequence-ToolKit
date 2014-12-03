@@ -54,8 +54,7 @@ class UI_GenRep(UI_GenSec_Base):
 		self.action_profile.triggered.connect(self.data_profile)
 		self.action_group.triggered.connect(self.group)
 		self.action_ungroup.triggered.connect(self.ungroup)
-		self.action_ungroup_all.triggered.connect(self.ungroupall)
-		
+		self.action_ungroup_all.triggered.connect(self.ungroupall)		
 
 		self.treeWidget_2.itemClicked.connect(self.change_graphic)
 		
@@ -63,9 +62,6 @@ class UI_GenRep(UI_GenSec_Base):
 		self.form1.setCursor(QtCore.Qt.ArrowCursor)
 		self.treeWidget.customContextMenuRequested.connect(self.popup)
 				
-		self.selected_row=[False,False]
-		self.inGroup=[]
-		
 		self.genrep_config=self.config.loadGenRep()
 		if self.genrep_config:
 			self.curve_to_show=self.genrep_config[0]
@@ -80,6 +76,7 @@ class UI_GenRep(UI_GenSec_Base):
 			self.v_max=self.genrep_config[9]
 			self.v_great_unit=self.genrep_config[10]
 			self.v_small_unit=self.genrep_config[11]
+			self.parameters=self.genrep_config[12]
 		else:
 			self.curve_to_show=1
 			self.show_tl=0
@@ -93,6 +90,29 @@ class UI_GenRep(UI_GenSec_Base):
 			self.v_max=-1
 			self.v_great_unit=-1
 			self.v_small_unit=-1
+			self.parameters=[]
+			
+		self.selected_row=[False,False]
+		self.inGroup=[]
+		self.colores_in_row={}
+		
+		self.enum_parameters=(
+			"Beta Irradiation Time (s)", 
+			"Beta Dose (Gy)",
+			"External Irradiation Time (s)", 
+			"External Dose (Gy)", 
+			"Preheating Temperature (°C)",
+			"Measuring Temperature (°C)",
+			"Preheating Rate (°C/s)",
+			"Heating Rate (°C/s)",
+			"Light Source",
+			"Optical Power (%)",
+			"Electric Stimulation (V)",
+			"Electric Frequency (KHz)",
+			"Time of Beta irradiation",
+			"Time of External irradiation",
+			"Time of Measurement",
+		)
 
 
 	def change_graphic(self,item):
@@ -114,32 +134,45 @@ class UI_GenRep(UI_GenSec_Base):
 		self.setup=Setup(self.curve_to_show,self.show_tl,self.h_scale,self.h_min,self.h_max,self.h_great_unit,self.h_small_unit,self.v_scale,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit,self.form1)
 		self.setup.pushButton.clicked.connect(self.setup_ready)		
 	
-	#---------------------------------
+
 	def  data_profile(self):
-		self.profile=Profile(self.form1)
-		#self.setup.pushButton.clicked.connect()
-		#self.setup.form1.close()		
+		self.profile=Profile(self.parameters,self.form1)
+		self.profile.pushButton_2.clicked.connect(self.profile_ready)		
+
+	def profile_ready(self):
+		self.parameters=self.profile.fill_data()
+		self.profile.form1.close()		
+		
 		
 	def setup_ready(self):
-		self.setup_data=self.setup.fill_data()
+		setup_data=self.setup.fill_data()
 		self.setup.form1.close()
 		
-		self.curve_to_show=self.setup_data[0]
-		self.show_tl=self.setup_data[1]
-		self.h_scale=self.setup_data[2]
-		self.h_min=self.setup_data[3]
-		self.h_max=self.setup_data[4]
-		self.h_great_unit=self.setup_data[5]
-		self.h_small_unit=self.setup_data[6]
-		self.v_scale=self.setup_data[7]
-		self.v_min=self.setup_data[8]
-		self.v_max=self.setup_data[9]
-		self.v_great_unit=self.setup_data[10]
-		self.v_small_unit=self.setup_data[11]
+		self.curve_to_show=setup_data[0]
+		self.show_tl=setup_data[1]
+		self.h_scale=setup_data[2]
+		self.h_min=setup_data[3]
+		self.h_max=setup_data[4]
+		self.h_great_unit=setup_data[5]
+		self.h_small_unit=setup_data[6]
+		self.v_scale=setup_data[7]
+		self.v_min=setup_data[8]
+		self.v_max=setup_data[9]
+		self.v_great_unit=setup_data[10]
+		self.v_small_unit=setup_data[11]
 					
 	def afterOpen(self):
 		self.create_graphic([],[])
 		self.clear_lateral_panel()
+		
+		if self.selected_row[1]:
+			self.selected_row[1].setStyleSheet(HEADER_TOOLBUTTON_STYLE)
+		self.selected_row=[False,False]
+		self.colores_in_row={}
+		for group in self.inGroup:		
+			self.colorearGrupo([group[0]],False,[])
+		self.inGroup=[]
+		
 		
 	@cursorAction()
 	def create_graphic(self,X,Y):
@@ -499,6 +532,28 @@ class UI_GenRep(UI_GenSec_Base):
 		self.Tools_ToolBar.addAction(self.action_ungroup)
 	
 	
+	def getColor(self,row):
+		try:
+			existen=self.colores_in_row[row]
+		except:
+			existen=[]
+			
+		colors=(
+			QtGui.QColor(255, 188, 0, 130),
+			QtGui.QColor(0, 255,218, 130),
+			QtGui.QColor(0, 203, 255, 130),
+			QtGui.QColor(147, 132, 245, 130),
+			QtGui.QColor(245, 132, 181, 130),
+		)
+		
+		for color in colors:
+			if not color in existen:
+				self.colores_in_row.setdefault(row, []).append (color)
+				return color
+		
+		self.colores_in_row.setdefault(row, []).append (existen[-5])
+		return existen[-5]
+	
 	def colorearGrupo(self,group,colorear,dejar):
 		columns=[]
 		row=-1
@@ -506,8 +561,9 @@ class UI_GenRep(UI_GenSec_Base):
 			data=g.split(',')
 			row=int(data[0])
 			columns.append(int(data[1]))
-			
-		delegate = BackgroundColorDelegate(self.treeWidget,columns,colorear,dejar) 
+		
+		color= self.getColor(row)
+		delegate = BackgroundColorDelegate(self.treeWidget,columns,colorear,dejar,color) 
 		self.treeWidget.setItemDelegateForRow(row,delegate)
 
 	
@@ -667,7 +723,7 @@ class UI_GenRep(UI_GenSec_Base):
 	def onCloseEvent(self,event):
 		self.closeAllDialogs()
 		self.config.saveGeneral(self.fuente,self.size,self.fileLocation,self.opacity,self.lang)		
-		self.config.saveGenRep(self.curve_to_show,self.show_tl,self.h_scale,self.h_min,self.h_max,self.h_great_unit,self.h_small_unit,self.v_scale,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit)
+		self.config.saveGenRep(self.curve_to_show,self.show_tl,self.h_scale,self.h_min,self.h_max,self.h_great_unit,self.h_small_unit,self.v_scale,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit,self.parameters)
 		event.accept()
 	
 	
@@ -847,15 +903,16 @@ class UI_GenRep(UI_GenSec_Base):
 
 
 class BackgroundColorDelegate(QtGui.QStyledItemDelegate):
-	def __init__(self, parent,columns,colorear,dejar):
+	def __init__(self, parent,columns,colorear,dejar,color):
 		super(BackgroundColorDelegate, self).__init__(parent)
 		self.columns=columns
 		self.colorear=colorear
 		self.dejar=dejar
+		self.color=color
 
 	def paint(self, painter, option, index):
 		if (index.column() in self.columns and self.colorear) or (index.column() in self.dejar):
-			painter.fillRect(option.rect, QtGui.QColor(255, 188, 0, 130))
+			painter.fillRect(option.rect, self.color)
 			super(BackgroundColorDelegate, self).paint(painter, option, index)
 		else:			
 			super(BackgroundColorDelegate, self).paint(painter, option, index)

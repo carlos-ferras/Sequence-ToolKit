@@ -177,6 +177,7 @@ class UI_GenSec_Base(UI_base):
 			self.protocolo=''
 			self.id_lector=QtGui.QApplication.translate('MainWindow','Unknown')
 			self.directorioArchivo=''
+
 		
 		@cursorAction()
 		def open(self,dir=False):

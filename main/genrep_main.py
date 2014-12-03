@@ -92,10 +92,6 @@ class UI_GenRep(UI_GenSec_Base):
 			self.v_small_unit=-1
 			self.parameters=[]
 			
-		self.selected_row=[False,False]
-		self.inGroup=[]
-		self.colores_in_row={}
-		
 		self.enum_parameters=(
 			"Beta Irradiation Time (s)", 
 			"Beta Dose (Gy)",
@@ -633,6 +629,7 @@ class UI_GenRep(UI_GenSec_Base):
 		for group in self.inGroup:		
 			self.colorearGrupo([group[0]],False,[])
 		self.inGroup=[]
+		self.colores_in_row={}
 		
 		
 	def groupActive(self):

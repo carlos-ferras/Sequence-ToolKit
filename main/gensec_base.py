@@ -76,6 +76,10 @@ class UI_GenSec_Base(UI_base):
 			self.externalIrradiation=[]
 			self.externalIrradiationDefined=[]
 			self.inMerge=[]	
+			
+			self.selected_row=[False,False]
+			self.inGroup=[]
+			self.colores_in_row={}
 						
 			if dir:
 				self.directorioArchivo=dir

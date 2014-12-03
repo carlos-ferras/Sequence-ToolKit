@@ -158,11 +158,12 @@ class UI_base(MainWindows.Ui_MainWindow):
 			pass			
 
 		def runGenRep(self):
-			"""Ejecuta GenVis"""
+			"""Ejecuta GenRep"""
 			self.closeAllDialogs()
 			try:	
 				if (self.processGenRep.state() != QtCore.QProcess.Running):
-					self.beforeGenRep()					
+					self.beforeGenRep()
+					print self.dirToOpen				
 					self.processGenRep.start('python genrep.py '+self.dirToOpen)
 					self.afterGenRep()
 			except:

@@ -1,3 +1,22 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*- 
+
+#~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
+#~ This file is part of LF02_package.
+
+#~ LF02_package is free software: you can redistribute it and/or modify
+#~ it under the terms of the GNU General Public License as published by
+#~ the Free Software Foundation, either version 3 of the License, or
+#~ (at your option) any later version.
+
+#~ LF02_package is distributed in the hope that it will be useful,
+#~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+#~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#~ GNU General Public License for more details.
+
+#~ You should have received a copy of the GNU General Public License
+#~ along with LF02_package.  If not, see <http://www.gnu.org/licenses/>.
+
 from PyQt4 import QtGui ,QtCore
 
 from matplotlib.figure import Figure
@@ -14,8 +33,8 @@ class Lienzo(FigureCanvas):
 	signal_change = QtCore.pyqtSignal(float,float)
 	background_change = QtCore.pyqtSignal(float,float)
 	
-	def __init__(self,X,Y, parent=None):        
-		self.fig = Figure(figsize=(10,4))
+	def __init__(self,X,Y,w, parent=None):        
+		self.fig = Figure(figsize=(w,4))
 		self.allGraphic = self.fig.add_subplot(111,axisbg='#ffffff')	
 		
 		self.allGraphic_X=X
@@ -34,9 +53,9 @@ class Lienzo(FigureCanvas):
 		self.Signal.set_title('Signal(SG)',color='g',position=(0.5,1.05))
 		self.Signal.grid(True)
 		self.Signal.text(
-			-0.4,
+			-0.5,
 			0.15, 
-			'Altura',
+			'Count',
 			rotation='vertical',
 			color='b',
 			size = 14,

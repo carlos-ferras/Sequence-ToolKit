@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- 
 
-#~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez
+#~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
 #~ This file is part of LF02_package.
 
 #~ LF02_package is free software: you can redistribute it and/or modify
@@ -132,14 +132,17 @@ class config:
 		if os.path.exists(self.genrepconf):
 			file=open(self.genrepconf,'r')
 			try:
-				config=[1,0,'lineal',-1,-1,-1,-1,'lineal',-1,-1,-1,-1,[]]
+				config=[[1,2,3],0,'lineal',-1,-1,-1,-1,'lineal',-1,-1,-1,-1,[]]
 				while True:
 					line =file.readline()
 					if not line:
 						break
 					if not line.find('Curve to show '):
 						try:
-							config[0]=int(line.split("[")[1].split("]")[0])
+							temp=str(line.split("[")[1].split("]")[0])
+							ints=[int(i) for i in temp.split(',')]
+							if ints[0]!='':
+								config[0]=ints
 						except:
 							pass
 					elif not line.find('Show TL '):
@@ -209,6 +212,7 @@ class config:
 	def saveGenRep(self,curve_to_show,show_tl,h_scale,h_min,h_max,h_great_unit,h_small_unit,v_scale,v_min,v_max,v_great_unit,v_small_unit,parameters):
 		file=open(self.genrepconf,'w+').close()
 		file=open(self.genrepconf,'w+')
+		curve_to_show=str(curve_to_show)[1:-1]
 		parameters=str(parameters)[1:-1]
 		file.write("Curve to show ["+str(curve_to_show)+"]\n"+"Show TL ["+str(show_tl)+"]\n"+"Horizontal Scale ["+str(h_scale)+"]\n"+"Horizontal Minimum ["+str(h_min)+"]\n"+"Horizontal Maximum ["+str(h_max)+"]\n"+"Horizontal Greater Unity ["+str(h_great_unit)+"]\n"+"Horizontal Smallest Unity ["+str(h_small_unit)+"]\n"+"Vertical Scale ["+str(v_scale)+"]\n"+"Vertical Minimum ["+str(v_min)+"]\n"+"Vertical Maximum ["+str(v_max)+"]\n"+"Vertical Greater Unity ["+str(v_great_unit)+"]\n"+"Vertical Smallest Unity ["+str(v_small_unit)+"]\n"+"Parameters ["+str(parameters)+"]\n")
 		file.close()

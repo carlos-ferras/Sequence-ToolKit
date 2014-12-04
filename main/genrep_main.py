@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- 
 
-#~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez
+#~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
 #~ This file is part of LF02_package.
 
 #~ LF02_package is free software: you can redistribute it and/or modify
@@ -39,7 +39,7 @@ import math
 class UI_GenRep(UI_GenSec_Base):	
 	def __init__(self,dir=False,parent=None):
 		UI_GenSec_Base.__init__(self,'GenRep','pixmaps/genrep.png',dir)
-
+		
 		X=[]
 		Y=[]
 		self.create_graphic(X,Y)
@@ -113,17 +113,16 @@ class UI_GenRep(UI_GenSec_Base):
 
 	def change_graphic(self,item):
 		headerName= str(item.text(0))
-		item = self.treeWidget.topLevelItem(self.selected_row[0])
-		for column in range(self.comandos+1)[2:]:
-			if self.header.model().headerData(column,QtCore.Qt.Horizontal).toString()==headerName:
-				info=self.processData[str(self.selected_row[0])+','+str(column)]
-				
-				temp = info['Curva1'].split(';')[:-1]
-				
-				X=[float(i) for i in temp if float(i)!=0]
-				Y= [math.log10(i) for i in X]
-				
-				self.create_graphic(X,Y)
+		if headerName in ['1','2','3']:
+			parent=item.parent().text(0)			
+			item = self.treeWidget.topLevelItem(self.selected_row[0])
+			for column in range(self.comandos+1)[2:]:				
+				if self.header.model().headerData(column,QtCore.Qt.Horizontal).toString()==parent:					
+					info=self.processData[str(self.selected_row[0])+','+str(column)]					
+					temp = info['Curva'+headerName].split(';')[:-1]					
+					X=[float(i) for i in temp if float(i)!=0]
+					Y= [math.log10(i) for i in X]					
+					self.create_graphic(X,Y)
 		
 			
 	def  data_setup(self):
@@ -156,6 +155,10 @@ class UI_GenRep(UI_GenSec_Base):
 		self.v_max=setup_data[9]
 		self.v_great_unit=setup_data[10]
 		self.v_small_unit=setup_data[11]
+		
+		self.clear_lateral_panel()
+		self.fill_lateral_panel()
+		self.create_graphic([],[])
 					
 	def afterOpen(self):
 		self.create_graphic([],[])
@@ -174,7 +177,9 @@ class UI_GenRep(UI_GenSec_Base):
 	def create_graphic(self,X,Y):
 		self.pan=False
 		self.zoom=False
-		self.canvas = Lienzo(X,Y,self.verticalLayoutWidget)
+		
+		w=int(self.W/64)
+		self.canvas = Lienzo(X,Y,w,self.verticalLayoutWidget)
 		
 								
 		def onClick(event):
@@ -378,7 +383,7 @@ class UI_GenRep(UI_GenSec_Base):
 		
 		#isquierda de la grafica
 		self.treeWidget_2 = QtGui.QTreeWidget()
-		self.treeWidget_2.setIndentation(0)
+		#self.treeWidget_2.setIndentation(0)
 		font = QtGui.QFont()
 		font.setFamily("Novason")
 		font.setPointSize(12)
@@ -390,16 +395,10 @@ class UI_GenRep(UI_GenSec_Base):
 		self.treeWidget_2.setFocusPolicy(QtCore.Qt.ClickFocus)
 		self.treeWidget_2.setFrameShape(QtGui.QFrame.StyledPanel)
 		self.treeWidget_2.setFrameShadow(QtGui.QFrame.Sunken)
-		self.treeWidget_2.setMidLineWidth(0)
-		self.treeWidget_2.setEditTriggers(QtGui.QAbstractItemView.SelectedClicked|QtGui.QAbstractItemView.EditKeyPressed)
 		self.treeWidget_2.setTabKeyNavigation(True)
 		self.treeWidget_2.setStyleSheet(TREEW2_STYLE)
 		self.treeWidget_2.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
-		self.treeWidget_2.setUniformRowHeights(True)
-		self.treeWidget_2.setHeaderHidden(False)
-		self.treeWidget_2.setExpandsOnDoubleClick(False)
-		self.treeWidget_2.headerItem().setText(0, QtGui.QApplication.translate('MainWindow',"Columns with data"))
-		self.treeWidget_2.header().setDefaultSectionSize(117)
+		self.treeWidget_2.headerItem().setText(0, QtGui.QApplication.translate('MainWindow',"Columns"))
 		self.treeWidget_2.header().setStyleSheet(HEADER)	
 		
 		self.mainWidget=QtGui.QWidget()
@@ -414,16 +413,16 @@ class UI_GenRep(UI_GenSec_Base):
 		self.active_bar.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Show/Hidde graphic'))
 		self.active_bar.setStyleSheet('background:qlineargradient( x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #d3d3d3, stop: 0.1 #d3d3d3,stop: 0.49 #ffffff, stop: 0.5 #ffffff, stop: 0.9 #f0f0f0,stop: 1 #f0f0f0)')
 		self.down_area_layout.setContentsMargins(0, 0, 0, 0)
-		self.down_area_layout.addWidget(self.active_bar,0,0,1,3)
-		self.down_area_layout.addWidget(self.verticalLayoutWidget,1,0,10,2)
-		self.down_area_layout.addWidget(self.treeWidget_2,1,2,10,1)
-		
+		self.down_area_layout.addWidget(self.active_bar,0,0,1,4)
+		self.down_area_layout.addWidget(self.verticalLayoutWidget,1,0,10,3)
+		self.down_area_layout.addWidget(self.treeWidget_2,1,3,10,1)
+
 		self.layout=QtGui.QGridLayout(self.mainWidget)
-		self.layout.setRowMinimumHeight(1,210)
+		self.layout.setRowMinimumHeight(1,150)
 		self.layout.setContentsMargins(0, 0, 0, 0)
 		self.layout.addWidget(self.treeWidget, 1, 0, 1, 3)
 		self.layout.addWidget(self.down_area,2,0,1,3)
-		self.layout.setRowMinimumHeight(2,360)	
+		self.layout.setRowMinimumHeight(2,390)	
 		self.layout.setColumnMinimumWidth(0,385)
 		self.layout.setColumnMinimumWidth(1,385)
 		
@@ -521,11 +520,21 @@ class UI_GenRep(UI_GenSec_Base):
 		self.action_ungroup.setText(QtGui.QApplication.translate("MainWindow", "Ungroup", None, QtGui.QApplication.UnicodeUTF8))
 		self.action_ungroup.setEnabled(False)
 		
+		#Reporte--------------------------------------------------------------------
+		self.action_report= QtGui.QAction(self.form1)
+		icon = QtGui.QIcon()
+		icon.addPixmap(QtGui.QPixmap("pixmaps/icons/report.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		self.action_report.setIconVisibleInMenu(True)
+		self.action_report.setIcon(icon)
+		self.action_report.setStatusTip(QtGui.QApplication.translate("MainWindow", "Make a report", None, QtGui.QApplication.UnicodeUTF8))
+		self.action_report.setText(QtGui.QApplication.translate("MainWindow", "Report", None, QtGui.QApplication.UnicodeUTF8))
+		
 		self.Tools_ToolBar.setVisible(True)
 		self.Tools_ToolBar.addAction(self.action_profile)
 		self.Tools_ToolBar.addAction(self.action_setup)
 		self.Tools_ToolBar.addAction(self.action_group)
 		self.Tools_ToolBar.addAction(self.action_ungroup)
+		self.Tools_ToolBar.addAction(self.action_report)
 	
 	
 	def getColor(self,row):
@@ -890,13 +899,18 @@ class UI_GenRep(UI_GenSec_Base):
 			if dato!='':
 				info=self.processData[str(self.selected_row[0])+','+str(column)]
 				if info['id'] > 1 and info['id'] < 7:
-					if info['Curva1'] !='' or info['Curva3'] !='' or info['Curva3'] !='':
-						header=self.header.model().headerData(column,QtCore.Qt.Horizontal).toString()
-						
-						item_2 = QtGui.QTreeWidgetItem(self.treeWidget_2)
-						item_2.setFlags(QtCore.Qt.ItemIsSelectable|QtCore.Qt.ItemIsEnabled)
-						item_2.setText(0,header)
+					#Comprobar k curvas son las k necesito self.curve_to_show
+					header=self.header.model().headerData(column,QtCore.Qt.Horizontal).toString()						
+					item_2 = QtGui.QTreeWidgetItem(self.treeWidget_2)
+					item_2.setFlags(QtCore.Qt.ItemIsSelectable|QtCore.Qt.ItemIsEnabled)
+					item_2.setText(0,header)
+					for i in self.curve_to_show:
+						if info['Curva'+str(i)] !='':	
+							item_2.addChild(QtGui.QTreeWidgetItem(str(i)))
+							
+					if item_2.childCount ()>0:
 						self.treeWidget_2.setItemWidget(item_2, 0,QtGui.QWidget())
+
 
 
 class BackgroundColorDelegate(QtGui.QStyledItemDelegate):

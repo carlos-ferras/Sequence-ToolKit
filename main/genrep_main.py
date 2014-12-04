@@ -32,6 +32,7 @@ from Dialogs.fontSelect import fontS
 from Dialogs.setup import Setup
 from Dialogs.profile import Profile 
 from Dialogs.priview import priview
+from Dialogs.association import Association
 from Dialogs.process import eslWin,irraWin,ilumWin,lmosWin,oslWin,pauseWin,poslWin,pre_heatWin, tlWin
 from GenSecLib import createXML,loadXML
 import math
@@ -54,7 +55,8 @@ class UI_GenRep(UI_GenSec_Base):
 		self.action_profile.triggered.connect(self.data_profile)
 		self.action_group.triggered.connect(self.group)
 		self.action_ungroup.triggered.connect(self.ungroup)
-		self.action_ungroup_all.triggered.connect(self.ungroupall)		
+		self.action_ungroup_all.triggered.connect(self.ungroupall)
+		self.action_association.triggered.connect(self.associationCriteria)
 
 		self.treeWidget_2.itemClicked.connect(self.change_graphic)
 		
@@ -107,18 +109,18 @@ class UI_GenRep(UI_GenSec_Base):
 			self.parameters=[]
 			
 		self.enum_parameters=(
-			"Beta Irradiation Time (s)", 
-			"Beta Dose (Gy)",
-			"External Irradiation Time (s)", 
-			"External Dose (Gy)", 
-			"Preheating Temperature (°C)",
-			"Measuring Temperature (°C)",
-			"Preheating Rate (°C/s)",
-			"Heating Rate (°C/s)",
+			"Beta Irradiation Time", 
+			"Beta Dose",
+			"External Irradiation Time", 
+			"External Dose", 
+			"Preheating Temperature",
+			"Measuring Temperature",
+			"Preheating Rate",
+			"Heating Rate",
 			"Light Source",
-			"Optical Power (%)",
-			"Electric Stimulation (V)",
-			"Electric Frequency (KHz)",
+			"Optical Power",
+			"Electric Stimulation",
+			"Electric Frequency",
 			"Time of Beta irradiation",
 			"Time of External irradiation",
 			"Time of Measurement",
@@ -139,6 +141,19 @@ class UI_GenRep(UI_GenSec_Base):
 					self.create_graphic(X,Y)
 		
 			
+	def associationCriteria(self):
+		send=[]
+		for i in self.parameters:
+			send.append(self.enum_parameters	[i])
+		self.association=Association(send,self.form1)
+		self.association.pushButton_2.clicked.connect(self.association_ready)	
+		
+	def association_ready(self):
+		self.criterias=self.association.fill_data()
+		print self.criterias
+		self.association.form1.close()
+	
+	
 	def  data_setup(self):
 		self.setup=Setup(self.curve_to_show,self.show_tl,self.h_scale,self.h_min,self.h_max,self.h_great_unit,self.h_small_unit,self.unit,self.v_scale,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit,self.signal,self.background,self.s_low,self.s_high,self.b_low,self.b_high,self.form1)
 		self.setup.pushButton.clicked.connect(self.setup_ready)		
@@ -504,7 +519,7 @@ class UI_GenRep(UI_GenSec_Base):
 		icon.addPixmap(QtGui.QPixmap("pixmaps/icons/association.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 		self.action_association.setIconVisibleInMenu(True)
 		self.action_association.setIcon(icon)
-		self.action_association.setShortcut("Ctrl+Y")
+		self.action_association.setShortcut("Ctrl+K")
 		self.action_association.setStatusTip(QtGui.QApplication.translate("MainWindow", "Defines how they are to be displayed the results", None, QtGui.QApplication.UnicodeUTF8))
 		self.action_association.setText(QtGui.QApplication.translate("MainWindow", "&Association by criteria", None, QtGui.QApplication.UnicodeUTF8))
 		self.menuOpciones.insertAction(self.actionEjecutar_GenSec, self.action_association)

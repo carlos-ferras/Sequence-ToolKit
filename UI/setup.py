@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- 
 
-#~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez
+#~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
 #~ This file is part of LF02_package.
 
 #~ LF02_package is free software: you can redistribute it and/or modify
@@ -43,12 +43,12 @@ class Ui_Form(object):
         
 	self.tab = QtGui.QWidget()
         self.tabWidget.addTab(self.tab, _fromUtf8(""))	
-	self.radiobutton=QtGui.QRadioButton(self.tab)	
-	self.radiobutton.setGeometry(QtCore.QRect(10, 10, 200, 30))
-	self.radiobutton_1=QtGui.QRadioButton(self.tab)
-	self.radiobutton_1.setGeometry(QtCore.QRect(10, 40, 200, 30))
-	self.radiobutton_2=QtGui.QRadioButton(self.tab)
-	self.radiobutton_2.setGeometry(QtCore.QRect(10, 70, 200, 30))
+	self.checkbox=QtGui.QCheckBox(self.tab)	
+	self.checkbox.setGeometry(QtCore.QRect(10, 10, 200, 30))
+	self.checkbox_1=QtGui.QCheckBox(self.tab)
+	self.checkbox_1.setGeometry(QtCore.QRect(10, 40, 200, 30))
+	self.checkbox_2=QtGui.QCheckBox(self.tab)
+	self.checkbox_2.setGeometry(QtCore.QRect(10, 70, 200, 30))
 	
         self.tab_2 = QtGui.QWidget()
         self.tabWidget.addTab(self.tab_2, _fromUtf8(""))
@@ -224,9 +224,9 @@ class Ui_Form(object):
 	self.pushButton.setText(QtGui.QApplication.translate("MainWindow", "Accept", None, QtGui.QApplication.UnicodeUTF8))
 	self.pushButton_2.setText(QtGui.QApplication.translate("MainWindow", "Cancel", None, QtGui.QApplication.UnicodeUTF8))
 	
-	self.radiobutton.setText(QtGui.QApplication.translate("MainWindow", "Curve", None, QtGui.QApplication.UnicodeUTF8)+' 1')
-	self.radiobutton_1.setText(QtGui.QApplication.translate("MainWindow", "Curve", None, QtGui.QApplication.UnicodeUTF8)+' 2')
-	self.radiobutton_2.setText(QtGui.QApplication.translate("MainWindow", "Curve", None, QtGui.QApplication.UnicodeUTF8)+' 3')
+	self.checkbox.setText(QtGui.QApplication.translate("MainWindow", "Curve", None, QtGui.QApplication.UnicodeUTF8)+' 1')
+	self.checkbox_1.setText(QtGui.QApplication.translate("MainWindow", "Curve", None, QtGui.QApplication.UnicodeUTF8)+' 2')
+	self.checkbox_2.setText(QtGui.QApplication.translate("MainWindow", "Curve", None, QtGui.QApplication.UnicodeUTF8)+' 3')
 	
 	self.label_11.setText(QtGui.QApplication.translate("MainWindow", "Show", None, QtGui.QApplication.UnicodeUTF8))
 	self.radiobutton_3.setText(QtGui.QApplication.translate("MainWindow", "Curve vs Time", None, QtGui.QApplication.UnicodeUTF8))

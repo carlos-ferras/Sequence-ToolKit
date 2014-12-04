@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- 
 
-#~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez
+#~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
 #~ This file is part of LF02_package.
 
 #~ LF02_package is free software: you can redistribute it and/or modify

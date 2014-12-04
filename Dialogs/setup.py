@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- 
 
-#~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez
+#~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
 #~ This file is part of LF02_package.
 
 #~ LF02_package is free software: you can redistribute it and/or modify
@@ -45,12 +45,12 @@ class Setup(setup.Ui_Form):
 		self.radiobutton_26.toggled.connect(self.radio8)
 		
 	def fill(self,curve_to_show,show_tl,h_scale,h_min,h_max,h_great_unit,h_small_unit,v_scale,v_min,v_max,v_great_unit,v_small_unit):
-		if curve_to_show==1:
-			self.radiobutton.setChecked(True)
-		elif curve_to_show==2:
-			self.radiobutton_1.setChecked(True)
-		elif curve_to_show==3:
-			self.radiobutton_2.setChecked(True)
+		if  1 in curve_to_show:
+			self.checkbox.setChecked(True)
+		if 2 in curve_to_show:
+			self.checkbox_1.setChecked(True)
+		if 3 in curve_to_show:
+			self.checkbox_2.setChecked(True)
 			
 			
 		if show_tl==0:
@@ -180,12 +180,13 @@ class Setup(setup.Ui_Form):
 			self.doublesb_8.setEnabled(False)
 		
 	def fill_data(self):
-		if self.radiobutton.isChecked():		
-			curve_to_show=1
-		elif self.radiobutton_1.isChecked():		
-			curve_to_show=2
-		elif self.radiobutton_2.isChecked():		
-			curve_to_show=3
+		curve_to_show=[]
+		if self.checkbox.isChecked():		
+			curve_to_show.append(1)
+		if self.checkbox_1.isChecked():		
+			curve_to_show.append(2)
+		if self.checkbox_2.isChecked():		
+			curve_to_show.append(3)
 			
 	
 		if self.radiobutton_3.isChecked():		

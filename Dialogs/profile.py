@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- 
 
-#~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez
+#~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
 #~ This file is part of LF02_package.
 
 #~ LF02_package is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
 
 #~ You should have received a copy of the GNU General Public License
 #~ along with LF02_package.  If not, see <http://www.gnu.org/licenses/>.
-
 from PyQt4 import QtCore  
 from PyQt4 import QtGui 
 from UI import profile

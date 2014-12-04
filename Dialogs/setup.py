@@ -23,11 +23,11 @@ from UI import setup
 
 class Setup(setup.Ui_Form):
 	"""Ventana para seleccionar fuente"""
-	def __init__(self,curve_to_show,show_tl,h_scale,h_min,h_max,h_great_unit,h_small_unit,v_scale,v_min,v_max,v_great_unit,v_small_unit,parent=None):
+	def __init__(self,curve_to_show,show_tl,h_scale,h_min,h_max,h_great_unit,h_small_unit,unit,v_scale,v_min,v_max,v_great_unit,v_small_unit,signal,background,s_low,s_high,b_low,b_high,parent=None):
 		self.form1 =QtGui.QMainWindow(parent)
 		self.setupUi(self.form1)
 		
-		self.fill(curve_to_show,show_tl,h_scale,h_min,h_max,h_great_unit,h_small_unit,v_scale,v_min,v_max,v_great_unit,v_small_unit)
+		self.fill(curve_to_show,show_tl,h_scale,h_min,h_max,h_great_unit,h_small_unit,unit,v_scale,v_min,v_max,v_great_unit,v_small_unit,signal,background,s_low,s_high,b_low,b_high)
 		self.form1.show()
 		
 		self.pushButton_2.setShortcut("Escape")
@@ -44,7 +44,7 @@ class Setup(setup.Ui_Form):
 		self.radiobutton_25.toggled.connect(self.radio7)
 		self.radiobutton_26.toggled.connect(self.radio8)
 		
-	def fill(self,curve_to_show,show_tl,h_scale,h_min,h_max,h_great_unit,h_small_unit,v_scale,v_min,v_max,v_great_unit,v_small_unit):
+	def fill(self,curve_to_show,show_tl,h_scale,h_min,h_max,h_great_unit,h_small_unit,unit,v_scale,v_min,v_max,v_great_unit,v_small_unit,signal,background,s_low,s_high,b_low,b_high):
 		if  1 in curve_to_show:
 			self.checkbox.setChecked(True)
 		if 2 in curve_to_show:
@@ -94,6 +94,8 @@ class Setup(setup.Ui_Form):
 			self.doublesb_4.setValue(h_small_unit)
 			self.doublesb_4.setEnabled(True)
 			
+		self.combobox.setCurrentIndex(unit)
+			
 		
 		if v_scale=='lineal':
 			self.radiobutton_16.setChecked(True)
@@ -129,6 +131,13 @@ class Setup(setup.Ui_Form):
 			self.radiobutton_26.setChecked(True)
 			self.doublesb_8.setValue(v_small_unit)
 			self.doublesb_8.setEnabled(True)
+			
+		self.checkbox_3.setChecked(signal)
+		self.checkbox_4.setChecked(background)
+		self.doublesb_9.setValue(s_low)
+		self.doublesb_10.setValue(s_high)
+		self.doublesb_11.setValue(b_low)
+		self.doublesb_12.setValue(b_high)
 
 		
 	def radio1(self):
@@ -221,7 +230,9 @@ class Setup(setup.Ui_Form):
 			h_small_unit=-1
 		elif self.radiobutton_15.isChecked():		
 			h_small_unit=self.doublesb_4.value()
-			
+		
+		unit=self.combobox.currentIndex()
+				
 		
 		if self.radiobutton_16.isChecked():		
 			v_scale='lineal'
@@ -251,7 +262,15 @@ class Setup(setup.Ui_Form):
 			v_small_unit=self.doublesb_8.value()
 			
 			
-		return [curve_to_show,show_tl,h_scale,h_min,h_max,h_great_unit,h_small_unit,v_scale,v_min,v_max,v_great_unit,v_small_unit]	
+		signal=int(self.checkbox_3.isChecked())
+		background=int(self.checkbox_4.isChecked())
+		s_low=self.doublesb_9.value()
+		s_high=self.doublesb_10.value()
+		b_low=self.doublesb_11.value()
+		b_high=self.doublesb_12.value()
+			
+			
+		return [curve_to_show,show_tl,h_scale,h_min,h_max,h_great_unit,h_small_unit,unit,v_scale,v_min,v_max,v_great_unit,v_small_unit,signal,background,s_low,s_high,b_low,b_high]
 			
 			
 			

@@ -71,12 +71,19 @@ class UI_GenRep(UI_GenSec_Base):
 			self.h_max=self.genrep_config[4]
 			self.h_great_unit=self.genrep_config[5]
 			self.h_small_unit=self.genrep_config[6]
-			self.v_scale=self.genrep_config[7]
-			self.v_min=self.genrep_config[8]
-			self.v_max=self.genrep_config[9]
-			self.v_great_unit=self.genrep_config[10]
-			self.v_small_unit=self.genrep_config[11]
-			self.parameters=self.genrep_config[12]
+			self.unit=self.genrep_config[7]
+			self.v_scale=self.genrep_config[8]
+			self.v_min=self.genrep_config[9]
+			self.v_max=self.genrep_config[10]
+			self.v_great_unit=self.genrep_config[11]
+			self.v_small_unit=self.genrep_config[12]
+			self.signal=self.genrep_config[13]
+			self.background=self.genrep_config[14]
+			self.s_low=self.genrep_config[15]
+			self.s_high=self.genrep_config[16]
+			self.b_low=self.genrep_config[17]
+			self.b_high=self.genrep_config[18]
+			self.parameters=self.genrep_config[19]
 		else:
 			self.curve_to_show=1
 			self.show_tl=0
@@ -85,11 +92,18 @@ class UI_GenRep(UI_GenSec_Base):
 			self.h_max=-1
 			self.h_great_unit=-1
 			self.h_small_unit=-1
+			self.unit=0
 			self.v_scale='lineal'
 			self.v_min=-1
 			self.v_max=-1
 			self.v_great_unit=-1
 			self.v_small_unit=-1
+			self.signal=True
+			self.background=True
+			self.s_low=1
+			self.s_high=1
+			self.b_low=1
+			self.b_high=1
 			self.parameters=[]
 			
 		self.enum_parameters=(
@@ -126,7 +140,7 @@ class UI_GenRep(UI_GenSec_Base):
 		
 			
 	def  data_setup(self):
-		self.setup=Setup(self.curve_to_show,self.show_tl,self.h_scale,self.h_min,self.h_max,self.h_great_unit,self.h_small_unit,self.v_scale,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit,self.form1)
+		self.setup=Setup(self.curve_to_show,self.show_tl,self.h_scale,self.h_min,self.h_max,self.h_great_unit,self.h_small_unit,self.unit,self.v_scale,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit,self.signal,self.background,self.s_low,self.s_high,self.b_low,self.b_high,self.form1)
 		self.setup.pushButton.clicked.connect(self.setup_ready)		
 	
 
@@ -150,11 +164,18 @@ class UI_GenRep(UI_GenSec_Base):
 		self.h_max=setup_data[4]
 		self.h_great_unit=setup_data[5]
 		self.h_small_unit=setup_data[6]
-		self.v_scale=setup_data[7]
-		self.v_min=setup_data[8]
-		self.v_max=setup_data[9]
-		self.v_great_unit=setup_data[10]
-		self.v_small_unit=setup_data[11]
+		self.unit=setup_data[7]
+		self.v_scale=setup_data[8]
+		self.v_min=setup_data[9]
+		self.v_max=setup_data[10]
+		self.v_great_unit=setup_data[11]
+		self.v_small_unit=setup_data[12]
+		self.signal=setup_data[13]
+		self.background=setup_data[14]
+		self.s_low=setup_data[15]
+		self.s_high=setup_data[16]
+		self.b_low=setup_data[17]
+		self.b_high=setup_data[18]
 		
 		self.clear_lateral_panel()
 		self.fill_lateral_panel()
@@ -729,7 +750,7 @@ class UI_GenRep(UI_GenSec_Base):
 	def onCloseEvent(self,event):
 		self.closeAllDialogs()
 		self.config.saveGeneral(self.fuente,self.size,self.fileLocation,self.opacity,self.lang)		
-		self.config.saveGenRep(self.curve_to_show,self.show_tl,self.h_scale,self.h_min,self.h_max,self.h_great_unit,self.h_small_unit,self.v_scale,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit,self.parameters)
+		self.config.saveGenRep(self.curve_to_show,self.show_tl,self.h_scale,self.h_min,self.h_max,self.h_great_unit,self.h_small_unit,self.unit,self.v_scale,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit,self.signal,self.background,self.s_low,self.s_high,self.b_low,self.b_high,self.parameters)
 		event.accept()
 	
 	

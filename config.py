@@ -132,7 +132,7 @@ class config:
 		if os.path.exists(self.genrepconf):
 			file=open(self.genrepconf,'r')
 			try:
-				config=[[1,2,3],0,'lineal',-1,-1,-1,-1,'lineal',-1,-1,-1,-1,[]]
+				config=[[1,2,3],0,'lineal',-1,-1,-1,-1,0,'lineal',-1,-1,-1,-1,1,1,1,1,1,1,[]]
 				while True:
 					line =file.readline()
 					if not line:
@@ -172,26 +172,62 @@ class config:
 							config[6]=float(line.split("[")[1].split("]")[0])
 						except:
 							pass
-					elif not line.find('Vertical Scale '):
-						config[7]=str(line.split("[")[1].split("]")[0])
-					elif not line.find('Vertical Minimum '):
+					elif not line.find('Unit '):
 						try:
-							config[8]=float(line.split("[")[1].split("]")[0])
+							config[7]=int(line.split("[")[1].split("]")[0])
 						except:
 							pass
-					elif not line.find('Vertical Maximum '):
+					elif not line.find('Vertical Scale '):
+						config[8]=str(line.split("[")[1].split("]")[0])
+					elif not line.find('Vertical Minimum '):
 						try:
 							config[9]=float(line.split("[")[1].split("]")[0])
 						except:
 							pass
-					elif not line.find('Vertical Greater Unity '):
+					elif not line.find('Vertical Maximum '):
 						try:
 							config[10]=float(line.split("[")[1].split("]")[0])
 						except:
 							pass
-					elif not line.find('Vertical Smallest Unity '):
+					elif not line.find('Vertical Greater Unity '):
 						try:
 							config[11]=float(line.split("[")[1].split("]")[0])
+						except:
+							pass
+					elif not line.find('Vertical Smallest Unity '):
+						try:
+							config[12]=float(line.split("[")[1].split("]")[0])
+						except:
+							pass
+					
+					elif not line.find("Signal "):
+						try:
+							config[13]=int(line.split("[")[1].split("]")[0])
+						except:
+							pass
+					elif not line.find("Background "):
+						try:
+							config[14]=int(line.split("[")[1].split("]")[0])
+						except:
+							pass
+					elif not line.find("Low Signal "):
+						try:
+							config[15]=float(line.split("[")[1].split("]")[0])
+						except:
+							pass
+					elif not line.find("High Signal "):
+						try:
+							config[16]=float(line.split("[")[1].split("]")[0])
+						except:
+							pass
+					elif not line.find("Low Background "):
+						try:
+							config[17]=float(line.split("[")[1].split("]")[0])
+						except:
+							pass
+					elif not line.find("High Background "):
+						try:
+							config[18]=float(line.split("[")[1].split("]")[0])
 						except:
 							pass
 					elif not line.find('Parameters '):
@@ -199,7 +235,7 @@ class config:
 							temp=str(line.split("[")[1].split("]")[0])
 							ints=[int(i) for i in temp.split(',')]
 							if ints[0]!='':
-								config[12]=ints
+								config[19]=ints
 						except:
 							pass
 				return config
@@ -209,12 +245,12 @@ class config:
 		return False
 	
 	
-	def saveGenRep(self,curve_to_show,show_tl,h_scale,h_min,h_max,h_great_unit,h_small_unit,v_scale,v_min,v_max,v_great_unit,v_small_unit,parameters):
+	def saveGenRep(self,curve_to_show,show_tl,h_scale,h_min,h_max,h_great_unit,h_small_unit,unit,v_scale,v_min,v_max,v_great_unit,v_small_unit,signal,background,s_low,s_high,b_low,b_high,parameters):
 		file=open(self.genrepconf,'w+').close()
 		file=open(self.genrepconf,'w+')
 		curve_to_show=str(curve_to_show)[1:-1]
 		parameters=str(parameters)[1:-1]
-		file.write("Curve to show ["+str(curve_to_show)+"]\n"+"Show TL ["+str(show_tl)+"]\n"+"Horizontal Scale ["+str(h_scale)+"]\n"+"Horizontal Minimum ["+str(h_min)+"]\n"+"Horizontal Maximum ["+str(h_max)+"]\n"+"Horizontal Greater Unity ["+str(h_great_unit)+"]\n"+"Horizontal Smallest Unity ["+str(h_small_unit)+"]\n"+"Vertical Scale ["+str(v_scale)+"]\n"+"Vertical Minimum ["+str(v_min)+"]\n"+"Vertical Maximum ["+str(v_max)+"]\n"+"Vertical Greater Unity ["+str(v_great_unit)+"]\n"+"Vertical Smallest Unity ["+str(v_small_unit)+"]\n"+"Parameters ["+str(parameters)+"]\n")
+		file.write("Curve to show ["+str(curve_to_show)+"]\n"+"Show TL ["+str(show_tl)+"]\n"+"Horizontal Scale ["+str(h_scale)+"]\n"+"Horizontal Minimum ["+str(h_min)+"]\n"+"Horizontal Maximum ["+str(h_max)+"]\n"+"Horizontal Greater Unity ["+str(h_great_unit)+"]\n"+"Horizontal Smallest Unity ["+str(h_small_unit)+"]\n"+"Unit ["+str(unit)+"]\n"+"Vertical Scale ["+str(v_scale)+"]\n"+"Vertical Minimum ["+str(v_min)+"]\n"+"Vertical Maximum ["+str(v_max)+"]\n"+"Vertical Greater Unity ["+str(v_great_unit)+"]\n"+"Vertical Smallest Unity ["+str(v_small_unit)+"]\n"+"Signal ["+str(signal)+"]\n"+"Background ["+str(background)+"]\n"+"Low Signal ["+str(s_low)+"]\n"+"High Signal ["+str(s_high)+"]\n"+"Low Background ["+str(b_low)+"]\n"+"High Background ["+str(b_high)+"]\n"+"Parameters ["+str(parameters)+"]\n")
 		file.close()
 		return True
 	

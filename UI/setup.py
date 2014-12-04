@@ -31,14 +31,14 @@ class Ui_Form(object):
 	
 	widget=QtGui.QDesktopWidget()
 	mainScreenSize = widget.availableGeometry(widget.primaryScreen())
-	x= mainScreenSize.width()/2-192
-	y= mainScreenSize.height()/2-123
-	Dialog.setGeometry(QtCore.QRect(x, y, 450, 247))	
-	Dialog.setMinimumSize(QtCore.QSize(450, 247))
-        Dialog.setMaximumSize(QtCore.QSize(450, 247))
+	x= mainScreenSize.width()/2-225
+	y= mainScreenSize.height()/2-133
+	Dialog.setGeometry(QtCore.QRect(x, y, 450, 267))	
+	Dialog.setMinimumSize(QtCore.QSize(450, 267))
+        Dialog.setMaximumSize(QtCore.QSize(450, 267))
 	
         self.tabWidget = QtGui.QTabWidget(Dialog)
-        self.tabWidget.setGeometry(QtCore.QRect(0, 0, 450, 210))
+        self.tabWidget.setGeometry(QtCore.QRect(0, 0, 450, 230))
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
         
 	self.tab = QtGui.QWidget()
@@ -70,7 +70,7 @@ class Ui_Form(object):
 	self.radiobutton_7=QtGui.QRadioButton(self.tab_3)
 	self.radiobutton_7.setGeometry(QtCore.QRect(10, 100, 200, 30))
 	self.line = QtGui.QFrame(self.tab_3)
-        self.line.setGeometry(QtCore.QRect(80, 10, 10, 160))
+        self.line.setGeometry(QtCore.QRect(80, 10, 10, 145))
         self.line.setFrameShape(QtGui.QFrame.VLine)
         self.line.setFrameShadow(QtGui.QFrame.Sunken)
 	self.label_0=QtGui.QLabel(self.tab_3)
@@ -115,7 +115,6 @@ class Ui_Form(object):
 	self.radiobutton_11.setGeometry(QtCore.QRect(0, 0, 200, 30))
 	self.radiobutton_15=QtGui.QRadioButton(self.frame_4)
 	self.radiobutton_15.setGeometry(QtCore.QRect(90, 0, 200, 30))	
-	
 	self.doublesb_1=QtGui.QDoubleSpinBox(self.tab_3)
 	self.doublesb_1.setGeometry(QtCore.QRect(350, 40, 80, 30))
 	self.doublesb_1.setEnabled(False)
@@ -128,6 +127,12 @@ class Ui_Form(object):
 	self.doublesb_4=QtGui.QDoubleSpinBox(self.tab_3)
 	self.doublesb_4.setGeometry(QtCore.QRect(350, 130, 80, 30))
 	self.doublesb_4.setEnabled(False)
+	self.label_12=QtGui.QLabel(self.tab_3)
+	self.label_12.setGeometry(QtCore.QRect(10, 160, 40, 30))
+	self.combobox=QtGui.QComboBox(self.tab_3)
+	self.combobox.setGeometry(QtCore.QRect(50, 160, 130, 30))
+	self.combobox.addItem( "channels")
+        self.combobox.addItem("s")
 	
 	self.tab_4 = QtGui.QWidget()
         self.tabWidget.addTab(self.tab_4, _fromUtf8(""))
@@ -152,8 +157,7 @@ class Ui_Form(object):
 	self.label_9=QtGui.QLabel(self.tab_4)
 	self.label_9.setGeometry(QtCore.QRect(100, 100, 200, 30))
 	self.label_10=QtGui.QLabel(self.tab_4)
-	self.label_10.setGeometry(QtCore.QRect(100, 130, 200, 30))
-	
+	self.label_10.setGeometry(QtCore.QRect(100, 130, 200, 30))	
 	self.frame_5 = QtGui.QFrame(self.tab_4)
         self.frame_5.setGeometry(QtCore.QRect(190, 40, 400, 30))
         self.frame_5.setFrameShape(QtGui.QFrame.NoFrame)
@@ -161,8 +165,7 @@ class Ui_Form(object):
 	self.radiobutton_19=QtGui.QRadioButton(self.frame_5)
 	self.radiobutton_19.setGeometry(QtCore.QRect(0, 0, 200, 30))
 	self.radiobutton_23=QtGui.QRadioButton(self.frame_5)
-	self.radiobutton_23.setGeometry(QtCore.QRect(90, 0, 200, 30))
-	
+	self.radiobutton_23.setGeometry(QtCore.QRect(90, 0, 200, 30))	
 	self.frame_6 = QtGui.QFrame(self.tab_4)
         self.frame_6.setGeometry(QtCore.QRect(190, 70, 400, 30))
         self.frame_6.setFrameShape(QtGui.QFrame.NoFrame)
@@ -170,8 +173,7 @@ class Ui_Form(object):
 	self.radiobutton_20=QtGui.QRadioButton(self.frame_6)
 	self.radiobutton_20.setGeometry(QtCore.QRect(0, 0, 200, 30))
 	self.radiobutton_24=QtGui.QRadioButton(self.frame_6)
-	self.radiobutton_24.setGeometry(QtCore.QRect(90, 0, 200, 30))
-	
+	self.radiobutton_24.setGeometry(QtCore.QRect(90, 0, 200, 30))	
 	self.frame_7 = QtGui.QFrame(self.tab_4)
         self.frame_7.setGeometry(QtCore.QRect(190, 100, 400, 30))
         self.frame_7.setFrameShape(QtGui.QFrame.NoFrame)
@@ -179,8 +181,7 @@ class Ui_Form(object):
 	self.radiobutton_21=QtGui.QRadioButton(self.frame_7)
 	self.radiobutton_21.setGeometry(QtCore.QRect(0, 0, 200, 30))
 	self.radiobutton_25=QtGui.QRadioButton(self.frame_7)
-	self.radiobutton_25.setGeometry(QtCore.QRect(90, 0, 200, 30))
-	
+	self.radiobutton_25.setGeometry(QtCore.QRect(90, 0, 200, 30))	
 	self.frame_8 = QtGui.QFrame(self.tab_4)
         self.frame_8.setGeometry(QtCore.QRect(190, 130, 400, 30))
         self.frame_8.setFrameShape(QtGui.QFrame.NoFrame)
@@ -188,8 +189,7 @@ class Ui_Form(object):
 	self.radiobutton_22=QtGui.QRadioButton(self.frame_8)
 	self.radiobutton_22.setGeometry(QtCore.QRect(0, 0, 200, 30))
 	self.radiobutton_26=QtGui.QRadioButton(self.frame_8)
-	self.radiobutton_26.setGeometry(QtCore.QRect(90, 0, 200, 30))
-	
+	self.radiobutton_26.setGeometry(QtCore.QRect(90, 0, 200, 30))	
 	self.doublesb_5=QtGui.QDoubleSpinBox(self.tab_4)
 	self.doublesb_5.setGeometry(QtCore.QRect(350, 40, 80, 30))
 	self.doublesb_5.setEnabled(False)
@@ -203,12 +203,45 @@ class Ui_Form(object):
 	self.doublesb_8.setGeometry(QtCore.QRect(350, 130, 80, 30))
 	self.doublesb_8.setEnabled(False)
 	
+	self.tab_5 = QtGui.QWidget()
+        self.tabWidget.addTab(self.tab_5, _fromUtf8(""))
+	self.label_13=QtGui.QLabel(self.tab_5)
+	self.label_13.setGeometry(QtCore.QRect(10, 10, 200, 30))
+	
+	self.checkbox_3=QtGui.QCheckBox(self.tab_5)
+	self.checkbox_3.setGeometry(QtCore.QRect(10, 40, 200, 30))
+	self.checkbox_4=QtGui.QCheckBox(self.tab_5)
+	self.checkbox_4.setGeometry(QtCore.QRect(240, 40, 200, 30))
+	
+	self.label_14=QtGui.QLabel(self.tab_5)
+	self.label_14.setGeometry(QtCore.QRect(10, 100, 200, 30))
+	
+	self.label_15=QtGui.QLabel(self.tab_5)
+	self.label_15.setGeometry(QtCore.QRect(10, 130, 30, 30))
+	self.doublesb_9=QtGui.QDoubleSpinBox(self.tab_5)
+	self.doublesb_9.setGeometry(QtCore.QRect(40, 130, 60, 30))
+	
+	self.label_16=QtGui.QLabel(self.tab_5)
+	self.label_16.setGeometry(QtCore.QRect(110, 130, 30, 30))
+	self.doublesb_10=QtGui.QDoubleSpinBox(self.tab_5)
+	self.doublesb_10.setGeometry(QtCore.QRect(140, 130, 60, 30))
+	
+	self.label_17=QtGui.QLabel(self.tab_5)
+	self.label_17.setGeometry(QtCore.QRect(240, 130, 30, 30))
+	self.doublesb_11=QtGui.QDoubleSpinBox(self.tab_5)
+	self.doublesb_11.setGeometry(QtCore.QRect(270, 130, 60, 30))
+	
+	self.label_18=QtGui.QLabel(self.tab_5)
+	self.label_18.setGeometry(QtCore.QRect(340, 130, 30, 30))
+	self.doublesb_12=QtGui.QDoubleSpinBox(self.tab_5)
+	self.doublesb_12.setGeometry(QtCore.QRect(370, 130, 60, 30))
+	
 	self.pushButton = QtGui.QPushButton(Dialog)
 	self.pushButton.setStyleSheet(PROCESS_BUTTONS_STYLE)
-        self.pushButton.setGeometry(QtCore.QRect(260, 215, 91, 30))		
+        self.pushButton.setGeometry(QtCore.QRect(260, 235, 91, 30))		
 	self.pushButton_2 = QtGui.QPushButton(Dialog)
 	self.pushButton_2.setStyleSheet(PROCESS_BUTTONS_STYLE)
-        self.pushButton_2.setGeometry(QtCore.QRect(355, 215, 91, 30))	
+        self.pushButton_2.setGeometry(QtCore.QRect(355, 235, 91, 30))	
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -220,18 +253,15 @@ class Ui_Form(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtGui.QApplication.translate("Form", "For TL", None, QtGui.QApplication.UnicodeUTF8))
 	self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QtGui.QApplication.translate("Form", "Format Horizontal Axis", None, QtGui.QApplication.UnicodeUTF8))
 	self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), QtGui.QApplication.translate("Form", "Format Vertical Axis", None, QtGui.QApplication.UnicodeUTF8))
-	
+	self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), QtGui.QApplication.translate("Form", "Cursors", None, QtGui.QApplication.UnicodeUTF8))
 	self.pushButton.setText(QtGui.QApplication.translate("MainWindow", "Accept", None, QtGui.QApplication.UnicodeUTF8))
 	self.pushButton_2.setText(QtGui.QApplication.translate("MainWindow", "Cancel", None, QtGui.QApplication.UnicodeUTF8))
-	
 	self.checkbox.setText(QtGui.QApplication.translate("MainWindow", "Curve", None, QtGui.QApplication.UnicodeUTF8)+' 1')
 	self.checkbox_1.setText(QtGui.QApplication.translate("MainWindow", "Curve", None, QtGui.QApplication.UnicodeUTF8)+' 2')
 	self.checkbox_2.setText(QtGui.QApplication.translate("MainWindow", "Curve", None, QtGui.QApplication.UnicodeUTF8)+' 3')
-	
 	self.label_11.setText(QtGui.QApplication.translate("MainWindow", "Show", None, QtGui.QApplication.UnicodeUTF8))
 	self.radiobutton_3.setText(QtGui.QApplication.translate("MainWindow", "Curve vs Time", None, QtGui.QApplication.UnicodeUTF8))
 	self.radiobutton_4.setText(QtGui.QApplication.translate("MainWindow", "Curve vs Temperature", None, QtGui.QApplication.UnicodeUTF8))
-	
 	self.label.setText(QtGui.QApplication.translate("MainWindow", "Scale", None, QtGui.QApplication.UnicodeUTF8))
 	self.radiobutton_5.setText(QtGui.QApplication.translate("MainWindow", "Lineal", None, QtGui.QApplication.UnicodeUTF8))
 	self.radiobutton_6.setText(QtGui.QApplication.translate("MainWindow", "Log10", None, QtGui.QApplication.UnicodeUTF8))
@@ -249,7 +279,6 @@ class Ui_Form(object):
 	self.radiobutton_14.setText(QtGui.QApplication.translate("MainWindow", "Fixed", None, QtGui.QApplication.UnicodeUTF8))
 	self.radiobutton_15.setText(QtGui.QApplication.translate("MainWindow", "Fixed", None, QtGui.QApplication.UnicodeUTF8))
 	self.label_0.setText(QtGui.QApplication.translate("MainWindow", "Axis values", None, QtGui.QApplication.UnicodeUTF8))
-	
 	self.label_5.setText(QtGui.QApplication.translate("MainWindow", "Scale", None, QtGui.QApplication.UnicodeUTF8))
 	self.radiobutton_16.setText(QtGui.QApplication.translate("MainWindow", "Lineal", None, QtGui.QApplication.UnicodeUTF8))
 	self.radiobutton_17.setText(QtGui.QApplication.translate("MainWindow", "Log10", None, QtGui.QApplication.UnicodeUTF8))
@@ -267,6 +296,15 @@ class Ui_Form(object):
 	self.radiobutton_25.setText(QtGui.QApplication.translate("MainWindow", "Fixed", None, QtGui.QApplication.UnicodeUTF8))
 	self.radiobutton_26.setText(QtGui.QApplication.translate("MainWindow", "Fixed", None, QtGui.QApplication.UnicodeUTF8))
 	self.label_6.setText(QtGui.QApplication.translate("MainWindow", "Axis values", None, QtGui.QApplication.UnicodeUTF8))
+	self.label_12.setText(QtGui.QApplication.translate("MainWindow", "Units", None, QtGui.QApplication.UnicodeUTF8))
+	self.label_13.setText(QtGui.QApplication.translate("MainWindow", "Show Cursors", None, QtGui.QApplication.UnicodeUTF8))
+	self.checkbox_3.setText(QtGui.QApplication.translate("MainWindow", "Signal", None, QtGui.QApplication.UnicodeUTF8))
+	self.checkbox_4.setText(QtGui.QApplication.translate("MainWindow", "Background", None, QtGui.QApplication.UnicodeUTF8))
+	self.label_14.setText(QtGui.QApplication.translate("MainWindow", "Default Position", None, QtGui.QApplication.UnicodeUTF8))
+	self.label_15.setText(QtGui.QApplication.translate("MainWindow", "Low", None, QtGui.QApplication.UnicodeUTF8))
+	self.label_16.setText(QtGui.QApplication.translate("MainWindow", "High", None, QtGui.QApplication.UnicodeUTF8))
+	self.label_17.setText(QtGui.QApplication.translate("MainWindow", "Low", None, QtGui.QApplication.UnicodeUTF8))
+	self.label_18.setText(QtGui.QApplication.translate("MainWindow", "High", None, QtGui.QApplication.UnicodeUTF8))
 	
 	
 	

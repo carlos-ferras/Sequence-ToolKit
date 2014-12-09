@@ -41,11 +41,7 @@ import math
 class UI_GenRep(UI_GenSec_Base):	
 	def __init__(self,dir=False,parent=None):
 		UI_GenSec_Base.__init__(self,'GenRep','pixmaps/genrep.png',dir)
-		
-		X=[]
-		Y=[]
-		self.create_graphic(X,Y)
-		
+				
 		self.treeWidget.itemSelectionChanged.connect(self.groupActive)
 		self.header=self.treeWidget.header()			
 		self.header.setClickable(True)
@@ -88,7 +84,7 @@ class UI_GenRep(UI_GenSec_Base):
 			self.b_high=self.genrep_config[18]
 			self.parameters=self.genrep_config[19]
 		else:
-			self.curve_to_show=1
+			self.curve_to_show=[1]
 			self.show_tl=0
 			self.h_scale='lineal'
 			self.h_min=-1
@@ -103,10 +99,10 @@ class UI_GenRep(UI_GenSec_Base):
 			self.v_small_unit=-1
 			self.signal=True
 			self.background=True
-			self.s_low=1
-			self.s_high=1
-			self.b_low=1
-			self.b_high=1
+			self.s_low=0
+			self.s_high=0
+			self.b_low=0
+			self.b_high=0
 			self.parameters=[]
 			
 		self.enum_parameters=(
@@ -126,14 +122,11 @@ class UI_GenRep(UI_GenSec_Base):
 			"Time of External irradiation",
 			"Time of Measurement",
 		)
-
-
-	def Apply_To(self):
-		send=[]
-		for i in self.parameters:
-			send.append(self.enum_parameters	[i])
-		self.apply_to_win=Apply_To(send,self.form1)
 		
+		
+		X=[]
+		Y=[]
+		self.create_graphic(X,Y)
 	
 	def change_graphic(self,item):
 		headerName= str(item.text(0))
@@ -148,9 +141,24 @@ class UI_GenRep(UI_GenSec_Base):
 					X=range(sum)
 					if self.unit:
 						X=[ (i*info['timePerCanel']) for i in X]
+					
 					self.create_graphic(X,Y)
 		
 			
+	def Apply_To(self):
+		send=[]
+		for i in self.parameters:
+			send.append(self.enum_parameters	[i])
+		self.apply_to_win=Apply_To(send,self.form1)
+		self.apply_to_win.pushButton_2.clicked.connect(self.Apply_To_ready)
+		
+		
+	def Apply_To_ready(self):
+		self.criterias_to=self.apply_to_win.fill_data()
+		print self.criterias_to
+		self.apply_to_win.form1.close()
+	
+	
 	def associationCriteria(self):
 		send=[]
 		for i in self.parameters:
@@ -204,7 +212,7 @@ class UI_GenRep(UI_GenSec_Base):
 		
 		self.clear_lateral_panel()
 		self.fill_lateral_panel()
-		self.create_graphic([],[])
+		self.create_graphic(self.canvas.allGraphic_X,self.canvas.allGraphic_Y)
 					
 	def afterOpen(self):
 		self.create_graphic([],[])
@@ -225,7 +233,11 @@ class UI_GenRep(UI_GenSec_Base):
 		self.zoom=False
 		
 		w=int(self.W/64)
-		self.canvas = Lienzo(X,Y,w,self.verticalLayoutWidget)
+		sl=self.s_low
+		sh=self.s_high
+		bl=self.b_low
+		bh=self.b_high
+		self.canvas = Lienzo(X,Y,w,sl,sh,bl,bh,self.signal,self.background,self.verticalLayoutWidget)
 		
 								
 		def onClick(event):
@@ -284,16 +296,18 @@ class UI_GenRep(UI_GenSec_Base):
 		def home_press(event):
 			self.canvas.activeSignal=True
 			self.canvas.activeBackground=False
-			try:
-				self.canvas.onselect(min(self.canvas.Signal_X),max(self.canvas.Signal_X))
-			except:
-				self.canvas.onselect(self.canvas.Signal_X,self.canvas.Signal_X)
+			if self.signal and self.canvas.allGraphic_X!=[]:
+				try:
+					self.canvas.onselect(min(self.canvas.Signal_X),max(self.canvas.Signal_X))
+				except:
+					self.canvas.onselect(self.canvas.Signal_X,self.canvas.Signal_X)
 			self.canvas.activeBackground=True
-			try:
-				self.canvas.onselect(min(self.canvas.Background_X),max(self.canvas.Background_X))
-			except:
-				self.canvas.onselect(self.canvas.Background_X,self.canvas.Background_X)
-			
+			if self.background and self.canvas.allGraphic_X!=[]:
+				try:
+					self.canvas.onselect(min(self.canvas.Background_X),max(self.canvas.Background_X))
+				except:
+					self.canvas.onselect(self.canvas.Background_X,self.canvas.Background_X)
+				
 		
 		ToolBarr.setOrientation(QtCore.Qt.Vertical)
 		ToolBarr.setMaximumWidth (40)
@@ -354,6 +368,17 @@ class UI_GenRep(UI_GenSec_Base):
 		xmax1_sb = QtGui.QDoubleSpinBox()
 		xmax1_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'High channel to signal'))
 		
+		sign_count_label=QtGui.QLabel('signal')
+		sign_count_label.setStyleSheet('color:green')
+		sign_count_line = QtGui.QLineEdit()
+		sign_count_line.setReadOnly (True)
+		sign_count_line.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Count of signal area'))
+		
+		if not self.signal:
+			self.sig_widget.setVisible(False)
+		else:
+			self.sig_widget.setVisible(True)
+			
 		xmin2_label=QtGui.QLabel('low')
 		xmin2_label.setStyleSheet('color:#1A297D')
 		xmin2_sb = QtGui.QDoubleSpinBox()
@@ -364,17 +389,16 @@ class UI_GenRep(UI_GenSec_Base):
 		xmax2_sb = QtGui.QDoubleSpinBox()
 		xmax2_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'High channel to Background'))
 		
-		sign_count_label=QtGui.QLabel('signal')
-		sign_count_label.setStyleSheet('color:green')
-		sign_count_line = QtGui.QLineEdit()
-		sign_count_line.setReadOnly (True)
-		sign_count_line.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Count of signal area'))
-		
 		back_count_label=QtGui.QLabel('background')
 		back_count_label.setStyleSheet('color:#1A297D')
 		back_count_line = QtGui.QLineEdit()
 		back_count_line.setReadOnly (True)
 		back_count_line.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Count of background area'))
+		
+		if not self.background:
+			self.back_widget.setVisible(False)
+		else:
+			self.back_widget.setVisible(True)
 		
 		apply_to=QtGui.QPushButton()
 		apply_to.setText(QtGui.QApplication.translate("MainWindow", 'Apply this to'))
@@ -384,25 +408,35 @@ class UI_GenRep(UI_GenSec_Base):
 		apply_all.setText(QtGui.QApplication.translate("MainWindow", 'Apply to all'))
 		
 		self.verticalLayout.addWidget(ToolBarr,2,0,8,1)
-		self.verticalLayout.addWidget(self.canvas,0,0,10,60)
+		self.verticalLayout.addWidget(self.canvas,0,0,10,60)		
 		
-		self.verticalLayout.addWidget(xmin1_label,11,2,1,1)
-		self.verticalLayout.addWidget(xmin1_sb,12,2,1,1)		
-		self.verticalLayout.addWidget(sign_count_label,11,4,1,2)
-		self.verticalLayout.addWidget(sign_count_line,12,4,1,2)		
-		self.verticalLayout.addWidget(xmax1_label,11,7,1,1)
-		self.verticalLayout.addWidget(xmax1_sb,12,7,1,1)
+		self.sig_verticalLayout.addWidget(xmin1_label,0,0,1,1)
+		self.sig_verticalLayout.addWidget(xmin1_sb,1,0,1,1)		
+		self.sig_verticalLayout.addWidget(sign_count_label,0,2,1,2)
+		self.sig_verticalLayout.addWidget(sign_count_line,1,2,1,2)		
+		self.sig_verticalLayout.addWidget(xmax1_label,0,5,1,1)
+		self.sig_verticalLayout.addWidget(xmax1_sb,1,5,1,1)		
+		self.verticalLayout.addWidget(self.sig_widget,11,2,2,4)
 		
 		self.verticalLayout.addWidget(apply_to,12,25,1,1)
 		self.verticalLayout.addWidget(apply_all,12,30,1,1)
 		
+		self.back_verticalLayout.addWidget(xmin2_label,0,0,1,1)
+		self.back_verticalLayout.addWidget(xmin2_sb,1,0,1,1)
+		self.back_verticalLayout.addWidget(back_count_label,0,2,1,2)
+		self.back_verticalLayout.addWidget(back_count_line,1,2,1,2)	
+		self.back_verticalLayout.addWidget(xmax2_label,0,5,1,1)
+		self.back_verticalLayout.addWidget(xmax2_sb,1,5,1,1)
+		self.verticalLayout.addWidget(self.back_widget,11,50,2,4)
+		
+		"""
 		self.verticalLayout.addWidget(xmin2_label,11,50,1,1)
 		self.verticalLayout.addWidget(xmin2_sb,12,50,1,1)
 		self.verticalLayout.addWidget(back_count_label,11,52,1,2)
 		self.verticalLayout.addWidget(back_count_line,12,52,1,2)	
 		self.verticalLayout.addWidget(xmax2_label,11,55,1,1)
 		self.verticalLayout.addWidget(xmax2_sb,12,55,1,1)
-		
+		"""
 		def count_signal():
 			count=0
 			for i in self.canvas.Signal_Y:
@@ -426,16 +460,16 @@ class UI_GenRep(UI_GenSec_Base):
 			count_background()	
 		
 		def x1_sb_change(buttom):
-			if not self.canvas.activeSignal:
-				self.canvas.activeSignal=True
+			if not self.canvas.activeSignal:				
 				if xmax1_sb.value() >=xmin1_sb.value():
+					self.canvas.activeSignal=True
 					self.canvas.onselect(xmin1_sb.value(),xmax1_sb.value()+1)
 
 			
 		def x2_sb_change(buttom):
-			if not self.canvas.activeBackground:
-				self.canvas.activeBackground=True
+			if not self.canvas.activeBackground:				
 				if xmax2_sb.value() >=xmin2_sb.value():
+					self.canvas.activeBackground=True
 					self.canvas.onselect(xmin2_sb.value(),xmax2_sb.value()+1)
 				
 		if self.canvas.allGraphic_X!=[] and self.canvas.allGraphic_Y!=[]:
@@ -466,12 +500,26 @@ class UI_GenRep(UI_GenSec_Base):
 			xmax2_sb.valueChanged.connect(partial(x2_sb_change,2))	
 			self.canvas.signal_change.connect(fill_x_1)
 			self.canvas.background_change.connect(fill_x_2)
+			
+			if self.signal:
+				fill_x_1(self.canvas.Signal_X[0],self.canvas.Signal_X[-1])
+			if self.background:
+				fill_x_2(self.canvas.Background_X[0],self.canvas.Background_X[-1])
 
 	def fillActions(self):
 		#Para la grafica
 		self.verticalLayoutWidget = QtGui.QWidget()
 		self.verticalLayout = QtGui.QGridLayout(self.verticalLayoutWidget)
 		self.verticalLayout.setContentsMargins(5, 0, 0, 0)
+		
+		self.sig_widget=QtGui.QWidget()
+		self.sig_verticalLayout = QtGui.QGridLayout(self.sig_widget)
+		self.sig_verticalLayout.setContentsMargins(0, 0, 0, 0)
+		
+		self.back_widget=QtGui.QWidget()
+		self.back_verticalLayout = QtGui.QGridLayout(self.back_widget)
+		self.back_verticalLayout.setContentsMargins(0, 0, 0, 0)
+		
 		
 		#isquierda de la grafica
 		self.treeWidget_2 = QtGui.QTreeWidget()

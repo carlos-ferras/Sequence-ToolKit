@@ -59,13 +59,13 @@ class Apply_To(apply_to.Ui_Dialog):
 		
 	def fill_data(self):
 		filters=[]
-		if self.comboBox.currentIndex() >0 and self.lineEdit.text()!='':
+		if self.comboBox.currentIndex() >0 :
 			filters.append([str(self.comboBox.currentText()),str(self.comboBox_5.currentText()),str(self.lineEdit.text())])
-			if self.comboBox_2.currentIndex() >0  and self.lineEdit_2.text()!='' and not(self.comboBox_2.currentIndex() in self.selecteds[:1]):
+			if self.comboBox_2.currentIndex() >0  and not(self.comboBox_2.currentIndex() in self.selecteds[:1]):
 				filters.append([str(self.comboBox_2.currentText()),str(self.comboBox_6.currentText()),str(self.lineEdit_2.text())])
-				if self.comboBox_3.currentIndex() >0 and self.lineEdit.text()!='' and not(self.comboBox_3.currentIndex() in self.selecteds[:2]) :
+				if self.comboBox_3.currentIndex() >0 and not(self.comboBox_3.currentIndex() in self.selecteds[:2]) :
 					filters.append([str(self.comboBox_3.currentText()),str(self.comboBox_7.currentText()),str(self.lineEdit_3.text())])
-					if self.comboBox_4.currentIndex() >0 and self.lineEdit.text()!='' and not(self.comboBox_4.currentIndex() in self.selecteds[:3]) :
+					if self.comboBox_4.currentIndex() >0 and not(self.comboBox_4.currentIndex() in self.selecteds[:3]) :
 						filters.append([str(self.comboBox_4.currentText()),str(self.comboBox_8.currentText()),str(self.lineEdit_4.text())])
 		return filters
 		

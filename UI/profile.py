@@ -40,6 +40,10 @@ class Ui_Dialog(object):
         self.label = QtGui.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(0, 10, 241, 17))
         self.label.setStyleSheet(LABEL_HEADER_STYLE)
+	
+	self.check=QtGui.QCheckBox(Dialog)
+	self.check.setGeometry(QtCore.QRect(0, 2, 30, 30))
+	
         self.listWidget = QtGui.QListWidget(Dialog)
         self.listWidget.setGeometry(QtCore.QRect(0, 30, 241, 201))
         self.listWidget.setObjectName(_fromUtf8("listWidget"))

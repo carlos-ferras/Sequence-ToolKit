@@ -32,6 +32,8 @@ class Profile(profile.Ui_Dialog):
 		self.pushButton.clicked.connect(self.form1.close)
 		
 		self.pushButton_2.setShortcut("Enter")
+		
+		self.check.clicked.connect(self.check_uncheck_all)
 
 	def fill(self,parameters):
 		for i in parameters:
@@ -48,7 +50,12 @@ class Profile(profile.Ui_Dialog):
 		return data
 		
 		
-		
+	def check_uncheck_all(self):		
+		for i in range(self.listWidget.count()): 
+			if self.check.isChecked():
+				self.listWidget.item(i).setCheckState(QtCore.Qt.Checked)
+			else:
+				self.listWidget.item(i).setCheckState(QtCore.Qt.Unchecked)
 		
 		
 		

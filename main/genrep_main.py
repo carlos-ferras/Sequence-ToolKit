@@ -33,6 +33,7 @@ from Dialogs.setup import Setup
 from Dialogs.profile import Profile 
 from Dialogs.priview import priview
 from Dialogs.association import Association
+from Dialogs.apply_to import Apply_To
 from Dialogs.process import eslWin,irraWin,ilumWin,lmosWin,oslWin,pauseWin,poslWin,pre_heatWin, tlWin
 from GenSecLib import createXML,loadXML
 import math
@@ -56,7 +57,7 @@ class UI_GenRep(UI_GenSec_Base):
 		self.action_group.triggered.connect(self.group)
 		self.action_ungroup.triggered.connect(self.ungroup)
 		self.action_ungroup_all.triggered.connect(self.ungroupall)
-		self.action_association.triggered.connect(self.associationCriteria)
+		self.action_association.triggered.connect(self.associationCriteria)			
 
 		self.treeWidget_2.itemClicked.connect(self.change_graphic)
 		
@@ -127,6 +128,13 @@ class UI_GenRep(UI_GenSec_Base):
 		)
 
 
+	def Apply_To(self):
+		send=[]
+		for i in self.parameters:
+			send.append(self.enum_parameters	[i])
+		self.apply_to_win=Apply_To(send,self.form1)
+		
+	
 	def change_graphic(self,item):
 		headerName= str(item.text(0))
 		if headerName in ['1','2','3']:
@@ -135,9 +143,11 @@ class UI_GenRep(UI_GenSec_Base):
 			for column in range(self.comandos+1)[2:]:				
 				if self.header.model().headerData(column,QtCore.Qt.Horizontal).toString()==parent:					
 					info=self.processData[str(self.selected_row[0])+','+str(column)]					
-					temp = info['Curva'+headerName].split(';')[:-1]					
-					X=[float(i) for i in temp if float(i)!=0]
-					Y= [math.log10(i) for i in X]					
+					sum=int(info['datapoints1']+info['datapoints2']+info['datapoints3'])
+					Y=[float(i) for i in info['Curva'+headerName].split(';')[:sum]]
+					X=range(sum)
+					if self.unit:
+						X=[ (i*info['timePerCanel']) for i in X]
 					self.create_graphic(X,Y)
 		
 			
@@ -284,6 +294,10 @@ class UI_GenRep(UI_GenSec_Base):
 			except:
 				self.canvas.onselect(self.canvas.Background_X,self.canvas.Background_X)
 			
+		
+		ToolBarr.setOrientation(QtCore.Qt.Vertical)
+		ToolBarr.setMaximumWidth (40)
+		
 		for act in ToolBarr.actions():
 			toolTip=str(act.toolTip())
 			if toolTip=='Configure subplots' or toolTip=='Edit curves line and axes parameters':
@@ -333,54 +347,96 @@ class UI_GenRep(UI_GenSec_Base):
 		xmin1_label=QtGui.QLabel('low')		
 		xmin1_label.setStyleSheet('color:green')
 		xmin1_sb = QtGui.QDoubleSpinBox()
-		xmin1_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Start channel to signal'))	
+		xmin1_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Low channel to signal'))	
 		
 		xmax1_label=QtGui.QLabel('high')
 		xmax1_label.setStyleSheet('color:green')
 		xmax1_sb = QtGui.QDoubleSpinBox()
-		xmax1_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'End channel to signal'))
+		xmax1_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'High channel to signal'))
 		
 		xmin2_label=QtGui.QLabel('low')
 		xmin2_label.setStyleSheet('color:#1A297D')
 		xmin2_sb = QtGui.QDoubleSpinBox()
-		xmin2_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Start channel to Background'))
+		xmin2_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Low channel to Background'))
 		
 		xmax2_label=QtGui.QLabel('high')
 		xmax2_label.setStyleSheet('color:#1A297D')
 		xmax2_sb = QtGui.QDoubleSpinBox()
-		xmax2_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'End channel to Background'))
+		xmax2_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'High channel to Background'))
 		
-		self.verticalLayout.addWidget(xmin1_label,1,0,1,1)
-		self.verticalLayout.addWidget(xmin1_sb,2,0,1,1)
-		self.verticalLayout.addWidget(xmax1_label,3,0,1,1)
-		self.verticalLayout.addWidget(xmax1_sb,4,0,1,1)
-		self.verticalLayout.addWidget(xmin2_label,1,14,1,1)
-		self.verticalLayout.addWidget(xmin2_sb,2,14,1,1)
-		self.verticalLayout.addWidget(xmax2_label,3,14,1,1)
-		self.verticalLayout.addWidget(xmax2_sb,4,14,1,1)
+		sign_count_label=QtGui.QLabel('signal')
+		sign_count_label.setStyleSheet('color:green')
+		sign_count_line = QtGui.QLineEdit()
+		sign_count_line.setReadOnly (True)
+		sign_count_line.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Count of signal area'))
 		
-		self.verticalLayout.addWidget(self.canvas,0,0,10,15)
-		self.verticalLayout.addWidget(ToolBarr,11,0,2,15)
+		back_count_label=QtGui.QLabel('background')
+		back_count_label.setStyleSheet('color:#1A297D')
+		back_count_line = QtGui.QLineEdit()
+		back_count_line.setReadOnly (True)
+		back_count_line.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Count of background area'))
+		
+		apply_to=QtGui.QPushButton()
+		apply_to.setText(QtGui.QApplication.translate("MainWindow", 'Apply this to'))
+		apply_to.clicked.connect(self.Apply_To)
+		
+		apply_all=QtGui.QPushButton()
+		apply_all.setText(QtGui.QApplication.translate("MainWindow", 'Apply to all'))
+		
+		self.verticalLayout.addWidget(ToolBarr,2,0,8,1)
+		self.verticalLayout.addWidget(self.canvas,0,0,10,60)
+		
+		self.verticalLayout.addWidget(xmin1_label,11,2,1,1)
+		self.verticalLayout.addWidget(xmin1_sb,12,2,1,1)		
+		self.verticalLayout.addWidget(sign_count_label,11,4,1,2)
+		self.verticalLayout.addWidget(sign_count_line,12,4,1,2)		
+		self.verticalLayout.addWidget(xmax1_label,11,7,1,1)
+		self.verticalLayout.addWidget(xmax1_sb,12,7,1,1)
+		
+		self.verticalLayout.addWidget(apply_to,12,25,1,1)
+		self.verticalLayout.addWidget(apply_all,12,30,1,1)
+		
+		self.verticalLayout.addWidget(xmin2_label,11,50,1,1)
+		self.verticalLayout.addWidget(xmin2_sb,12,50,1,1)
+		self.verticalLayout.addWidget(back_count_label,11,52,1,2)
+		self.verticalLayout.addWidget(back_count_line,12,52,1,2)	
+		self.verticalLayout.addWidget(xmax2_label,11,55,1,1)
+		self.verticalLayout.addWidget(xmax2_sb,12,55,1,1)
+		
+		def count_signal():
+			count=0
+			for i in self.canvas.Signal_Y:
+				count+=i
+			sign_count_line.setText(str(int(count)))
+			
+		def count_background():
+			count=0
+			for i in self.canvas.Background_Y:
+				count+=i
+			back_count_line.setText(str(int(count)))
 		
 		def fill_x_1(x1,x2):
 			xmin1_sb.setValue(x1)
 			xmax1_sb.setValue(x2)			
-			
+			count_signal()
 		
 		def fill_x_2(x1,x2):
 			xmin2_sb.setValue(x1)
-			xmax2_sb.setValue(x2)			
+			xmax2_sb.setValue(x2)
+			count_background()	
 		
 		def x1_sb_change(buttom):
-			self.canvas.activeSignal=True
-			if xmax1_sb.value() >=xmin1_sb.value():
-				self.canvas.onselect(xmin1_sb.value(),xmax1_sb.value())
+			if not self.canvas.activeSignal:
+				self.canvas.activeSignal=True
+				if xmax1_sb.value() >=xmin1_sb.value():
+					self.canvas.onselect(xmin1_sb.value(),xmax1_sb.value()+1)
 
 			
 		def x2_sb_change(buttom):
-			self.canvas.activeBackground=True
-			if xmax2_sb.value() >=xmin2_sb.value():
-				self.canvas.onselect(xmin2_sb.value(),xmax2_sb.value())
+			if not self.canvas.activeBackground:
+				self.canvas.activeBackground=True
+				if xmax2_sb.value() >=xmin2_sb.value():
+					self.canvas.onselect(xmin2_sb.value(),xmax2_sb.value()+1)
 				
 		if self.canvas.allGraphic_X!=[] and self.canvas.allGraphic_Y!=[]:
 			self.canvas.mousePressEvent=SpanSelector(
@@ -419,7 +475,6 @@ class UI_GenRep(UI_GenSec_Base):
 		
 		#isquierda de la grafica
 		self.treeWidget_2 = QtGui.QTreeWidget()
-		#self.treeWidget_2.setIndentation(0)
 		font = QtGui.QFont()
 		font.setFamily("Novason")
 		font.setPointSize(12)

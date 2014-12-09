@@ -160,7 +160,7 @@ class UI_base(MainWindows.Ui_MainWindow):
 		def runGenRep(self):
 			"""Ejecuta GenRep"""
 			self.closeAllDialogs()
-			try:	
+			try:
 				if (self.processGenRep.state() != QtCore.QProcess.Running):
 					self.beforeGenRep()
 					print self.dirToOpen				
@@ -168,7 +168,7 @@ class UI_base(MainWindows.Ui_MainWindow):
 					self.afterGenRep()
 			except:
 				self.error(QtGui.QApplication.translate('MainWindow','Unable to launch GenRep'))
-		
+
 		def beforeGenRep(self):
 			pass
 		def afterGenRep(self):

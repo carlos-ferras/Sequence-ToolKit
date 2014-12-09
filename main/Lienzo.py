@@ -34,7 +34,7 @@ class Lienzo(FigureCanvas):
 	background_change = QtCore.pyqtSignal(float,float)
 	
 	def __init__(self,X,Y,w, parent=None):        
-		self.fig = Figure(figsize=(w,4))
+		self.fig = Figure(figsize=(w,8))
 		self.allGraphic = self.fig.add_subplot(111,axisbg='#ffffff')	
 		
 		self.allGraphic_X=X
@@ -89,7 +89,7 @@ class Lienzo(FigureCanvas):
 			self.activeBackground=True
 			self.onselect(max(self.allGraphic_X),max(self.allGraphic_X))
 		
-	
+	"""
 	def calc_m(self,x1,y1,x2,y2):
 		m=float((y2-y1)/(x2-x1))
 		return m
@@ -122,22 +122,18 @@ class Lienzo(FigureCanvas):
 		m,n=self.function(xmenor,y_xmenor,xmayor,y_xmayor)
 		ymin=tope*m+n
 		return ymin,xmenor,xmayor	
+	"""
 	
-	
-	def fillSignal(self,x,y,typ,tope=False):
+	def fillSignal(self,x,y,typ):
 		self.line1.remove()
 		self.line1, = self.Signal.plot([], [], typ,color='blue')
 		self.line1.set_data(x, y)
 		self.Signal_X=x
 		self.Signal_Y=y
-		if tope:
-			self.Signal.set_xlim(tope[0], tope[-1])
-			self.signal_change.emit(float(x), float(x))
-		else:
-			self.Signal.set_xlim(min(x), max(x))			
-			self.signal_change.emit(float(min(x)), float(max(x)))
+		self.Signal.set_xlim(min(x), max(x))			
+		self.signal_change.emit(float(min(x)), float(max(x)))
 		self.Signal.set_ylim(min(self.allGraphic_Y), max(self.allGraphic_Y))
-		
+
 		self.axvspanSignal.set_alpha(0)			
 		if str(type(x))=="<type 'list'>":
 			self.axvspanSignal= self.allGraphic.axvspan(x[0], x[-1], facecolor='g', alpha=0.5)
@@ -147,18 +143,14 @@ class Lienzo(FigureCanvas):
 		self.Signal.patch.set_facecolor('#ffffff')
 		
 
-	def fillBackground(self,x,y,typ,tope=False):
+	def fillBackground(self,x,y,typ):
 		self.line2.remove()
 		self.line2, = self.Background.plot([], [], typ,color='blue')
 		self.line2.set_data(x, y)
 		self.Background_X=x
 		self.Background_Y=y
-		if tope:
-			self.Background.set_xlim(tope[0], tope[-1])
-			self.background_change.emit(float(x), float(x))
-		else:
-			self.Background.set_xlim(min(x), max(x))
-			self.background_change.emit(float(min(x)), float(max(x)))
+		self.Background.set_xlim(min(x), max(x))
+		self.background_change.emit(float(min(x)), float(max(x)))
 		self.Background.set_ylim(min(self.allGraphic_Y), max(self.allGraphic_Y))
 		
 		self.axvspanBackground.set_alpha(0)			
@@ -173,31 +165,25 @@ class Lienzo(FigureCanvas):
 	def onselect(self,xmin, xmax):
 		if self.activeBackground or self.activeSignal:
 			if xmin>=min(self.allGraphic_X) and xmax<=max(self.allGraphic_X):
-				if xmin!= xmax:
-					indmin, indmax = npy.searchsorted(self.allGraphic_X, (xmin, xmax))
-					indmax = min(len(self.allGraphic_X)-1, indmax)
-					
+				indmin, indmax = npy.searchsorted(self.allGraphic_X, (xmin, xmax))
+				if indmin>xmin:
+					indmin-=1
+				if indmin!= indmax:					
 					x=self.allGraphic_X[indmin:indmax]
 					y=self.allGraphic_Y[indmin:indmax]
-					
-					ymin=self.getf('min',xmin,xmax)[0]
-					ymax=self.getf('max',xmin,xmax)[0]
-					
-					x.insert(0,xmin)
-					y.insert(0,ymin)
-					x.append(xmax)
-					y.append(ymax)
 					
 					if self.activeSignal:
 						self.fillSignal(x,y,'-')
 					if self.activeBackground:
-						self.fillBackground(x,y,'-')
+						self.fillBackground(x,y,'-')					
 				else:
-					ymin,xmenor,xmayor=self.getf('min',xmin,xmax)
+					x=[self.allGraphic_X[indmin]]
+					y=[self.allGraphic_Y[indmin]]
+					
 					if self.activeSignal:
-						self.fillSignal(xmin,ymin,'.',[xmenor,xmayor])
+						self.fillSignal(x,y,'.')
 					if self.activeBackground:
-						self.fillBackground(xmin,ymin,'.',[xmenor,xmayor])
+						self.fillBackground(x,y,'.')
 			
 			else:
 				#puedo mostrar un mensage de k deve seleccionar una zona valida

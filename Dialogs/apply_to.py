@@ -19,9 +19,9 @@
 
 from PyQt4 import QtCore  
 from PyQt4 import QtGui 
-from UI import association
+from UI import apply_to
 
-class Association(association.Ui_Dialog):
+class Apply_To(apply_to.Ui_Dialog):
 	"""Ventana para seleccionar fuente"""
 	def __init__(self,parameters,parent=None):
 		self.form1 =QtGui.QMainWindow(parent)

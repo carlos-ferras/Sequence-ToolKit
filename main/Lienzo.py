@@ -80,18 +80,17 @@ class Lienzo(FigureCanvas):
 		FigureCanvas.setSizePolicy(self,QtGui.QSizePolicy.Expanding,QtGui.QSizePolicy.Expanding)
 		FigureCanvas.updateGeometry(self)
 		
-		if X!=[] and Y!=[]:
-			
+		if X!=[] and Y!=[]:			
 			if sl==0 and sh==0:
 				sl=self.allGraphic_X[:11][0]
 				sh=self.allGraphic_X[:11][-1]
 			if bl==0 and bh==0:
 				bl=self.allGraphic_X[-11:][0]
 				bh=self.allGraphic_X[-11:][-1]
-				
-			self.Signal_X=min(X)
+			
+			self.Signal_X=sl
 			self.Signal_Y=False
-			self.Background_X=max(X)
+			self.Background_X=bl
 			self.Background_Y=False
 		
 			self.allGraphic.plot(self.allGraphic_X, self.allGraphic_Y, '-')
@@ -148,7 +147,7 @@ class Lienzo(FigureCanvas):
 				indmin, indmax = npy.searchsorted(self.allGraphic_X, (xmin, xmax))
 				if indmin>xmin:
 					indmin-=1
-				if indmin!= indmax:					
+				if indmin!= indmax:
 					x=self.allGraphic_X[indmin:indmax]
 					y=self.allGraphic_Y[indmin:indmax]
 					

@@ -39,28 +39,8 @@ from GenSecLib import createXML,loadXML
 import math
 
 class UI_GenRep(UI_GenSec_Base):	
-	def __init__(self,dir=False,parent=None):
-		UI_GenSec_Base.__init__(self,'GenRep','pixmaps/genrep.png',dir)
-				
-		self.treeWidget.itemSelectionChanged.connect(self.groupActive)
-		self.header=self.treeWidget.header()			
-		self.header.setClickable(True)
-		self.header.setStyleSheet(HEADER)		
-		self.form1.resizeEvent = self.onResize
-		self.actionAcerda_de.triggered.connect(partial(about,self.form1,'GenRep',QtGui.QApplication.translate("MainWindow", 'Report Generator', None, QtGui.QApplication.UnicodeUTF8),QtGui.QApplication.translate("MainWindow", 'Description', None, QtGui.QApplication.UnicodeUTF8),'1.0.0',"pixmaps/genrep.png"))
-		self.action_setup.triggered.connect(self.data_setup)
-		self.action_profile.triggered.connect(self.data_profile)
-		self.action_group.triggered.connect(self.group)
-		self.action_ungroup.triggered.connect(self.ungroup)
-		self.action_ungroup_all.triggered.connect(self.ungroupall)
-		self.action_association.triggered.connect(self.associationCriteria)			
-
-		self.treeWidget_2.itemClicked.connect(self.change_graphic)
-		
-		self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"Ready"),2000)
-		self.form1.setCursor(QtCore.Qt.ArrowCursor)
-		self.treeWidget.customContextMenuRequested.connect(self.popup)
-				
+	def __init__(self,dir=False,parent=None):		
+		self.config=config()
 		self.genrep_config=self.config.loadGenRep()
 		if self.genrep_config:
 			self.curve_to_show=self.genrep_config[0]
@@ -123,10 +103,31 @@ class UI_GenRep(UI_GenSec_Base):
 			"Time of Measurement",
 		)
 		
+		UI_GenSec_Base.__init__(self,'GenRep','pixmaps/genrep.png',dir)
+				
+		self.treeWidget.itemSelectionChanged.connect(self.groupActive)
+		self.header=self.treeWidget.header()			
+		self.header.setClickable(True)
+		self.header.setStyleSheet(HEADER)		
+		self.form1.resizeEvent = self.onResize
+		self.actionAcerda_de.triggered.connect(partial(about,self.form1,'GenRep',QtGui.QApplication.translate("MainWindow", 'Report Generator', None, QtGui.QApplication.UnicodeUTF8),QtGui.QApplication.translate("MainWindow", 'Description', None, QtGui.QApplication.UnicodeUTF8),'1.0.0',"pixmaps/genrep.png"))
+		self.action_setup.triggered.connect(self.data_setup)
+		self.action_profile.triggered.connect(self.data_profile)
+		self.action_group.triggered.connect(self.group)
+		self.action_ungroup.triggered.connect(self.ungroup)
+		self.action_ungroup_all.triggered.connect(self.ungroupall)
+		self.action_association.triggered.connect(self.associationCriteria)			
+
+		self.treeWidget_2.itemClicked.connect(self.change_graphic)
+		
+		self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"Ready"),2000)
+		self.form1.setCursor(QtCore.Qt.ArrowCursor)
+		self.treeWidget.customContextMenuRequested.connect(self.popup)
 		
 		X=[]
 		Y=[]
 		self.create_graphic(X,Y)
+		self.groupsColors={}
 	
 	def change_graphic(self,item):
 		headerName= str(item.text(0))
@@ -138,7 +139,10 @@ class UI_GenRep(UI_GenSec_Base):
 					info=self.processData[str(self.selected_row[0])+','+str(column)]					
 					sum=int(info['datapoints1']+info['datapoints2']+info['datapoints3'])
 					Y=[float(i) for i in info['Curva'+headerName].split(';')[:sum]]
-					X=range(sum)
+					if info['id']==2 and self.show_tl:
+						X=[float(i) for i in info['Curva3'].split(';')[:sum]]
+					else:
+						X=range(sum)
 					if self.unit:
 						X=[ (i*info['timePerCanel']) for i in X]
 					
@@ -416,7 +420,7 @@ class UI_GenRep(UI_GenSec_Base):
 		self.sig_verticalLayout.addWidget(sign_count_line,1,2,1,2)		
 		self.sig_verticalLayout.addWidget(xmax1_label,0,5,1,1)
 		self.sig_verticalLayout.addWidget(xmax1_sb,1,5,1,1)		
-		self.verticalLayout.addWidget(self.sig_widget,11,2,2,4)
+		self.verticalLayout.addWidget(self.sig_widget,11,6,2,4)
 		
 		self.verticalLayout.addWidget(apply_to,12,25,1,1)
 		self.verticalLayout.addWidget(apply_all,12,30,1,1)
@@ -429,14 +433,6 @@ class UI_GenRep(UI_GenSec_Base):
 		self.back_verticalLayout.addWidget(xmax2_sb,1,5,1,1)
 		self.verticalLayout.addWidget(self.back_widget,11,50,2,4)
 		
-		"""
-		self.verticalLayout.addWidget(xmin2_label,11,50,1,1)
-		self.verticalLayout.addWidget(xmin2_sb,12,50,1,1)
-		self.verticalLayout.addWidget(back_count_label,11,52,1,2)
-		self.verticalLayout.addWidget(back_count_line,12,52,1,2)	
-		self.verticalLayout.addWidget(xmax2_label,11,55,1,1)
-		self.verticalLayout.addWidget(xmax2_sb,12,55,1,1)
-		"""
 		def count_signal():
 			count=0
 			for i in self.canvas.Signal_Y:
@@ -502,24 +498,23 @@ class UI_GenRep(UI_GenSec_Base):
 			self.canvas.background_change.connect(fill_x_2)
 			
 			if self.signal:
-				fill_x_1(self.canvas.Signal_X[0],self.canvas.Signal_X[-1])
+				fill_x_1(self.canvas.Signal_X[0],self.canvas.Signal_X[-1]+1)
 			if self.background:
-				fill_x_2(self.canvas.Background_X[0],self.canvas.Background_X[-1])
-
+				fill_x_2(self.canvas.Background_X[0],self.canvas.Background_X[-1]+1)
+			
 	def fillActions(self):
 		#Para la grafica
-		self.verticalLayoutWidget = QtGui.QWidget()
+		self.verticalLayoutWidget = QtGui.QWidget()		
 		self.verticalLayout = QtGui.QGridLayout(self.verticalLayoutWidget)
 		self.verticalLayout.setContentsMargins(5, 0, 0, 0)
 		
-		self.sig_widget=QtGui.QWidget()
+		self.sig_widget=QtGui.QWidget()		
 		self.sig_verticalLayout = QtGui.QGridLayout(self.sig_widget)
 		self.sig_verticalLayout.setContentsMargins(0, 0, 0, 0)
 		
 		self.back_widget=QtGui.QWidget()
 		self.back_verticalLayout = QtGui.QGridLayout(self.back_widget)
-		self.back_verticalLayout.setContentsMargins(0, 0, 0, 0)
-		
+		self.back_verticalLayout.setContentsMargins(0, 0, 0, 0)		
 		
 		#isquierda de la grafica
 		self.treeWidget_2 = QtGui.QTreeWidget()
@@ -545,6 +540,7 @@ class UI_GenRep(UI_GenSec_Base):
 		
 		#Panel de abajo
 		self.down_area= QtGui.QWidget()
+		#self.down_area.setStyleSheet('background:red;')
 		self.down_area_layout=QtGui.QGridLayout(self.down_area)
 		self.active_bar=QtGui.QLabel()
 		self.active_bar.mouseDoubleClickEvent=self.chow_hidden_down_area
@@ -555,15 +551,14 @@ class UI_GenRep(UI_GenSec_Base):
 		self.down_area_layout.addWidget(self.active_bar,0,0,1,4)
 		self.down_area_layout.addWidget(self.verticalLayoutWidget,1,0,10,3)
 		self.down_area_layout.addWidget(self.treeWidget_2,1,3,10,1)
-
+		self.down_area_layout.setColumnMinimumWidth(3,120)
+		
 		self.layout=QtGui.QGridLayout(self.mainWidget)
 		self.layout.setRowMinimumHeight(1,150)
 		self.layout.setContentsMargins(0, 0, 0, 0)
 		self.layout.addWidget(self.treeWidget, 1, 0, 1, 3)
 		self.layout.addWidget(self.down_area,2,0,1,3)
-		self.layout.setRowMinimumHeight(2,390)	
-		self.layout.setColumnMinimumWidth(0,385)
-		self.layout.setColumnMinimumWidth(1,385)
+		self.layout.setRowMinimumHeight(2,390)
 		
 		self.m_anim = Animation(self.down_area, 'pos')
 		self.m_anim.setEasingCurve(QtCore.QEasingCurve.Linear)
@@ -676,18 +671,18 @@ class UI_GenRep(UI_GenSec_Base):
 		self.Tools_ToolBar.addAction(self.action_report)
 	
 	
-	def getColor(self,row):
+	def getGroupColor(self,row):
 		try:
 			existen=self.colores_in_row[row]
 		except:
 			existen=[]
 			
 		colors=(
-			QtGui.QColor(255, 188, 0, 130),
-			QtGui.QColor(0, 255,218, 130),
-			QtGui.QColor(0, 203, 255, 130),
-			QtGui.QColor(147, 132, 245, 130),
-			QtGui.QColor(245, 132, 181, 130),
+			QtGui.QColor(255, 188, 0, 50),
+			QtGui.QColor(0, 255,218, 50),
+			QtGui.QColor(0, 203, 255, 50),
+			QtGui.QColor(147, 132, 245, 50),
+			QtGui.QColor(245, 132, 181, 50),
 		)
 		
 		for color in colors:
@@ -700,25 +695,26 @@ class UI_GenRep(UI_GenSec_Base):
 	
 	def colorearGrupo(self,group,colorear,dejar):
 		columns=[]
-		row=-1
+		row=-1		
+		color= self.getGroupColor(row)		
 		for g in group:
+			self.groupsColors[g]=color
 			data=g.split(',')
 			row=int(data[0])
-			columns.append(int(data[1]))
-		
-		color= self.getColor(row)
+			columns.append(int(data[1]))		
 		delegate = BackgroundColorDelegate(self.treeWidget,columns,colorear,dejar,color) 
 		self.treeWidget.setItemDelegateForRow(row,delegate)
 
 	
 	def dejar(self,row,toGroup):
-		list=[]
+		list={}
 		item = self.treeWidget.topLevelItem(row)
 		for column in range(self.treeWidget.columnCount()):
 			if not (str(row)+','+str(column)) in toGroup:
 				for group in range(len(self.inGroup)):
 					if (str(row)+','+str(column)) in self.inGroup[group]:
-						list.append(column)
+						g=str(row)+','+str(column)
+						list[column]=self.groupsColors[g]
 		return list
 		
 		
@@ -740,11 +736,7 @@ class UI_GenRep(UI_GenSec_Base):
 			if i.text(item.column())=='':
 				self.error(QtGui.QApplication.translate('MainWindow','Command ')+str(item.column()-1)+QtGui.QApplication.translate('MainWindow',' is empty'))
 				return False
-			for group in range(len(self.inGroup)):
-				if (str(item.row())+','+str(item.column())) in self.inGroup[group]:
-					self.ungroup()
-					if not group in borrar:
-						borrar.insert(0,group)
+			self.ungroup()
 			row=item.row()
 			toGroup.append(str(row)+','+str(item.column()))
 		
@@ -1061,8 +1053,11 @@ class BackgroundColorDelegate(QtGui.QStyledItemDelegate):
 		self.color=color
 
 	def paint(self, painter, option, index):
-		if (index.column() in self.columns and self.colorear) or (index.column() in self.dejar):
+		if index.column() in self.columns and self.colorear:
 			painter.fillRect(option.rect, self.color)
+			super(BackgroundColorDelegate, self).paint(painter, option, index)
+		elif index.column() in self.dejar:
+			painter.fillRect(option.rect, self.dejar[index.column()])
 			super(BackgroundColorDelegate, self).paint(painter, option, index)
 		else:			
 			super(BackgroundColorDelegate, self).paint(painter, option, index)

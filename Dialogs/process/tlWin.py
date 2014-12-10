@@ -67,6 +67,10 @@ class tlWin(TL.Ui_Dialog):
 		self.spinBox.setValue(campos["datapoints2"])
 		self.date_type=campos["date_type"]
 		self.comments=campos["comments"]
+		if campos["save_temp"]:
+			self.check.setCheckState(QtCore.Qt.Checked)
+		else:
+			self.check.setCheckState(QtCore.Qt.Unchecked)
 			
 		
 	def data(self):
@@ -77,7 +81,8 @@ class tlWin(TL.Ui_Dialog):
 			"final_temp":self.doubleSpinBox_2.value(),
 			"datapoints2":self.spinBox.value(),
 			"date_type":self.date_type,
-			"comments":self.comments
+			"comments":self.comments,
+			"save_temp":int(self.check.isChecked())
 		}
 		
 		return "TL,  "+str(self.doubleSpinBox_2.value())+QtCore.QString.fromUtf8(" °C , ")+str(self.doubleSpinBox.value())+QtCore.QString.fromUtf8(" °C/s") ,all

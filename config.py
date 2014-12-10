@@ -132,7 +132,7 @@ class config:
 		if os.path.exists(self.genrepconf):
 			file=open(self.genrepconf,'r')
 			try:
-				config=[[1,2,3],0,'lineal',-1,-1,-1,-1,0,'lineal',-1,-1,-1,-1,1,1,0,0,0,0,[]]
+				config=[[1],0,'lineal',-1,-1,-1,-1,0,'lineal',-1,-1,-1,-1,1,1,0,0,0,0,[]]
 				while True:
 					line =file.readline()
 					if not line:

@@ -30,12 +30,12 @@ class Ui_Dialog(object):
         widget=QtGui.QDesktopWidget()
 	mainScreenSize = widget.availableGeometry(widget.primaryScreen())
 	x= mainScreenSize.width()/2-273
-	y= mainScreenSize.height()/2-65
-	Dialog.setGeometry(QtCore.QRect(x, y, 546, 129))
-        Dialog.setMinimumSize(QtCore.QSize(546, 129))
-        Dialog.setMaximumSize(QtCore.QSize(546, 129))
+	y= mainScreenSize.height()/2-85
+	Dialog.setGeometry(QtCore.QRect(x, y, 546, 169))
+        Dialog.setMinimumSize(QtCore.QSize(546, 169))
+        Dialog.setMaximumSize(QtCore.QSize(546, 169))
         self.frame = QtGui.QFrame(Dialog)
-        self.frame.setGeometry(QtCore.QRect(6, 10, 444, 111))
+        self.frame.setGeometry(QtCore.QRect(6, 10, 444, 151))
         self.frame.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtGui.QFrame.Raised)
 	self.frame.setStyleSheet(PROCESS_WIN_STYLE)
@@ -69,7 +69,10 @@ class Ui_Dialog(object):
         self.spinBox.setGeometry(QtCore.QRect(70, 67, 54, 27))
         self.spinBox.setMaximum(512)
         self.spinBox.setObjectName(_fromUtf8("spinBox"))
-        self.pushButton = QtGui.QPushButton(Dialog)
+        self.check=QtGui.QCheckBox(self.frame)
+        self.check.setGeometry(QtCore.QRect(10, 110, 150, 30))
+	
+	self.pushButton = QtGui.QPushButton(Dialog)
 	self.pushButton.setStyleSheet(PROCESS_BUTTONS_STYLE)
         self.pushButton.setGeometry(QtCore.QRect(454, 10, 91, 26))
         self.pushButton.setObjectName(_fromUtf8("pushButton"))
@@ -94,4 +97,5 @@ class Ui_Dialog(object):
         self.label_3.setText(QtGui.QApplication.translate("MainWindow", "Time at Final Temp (s)", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setText(QtGui.QApplication.translate("MainWindow", "Channel", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_3.setText(QtGui.QApplication.translate("MainWindow", "&Sample Info.", None, QtGui.QApplication.UnicodeUTF8))
+	self.check.setText(QtGui.QApplication.translate("MainWindow", "Save Temp.", None, QtGui.QApplication.UnicodeUTF8))
 

@@ -266,7 +266,7 @@ class UI_GenSec_Base(UI_base):
 												
 											if parametro=='stabilization' or parametro=='excV' or parametro=='excF' or parametro=='final_temp' or parametro=='time_final_temp' or parametro=='heating_rate' or parametro=='time':	
 												valor=float(valor)
-											elif parametro=='datapoints1' or parametro=='datapoints2' or parametro=='datapoints3' or parametro=='start_optical_power' or parametro=='end_optical_power' or parametro=='number_of_scans':	
+											elif parametro=='datapoints1' or parametro=='datapoints2' or parametro=='datapoints3' or parametro=='start_optical_power' or parametro=='end_optical_power' or parametro=='number_of_scans' or parametro=='save_temp':	
 												valor=int(valor)
 											command[parametro]=valor
 											

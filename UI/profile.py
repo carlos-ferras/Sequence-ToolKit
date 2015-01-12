@@ -31,11 +31,11 @@ class Ui_Dialog(object):
 	
 	widget=QtGui.QDesktopWidget()
 	mainScreenSize = widget.availableGeometry(widget.primaryScreen())
-	x= mainScreenSize.width()/2-120
-	y= mainScreenSize.height()/2-135
-	Dialog.setGeometry(QtCore.QRect(x, y, 241, 271))	
-	Dialog.setMinimumSize(QtCore.QSize(241, 271))
-        Dialog.setMaximumSize(QtCore.QSize(241, 271))
+	x= mainScreenSize.width()/2-168
+	y= mainScreenSize.height()/2-115
+	Dialog.setGeometry(QtCore.QRect(x, y, 336, 235))	
+	Dialog.setMinimumSize(QtCore.QSize(336, 235))
+        Dialog.setMaximumSize(QtCore.QSize(336, 235))
 	
         self.label = QtGui.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(0, 10, 241, 17))
@@ -93,12 +93,18 @@ class Ui_Dialog(object):
         item.setCheckState(QtCore.Qt.Unchecked)
         self.listWidget.addItem(item)
         
-	self.pushButton = QtGui.QPushButton(Dialog)
-        self.pushButton.setGeometry(QtCore.QRect(150, 240, 85, 27))
-        self.pushButton.setStyleSheet(BUTTON_STYLE)
-        self.pushButton_2 = QtGui.QPushButton(Dialog)
-        self.pushButton_2.setGeometry(QtCore.QRect(60, 240, 85, 27))
+	self.pushButton_2 = QtGui.QPushButton(Dialog)
+        self.pushButton_2.setGeometry(QtCore.QRect(245, 8, 85, 27))
         self.pushButton_2.setStyleSheet(BUTTON_STYLE)
+	self.pushButton = QtGui.QPushButton(Dialog)
+        self.pushButton.setGeometry(QtCore.QRect(245, 43, 85, 27))
+        self.pushButton.setStyleSheet(BUTTON_STYLE)
+        self.pushButton_3 = QtGui.QPushButton(Dialog)
+        self.pushButton_3.setGeometry(QtCore.QRect(245, 78, 85, 27))
+        self.pushButton_3.setStyleSheet(BUTTON_STYLE)
+	self.pushButton_4 = QtGui.QPushButton(Dialog)
+        self.pushButton_4.setGeometry(QtCore.QRect(245, 113, 85, 27))
+        self.pushButton_4.setStyleSheet(BUTTON_STYLE)
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -141,4 +147,6 @@ class Ui_Dialog(object):
         self.listWidget.setSortingEnabled(__sortingEnabled)
         self.pushButton.setText(QtGui.QApplication.translate("Dialog", "Cancel", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_2.setText(QtGui.QApplication.translate("Dialog", "Accept", None, QtGui.QApplication.UnicodeUTF8))
+	self.pushButton_3.setText(QtGui.QApplication.translate("Dialog", "Load", None, QtGui.QApplication.UnicodeUTF8))
+	self.pushButton_4.setText(QtGui.QApplication.translate("Dialog", "Save", None, QtGui.QApplication.UnicodeUTF8))
 

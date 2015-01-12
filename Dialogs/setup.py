@@ -44,6 +44,28 @@ class Setup(setup.Ui_Form):
 		self.radiobutton_25.toggled.connect(self.radio7)
 		self.radiobutton_26.toggled.connect(self.radio8)
 		
+		self.doublesb_12.valueChanged.connect(self.hback_change)
+		self.doublesb_11.valueChanged.connect(self.lback_change)
+		
+		self.doublesb_10.valueChanged.connect(self.hsig_change)
+		self.doublesb_9.valueChanged.connect(self.lsig_change)
+		
+	def hsig_change(self):
+		if self.doublesb_10.value()<self.doublesb_9.value():
+			self.doublesb_10.setValue(self.doublesb_10.value()+1)
+	
+	def lsig_change(self):
+		if self.doublesb_10.value()<self.doublesb_9.value():
+			self.doublesb_9.setValue(self.doublesb_9.value()-1)	
+	
+	def hback_change(self):
+		if self.doublesb_12.value()<self.doublesb_11.value():
+			self.doublesb_12.setValue(self.doublesb_12.value()+1)
+	
+	def lback_change(self):
+		if self.doublesb_12.value()<self.doublesb_11.value():
+			self.doublesb_11.setValue(self.doublesb_11.value()-1)
+	
 	def fill(self,curve_to_show,show_tl,h_scale,h_min,h_max,h_great_unit,h_small_unit,unit,v_scale,v_min,v_max,v_great_unit,v_small_unit,signal,background,s_low,s_high,b_low,b_high):
 		if  1 in curve_to_show:
 			self.checkbox.setChecked(True)

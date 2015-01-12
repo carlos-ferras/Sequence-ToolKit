@@ -87,6 +87,15 @@ class Lienzo(FigureCanvas):
 			if bl==0 and bh==0:
 				bl=self.allGraphic_X[-11:][0]
 				bh=self.allGraphic_X[-11:][-1]
+			else:
+				if bl==0:
+					bl=self.allGraphic_X[-1]
+				else:
+					bl=self.allGraphic_X[int(bl)]
+				if bh==0:
+					bh=self.allGraphic_X[-1]
+				else:
+					bh=self.allGraphic_X[int(bh)]
 			
 			self.Signal_X=sl
 			self.Signal_Y=False
@@ -148,13 +157,13 @@ class Lienzo(FigureCanvas):
 				if indmin>xmin:
 					indmin-=1
 				if indmin!= indmax:
-					x=self.allGraphic_X[indmin:indmax]
-					y=self.allGraphic_Y[indmin:indmax]
+					x=self.allGraphic_X[indmin:indmax+1]
+					y=self.allGraphic_Y[indmin:indmax+1]
 					
 					if self.activeSignal:
 						self.fillSignal(x,y,'-')
 					if self.activeBackground:
-						self.fillBackground(x,y,'-')					
+						self.fillBackground(x,y,'-')
 				else:
 					x=[self.allGraphic_X[indmin]]
 					y=[self.allGraphic_Y[indmin]]

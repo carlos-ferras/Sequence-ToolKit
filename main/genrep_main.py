@@ -80,8 +80,8 @@ class UI_GenRep(UI_GenSec_Base):
 			self.signal=True
 			self.background=True
 			self.s_low=0
-			self.s_high=0
-			self.b_low=0
+			self.s_high=10
+			self.b_low=-10
 			self.b_high=0
 			self.parameters=[]
 			
@@ -459,14 +459,14 @@ class UI_GenRep(UI_GenSec_Base):
 			if not self.canvas.activeSignal:				
 				if xmax1_sb.value() >=xmin1_sb.value():
 					self.canvas.activeSignal=True
-					self.canvas.onselect(xmin1_sb.value(),xmax1_sb.value()+1)
+					self.canvas.onselect(xmin1_sb.value(),xmax1_sb.value())
 
 			
 		def x2_sb_change(buttom):
 			if not self.canvas.activeBackground:				
 				if xmax2_sb.value() >=xmin2_sb.value():
 					self.canvas.activeBackground=True
-					self.canvas.onselect(xmin2_sb.value(),xmax2_sb.value()+1)
+					self.canvas.onselect(xmin2_sb.value(),xmax2_sb.value())
 				
 		if self.canvas.allGraphic_X!=[] and self.canvas.allGraphic_Y!=[]:
 			self.canvas.mousePressEvent=SpanSelector(
@@ -498,9 +498,9 @@ class UI_GenRep(UI_GenSec_Base):
 			self.canvas.background_change.connect(fill_x_2)
 			
 			if self.signal:
-				fill_x_1(self.canvas.Signal_X[0],self.canvas.Signal_X[-1]+1)
+				fill_x_1(self.canvas.Signal_X[0],self.canvas.Signal_X[-1])
 			if self.background:
-				fill_x_2(self.canvas.Background_X[0],self.canvas.Background_X[-1]+1)
+				fill_x_2(self.canvas.Background_X[0],self.canvas.Background_X[-1])
 			
 	def fillActions(self):
 		#Para la grafica

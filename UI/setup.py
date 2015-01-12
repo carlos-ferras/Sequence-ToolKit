@@ -219,21 +219,25 @@ class Ui_Form(object):
 	self.label_15=QtGui.QLabel(self.tab_5)
 	self.label_15.setGeometry(QtCore.QRect(10, 130, 30, 30))
 	self.doublesb_9=QtGui.QDoubleSpinBox(self.tab_5)
+	self.doublesb_9.setRange(0,99999)
 	self.doublesb_9.setGeometry(QtCore.QRect(40, 130, 60, 30))
 	
 	self.label_16=QtGui.QLabel(self.tab_5)
 	self.label_16.setGeometry(QtCore.QRect(110, 130, 30, 30))
 	self.doublesb_10=QtGui.QDoubleSpinBox(self.tab_5)
+	self.doublesb_10.setRange(0,99999)
 	self.doublesb_10.setGeometry(QtCore.QRect(140, 130, 60, 30))
 	
 	self.label_17=QtGui.QLabel(self.tab_5)
 	self.label_17.setGeometry(QtCore.QRect(240, 130, 30, 30))
 	self.doublesb_11=QtGui.QDoubleSpinBox(self.tab_5)
+	self.doublesb_11.setRange(-99999,0)
 	self.doublesb_11.setGeometry(QtCore.QRect(270, 130, 60, 30))
 	
 	self.label_18=QtGui.QLabel(self.tab_5)
 	self.label_18.setGeometry(QtCore.QRect(340, 130, 30, 30))
 	self.doublesb_12=QtGui.QDoubleSpinBox(self.tab_5)
+	self.doublesb_12.setRange(-99999,0)
 	self.doublesb_12.setGeometry(QtCore.QRect(370, 130, 60, 30))
 	
 	self.pushButton = QtGui.QPushButton(Dialog)

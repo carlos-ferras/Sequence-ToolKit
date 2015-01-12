@@ -1,7 +1,5 @@
-GenSec
+Secuence-ToolKit
 ======
-
-Sequence Generator Measurement of Photoluminescence
 
 This package is the result of the collaboration between the department of free software from the University of Informatics Sciences (UCI)
 in Havana and the Luminescence Dating Laboratory at CEADEN.

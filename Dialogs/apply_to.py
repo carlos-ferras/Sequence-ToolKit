@@ -2,20 +2,20 @@
 # -*- coding: utf-8 -*- 
 
 #~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
-#~ This file is part of Secuence-ToolKit.
+#~ This file is part of Sequence-ToolKit.
 
-#~ Secuence-ToolKit is free software: you can redistribute it and/or modify
+#~ Sequence-ToolKit is free software: you can redistribute it and/or modify
 #~ it under the terms of the GNU General Public License as published by
 #~ the Free Software Foundation, either version 3 of the License, or
 #~ (at your option) any later version.
 
-#~ Secuence-ToolKit is distributed in the hope that it will be useful,
+#~ Sequence-ToolKit is distributed in the hope that it will be useful,
 #~ but WITHOUT ANY WARRANTY; without even the implied warranty of
 #~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #~ GNU General Public License for more details.
 
 #~ You should have received a copy of the GNU General Public License
-#~ along with Secuence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
+#~ along with Sequence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore  
 from PyQt4 import QtGui 
@@ -32,7 +32,6 @@ class Apply_To(apply_to.Ui_Dialog):
 		
 		self.pushButton.setShortcut("Escape")
 		self.pushButton.clicked.connect(self.form1.close)
-		#self.toolButton.clicked.connect(self.addLevel)
 		self.pushButton_2.setShortcut("Enter")
 		
 
@@ -137,36 +136,6 @@ class Apply_To(apply_to.Ui_Dialog):
 			self.setLevel(3)
 		elif level==3 and self.comboBox_4.currentIndex() >0:
 			self.setLevel(4)
-	"""		
-	def addLevel(self):
-		plus=0
-		if self.levels>0 and self.levels<4:			
-			if self.levels==1 and not self.comboBox_2.isVisible():
-				self.comboBox_2.setVisible(True)
-				self.comboBox_6.setVisible(True)
-				self.lineEdit_2.setVisible(True)
-				plus=40
-			
-			elif self.levels==2 and not self.comboBox_3.isVisible():
-				self.comboBox_3.setVisible(True)
-				self.comboBox_7.setVisible(True)
-				self.lineEdit_3.setVisible(True)
-				plus=40
-			
-			elif self.levels==3 and not self.comboBox_4.isVisible():
-				self.comboBox_4.setVisible(True)
-				self.comboBox_8.setVisible(True)
-				self.lineEdit_4.setVisible(True)
-				plus=40
-				
-			h=self.form1.height()
-			self.form1.setGeometry(QtCore.QRect(self.x, self.y, 477, h+plus))
-			self.form1.setMinimumSize(QtCore.QSize(477, h+plus))
-			self.form1.setMaximumSize(QtCore.QSize(477, h+plus))
-			self.toolButton.setGeometry(QtCore.QRect(450, self.toolButton.y()+plus, 31, 21))
-			self.pushButton.setGeometry(QtCore.QRect(390, self.pushButton.y()+plus, 85, 27))
-			self.pushButton_2.setGeometry(QtCore.QRect(300, self.pushButton_2.y()+plus, 85, 27))
-	"""		
 
 
 	

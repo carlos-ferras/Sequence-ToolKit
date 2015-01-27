@@ -2,23 +2,22 @@
 # -*- coding: utf-8 -*- 
 
 #~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
-#~ This file is part of Secuence-ToolKit.
+#~ This file is part of Sequence-ToolKit.
 
-#~ Secuence-ToolKit is free software: you can redistribute it and/or modify
+#~ Sequence-ToolKit is free software: you can redistribute it and/or modify
 #~ it under the terms of the GNU General Public License as published by
 #~ the Free Software Foundation, either version 3 of the License, or
 #~ (at your option) any later version.
 
-#~ Secuence-ToolKit is distributed in the hope that it will be useful,
+#~ Sequence-ToolKit is distributed in the hope that it will be useful,
 #~ but WITHOUT ANY WARRANTY; without even the implied warranty of
 #~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #~ GNU General Public License for more details.
 
 #~ You should have received a copy of the GNU General Public License
-#~ along with Secuence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
+#~ along with Sequence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
-from style import *
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -56,7 +55,6 @@ class Ui_Dialog(object):
 	self.toolButton.setText(_fromUtf8(""))
 	self.toolButton.setObjectName(_fromUtf8("toolButton"))
 	self.toolButton.setToolTip(QtGui.QApplication.translate("MainWindow",'Save', None, QtGui.QApplication.UnicodeUTF8))
-	self.toolButton.setStyleSheet(TOOLBUTTON_STYLE)
 	
 	self.toolButton_2 = QtGui.QToolButton(Dialog)
 	icon = QtGui.QIcon()
@@ -67,7 +65,6 @@ class Ui_Dialog(object):
 	self.toolButton_2.setText(_fromUtf8(""))
 	self.toolButton_2.setObjectName(_fromUtf8("toolButton_2"))
 	self.toolButton_2.setToolTip(QtGui.QApplication.translate("MainWindow",'Save as', None, QtGui.QApplication.UnicodeUTF8))
-	self.toolButton_2.setStyleSheet(TOOLBUTTON_STYLE)
 
 	
 

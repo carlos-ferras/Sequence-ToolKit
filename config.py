@@ -2,20 +2,20 @@
 # -*- coding: utf-8 -*- 
 
 #~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
-#~ This file is part of Secuence-ToolKit.
+#~ This file is part of Sequence-ToolKit.
 
-#~ Secuence-ToolKit is free software: you can redistribute it and/or modify
+#~ Sequence-ToolKit is free software: you can redistribute it and/or modify
 #~ it under the terms of the GNU General Public License as published by
 #~ the Free Software Foundation, either version 3 of the License, or
 #~ (at your option) any later version.
 
-#~ Secuence-ToolKit is distributed in the hope that it will be useful,
+#~ Sequence-ToolKit is distributed in the hope that it will be useful,
 #~ but WITHOUT ANY WARRANTY; without even the implied warranty of
 #~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #~ GNU General Public License for more details.
 
 #~ You should have received a copy of the GNU General Public License
-#~ along with Secuence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
+#~ along with Sequence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
 
 import commands
 import os
@@ -44,20 +44,20 @@ class config:
 		except:
 			self.win=True
 		if not self.win:
-			self.generalconf=self.dir+'.lf02.conf'
+			self.generalconf=self.dir+'.stk.conf'
 			self.gensecconf=self.dir+'.genSec.conf'
 			self.genrepconf=self.dir+'.genRep.conf'
 		else:
-			self.generalconf='lf02.conf'
+			self.generalconf='stk.conf'
 			self.gensecconf='genSec.conf'
 			self.genrepconf='genRep.conf'
 			
 	
 	def loadGeneral(self):
+		config=['Novason',12,'',1,'','default']
 		if os.path.exists(self.generalconf):
 			file=open(self.generalconf,'r')
 			try:
-				config=['Novason',12,'',1,'']
 				while True:
 					line =file.readline()
 					if not line:
@@ -78,26 +78,27 @@ class config:
 							pass
 					elif not line.find('Lang '):
 						config[4] =str(line.split("[")[1].split("]")[0])
-				return config
+					elif not line.find('Theme '):
+						config[5] =str(line.split("[")[1].split("]")[0])
 			except:
-				return False
+				pass
 			file.close()
-		return False
+		return config
 	
 	
-	def saveGeneral(self,fuente,size,fileLocation,opacity,lang):
+	def saveGeneral(self,fuente,size,fileLocation,opacity,lang,theme):
 		file=open(self.generalconf,'w+').close()
 		file=open(self.generalconf,'w+')
-		file.write("Font ["+str(fuente)+"]\n"+"Size ["+str(size)+"]\n"+"File Location ["+str(fileLocation)+"]\n"+"Opacity ["+str(opacity)+"]\n"+"Lang ["+str(lang)+"]\n")
+		file.write("Font ["+str(fuente)+"]\n"+"Size ["+str(size)+"]\n"+"File Location ["+str(fileLocation)+"]\n"+"Opacity ["+str(opacity)+"]\n"+"Lang ["+str(lang)+"]\n"+"Theme ["+str(theme)+"]\n")
 		file.close()
 		return True
 		
 		
 	def loadGenSec(self):
+		config=['#6695df','#4e72aa','#8665df',[False,False,False,False,False,False,False,[False,False],False]]
 		if os.path.exists(self.gensecconf):
 			file=open(self.gensecconf,'r')
 			try:
-				config=['#6695df','#4e72aa','#8665df',[]]
 				while True:
 					line =file.readline()
 					if not line:
@@ -112,11 +113,10 @@ class config:
 						config[3] =pickle.load(file)
 						if config[3] ==[]:
 							config[3] =[False,False,False,False,False,False,False,[False,False],False]
-				return config
 			except:
-				return False
+				pass
 			file.close()
-		return False
+		return config
 	
 	
 	def saveGenSec(self,col1,col2,col3,processDefaults):
@@ -129,10 +129,10 @@ class config:
 		
 	
 	def loadGenRep(self):
+		config=[[1],0,'linear',-1,-1,20,5,0,'lineal',-1,-1,5000,500,1,1,0,10,-10,0,True,[]]
 		if os.path.exists(self.genrepconf):
 			file=open(self.genrepconf,'r')
 			try:
-				config=[[1],0,'lineal',-1,-1,-1,-1,0,'lineal',-1,-1,-1,-1,1,1,0,10,-10,0,[]]
 				while True:
 					line =file.readline()
 					if not line:
@@ -230,27 +230,31 @@ class config:
 							config[18]=float(line.split("[")[1].split("]")[0])
 						except:
 							pass
+					elif not line.find("Consecutives "):
+						try:
+							config[19]=bool(int(line.split("[")[1].split("]")[0]))
+						except:
+							pass
 					elif not line.find('Parameters '):
 						try:
 							temp=str(line.split("[")[1].split("]")[0])
 							ints=[int(i) for i in temp.split(',')]
 							if ints[0]!='':
-								config[19]=ints
+								config[20]=ints
 						except:
 							pass
-				return config
 			except:
-				return False
+				pass
 			file.close()
-		return False
+		return config
 	
 	
-	def saveGenRep(self,curve_to_show,show_tl,h_scale,h_min,h_max,h_great_unit,h_small_unit,unit,v_scale,v_min,v_max,v_great_unit,v_small_unit,signal,background,s_low,s_high,b_low,b_high,parameters):
+	def saveGenRep(self,curve_to_show,show_tl,h_scale,h_min,h_max,h_great_unit,h_small_unit,unit,v_scale,v_min,v_max,v_great_unit,v_small_unit,signal,background,s_low,s_high,b_low,b_high,consecutives,parameters):
 		file=open(self.genrepconf,'w+').close()
 		file=open(self.genrepconf,'w+')
 		curve_to_show=str(curve_to_show)[1:-1]
 		parameters=str(parameters)[1:-1]
-		file.write("Curve to show ["+str(curve_to_show)+"]\n"+"Show TL ["+str(show_tl)+"]\n"+"Horizontal Scale ["+str(h_scale)+"]\n"+"Horizontal Minimum ["+str(h_min)+"]\n"+"Horizontal Maximum ["+str(h_max)+"]\n"+"Horizontal Greater Unity ["+str(h_great_unit)+"]\n"+"Horizontal Smallest Unity ["+str(h_small_unit)+"]\n"+"Unit ["+str(unit)+"]\n"+"Vertical Scale ["+str(v_scale)+"]\n"+"Vertical Minimum ["+str(v_min)+"]\n"+"Vertical Maximum ["+str(v_max)+"]\n"+"Vertical Greater Unity ["+str(v_great_unit)+"]\n"+"Vertical Smallest Unity ["+str(v_small_unit)+"]\n"+"Signal ["+str(signal)+"]\n"+"Background ["+str(background)+"]\n"+"Low Signal ["+str(s_low)+"]\n"+"High Signal ["+str(s_high)+"]\n"+"Low Background ["+str(b_low)+"]\n"+"High Background ["+str(b_high)+"]\n"+"Parameters ["+str(parameters)+"]\n")
+		file.write("Curve to show ["+str(curve_to_show)+"]\n"+"Show TL ["+str(show_tl)+"]\n"+"Horizontal Scale ["+str(h_scale)+"]\n"+"Horizontal Minimum ["+str(h_min)+"]\n"+"Horizontal Maximum ["+str(h_max)+"]\n"+"Horizontal Greater Unity ["+str(h_great_unit)+"]\n"+"Horizontal Smallest Unity ["+str(h_small_unit)+"]\n"+"Unit ["+str(unit)+"]\n"+"Vertical Scale ["+str(v_scale)+"]\n"+"Vertical Minimum ["+str(v_min)+"]\n"+"Vertical Maximum ["+str(v_max)+"]\n"+"Vertical Greater Unity ["+str(v_great_unit)+"]\n"+"Vertical Smallest Unity ["+str(v_small_unit)+"]\n"+"Signal ["+str(signal)+"]\n"+"Background ["+str(background)+"]\n"+"Low Signal ["+str(s_low)+"]\n"+"High Signal ["+str(s_high)+"]\n"+"Low Background ["+str(b_low)+"]\n"+"High Background ["+str(b_high)+"]\n"+"Consecutives ["+str(int(consecutives))+"]\n"+"Parameters ["+str(parameters)+"]\n")
 		file.close()
 		return True
 	

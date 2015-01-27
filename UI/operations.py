@@ -2,23 +2,22 @@
 # -*- coding: utf-8 -*- 
 
 #~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
-#~ This file is part of Secuence-ToolKit.
+#~ This file is part of Sequence-ToolKit.
 
-#~ Secuence-ToolKit is free software: you can redistribute it and/or modify
+#~ Sequence-ToolKit is free software: you can redistribute it and/or modify
 #~ it under the terms of the GNU General Public License as published by
 #~ the Free Software Foundation, either version 3 of the License, or
 #~ (at your option) any later version.
 
-#~ Secuence-ToolKit is distributed in the hope that it will be useful,
+#~ Sequence-ToolKit is distributed in the hope that it will be useful,
 #~ but WITHOUT ANY WARRANTY; without even the implied warranty of
 #~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #~ GNU General Public License for more details.
 
 #~ You should have received a copy of the GNU General Public License
-#~ along with Secuence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
+#~ along with Sequence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
-from style import *
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -58,47 +57,38 @@ class Ui_Dialog(object):
 		
 		self.pushButton_2 = QtGui.QPushButton(self.verticalLayoutWidget)
 		self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
-		self.pushButton_2.setStyleSheet(BUTTON_OPTION_STYLE)
 		self.pushButton_2.setFont(font)
 		self.verticalLayout.addWidget(self.pushButton_2)		
 		self.pushButton_3 = QtGui.QPushButton(self.verticalLayoutWidget)
 		self.pushButton_3.setObjectName(_fromUtf8("pushButton_3"))
-		self.pushButton_3.setStyleSheet(BUTTON_OPTION_STYLE)
 		self.pushButton_3.setFont(font)
 		self.verticalLayout.addWidget(self.pushButton_3)		
 		self.pushButton_4 = QtGui.QPushButton(self.verticalLayoutWidget)
 		self.pushButton_4.setObjectName(_fromUtf8("pushButton_4"))
-		self.pushButton_4.setStyleSheet(BUTTON_OPTION_STYLE)
 		self.pushButton_4.setFont(font)
 		self.verticalLayout.addWidget(self.pushButton_4)
 		self.pushButton_7 = QtGui.QPushButton(self.verticalLayoutWidget)
 		self.pushButton_7.setObjectName(_fromUtf8("pushButton_7"))
-		self.pushButton_7.setStyleSheet(BUTTON_OPTION_STYLE)
 		self.pushButton_7.setFont(font)
 		self.verticalLayout.addWidget(self.pushButton_7)		
 		self.pushButton_10 = QtGui.QPushButton(self.verticalLayoutWidget)
 		self.pushButton_10.setObjectName(_fromUtf8("pushButton_10"))
-		self.pushButton_10.setStyleSheet(BUTTON_OPTION_STYLE)
 		self.pushButton_10.setFont(font)
 		self.verticalLayout.addWidget(self.pushButton_10)
 		self.pushButton = QtGui.QPushButton(self.verticalLayoutWidget)
 		self.pushButton.setObjectName(_fromUtf8("pushButton"))
-		self.pushButton.setStyleSheet(BUTTON_OPTION_STYLE)
 		self.pushButton.setFont(font)
 		self.verticalLayout.addWidget(self.pushButton)
 		self.pushButton_8 = QtGui.QPushButton(self.verticalLayoutWidget)
 		self.pushButton_8.setObjectName(_fromUtf8("pushButton_8"))
-		self.pushButton_8.setStyleSheet(BUTTON_OPTION_STYLE)
 		self.pushButton_8.setFont(font)
 		self.verticalLayout.addWidget(self.pushButton_8)
 		self.pushButton_9 = QtGui.QPushButton(self.verticalLayoutWidget)
 		self.pushButton_9.setObjectName(_fromUtf8("pushButton_9"))
-		self.pushButton_9.setStyleSheet(BUTTON_OPTION_STYLE)
 		self.pushButton_9.setFont(font)
 		self.verticalLayout.addWidget(self.pushButton_9)
 		self.pushButton_5 = QtGui.QPushButton(self.verticalLayoutWidget)
 		self.pushButton_5.setObjectName(_fromUtf8("pushButton_5"))
-		self.pushButton_5.setStyleSheet(BUTTON_OPTION_STYLE)
 		self.pushButton_5.setFont(font)
 		self.verticalLayout.addWidget(self.pushButton_5)
 		

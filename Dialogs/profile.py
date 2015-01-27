@@ -71,16 +71,16 @@ class Profile(profile.Ui_Dialog):
 					self.dir+s.join(str(time.time()).split('.'))+'.grprofile',
 					QtGui.QApplication.translate('MainWindow','File')+' grprofile (*.grprofile)',
 				))	
-		self.dir=os.path.dirname(dir)
-		
-		file=open(dir,'w+').close()
-		file=open(dir,'w+')
-		file.write(str(self.fill_data()))
-		file.close()
+		if dir:
+			self.dir=os.path.dirname(dir)
+			
+			file=open(dir,'w+').close()
+			file=open(dir,'w+')
+			file.write(str(self.fill_data()))
+			file.close()
 			
 	
-	def load(self):
-		
+	def load(self):		
 		dir=str(QtGui.QFileDialog.getOpenFileName(
 					self.form1,
 					QtGui.QApplication.translate('MainWindow',"Load") +" GenRep"+QtGui.QApplication.translate('MainWindow',"Profile") ,
@@ -102,7 +102,7 @@ class Profile(profile.Ui_Dialog):
 			except:
 				pass
 			self.fill(data)
-		
+			file.close()
 		
 		
 		

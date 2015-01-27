@@ -2,36 +2,28 @@
 # -*- coding: utf-8 -*- 
 
 #~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
-#~ This file is part of Secuence-ToolKit.
+#~ This file is part of Sequence-ToolKit.
 
-#~ Secuence-ToolKit is free software: you can redistribute it and/or modify
+#~ Sequence-ToolKit is free software: you can redistribute it and/or modify
 #~ it under the terms of the GNU General Public License as published by
 #~ the Free Software Foundation, either version 3 of the License, or
 #~ (at your option) any later version.
 
-#~ Secuence-ToolKit is distributed in the hope that it will be useful,
+#~ Sequence-ToolKit is distributed in the hope that it will be useful,
 #~ but WITHOUT ANY WARRANTY; without even the implied warranty of
 #~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #~ GNU General Public License for more details.
 
 #~ You should have received a copy of the GNU General Public License
-#~ along with Secuence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
-
+#~ along with Sequence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
 
 import threading
 from gensec_base import *
-import time
-import datetime
 
-from Dialogs.operationsWid import operationsWid 
-from Dialogs.fontSelect import fontS 
-from Dialogs.priview import priview
-from Dialogs.process import eslWin,irraWin,ilumWin,lmosWin,oslWin,pauseWin,poslWin,pre_heatWin, tlWin
-from GenSecLib import createXML,loadXML
 
 class UI_GenSec(UI_GenSec_Base): 
 		def __init__(self,dir=False, parent=None):			
-			UI_GenSec_Base.__init__(self,'GenSec','pixmaps/gensec.png',dir)
+			UI_GenSec_Base.__init__(self,'GenSec','pixmaps/gensec.ico',dir)
 			
 			if self.gensec_config:
 				self.processDefaults=self.gensec_config[3]
@@ -47,7 +39,7 @@ class UI_GenSec(UI_GenSec_Base):
 			self.actionDsdsda.triggered.connect(self.previusly)
 			self.actionOrder.triggered.connect(self.orderBySample)
 			self.actionBorrar.triggered.connect(self.delete)
-			self.actionAcerda_de.triggered.connect(partial(about,self.form1,'GenSec',QtGui.QApplication.translate("MainWindow", 'Sequence Generator', None, QtGui.QApplication.UnicodeUTF8),QtGui.QApplication.translate("MainWindow", 'This application generates a xml file with the data used by the LF02 automated luminescence reader to run a measuring sequence.', None, QtGui.QApplication.UnicodeUTF8),'1.0.0',"pixmaps/gensec.png"))
+			self.actionAcerda_de.triggered.connect(partial(about,self.form1,'GenSec',QtGui.QApplication.translate("MainWindow", 'Sequence Generator', None, QtGui.QApplication.UnicodeUTF8),QtGui.QApplication.translate("MainWindow", 'This application generates a xml file with the data used by the LF02 automated luminescence reader to run a measuring sequence.', None, QtGui.QApplication.UnicodeUTF8),'1.0.0',"pixmaps/gensec.ico"))
 			self.actionNombre.triggered.connect(self.Nombre)
 			self.actionPropietario.triggered.connect(self.Propietario)
 			self.actionUso_de_Nitr_geno.triggered.connect(self.Nitrogeno)
@@ -489,6 +481,8 @@ class UI_GenSec(UI_GenSec_Base):
 					QtGui.QApplication.translate('MainWindow',"Save"),
 					self.fileLocation,
 					QtGui.QApplication.translate('MainWindow','File')+' SLF (*.slf *.xml)',
+					'0',
+					QtGui.QFileDialog.DontUseNativeDialog,
 				)
 			else:
 				self.directorioArchivo=dir
@@ -1031,7 +1025,7 @@ class UI_GenSec(UI_GenSec_Base):
 						for val in range(val1,val2+1):
 							self.nmuestras+=1
 			
-			self.mySEQ=createXML.SEQ(nmuestras=self.nmuestras,name=self.nombre,owner=self.propietario,n2flow=self.nitrogeno,doserate=self.dosis,extdoserate=self.dosisE,protocol=self.protocolo,reader_id=self.id_lector,datecrea=self.datecrea)
+			self.mySEQ=createSLF.SEQ(nmuestras=self.nmuestras,name=self.nombre,owner=self.propietario,n2flow=self.nitrogeno,doserate=self.dosis,extdoserate=self.dosisE,protocol=self.protocolo,reader_id=self.id_lector,datecrea=self.datecrea)
 			
 			for item in tabla:
 				ran=item[0]				
@@ -1178,13 +1172,13 @@ class UI_GenSec(UI_GenSec_Base):
 				event.ignore()
 			elif ret==1 :
 				self.closeAllDialogs()
-				self.config.saveGeneral(self.fuente,self.size,self.fileLocation,self.opacity,self.lang)
+				self.config.saveGeneral(self.fuente,self.size,self.fileLocation,self.opacity,self.lang,self.theme)
 				self.config.saveGenSec(self.col1,self.col2,self.col3,self.processDefaults)
 				event.accept()
 			else:
 				if self.save():
 					self.closeAllDialogs()
-					self.config.saveGeneral(self.fuente,self.size,self.fileLocation,self.opacity,self.lang)
+					self.config.saveGeneral(self.fuente,self.size,self.fileLocation,self.opacity,self.lang,self.theme)
 					self.config.saveGenSec(self.col1,self.col2,self.col3,self.processDefaults)
 					event.accept()
 				else:
@@ -1413,7 +1407,6 @@ class UI_GenSec(UI_GenSec_Base):
 			font.setStyleStrategy(QtGui.QFont.PreferDefault)
 			self.toolButtonHeader.setFont(font)
 			self.toolButtonHeader.setObjectName(("toolButton"))
-			self.toolButtonHeader.setStyleSheet(HEADER_TOOLBUTTON_STYLE)
 			self.treeWidget.setItemWidget(item_0, 0,self.toolButtonHeader)	
 			self.toolButtonHeader.clicked.connect(self.addGroup)			
 			vs=self.treeWidget.verticalScrollBar()

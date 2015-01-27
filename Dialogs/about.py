@@ -2,129 +2,129 @@
 # -*- coding: utf-8 -*- 
 
 #~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
-#~ This file is part of Secuence-ToolKit.
+#~ This file is part of Sequence-ToolKit.
 
-#~ Secuence-ToolKit is free software: you can redistribute it and/or modify
+#~ Sequence-ToolKit is free software: you can redistribute it and/or modify
 #~ it under the terms of the GNU General Public License as published by
 #~ the Free Software Foundation, either version 3 of the License, or
 #~ (at your option) any later version.
 
-#~ Secuence-ToolKit is distributed in the hope that it will be useful,
+#~ Sequence-ToolKit is distributed in the hope that it will be useful,
 #~ but WITHOUT ANY WARRANTY; without even the implied warranty of
 #~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #~ GNU General Public License for more details.
 
 #~ You should have received a copy of the GNU General Public License
-#~ along with Secuence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
+#~ along with Sequence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4   import QtCore
 from PyQt4 import QtGui
 
-def about(self,name,title,description,version,appIcon):	
+def about(parent,name,title,description,version,appIcon):	
 	_fromUtf8 = QtCore.QString.fromUtf8
-	self.groupBox_343 = QtGui.QGroupBox()
+	groupBox_343 = QtGui.QGroupBox()
 	
 	widget=QtGui.QDesktopWidget()
 	mainScreenSize = widget.availableGeometry(widget.primaryScreen())
 	W= mainScreenSize.width()
 	H= mainScreenSize.height()	
-        self.groupBox_343.setGeometry(QtCore.QRect(int(W/2)-323,int(H/2)-138,647,213))
-	self.groupBox_343.setMinimumSize(QtCore.QSize(647, 213))
-	self.groupBox_343.setMaximumSize(QtCore.QSize(647, 213))
-	self.groupBox_343.setStyleSheet(_fromUtf8("background-color:#f7f7f7;\n" "color:#a5a5a5;"))
-	self.groupBox_343.setTitle(_fromUtf8(""))
-	self.groupBox_343.setObjectName(_fromUtf8("groupBox_343"))
-	self.label_344 = QtGui.QLabel(self.groupBox_343)
-	self.label_344.setGeometry(QtCore.QRect(10, 0, 140, 150))
-	self.label_344.setText(_fromUtf8(""))
-	self.label_344.setPixmap(QtGui.QPixmap(appIcon))
-	self.label_344.setScaledContents(True)
-	self.label_344.setObjectName(_fromUtf8("label_344"))
-	self.label_345 = QtGui.QLabel(self.groupBox_343)
-	self.label_345.setGeometry(QtCore.QRect(160, 0, 200, 51))
+        groupBox_343.setGeometry(QtCore.QRect(int(W/2)-323,int(H/2)-138,647,213))
+	groupBox_343.setMinimumSize(QtCore.QSize(647, 213))
+	groupBox_343.setMaximumSize(QtCore.QSize(647, 213))
+	groupBox_343.setStyleSheet(_fromUtf8("background-color:#f7f7f7;\n" "color:#a5a5a5;"))
+	groupBox_343.setTitle(_fromUtf8(""))
+	groupBox_343.setObjectName(_fromUtf8("groupBox_343"))
+	label_344 = QtGui.QLabel(groupBox_343)
+	label_344.setGeometry(QtCore.QRect(10, 0, 140, 150))
+	label_344.setText(_fromUtf8(""))
+	label_344.setPixmap(QtGui.QPixmap(appIcon))
+	label_344.setScaledContents(True)
+	label_344.setObjectName(_fromUtf8("label_344"))
+	label_345 = QtGui.QLabel(groupBox_343)
+	label_345.setGeometry(QtCore.QRect(160, 0, 200, 51))
 	font = QtGui.QFont()
 	font.setFamily(_fromUtf8("Novason"))
 	font.setPointSize(30)
 	font.setBold(True)
 	font.setWeight(75)
-	self.label_345.setFont(font)
-	self.label_345.setStyleSheet(_fromUtf8("color:#555555;"))
-	self.label_345.setObjectName(_fromUtf8("label_345"))
-	self.textEdit_346 = QtGui.QTextEdit(self.groupBox_343)
-	self.textEdit_346.setGeometry(QtCore.QRect(160, 50, 491, 171))
+	label_345.setFont(font)
+	label_345.setStyleSheet(_fromUtf8("color:#555555;font-size:40px;"))
+	label_345.setObjectName(_fromUtf8("label_345"))
+	textEdit_346 = QtGui.QTextEdit(groupBox_343)
+	textEdit_346.setGeometry(QtCore.QRect(160, 50, 491, 171))
 	sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Ignored, QtGui.QSizePolicy.Ignored)
 	sizePolicy.setHorizontalStretch(3)
 	sizePolicy.setVerticalStretch(0)
-	sizePolicy.setHeightForWidth(self.textEdit_346.sizePolicy().hasHeightForWidth())
-	self.textEdit_346.setSizePolicy(sizePolicy)
-	self.textEdit_346.setMinimumSize(QtCore.QSize(491, 171))
-	self.textEdit_346.setMaximumSize(QtCore.QSize(491, 171))
+	sizePolicy.setHeightForWidth(textEdit_346.sizePolicy().hasHeightForWidth())
+	textEdit_346.setSizePolicy(sizePolicy)
+	textEdit_346.setMinimumSize(QtCore.QSize(491, 171))
+	textEdit_346.setMaximumSize(QtCore.QSize(491, 171))
 	font = QtGui.QFont()
 	font.setFamily(_fromUtf8("Novason"))
 	font.setPointSize(10)
 	font.setBold(False)
 	font.setWeight(50)
-	self.textEdit_346.setFont(font)
-	self.textEdit_346.setStyleSheet(_fromUtf8("color:#111111;"))
-	self.textEdit_346.setFrameShape(QtGui.QFrame.NoFrame)
-	self.textEdit_346.setFrameShadow(QtGui.QFrame.Plain)
-	self.textEdit_346.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-	self.textEdit_346.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-	self.textEdit_346.setReadOnly(True)
-	self.textEdit_346.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByKeyboard|QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextBrowserInteraction)
-	self.textEdit_346.setObjectName(_fromUtf8("textEdit_346"))
-	self.groupBox_347 = QtGui.QGroupBox(self.groupBox_343)
-	self.groupBox_347.setGeometry(QtCore.QRect(0, 170, 691, 41))
-	self.groupBox_347.setStyleSheet(_fromUtf8("background-color:#ebebeb;"))
-	self.groupBox_347.setTitle(_fromUtf8(""))
-	self.groupBox_347.setObjectName(_fromUtf8("groupBox_347"))
+	textEdit_346.setFont(font)
+	textEdit_346.setStyleSheet(_fromUtf8("color:#111111;"))
+	textEdit_346.setFrameShape(QtGui.QFrame.NoFrame)
+	textEdit_346.setFrameShadow(QtGui.QFrame.Plain)
+	textEdit_346.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+	textEdit_346.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+	textEdit_346.setReadOnly(True)
+	textEdit_346.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByKeyboard|QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextBrowserInteraction)
+	textEdit_346.setObjectName(_fromUtf8("textEdit_346"))
+	groupBox_347 = QtGui.QGroupBox(groupBox_343)
+	groupBox_347.setGeometry(QtCore.QRect(0, 170, 691, 41))
+	groupBox_347.setStyleSheet(_fromUtf8("background-color:#ebebeb;"))
+	groupBox_347.setTitle(_fromUtf8(""))
+	groupBox_347.setObjectName(_fromUtf8("groupBox_347"))
 	
-	self.pushButton_348 = QtGui.QPushButton(self.groupBox_347)
-	self.pushButton_348.setGeometry(QtCore.QRect(0, 10, 201, 27))
-	self.pushButton_348.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+	pushButton_348 = QtGui.QPushButton(groupBox_347)
+	pushButton_348.setGeometry(QtCore.QRect(0, 10, 201, 27))
+	pushButton_348.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
 	font = QtGui.QFont()
 	font.setPointSize(11)
 	font.setBold(True)
 	font.setWeight(75)
-	self.pushButton_348.setFont(font)
-	self.pushButton_348.setStyleSheet(_fromUtf8("color:#338ae9;\n"	"border-radius:15px;\n"	""))
-	self.pushButton_348.setCheckable(False)
-	self.pushButton_348.setDefault(False)
-	self.pushButton_348.setFlat(False)
-	self.pushButton_348.setObjectName(_fromUtf8("pushButton_348"))
-	self.pushButton_349 = QtGui.QPushButton(self.groupBox_347)
-	self.pushButton_349.setGeometry(QtCore.QRect(500, 10, 181, 27))
-	self.pushButton_349.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+	pushButton_348.setFont(font)
+	pushButton_348.setStyleSheet(_fromUtf8("color:#338ae9;\n"	"border-radius:15px;\n"	""))
+	pushButton_348.setCheckable(False)
+	pushButton_348.setDefault(False)
+	pushButton_348.setFlat(False)
+	pushButton_348.setObjectName(_fromUtf8("pushButton_348"))
+	pushButton_349 = QtGui.QPushButton(groupBox_347)
+	pushButton_349.setGeometry(QtCore.QRect(500, 10, 181, 27))
+	pushButton_349.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
 	font = QtGui.QFont()
 	font.setPointSize(11)
 	font.setBold(True)
 	font.setWeight(75)
-	self.pushButton_349.setFont(font)
-	self.pushButton_349.setLayoutDirection(QtCore.Qt.RightToLeft)
-	self.pushButton_349.setStyleSheet(_fromUtf8("color:#338ae9;\n"	"border-radius:15px;\n"	""))
-	self.pushButton_349.setCheckable(False)
-	self.pushButton_349.setDefault(False)
-	self.pushButton_349.setFlat(False)
-	self.pushButton_349.setObjectName(_fromUtf8("pushButton_349"))
-	self.pushButton_350 = QtGui.QPushButton(self.groupBox_347)
-	self.pushButton_350.setGeometry(QtCore.QRect(220, 10, 261, 27))
-	self.pushButton_350.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+	pushButton_349.setFont(font)
+	pushButton_349.setLayoutDirection(QtCore.Qt.RightToLeft)
+	pushButton_349.setStyleSheet(_fromUtf8("color:#338ae9;\n"	"border-radius:15px;\n"	""))
+	pushButton_349.setCheckable(False)
+	pushButton_349.setDefault(False)
+	pushButton_349.setFlat(False)
+	pushButton_349.setObjectName(_fromUtf8("pushButton_349"))
+	pushButton_350 = QtGui.QPushButton(groupBox_347)
+	pushButton_350.setGeometry(QtCore.QRect(220, 10, 261, 27))
+	pushButton_350.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
 	font = QtGui.QFont()
 	font.setPointSize(11)
 	font.setBold(True)
 	font.setWeight(75)
-	self.pushButton_350.setFont(font)
-	self.pushButton_350.setStyleSheet(_fromUtf8("color:#338ae9;\n"	"border-radius:15px;\n"	""))
-	self.pushButton_350.setCheckable(False)
-	self.pushButton_350.setDefault(False)
-	self.pushButton_350.setFlat(False)
-	self.pushButton_350.setObjectName(_fromUtf8("pushButton_350"))
-	self.pushButton_348.setText(QtGui.QApplication.translate("MainWindow", 'License Information', None, QtGui.QApplication.UnicodeUTF8))
-	self.pushButton_349.setText(QtGui.QApplication.translate("MainWindow", 'Credits', None, QtGui.QApplication.UnicodeUTF8))
-	self.pushButton_350.setText(QtGui.QApplication.translate("MainWindow", 'Contact the Developers', None, QtGui.QApplication.UnicodeUTF8))
+	pushButton_350.setFont(font)
+	pushButton_350.setStyleSheet(_fromUtf8("color:#338ae9;\n"	"border-radius:15px;\n"	""))
+	pushButton_350.setCheckable(False)
+	pushButton_350.setDefault(False)
+	pushButton_350.setFlat(False)
+	pushButton_350.setObjectName(_fromUtf8("pushButton_350"))
+	pushButton_348.setText(QtGui.QApplication.translate("MainWindow", 'License Information', None, QtGui.QApplication.UnicodeUTF8))
+	pushButton_349.setText(QtGui.QApplication.translate("MainWindow", 'Credits', None, QtGui.QApplication.UnicodeUTF8))
+	pushButton_350.setText(QtGui.QApplication.translate("MainWindow", 'Contact the Developers', None, QtGui.QApplication.UnicodeUTF8))
 		
-	self.label_345.setText(name)
-	self.textEdit_346.setHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+	label_345.setText(name)
+	textEdit_346.setHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 	"<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" /><style type=\"text/css\">\n"
 	"p, li { white-space: pre-wrap; }\n"
 	"</style></head><body style=\" font-family:\'Novason\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
@@ -132,27 +132,27 @@ def about(self,name,title,description,version,appIcon):
 	"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Novason\'; font-size:12pt; font-weight:600;\">"+version+"</span></p>\n"
 	"<p style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Novason\';\">"+description+"</span></p>\n"
 	"</span></p></body></html>")
-	self.groupBox_343.setWindowTitle(name)
-	self.groupBox_343.show()
+	groupBox_343.setWindowTitle(name)
+	groupBox_343.show()
 	
 	def licencia():
-		self.groupBox_343.setGeometry(QtCore.QRect(200, 100, 687, 600))
-		self.groupBox_343.setMinimumSize(QtCore.QSize(687, 600))
-		self.groupBox_343.setMaximumSize(QtCore.QSize(687, 600))
+		groupBox_343.setGeometry(QtCore.QRect(200, 100, 687, 600))
+		groupBox_343.setMinimumSize(QtCore.QSize(687, 600))
+		groupBox_343.setMaximumSize(QtCore.QSize(687, 600))
 
-		self.groupBox_347.setGeometry(QtCore.QRect(0, 555, 691, 41))
+		groupBox_347.setGeometry(QtCore.QRect(0, 555, 691, 41))
 
-		self.label_344.setVisible(False)
+		label_344.setVisible(False)
 
-		self.label_345.setText(QtGui.QApplication.translate("MainWindow", "License", None, QtGui.QApplication.UnicodeUTF8))
-		self.label_345.setGeometry(QtCore.QRect(260, 0, 191, 51))
+		label_345.setText(QtGui.QApplication.translate("MainWindow", "License", None, QtGui.QApplication.UnicodeUTF8))
+		label_345.setGeometry(QtCore.QRect(260, 0, 191, 51))
 
-		self.textEdit_346.setGeometry(QtCore.QRect(15, 50, 657, 500))
-		self.textEdit_346.setMinimumSize(QtCore.QSize(657, 500))
-		self.textEdit_346.setMaximumSize(QtCore.QSize(657, 500))
-		self.textEdit_346.setStyleSheet(_fromUtf8("color:#111111;background:#dddddd"))
-		self.textEdit_346.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-		self.textEdit_346.setHtml(QtGui.QApplication.translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+		textEdit_346.setGeometry(QtCore.QRect(15, 50, 657, 500))
+		textEdit_346.setMinimumSize(QtCore.QSize(657, 500))
+		textEdit_346.setMaximumSize(QtCore.QSize(657, 500))
+		textEdit_346.setStyleSheet(_fromUtf8("color:#111111;background:#dddddd"))
+		textEdit_346.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+		textEdit_346.setHtml(QtGui.QApplication.translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Bitstream Charter'; font-size:10pt; font-weight:600; font-style:normal;\">\n"
@@ -319,23 +319,23 @@ def about(self,name,title,description,version,appIcon):
 
 		
 	def credits():
-		self.groupBox_343.setGeometry(QtCore.QRect(200, 100, 687, 600))
-		self.groupBox_343.setMinimumSize(QtCore.QSize(687, 600))
-		self.groupBox_343.setMaximumSize(QtCore.QSize(687, 600))
+		groupBox_343.setGeometry(QtCore.QRect(200, 100, 687, 600))
+		groupBox_343.setMinimumSize(QtCore.QSize(687, 600))
+		groupBox_343.setMaximumSize(QtCore.QSize(687, 600))
 
-		self.groupBox_347.setGeometry(QtCore.QRect(0, 555, 691, 41))
+		groupBox_347.setGeometry(QtCore.QRect(0, 555, 691, 41))
 
-		self.label_344.setVisible(False)
+		label_344.setVisible(False)
 		
-		self.label_345.setText("    "+QtGui.QApplication.translate("MainWindow", "Credits", None, QtGui.QApplication.UnicodeUTF8))
-		self.label_345.setGeometry(QtCore.QRect(225, 0, 2580, 51))
+		label_345.setText("    "+QtGui.QApplication.translate("MainWindow", "Credits", None, QtGui.QApplication.UnicodeUTF8))
+		label_345.setGeometry(QtCore.QRect(225, 0, 2580, 51))
 
-		self.textEdit_346.setGeometry(QtCore.QRect(15, 50, 657, 500))
-		self.textEdit_346.setMinimumSize(QtCore.QSize(657, 500))
-		self.textEdit_346.setMaximumSize(QtCore.QSize(657, 500))
-		self.textEdit_346.setStyleSheet(_fromUtf8("color:#111111;background:#dddddd"))
-		self.textEdit_346.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-		self.textEdit_346.setHtml( "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+		textEdit_346.setGeometry(QtCore.QRect(15, 50, 657, 500))
+		textEdit_346.setMinimumSize(QtCore.QSize(657, 500))
+		textEdit_346.setMaximumSize(QtCore.QSize(657, 500))
+		textEdit_346.setStyleSheet(_fromUtf8("color:#111111;background:#dddddd"))
+		textEdit_346.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+		textEdit_346.setHtml( "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 		"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 		"p, li { white-space: pre-wrap; }\n"
 		"</style></head><body style=\" font-family:'Bitstream Charter'; font-size:10pt; font-weight:600; font-style:normal;\">\n"
@@ -351,6 +351,10 @@ def about(self,name,title,description,version,appIcon):
 		"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">"+QtCore.QString.fromUtf8("Yanet Leonor Quesada Hernández")+"</span></p>\n"
 		"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-righ"
 		"t:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;\"><br /></p>\n"
+		"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+QtGui.QApplication.translate("MainWindow", "Iconography by", None, QtGui.QApplication.UnicodeUTF8)+":</p>\n"
+		"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">"+QtCore.QString.fromUtf8("Yuriaski Leyva Clemente")+"</span></p>\n"
+		"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-righ"
+		"t:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;\"><br /></p>\n"
 		"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+QtGui.QApplication.translate("MainWindow", "XML structure and concepts", None, QtGui.QApplication.UnicodeUTF8)+":</p>\n"
 		"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; font-size:12pt; text-indent:0px;\">"+QtGui.QApplication.translate("MainWindow", "Luminescence Dating Laboratory at CEADEN", None, QtGui.QApplication.UnicodeUTF8)+"</p>\n"
 		"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-righ"
@@ -361,8 +365,8 @@ def about(self,name,title,description,version,appIcon):
 		import webbrowser
 		webbrowser.open('mailto:ceaden@ceaden.edu.cu')
 	
-	self.pushButton_348.clicked.connect(licencia)
-	self.pushButton_349.clicked.connect(credits)
-	self.pushButton_350.clicked.connect(contacto)
+	pushButton_348.clicked.connect(licencia)
+	pushButton_349.clicked.connect(credits)
+	pushButton_350.clicked.connect(contacto)
 	
 	

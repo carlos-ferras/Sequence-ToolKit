@@ -2,23 +2,22 @@
 # -*- coding: utf-8 -*- 
 
 #~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
-#~ This file is part of Secuence-ToolKit.
+#~ This file is part of Sequence-ToolKit.
 
-#~ Secuence-ToolKit is free software: you can redistribute it and/or modify
+#~ Sequence-ToolKit is free software: you can redistribute it and/or modify
 #~ it under the terms of the GNU General Public License as published by
 #~ the Free Software Foundation, either version 3 of the License, or
 #~ (at your option) any later version.
 
-#~ Secuence-ToolKit is distributed in the hope that it will be useful,
+#~ Sequence-ToolKit is distributed in the hope that it will be useful,
 #~ but WITHOUT ANY WARRANTY; without even the implied warranty of
 #~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #~ GNU General Public License for more details.
 
 #~ You should have received a copy of the GNU General Public License
-#~ along with Secuence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
+#~ along with Sequence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
-from style import *
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -40,7 +39,6 @@ class Ui_MainWindow(object):
 		self.menubar = QtGui.QMenuBar(MainWindow)
 		self.menubar.setGeometry(QtCore.QRect(0, 0, 805, 23))
 		self.menubar.setObjectName(_fromUtf8("menubar"))
-		self.menubar.setStyleSheet(MENU_STYLE)	
 		self.menuArchivo = QtGui.QMenu(self.menubar)
 		self.menuArchivo.setObjectName(_fromUtf8("menuArchivo"))
 		self.menuEditar = QtGui.QMenu(self.menubar)
@@ -51,6 +49,8 @@ class Ui_MainWindow(object):
 		self.menuOpciones_de_GenSec.setObjectName(_fromUtf8("menuOpciones_de_GenSec"))
 		self.menuLanguage = QtGui.QMenu(self.menuOpciones_de_GenSec)
 		self.menuLanguage.setObjectName(_fromUtf8("menuLanguage"))
+		self.menuTheme = QtGui.QMenu(self.menuOpciones_de_GenSec)
+		self.menuTheme.setObjectName(_fromUtf8("menuTheme"))
 		self.menuAyuda = QtGui.QMenu(self.menubar)
 		self.menuAyuda.setObjectName(_fromUtf8("menuAyuda"))
 		MainWindow.setMenuBar(self.menubar)
@@ -193,7 +193,7 @@ class Ui_MainWindow(object):
 		#Ejecutar GenRep -------------------------------------------------------------
 		self.actionEjecutar_GenRep = QtGui.QAction(MainWindow)
 		icon = QtGui.QIcon()
-		icon.addPixmap(QtGui.QPixmap(_fromUtf8("pixmaps/genrep.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		icon.addPixmap(QtGui.QPixmap(_fromUtf8("pixmaps/genrep.ico")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 		self.actionEjecutar_GenRep.setIconVisibleInMenu(True)
 		self.actionEjecutar_GenRep.setIcon(icon)
 		#self.actionEjecutar_Analyzer.setShortcut("Ctrl+R")
@@ -201,7 +201,7 @@ class Ui_MainWindow(object):
 		#Ejecutar GenSec-------------------------------------------------------------
 		self.actionEjecutar_GenSec = QtGui.QAction(MainWindow)
 		icon = QtGui.QIcon()
-		icon.addPixmap(QtGui.QPixmap(_fromUtf8("pixmaps/gensec.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		icon.addPixmap(QtGui.QPixmap(_fromUtf8("pixmaps/gensec.ico")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 		self.actionEjecutar_GenSec.setIconVisibleInMenu(True)
 		self.actionEjecutar_GenSec.setIcon(icon)
 		#self.actionEjecutar_GenSec.setShortcut("Ctrl+R")
@@ -220,7 +220,8 @@ class Ui_MainWindow(object):
 		self.menuEditar.addAction(self.actionPegar)
 		self.menuEditar.addAction(self.actionCopiar)
 		self.menuEditar.addAction(self.actionCortar)
-		self.menuOpciones_de_GenSec.addAction(self.menuLanguage.menuAction())	
+		self.menuOpciones_de_GenSec.addAction(self.menuLanguage.menuAction())
+		self.menuOpciones_de_GenSec.addAction(self.menuTheme.menuAction())	
 		self.menuOpciones_de_GenSec.addAction(self.actionFuente)
 		self.menuOpciones_de_GenSec.addAction(self.actionDir_defecto)
 		self.menuOpciones_de_GenSec.addAction(self.actionOpacity)
@@ -239,22 +240,18 @@ class Ui_MainWindow(object):
 		self.menubar.addAction(self.menuAyuda.menuAction())
 
 		self.Standar_ToolBar= MainWindow.addToolBar(QtGui.QApplication.translate("MainWindow","Standar Bar"))
-		self.Standar_ToolBar.setStyleSheet(TOOLBUTTON_STYLE)
 		self.Standar_ToolBar.addAction(self.actionNuevo)
 		self.Standar_ToolBar.addAction(self.actionAbrir)
 		self.Standar_ToolBar.addAction(self.actionGurdar)
 		self.Standar_ToolBar.addAction(self.actionImprimir )
 		
 		self.Tools_ToolBar= MainWindow.addToolBar(QtGui.QApplication.translate("MainWindow","Tools Bar"))
-		self.Tools_ToolBar.setStyleSheet(TOOLBUTTON_STYLE)
 		self.Tools_ToolBar.setVisible(False)
 		
 		self.Applications_ToolBar= MainWindow.addToolBar(QtGui.QApplication.translate("MainWindow","Applications Bar"))
-		self.Applications_ToolBar.setStyleSheet(TOOLBUTTON_STYLE)
 		self.Applications_ToolBar.addAction(self.actionEjecutar_GenSec)		
 		self.Applications_ToolBar.addAction(self.actionEjecutar_Comando)
 		self.Applications_ToolBar.addAction(self.actionEjecutar_GenRep)
-		
 
 		self.retranslateUi(MainWindow)
 		QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -266,6 +263,7 @@ class Ui_MainWindow(object):
 		self.menuOpciones.setTitle(QtGui.QApplication.translate("MainWindow", "&Options", None, QtGui.QApplication.UnicodeUTF8))
 		self.menuOpciones_de_GenSec.setTitle(QtGui.QApplication.translate("MainWindow", "Se&ttings", None, QtGui.QApplication.UnicodeUTF8))
 		self.menuLanguage.setTitle(QtGui.QApplication.translate("MainWindow", "&Select Language", None, QtGui.QApplication.UnicodeUTF8))
+		self.menuTheme.setTitle(QtGui.QApplication.translate("MainWindow", "&Theme", None, QtGui.QApplication.UnicodeUTF8))
 		self.menuAyuda.setTitle(QtGui.QApplication.translate("MainWindow", "&Help", None, QtGui.QApplication.UnicodeUTF8))
 		self.actionNuevo.setText(QtGui.QApplication.translate("MainWindow", "&New", None, QtGui.QApplication.UnicodeUTF8))
 		self.actionAbrir.setText(QtGui.QApplication.translate("MainWindow", "&Open", None, QtGui.QApplication.UnicodeUTF8))

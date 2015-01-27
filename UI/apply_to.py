@@ -2,23 +2,22 @@
 # -*- coding: utf-8 -*- 
 
 #~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
-#~ This file is part of Secuence-ToolKit.
+#~ This file is part of Sequence-ToolKit.
 
-#~ Secuence-ToolKit is free software: you can redistribute it and/or modify
+#~ Sequence-ToolKit is free software: you can redistribute it and/or modify
 #~ it under the terms of the GNU General Public License as published by
 #~ the Free Software Foundation, either version 3 of the License, or
 #~ (at your option) any later version.
 
-#~ Secuence-ToolKit is distributed in the hope that it will be useful,
+#~ Sequence-ToolKit is distributed in the hope that it will be useful,
 #~ but WITHOUT ANY WARRANTY; without even the implied warranty of
 #~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #~ GNU General Public License for more details.
 
 #~ You should have received a copy of the GNU General Public License
-#~ along with Secuence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
+#~ along with Sequence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
-from style import *
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -45,7 +44,6 @@ class Ui_Dialog(object):
         self.comboBox_5.addItem(_fromUtf8(""))
         self.comboBox_5.addItem(_fromUtf8(""))
         self.comboBox_5.addItem(_fromUtf8(""))
-        self.comboBox_5.addItem(_fromUtf8(""))
 	self.comboBox_5.setEnabled(False)
 	self.lineEdit = QtGui.QLineEdit(Dialog)
         self.lineEdit.setGeometry(QtCore.QRect(390, 30, 85, 23))
@@ -60,7 +58,6 @@ class Ui_Dialog(object):
 	self.comboBox_6 = QtGui.QComboBox(Dialog)
         self.comboBox_6.setGeometry(QtCore.QRect(250, 70, 131, 27))
         self.comboBox_6.setObjectName(_fromUtf8("comboBox_6"))
-        self.comboBox_6.addItem(_fromUtf8(""))
         self.comboBox_6.addItem(_fromUtf8(""))
         self.comboBox_6.addItem(_fromUtf8(""))
         self.comboBox_6.addItem(_fromUtf8(""))
@@ -81,7 +78,6 @@ class Ui_Dialog(object):
         self.comboBox_7.addItem(_fromUtf8(""))
         self.comboBox_7.addItem(_fromUtf8(""))
         self.comboBox_7.addItem(_fromUtf8(""))
-        self.comboBox_7.addItem(_fromUtf8(""))	
 	self.comboBox_7.setEnabled(False)
 	self.lineEdit_3 = QtGui.QLineEdit(Dialog)
         self.lineEdit_3.setGeometry(QtCore.QRect(390, 110, 85, 23))
@@ -96,7 +92,6 @@ class Ui_Dialog(object):
 	self.comboBox_8 = QtGui.QComboBox(Dialog)
         self.comboBox_8.setGeometry(QtCore.QRect(250, 150, 131, 27))
         self.comboBox_8.setObjectName(_fromUtf8("comboBox_8"))
-        self.comboBox_8.addItem(_fromUtf8(""))
         self.comboBox_8.addItem(_fromUtf8(""))
         self.comboBox_8.addItem(_fromUtf8(""))
         self.comboBox_8.addItem(_fromUtf8(""))
@@ -120,13 +115,10 @@ class Ui_Dialog(object):
         
         self.pushButton = QtGui.QPushButton(Dialog)
         self.pushButton.setGeometry(QtCore.QRect(390, 190, 85, 27))
-        self.pushButton.setStyleSheet(BUTTON_STYLE)
         self.pushButton_2 = QtGui.QPushButton(Dialog)
         self.pushButton_2.setGeometry(QtCore.QRect(300, 190, 85, 27))
-        self.pushButton_2.setStyleSheet(BUTTON_STYLE)
 	self.pushButton_3 = QtGui.QPushButton(Dialog)
-        self.pushButton_3.setGeometry(QtCore.QRect(210, 190, 85, 27))
-        self.pushButton_3.setStyleSheet(BUTTON_STYLE)
+        self.pushButton_3.setGeometry(QtCore.QRect(195, 190, 100, 27))
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -146,18 +138,14 @@ class Ui_Dialog(object):
 	self.comboBox_4.setItemText(0, QtGui.QApplication.translate("Dialog", "<<select>>", None, QtGui.QApplication.UnicodeUTF8))
         self.comboBox_5.setItemText(0, QtGui.QApplication.translate("Dialog", "Same", None, QtGui.QApplication.UnicodeUTF8))
         self.comboBox_5.setItemText(1, QtGui.QApplication.translate("Dialog", "Different", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_5.setItemText(2, QtGui.QApplication.translate("Dialog", "Numeric Value", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_5.setItemText(3, QtGui.QApplication.translate("Dialog", "String Value", None, QtGui.QApplication.UnicodeUTF8))
+        self.comboBox_5.setItemText(2, QtGui.QApplication.translate("Dialog", "Value", None, QtGui.QApplication.UnicodeUTF8))
         self.comboBox_6.setItemText(0, QtGui.QApplication.translate("Dialog", "Same", None, QtGui.QApplication.UnicodeUTF8))
         self.comboBox_6.setItemText(1, QtGui.QApplication.translate("Dialog", "Different", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_6.setItemText(2, QtGui.QApplication.translate("Dialog", "Numeric Value", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_6.setItemText(3, QtGui.QApplication.translate("Dialog", "String Value", None, QtGui.QApplication.UnicodeUTF8))
+        self.comboBox_6.setItemText(2, QtGui.QApplication.translate("Dialog", "Value", None, QtGui.QApplication.UnicodeUTF8))
         self.comboBox_7.setItemText(0, QtGui.QApplication.translate("Dialog", "Same", None, QtGui.QApplication.UnicodeUTF8))
         self.comboBox_7.setItemText(1, QtGui.QApplication.translate("Dialog", "Different", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_7.setItemText(2, QtGui.QApplication.translate("Dialog", "Numeric Value", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_7.setItemText(3, QtGui.QApplication.translate("Dialog", "String Value", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_8.setItemText(0, QtGui.QApplication.translate("Dialog", "Same", None, QtGui.QApplication.UnicodeUTF8))
+        self.comboBox_7.setItemText(2, QtGui.QApplication.translate("Dialog", "Value", None, QtGui.QApplication.UnicodeUTF8))
+	self.comboBox_8.setItemText(0, QtGui.QApplication.translate("Dialog", "Same", None, QtGui.QApplication.UnicodeUTF8))
         self.comboBox_8.setItemText(1, QtGui.QApplication.translate("Dialog", "Different", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_8.setItemText(2, QtGui.QApplication.translate("Dialog", "Numeric Value", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_8.setItemText(3, QtGui.QApplication.translate("Dialog", "String Value", None, QtGui.QApplication.UnicodeUTF8))
+        self.comboBox_8.setItemText(2, QtGui.QApplication.translate("Dialog", "Value", None, QtGui.QApplication.UnicodeUTF8))
         

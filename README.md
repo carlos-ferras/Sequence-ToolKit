@@ -1,4 +1,4 @@
-Secuence-ToolKit
+Sequence-ToolKit
 ======
 
 This package is the result of the collaboration between the department of free software from the University of Informatics Sciences (UCI)

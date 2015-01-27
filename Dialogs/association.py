@@ -2,46 +2,47 @@
 # -*- coding: utf-8 -*- 
 
 #~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
-#~ This file is part of Secuence-ToolKit.
+#~ This file is part of Sequence-ToolKit.
 
-#~ Secuence-ToolKit is free software: you can redistribute it and/or modify
+#~ Sequence-ToolKit is free software: you can redistribute it and/or modify
 #~ it under the terms of the GNU General Public License as published by
 #~ the Free Software Foundation, either version 3 of the License, or
 #~ (at your option) any later version.
 
-#~ Secuence-ToolKit is distributed in the hope that it will be useful,
+#~ Sequence-ToolKit is distributed in the hope that it will be useful,
 #~ but WITHOUT ANY WARRANTY; without even the implied warranty of
 #~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #~ GNU General Public License for more details.
 
 #~ You should have received a copy of the GNU General Public License
-#~ along with Secuence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
+#~ along with Sequence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore  
 from PyQt4 import QtGui 
 from UI import association
+import pickle
+import time
+import os
 
 class Association(association.Ui_Dialog):
 	"""Ventana para seleccionar fuente"""
-	def __init__(self,parameters,parent=None):
+	def __init__(self,parameters,checked,parent=None):
 		self.form1 =QtGui.QMainWindow(parent)
 		self.setupUi(self.form1)
 		
-		self.fill()
 		self.form1.show()
 		
 		self.pushButton.setShortcut("Escape")
 		self.pushButton.clicked.connect(self.form1.close)
-		#self.toolButton.clicked.connect(self.addLevel)
 		self.pushButton_2.setShortcut("Enter")
 		
 
 		self.criterions=[
-			'Sample ID',
 			"Process Order", 
 			"Data Type",
 		]
 		
+		self.checkbox.setChecked(checked)
 		self.criterions+=parameters
 		
 		self.levels=0
@@ -54,8 +55,71 @@ class Association(association.Ui_Dialog):
 		
 		self.fill_select()
 		
-	def fill(self):
-		pass
+		self.pushButton_3.clicked.connect(self.load)
+		self.pushButton_4.clicked.connect(self.save)
+		
+		self.dir='/'
+		
+	def save(self):
+		s=''
+		dir=str(QtGui.QFileDialog.getSaveFileName(
+					self.form1,
+					QtGui.QApplication.translate('MainWindow',"Save"),
+					self.dir+s.join(str(time.time()).split('.'))+'.grassociation',
+					QtGui.QApplication.translate('MainWindow','File')+' grassociation (*.grassociation)',
+				))	
+		if dir:
+			self.dir=os.path.dirname(dir)
+			
+			file=open(dir,'w+').close()
+			file=open(dir,'w+')
+			filters,x=self.fill_data()
+			pickle.dump([filters,x],file)
+			file.close()
+			
+	
+	def load(self):		
+		dir=str(QtGui.QFileDialog.getOpenFileName(
+					self.form1,
+					QtGui.QApplication.translate('MainWindow',"Load") +" GenRep"+QtGui.QApplication.translate('MainWindow',"Group Cells") ,
+					self.dir,
+					QtGui.QApplication.translate('MainWindow','File')+' grassociation (*.grassociation)', 
+				))
+		
+		self.dir=os.path.dirname(dir)		
+		
+		if os.path.exists(dir):
+			file=open(dir,'r')
+			data=[]
+			try:				
+				data =pickle.load(file)
+				if len(data)!=2:
+					data=[]
+			except:
+				pass
+			self.fill(data)
+			file.close()
+	
+	
+	def fill(self,data):
+		if len(data)==2:
+			self.checkbox.setChecked(data[1])
+			if data[0]!=[]:				
+				self.comboBox.setCurrentIndex(self.comboBox.findText(data[0][0][0]))
+				self.comboBox_5.setCurrentIndex(self.comboBox_5.findText(data[0][0][1]))
+				self.lineEdit.setText(data[0][0][2])
+				if len(data[0])>1:
+					self.comboBox_2.setCurrentIndex(self.comboBox_2.findText(data[0][1][0]))
+					self.comboBox_6.setCurrentIndex(self.comboBox_6.findText(data[0][1][1]))
+					self.lineEdit_2.setText(data[0][1][2])
+					if len(data[0])>2:
+						self.comboBox_3.setCurrentIndex(self.comboBox_3.findText(data[0][2][0]))
+						self.comboBox_7.setCurrentIndex(self.comboBox_7.findText(data[0][2][1]))
+						self.lineEdit_3.setText(data[0][2][2])
+						if len(data[0])>3:
+							self.comboBox_4.setCurrentIndex(self.comboBox_4.findText(data[0][3][0]))
+							self.comboBox_8.setCurrentIndex(self.comboBox_8.findText(data[0][3][1]))
+							self.lineEdit_4.setText(data[0][3][2])
 		
 	def fill_data(self):
 		filters=[]
@@ -67,7 +131,7 @@ class Association(association.Ui_Dialog):
 					filters.append([str(self.comboBox_3.currentText()),str(self.comboBox_7.currentText()),str(self.lineEdit_3.text())])
 					if self.comboBox_4.currentIndex() >0 and not(self.comboBox_4.currentIndex() in self.selecteds[:3]) :
 						filters.append([str(self.comboBox_4.currentText()),str(self.comboBox_8.currentText()),str(self.lineEdit_4.text())])
-		return filters
+		return filters, self.checkbox.isChecked()
 		
 	def fill_select(self):
 		for c in self.criterions:
@@ -137,36 +201,7 @@ class Association(association.Ui_Dialog):
 			self.setLevel(3)
 		elif level==3 and self.comboBox_4.currentIndex() >0:
 			self.setLevel(4)
-	"""		
-	def addLevel(self):
-		plus=0
-		if self.levels>0 and self.levels<4:			
-			if self.levels==1 and not self.comboBox_2.isVisible():
-				self.comboBox_2.setVisible(True)
-				self.comboBox_6.setVisible(True)
-				self.lineEdit_2.setVisible(True)
-				plus=40
-			
-			elif self.levels==2 and not self.comboBox_3.isVisible():
-				self.comboBox_3.setVisible(True)
-				self.comboBox_7.setVisible(True)
-				self.lineEdit_3.setVisible(True)
-				plus=40
-			
-			elif self.levels==3 and not self.comboBox_4.isVisible():
-				self.comboBox_4.setVisible(True)
-				self.comboBox_8.setVisible(True)
-				self.lineEdit_4.setVisible(True)
-				plus=40
-				
-			h=self.form1.height()
-			self.form1.setGeometry(QtCore.QRect(self.x, self.y, 477, h+plus))
-			self.form1.setMinimumSize(QtCore.QSize(477, h+plus))
-			self.form1.setMaximumSize(QtCore.QSize(477, h+plus))
-			self.toolButton.setGeometry(QtCore.QRect(450, self.toolButton.y()+plus, 31, 21))
-			self.pushButton.setGeometry(QtCore.QRect(390, self.pushButton.y()+plus, 85, 27))
-			self.pushButton_2.setGeometry(QtCore.QRect(300, self.pushButton_2.y()+plus, 85, 27))
-	"""		
+	
 
 
 	

@@ -2,20 +2,20 @@
 # -*- coding: utf-8 -*- 
 
 #~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
-#~ This file is part of Secuence-ToolKit.
+#~ This file is part of Sequence-ToolKit.
 
-#~ Secuence-ToolKit is free software: you can redistribute it and/or modify
+#~ Sequence-ToolKit is free software: you can redistribute it and/or modify
 #~ it under the terms of the GNU General Public License as published by
 #~ the Free Software Foundation, either version 3 of the License, or
 #~ (at your option) any later version.
 
-#~ Secuence-ToolKit is distributed in the hope that it will be useful,
+#~ Sequence-ToolKit is distributed in the hope that it will be useful,
 #~ but WITHOUT ANY WARRANTY; without even the implied warranty of
 #~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #~ GNU General Public License for more details.
 
 #~ You should have received a copy of the GNU General Public License
-#~ along with Secuence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
+#~ along with Sequence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
 
 
 import sys
@@ -23,19 +23,25 @@ from PyQt4 import QtCore
 from PyQt4 import QtGui 
 from main.genrep_main import UI_GenRep
 from config import config
+from base_theme import BASE
+from load_theme import LOAD
 
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)
-    
 	conf=config()
 	c=conf.loadGeneral()
+	theme=c[5]
+	
+	COL1,COL2,COL3,COL4,COL5,COL6,COL7,COL8=LOAD(theme)	
+	app.setStyleSheet(BASE(COL1,COL2,COL3,COL4,COL5,COL6,COL7,COL8,True))
+
 	locale=''
 	if c:	
 		locale=c[4]
 	if locale=='' or locale=='locale' or locale=='None':	
 		locale =unicode(QtCore.QLocale.system().name())
 	translator=QtCore.QTranslator()
-	translator.load("Locale/LF02_package_"+locale)
+	translator.load("Locale/Sequence_ToolKit_"+locale)
 	app.installTranslator(translator)
 	
 	qtTranslator=QtCore.QTranslator()

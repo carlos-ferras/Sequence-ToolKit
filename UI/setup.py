@@ -2,23 +2,22 @@
 # -*- coding: utf-8 -*- 
 
 #~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
-#~ This file is part of Secuence-ToolKit.
+#~ This file is part of Sequence-ToolKit.
 
-#~ Secuence-ToolKit is free software: you can redistribute it and/or modify
+#~ Sequence-ToolKit is free software: you can redistribute it and/or modify
 #~ it under the terms of the GNU General Public License as published by
 #~ the Free Software Foundation, either version 3 of the License, or
 #~ (at your option) any later version.
 
-#~ Secuence-ToolKit is distributed in the hope that it will be useful,
+#~ Sequence-ToolKit is distributed in the hope that it will be useful,
 #~ but WITHOUT ANY WARRANTY; without even the implied warranty of
 #~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #~ GNU General Public License for more details.
 
 #~ You should have received a copy of the GNU General Public License
-#~ along with Secuence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
+#~ along with Sequence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
-from process.style import *
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -116,15 +115,19 @@ class Ui_Form(object):
 	self.radiobutton_15=QtGui.QRadioButton(self.frame_4)
 	self.radiobutton_15.setGeometry(QtCore.QRect(90, 0, 200, 30))	
 	self.doublesb_1=QtGui.QDoubleSpinBox(self.tab_3)
+	self.doublesb_1.setMaximum(999999999)
 	self.doublesb_1.setGeometry(QtCore.QRect(350, 40, 80, 30))
 	self.doublesb_1.setEnabled(False)
 	self.doublesb_2=QtGui.QDoubleSpinBox(self.tab_3)
+	self.doublesb_2.setMaximum(999999999)
 	self.doublesb_2.setGeometry(QtCore.QRect(350, 70, 80, 30))
 	self.doublesb_2.setEnabled(False)
 	self.doublesb_3=QtGui.QDoubleSpinBox(self.tab_3)
+	self.doublesb_3.setMaximum(999999999)
 	self.doublesb_3.setGeometry(QtCore.QRect(350, 100, 80, 30))
 	self.doublesb_3.setEnabled(False)
 	self.doublesb_4=QtGui.QDoubleSpinBox(self.tab_3)
+	self.doublesb_4.setMaximum(999999999)
 	self.doublesb_4.setGeometry(QtCore.QRect(350, 130, 80, 30))
 	self.doublesb_4.setEnabled(False)
 	self.label_12=QtGui.QLabel(self.tab_3)
@@ -191,15 +194,19 @@ class Ui_Form(object):
 	self.radiobutton_26=QtGui.QRadioButton(self.frame_8)
 	self.radiobutton_26.setGeometry(QtCore.QRect(90, 0, 200, 30))	
 	self.doublesb_5=QtGui.QDoubleSpinBox(self.tab_4)
+	self.doublesb_5.setMaximum(999999999)
 	self.doublesb_5.setGeometry(QtCore.QRect(350, 40, 80, 30))
 	self.doublesb_5.setEnabled(False)
 	self.doublesb_6=QtGui.QDoubleSpinBox(self.tab_4)
+	self.doublesb_6.setMaximum(999999999)
 	self.doublesb_6.setGeometry(QtCore.QRect(350, 70, 80, 30))
 	self.doublesb_6.setEnabled(False)
 	self.doublesb_7=QtGui.QDoubleSpinBox(self.tab_4)
+	self.doublesb_7.setMaximum(999999999)
 	self.doublesb_7.setGeometry(QtCore.QRect(350, 100, 80, 30))
 	self.doublesb_7.setEnabled(False)
 	self.doublesb_8=QtGui.QDoubleSpinBox(self.tab_4)
+	self.doublesb_8.setMaximum(999999999)
 	self.doublesb_8.setGeometry(QtCore.QRect(350, 130, 80, 30))
 	self.doublesb_8.setEnabled(False)
 	
@@ -219,32 +226,30 @@ class Ui_Form(object):
 	self.label_15=QtGui.QLabel(self.tab_5)
 	self.label_15.setGeometry(QtCore.QRect(10, 130, 30, 30))
 	self.doublesb_9=QtGui.QDoubleSpinBox(self.tab_5)
-	self.doublesb_9.setRange(0,99999)
+	self.doublesb_9.setRange(0,999999999)
 	self.doublesb_9.setGeometry(QtCore.QRect(40, 130, 60, 30))
 	
 	self.label_16=QtGui.QLabel(self.tab_5)
 	self.label_16.setGeometry(QtCore.QRect(110, 130, 30, 30))
 	self.doublesb_10=QtGui.QDoubleSpinBox(self.tab_5)
-	self.doublesb_10.setRange(0,99999)
+	self.doublesb_10.setRange(0,999999999)
 	self.doublesb_10.setGeometry(QtCore.QRect(140, 130, 60, 30))
 	
 	self.label_17=QtGui.QLabel(self.tab_5)
 	self.label_17.setGeometry(QtCore.QRect(240, 130, 30, 30))
 	self.doublesb_11=QtGui.QDoubleSpinBox(self.tab_5)
-	self.doublesb_11.setRange(-99999,0)
+	self.doublesb_11.setRange(-999999999,0)
 	self.doublesb_11.setGeometry(QtCore.QRect(270, 130, 60, 30))
 	
 	self.label_18=QtGui.QLabel(self.tab_5)
 	self.label_18.setGeometry(QtCore.QRect(340, 130, 30, 30))
 	self.doublesb_12=QtGui.QDoubleSpinBox(self.tab_5)
-	self.doublesb_12.setRange(-99999,0)
+	self.doublesb_12.setRange(-999999999,0)
 	self.doublesb_12.setGeometry(QtCore.QRect(370, 130, 60, 30))
 	
 	self.pushButton = QtGui.QPushButton(Dialog)
-	self.pushButton.setStyleSheet(PROCESS_BUTTONS_STYLE)
         self.pushButton.setGeometry(QtCore.QRect(260, 235, 91, 30))		
 	self.pushButton_2 = QtGui.QPushButton(Dialog)
-	self.pushButton_2.setStyleSheet(PROCESS_BUTTONS_STYLE)
         self.pushButton_2.setGeometry(QtCore.QRect(355, 235, 91, 30))	
 
         self.retranslateUi(Dialog)

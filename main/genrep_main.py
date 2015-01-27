@@ -2,41 +2,41 @@
 # -*- coding: utf-8 -*- 
 
 #~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
-#~ This file is part of Secuence-ToolKit.
+#~ This file is part of Sequence-ToolKit.
 
-#~ Secuence-ToolKit is free software: you can redistribute it and/or modify
+#~ Sequence-ToolKit is free software: you can redistribute it and/or modify
 #~ it under the terms of the GNU General Public License as published by
 #~ the Free Software Foundation, either version 3 of the License, or
 #~ (at your option) any later version.
 
-#~ Secuence-ToolKit is distributed in the hope that it will be useful,
+#~ Sequence-ToolKit is distributed in the hope that it will be useful,
 #~ but WITHOUT ANY WARRANTY; without even the implied warranty of
 #~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #~ GNU General Public License for more details.
 
 #~ You should have received a copy of the GNU General Public License
-#~ along with Secuence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
+#~ along with Sequence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
 
-
-import os
-import re
 from Lienzo import *
 
 import threading
 from gensec_base import *
-import time
-import datetime
 
-from Dialogs.operationsWid import operationsWid 
-from Dialogs.fontSelect import fontS
 from Dialogs.setup import Setup
 from Dialogs.profile import Profile 
-from Dialogs.priview import priview
 from Dialogs.association import Association
 from Dialogs.apply_to import Apply_To
-from Dialogs.process import eslWin,irraWin,ilumWin,lmosWin,oslWin,pauseWin,poslWin,pre_heatWin, tlWin
-from GenSecLib import createXML,loadXML
+
 import math
+
+class INDEX:
+	def __init__(self,row,column):
+		self.r=row
+		self.c=column
+	def row(self):
+		return self.r
+	def column(self):
+		return self.c
 
 class UI_GenRep(UI_GenSec_Base):	
 	def __init__(self,dir=False,parent=None):		
@@ -62,27 +62,29 @@ class UI_GenRep(UI_GenSec_Base):
 			self.s_high=self.genrep_config[16]
 			self.b_low=self.genrep_config[17]
 			self.b_high=self.genrep_config[18]
-			self.parameters=self.genrep_config[19]
+			self.consecutives=self.genrep_config[19]
+			self.parameters=self.genrep_config[20]
 		else:
 			self.curve_to_show=[1]
 			self.show_tl=0
-			self.h_scale='lineal'
+			self.h_scale='linear'
 			self.h_min=-1
 			self.h_max=-1
-			self.h_great_unit=-1
-			self.h_small_unit=-1
+			self.h_great_unit=20
+			self.h_small_unit=5
 			self.unit=0
-			self.v_scale='lineal'
+			self.v_scale='linear'
 			self.v_min=-1
 			self.v_max=-1
-			self.v_great_unit=-1
-			self.v_small_unit=-1
+			self.v_great_unit=5000
+			self.v_small_unit=500
 			self.signal=True
 			self.background=True
 			self.s_low=0
 			self.s_high=10
 			self.b_low=-10
 			self.b_high=0
+			self.consecutives=True
 			self.parameters=[]
 			
 		self.enum_parameters=(
@@ -103,14 +105,13 @@ class UI_GenRep(UI_GenSec_Base):
 			"Time of Measurement",
 		)
 		
-		UI_GenSec_Base.__init__(self,'GenRep','pixmaps/genrep.png',dir)
+		UI_GenSec_Base.__init__(self,'GenRep','pixmaps/genrep.ico',dir)
 				
 		self.treeWidget.itemSelectionChanged.connect(self.groupActive)
 		self.header=self.treeWidget.header()			
-		self.header.setClickable(True)
-		self.header.setStyleSheet(HEADER)		
+		self.header.setClickable(True)	
 		self.form1.resizeEvent = self.onResize
-		self.actionAcerda_de.triggered.connect(partial(about,self.form1,'GenRep',QtGui.QApplication.translate("MainWindow", 'Report Generator', None, QtGui.QApplication.UnicodeUTF8),QtGui.QApplication.translate("MainWindow", 'Description', None, QtGui.QApplication.UnicodeUTF8),'1.0.0',"pixmaps/genrep.png"))
+		self.actionAcerda_de.triggered.connect(partial(about,self.form1,'GenRep',QtGui.QApplication.translate("MainWindow", 'Report Generator', None, QtGui.QApplication.UnicodeUTF8),QtGui.QApplication.translate("MainWindow", 'Description', None, QtGui.QApplication.UnicodeUTF8),'1.0.0',"pixmaps/genrep.ico"))
 		self.action_setup.triggered.connect(self.data_setup)
 		self.action_profile.triggered.connect(self.data_profile)
 		self.action_group.triggered.connect(self.group)
@@ -126,8 +127,113 @@ class UI_GenRep(UI_GenSec_Base):
 		
 		X=[]
 		Y=[]
-		self.create_graphic(X,Y)
 		self.groupsColors={}
+		self.values_sig={}
+		self.values_back={}
+		self.actual_in_graph=''	
+		
+		self.establecerFondo()
+		self.create_graphic(X,Y)
+		
+	
+	@cursorAction()
+	def save(self,temp=False):
+		"""Guarda la informacion en forma de xml"""
+		self.closeAllDialogs()
+		if self.directorioArchivo=='':
+			return self.saveAs()
+		else:
+			#guardarlo en la dir self.directorioArchivo
+			pass
+	
+	
+	@cursorAction()
+	def saveAs(self,dir=False):
+		"""Ventana para guardar un documanto"""
+		self.closeAllDialogs()
+		dialog=QtGui.QFileDialog(self.form1)
+		if not dir:
+			self.directorioArchivo=dialog.getSaveFileName(
+				self.form1,
+				QtGui.QApplication.translate('MainWindow',"Save"),
+				self.fileLocation,
+				QtGui.QApplication.translate('MainWindow','File')+' XLS (*.xls);; '+QtGui.QApplication.translate('MainWindow','File')+'RLS (*.rls);; '+QtGui.QApplication.translate('MainWindow','File')+'PDF (*.pdf)',
+				'0',
+				QtGui.QFileDialog.DontUseNativeDialog,
+			)
+		else:
+			self.directorioArchivo=dir
+		if self.directorioArchivo:
+			if not (self.directorioArchivo.endswith('.xls') or self.directorioArchivo.endswith('.xml') or self.directorioArchivo.endswith('.pdf')):
+				self.directorioArchivo+='.xls'
+			#Ak ya se redirecciona para un metodo distinto dependiendo de lo k se balla a hacer
+			return True
+		else:
+			self.directorioArchivo=''
+		return False
+		
+	def getAllData(self):
+		allData={}
+		for i in range(self.treeWidget.topLevelItemCount()):
+			item = self.treeWidget.topLevelItem( i )
+			for column in range(self.comandos+1)[2:]:
+				dato=item.text(column)
+				if dato!='':				
+					info=self.processData[str(i)+','+str(column)]
+					if info['id'] > 1 and info['id'] < 7:
+						for j in self.curve_to_show:
+							if info['Curva'+str(j)] !='':
+								
+								sig_range=[None,None]
+								back_range=[None,None]
+								
+								if self.values_sig.has_key(str(i)+','+str(column)):									
+									sig=self.values_sig[str(i)+','+str(column)]
+									back=self.values_back[str(i)+','+str(column)]
+								else:
+									sig=[self.canvas.allGraphic_X[int(self.s_low)],self.canvas.allGraphic_X[int(self.s_high)]]
+									if self.b_high==0:
+										max=len(self.canvas.allGraphic_X)-1
+									else:
+										max=int(self.b_high)
+									back=[self.canvas.allGraphic_X[int(self.b_low)],self.canvas.allGraphic_X[max]]
+								
+								sig_range[0]=int(self.canvas.allGraphic_X.index(sig[0]))
+								sig_range[1]=int(self.canvas.allGraphic_X.index(sig[1])+1)
+								back_range[0]=int(self.canvas.allGraphic_X.index(back[0]))
+								back_range[1]=int(self.canvas.allGraphic_X.index(back[1])+1)
+									
+								sig_values=self.canvas.allGraphic_Y[sig_range[0]:sig_range[1]]
+								back_values=self.canvas.allGraphic_Y[back_range[0]:back_range[1]]
+
+								sig_count=0
+								back_count=0
+								
+								for k in sig_values:
+									sig_count+=k
+								for k in back_values:
+									back_count+=k
+									
+								allData[str(i)+','+str(column)]=[sig,back,sig_count,back_count]
+		return allData					
+		
+	def affter_theme(self):
+		COL1,COL2,COL3,COL4,COL5,COL6,COL7,COL8=LOAD(self.theme)	
+		self.fondo=[COL2,COL3]
+		self.fondo_graph=[COL1,COL2]
+		self.font_color=COL8
+		self.create_graphic(self.canvas.allGraphic_X,self.canvas.allGraphic_Y)
+		
+	def establecerFondo(self):
+		columns=range(self.comandos+1)
+		rows=range(self.treeWidget.topLevelItemCount())
+		dejar=[]
+		color=''
+		colorear=''
+		for row in rows:
+			delegate = BackgroundColorDelegate(self.treeWidget,columns,colorear,dejar,color,self.fondo) 
+			self.treeWidget.setItemDelegateForRow(row,delegate)
+	
 	
 	def change_graphic(self,item):
 		headerName= str(item.text(0))
@@ -140,42 +246,213 @@ class UI_GenRep(UI_GenSec_Base):
 					sum=int(info['datapoints1']+info['datapoints2']+info['datapoints3'])
 					Y=[float(i) for i in info['Curva'+headerName].split(';')[:sum]]
 					if info['id']==2 and self.show_tl:
-						X=[float(i) for i in info['Curva3'].split(';')[:sum]]
+						X=[float("{0:.4f}".format(i)) for i in info['Curva3'].split(';')[:sum]]
 					else:
-						X=range(sum)
+						X=range(1,sum+1)
 					if self.unit:
 						X=[ (i*info['timePerCanel']) for i in X]
-					
+					if len(X)>0 and X[0]==0 and (self.h_scale=='log' or self.h_scale=='ln'):
+						del X[0]
+						new= X[-1]+1
+						X.append(new)
+					self.actual_in_graph=str(self.selected_row[0])+','+str(column)
 					self.create_graphic(X,Y)
 		
 			
+	def save_sig_back_values(self,pos):
+		self.values_sig[pos]=(self.xmin1_sb.value(),self.xmax1_sb.value())
+		self.values_back[pos]=(self.xmin2_sb.value(),self.xmax2_sb.value())
+		
+	
 	def Apply_To(self):
 		send=[]
 		for i in self.parameters:
 			send.append(self.enum_parameters	[i])
 		self.apply_to_win=Apply_To(send,self.form1)
 		self.apply_to_win.pushButton_2.clicked.connect(self.Apply_To_ready)
+		self.apply_to_win.pushButton_3.clicked.connect(self.Apply_To_All)
 		
 		
 	def Apply_To_ready(self):
 		self.criterias_to=self.apply_to_win.fill_data()
-		print self.criterias_to
+		for i in range(self.treeWidget.topLevelItemCount()):
+			item = self.treeWidget.topLevelItem( i )
+			if item.text(1):
+				muestra=str(item.text(1))					
+				first=[]
+				if self.criterias_to[0][0]!='':	
+					for column in range(self.comandos+1)[2:]:
+						if item.text(column):
+							criteria=self.criterias_to[0]
+							info=self.processData[str(i)+','+str(column)]
+							data=self.getData(info,criteria[0],muestra)
+							if data!='error':
+								if criteria[1]=='Same':
+									first.append (INDEX(i,column))
+								elif criteria[1]=='Different':
+									if str(data)!=str(criteria[2]):
+										first.append (INDEX(i,column))
+								elif criteria[1]=='Value':
+									value=str(criteria[2])										
+									if '*' in value:
+										data=str(data)
+										while ('*' in value):
+											p=value.find('*')
+											if data[:p]!=value[:p]:
+												break
+											value=value[p+1:]
+											data=data[p+1:]		
+										if data==value:
+											first.append (INDEX(i,column))											
+									else:
+										if type(data)==float:
+											try:
+												value=float(value)
+											except:
+												value='error'
+										if str(data)==str(value):
+											first.append (INDEX(i,column))
+				if len(self.criterias_to)>1!='':
+					second={}
+					if len(first)>1:
+						for i in first:							
+							criteria=self.criterias_to[1]
+							info=self.processData[str(i.row())+','+str(i.column())]
+							data=self.getData(info,criteria[0],muestra)
+							if data!='error':
+								if criteria[1]=='Same':
+									second.append (INDEX(i.row(),i.column()))
+								elif criteria[1]=='Different':
+									if str(data)!=str(criteria[2]):
+										second.append (INDEX(i.row(),i.column()))
+								elif criteria[1]=='Value':
+									value=str(criteria[2])										
+									if '*' in value:
+										data=str(data)
+										while ('*' in value):
+											p=value.find('*')
+											if data[:p]!=value[:p]:
+												break
+											value=value[p+1:]
+											data=data[p+1:]		
+										if data==value:
+											second.append (INDEX(i.row(),i.column()))										
+									else:
+										if type(data)==float:
+											try:
+												value=float(value)
+											except:
+												value='error'
+										if str(data)==str(value):
+											second.append (INDEX(i.row(),i.column()))
+										
+					if len(self.criterias_to)>2!='':		
+						tercero={}
+						if len(second)>1:
+							for i in second:							
+								criteria=self.criterias_to[2]
+								info=self.processData[str(i.row())+','+str(i.column())]
+								data=self.getData(info,criteria[0],muestra)
+								if data!='error':
+									if criteria[1]=='Same':
+										tercero.append (INDEX(i.row(),i.column()))
+									elif criteria[1]=='Different':
+										if str(data)!=str(criteria[2]):
+											tercero.append (INDEX(i.row(),i.column()))
+									elif criteria[1]=='Value':
+										value=str(criteria[2])										
+										if '*' in value:
+											data=str(data)
+											while ('*' in value):
+												p=value.find('*')
+												if data[:p]!=value[:p]:
+													break
+												value=value[p+1:]
+												data=data[p+1:]		
+											if data==value:
+												tercero.append (INDEX(i.row(),i.column()))										
+										else:
+											if type(data)==float:
+												try:
+													value=float(value)
+												except:
+													value='error'
+											if str(data)==str(value):
+												tercero.append (INDEX(i.row(),i.column()))
+						if len(self.criterias_to)>3!='':		
+							cuarto={}
+							if len(tercero)>1:
+								for i in tercero:							
+									criteria=self.criterias_to[3]
+									info=self.processData[str(i.row())+','+str(i.column())]
+									data=self.getData(info,criteria[0],muestra)	
+									if data!='error':
+										if criteria[1]=='Same':
+											cuarto.append (INDEX(i.row(),i.column()))
+										elif criteria[1]=='Different':
+											if str(data)!=str(criteria[2]):
+												cuarto.append (INDEX(i.row(),i.column()))
+										elif criteria[1]=='Value':
+											value=str(criteria[2])										
+											if '*' in value:
+												data=str(data)
+												while ('*' in value):
+													p=value.find('*')
+													if data[:p]!=value[:p]:
+														break
+													value=value[p+1:]
+													data=data[p+1:]		
+												if data==value:
+													cuarto.append (INDEX(i.row(),i.column()))										
+											else:
+												if type(data)==float:
+													try:
+														value=float(value)
+													except:
+														value='error'
+												if str(data)==str(value):
+													cuarto.append (INDEX(i.row(),i.column()))
+							for k in cuarto:
+								self.save_sig_back_values(str(k.row())+','+str(k.column()))
+						else:
+							for k in tercero:
+								self.save_sig_back_values(str(k.row())+','+str(k.column()))
+					else:
+						for k in second:
+							self.save_sig_back_values(str(k.row())+','+str(k.column()))
+				else:
+					for k in first:
+						self.save_sig_back_values(str(k.row())+','+str(k.column()))
+		
+		
 		self.apply_to_win.form1.close()
 	
+	
+	def Apply_To_All(self):
+		for i in range(self.treeWidget.topLevelItemCount()):
+			item = self.treeWidget.topLevelItem( i )
+			for column in range(self.comandos+1)[2:]:
+				dato=item.text(column)
+				if dato!='':
+					info=self.processData[str(i)+','+str(column)]
+					if info['id'] > 1 and info['id'] < 7:
+						for j in self.curve_to_show:
+							if info['Curva'+str(j)] !='':	
+								self.save_sig_back_values(str(i)+','+str(column))
+		try:
+			self.apply_to_win.form1.close()
+		except:
+			pass
+								
 	
 	def associationCriteria(self):
 		send=[]
 		for i in self.parameters:
 			send.append(self.enum_parameters	[i])
-		self.association=Association(send,self.form1)
+		self.association=Association(send,self.consecutives,self.form1)
 		self.association.pushButton_2.clicked.connect(self.association_ready)	
 		
-	def association_ready(self):
-		self.criterias=self.association.fill_data()
-		print self.criterias
-		self.association.form1.close()
-	
-	
+		
 	def  data_setup(self):
 		self.setup=Setup(self.curve_to_show,self.show_tl,self.h_scale,self.h_min,self.h_max,self.h_great_unit,self.h_small_unit,self.unit,self.v_scale,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit,self.signal,self.background,self.s_low,self.s_high,self.b_low,self.b_high,self.form1)
 		self.setup.pushButton.clicked.connect(self.setup_ready)		
@@ -219,11 +496,19 @@ class UI_GenRep(UI_GenSec_Base):
 		self.create_graphic(self.canvas.allGraphic_X,self.canvas.allGraphic_Y)
 					
 	def afterOpen(self):
-		self.create_graphic([],[])
+		X=[]
+		Y=[]
+		self.groupsColors={}
+		self.values_sig={}
+		self.values_back={}
+		self.actual_in_graph=''
+		
+		self.create_graphic(X,Y)
 		self.clear_lateral_panel()
 		
 		if self.selected_row[1]:
-			self.selected_row[1].setStyleSheet(HEADER_TOOLBUTTON_STYLE)
+			#self.selected_row[1].setStyleSheet(HEADER_TOOLBUTTON_STYLE)
+			pass
 		self.selected_row=[False,False]
 		self.colores_in_row={}
 		for group in self.inGroup:		
@@ -237,13 +522,52 @@ class UI_GenRep(UI_GenSec_Base):
 		self.zoom=False
 		
 		w=int(self.W/64)
-		sl=self.s_low
-		sh=self.s_high
-		bl=self.b_low
-		bh=self.b_high
-		self.canvas = Lienzo(X,Y,w,sl,sh,bl,bh,self.signal,self.background,self.verticalLayoutWidget)
 		
-								
+		if self.actual_in_graph=='' or not self.values_sig.has_key(self.actual_in_graph):
+			sl=self.s_low
+			sh=self.s_high
+			bl=self.b_low
+			bh=self.b_high
+			default=True
+		else:
+			sl=self.values_sig[self.actual_in_graph][0]
+			sh=self.values_sig[self.actual_in_graph][1]
+			bl=self.values_back[self.actual_in_graph][0]
+			bh=self.values_back[self.actual_in_graph][1]
+			default=False
+		
+		self.canvas = Lienzo(X,Y,w,sl,sh,bl,bh,default,self.signal,self.background,self.h_min,self.h_max,self.h_great_unit,self.h_small_unit,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit,self.fondo_graph,self.font_color,self.verticalLayoutWidget)
+		try:
+			if self.v_scale=='log':
+				self.canvas.allGraphic.set_yscale('log', basey=10)
+				if self.canvas.active_sig:
+					self.canvas.Signal.set_yscale('log', basey=10)
+				if self.canvas.active_back:
+					self.canvas.Background.set_yscale('log', basey=10)
+			elif self.v_scale=='ln':
+				self.canvas.allGraphic.set_yscale('log', basey=math.e)
+				if self.canvas.active_sig:
+					self.canvas.Signal.set_yscale('log', basey=math.e)
+				if self.canvas.active_back:
+					self.canvas.Background.set_yscale('log', basey=math.e)
+		except:
+			pass
+		try:
+			if self.h_scale=='log':
+				self.canvas.allGraphic.set_xscale('log', basey=10)
+				if self.canvas.active_sig:
+					self.canvas.Signal.set_xscale('log', basey=10)
+				if self.canvas.active_back:
+					self.canvas.Background.set_xscale('log', basey=10)
+			elif self.h_scale=='ln':
+				self.canvas.allGraphic.set_xscale('log', basey=math.e)
+				if self.canvas.active_sig:
+					self.canvas.Signal.set_xscale('log', basey=math.e)
+				if self.canvas.active_back:
+					self.canvas.Background.set_xscale('log', basey=math.e)
+		except:
+			pass
+		
 		def onClick(event):
 			if event.button==1 and (not self.pan) and (not self.zoom):
 				try:
@@ -254,7 +578,7 @@ class UI_GenRep(UI_GenSec_Base):
 							event.canvas.draw()
 							self.canvas.activeSignal=True
 						else:
-							event.inaxes.patch.set_facecolor('#ffffff')
+							event.inaxes.patch.set_facecolor(self.fondo_graph[0])
 							event.canvas.draw()
 							self.canvas.activeSignal=False
 					elif event.inaxes.get_title()=='Background(BG)' and not self.canvas.activeSignal:
@@ -264,7 +588,7 @@ class UI_GenRep(UI_GenSec_Base):
 							event.canvas.draw()
 							self.canvas.activeBackground=True
 						else:
-							event.inaxes.patch.set_facecolor('#ffffff')
+							event.inaxes.patch.set_facecolor(self.fondo_graph[0])
 							event.canvas.draw()
 							self.canvas.activeBackground=False					
 				except:
@@ -281,7 +605,6 @@ class UI_GenRep(UI_GenSec_Base):
 				self.form1.setCursor(QtCore.Qt.ArrowCursor)
 		
 		ToolBarr = NavigationToolbar(self.canvas, self.verticalLayoutWidget)
-		self.verticalLayoutWidget.setStyleSheet(TOOLBUTTON_STYLE)
 		
 		def pan_change(event):
 			if self.pan:
@@ -359,18 +682,26 @@ class UI_GenRep(UI_GenSec_Base):
 				icon = QtGui.QIcon()
 				icon.addPixmap(QtGui.QPixmap("pixmaps/icons/save.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 				act.setIcon(icon)
-		self.canvas.fig.set_facecolor('#f0f0f0')
-		ToolBarr.setStyleSheet('background:#f0f0f0;')
+		self.canvas.fig.set_facecolor(self.fondo_graph[0])
 		
 		xmin1_label=QtGui.QLabel('low')		
 		xmin1_label.setStyleSheet('color:green')
-		xmin1_sb = QtGui.QDoubleSpinBox()
-		xmin1_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Low channel to signal'))	
+		self.xmin1_sb = QtGui.QDoubleSpinBox()
+		self.xmin1_sb.setDecimals(4)
+		if self.unit:
+			self.xmin1_sb.setSingleStep(0.1) 
+		"""Lo k necesito no es declarar un margen de salto sino la forma
+		de hacer k salte segun los valoresd e una lista"""
+		self.xmin1_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Low channel to signal'))	
 		
 		xmax1_label=QtGui.QLabel('high')
 		xmax1_label.setStyleSheet('color:green')
-		xmax1_sb = QtGui.QDoubleSpinBox()
-		xmax1_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'High channel to signal'))
+		self.xmax1_sb = QtGui.QDoubleSpinBox()
+		self.xmax1_sb.setDecimals(4)
+		if self.unit:
+			""""""
+			self.xmax1_sb.setSingleStep(0.1) 
+		self.xmax1_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'High channel to signal'))
 		
 		sign_count_label=QtGui.QLabel('signal')
 		sign_count_label.setStyleSheet('color:green')
@@ -385,13 +716,21 @@ class UI_GenRep(UI_GenSec_Base):
 			
 		xmin2_label=QtGui.QLabel('low')
 		xmin2_label.setStyleSheet('color:#1A297D')
-		xmin2_sb = QtGui.QDoubleSpinBox()
-		xmin2_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Low channel to Background'))
+		self.xmin2_sb = QtGui.QDoubleSpinBox()
+		self.xmin2_sb.setDecimals(4)
+		if self.unit:
+			""""""
+			self.xmin2_sb.setSingleStep(0.1) 
+		self.xmin2_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Low channel to Background'))
 		
 		xmax2_label=QtGui.QLabel('high')
 		xmax2_label.setStyleSheet('color:#1A297D')
-		xmax2_sb = QtGui.QDoubleSpinBox()
-		xmax2_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'High channel to Background'))
+		self.xmax2_sb = QtGui.QDoubleSpinBox()
+		self.xmax2_sb.setDecimals(4)
+		if self.unit:
+			""""""
+			self.xmax2_sb.setSingleStep(0.1) 
+		self.xmax2_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'High channel to Background'))
 		
 		back_count_label=QtGui.QLabel('background')
 		back_count_label.setStyleSheet('color:#1A297D')
@@ -410,28 +749,33 @@ class UI_GenRep(UI_GenSec_Base):
 		
 		apply_all=QtGui.QPushButton()
 		apply_all.setText(QtGui.QApplication.translate("MainWindow", 'Apply to all'))
+		apply_all.clicked.connect(self.Apply_To_All)
 		
-		self.verticalLayout.addWidget(ToolBarr,2,0,8,1)
+		self.verticalLayout.addWidget(ToolBarr,2,0,6,1)
 		self.verticalLayout.addWidget(self.canvas,0,0,10,60)		
 		
+		
 		self.sig_verticalLayout.addWidget(xmin1_label,0,0,1,1)
-		self.sig_verticalLayout.addWidget(xmin1_sb,1,0,1,1)		
+		self.sig_verticalLayout.addWidget(self.xmin1_sb,1,0,1,1)		
 		self.sig_verticalLayout.addWidget(sign_count_label,0,2,1,2)
 		self.sig_verticalLayout.addWidget(sign_count_line,1,2,1,2)		
 		self.sig_verticalLayout.addWidget(xmax1_label,0,5,1,1)
-		self.sig_verticalLayout.addWidget(xmax1_sb,1,5,1,1)		
-		self.verticalLayout.addWidget(self.sig_widget,11,6,2,4)
-		
-		self.verticalLayout.addWidget(apply_to,12,25,1,1)
-		self.verticalLayout.addWidget(apply_all,12,30,1,1)
+		self.sig_verticalLayout.addWidget(self.xmax1_sb,1,5,1,1)
+		self.sig_verticalLayout.setColumnMinimumWidth(3,80)		
+		self.verticalLayout.addWidget(self.sig_widget,11,0,2,15)
+			
+		self.verticalLayout.addWidget(apply_to,12,19,1,7)
+		self.verticalLayout.addWidget(apply_all,12,34,1,7)
 		
 		self.back_verticalLayout.addWidget(xmin2_label,0,0,1,1)
-		self.back_verticalLayout.addWidget(xmin2_sb,1,0,1,1)
+		self.back_verticalLayout.addWidget(self.xmin2_sb,1,0,1,1)
 		self.back_verticalLayout.addWidget(back_count_label,0,2,1,2)
 		self.back_verticalLayout.addWidget(back_count_line,1,2,1,2)	
 		self.back_verticalLayout.addWidget(xmax2_label,0,5,1,1)
-		self.back_verticalLayout.addWidget(xmax2_sb,1,5,1,1)
-		self.verticalLayout.addWidget(self.back_widget,11,50,2,4)
+		self.back_verticalLayout.addWidget(self.xmax2_sb,1,5,1,1)
+		self.back_verticalLayout.setColumnMinimumWidth(3,80)
+		self.verticalLayout.addWidget(self.back_widget,11,45,2,15)
+		
 		
 		def count_signal():
 			count=0
@@ -446,27 +790,32 @@ class UI_GenRep(UI_GenSec_Base):
 			back_count_line.setText(str(int(count)))
 		
 		def fill_x_1(x1,x2):
-			xmin1_sb.setValue(x1)
-			xmax1_sb.setValue(x2)			
+			self.xmin1_sb.setValue(x1)
+			self.xmax1_sb.setValue(x2)			
 			count_signal()
+			self.getAllData()
 		
 		def fill_x_2(x1,x2):
-			xmin2_sb.setValue(x1)
-			xmax2_sb.setValue(x2)
-			count_background()	
+			self.xmin2_sb.setValue(x1)
+			self.xmax2_sb.setValue(x2)
+			count_background()
+			
 		
 		def x1_sb_change(buttom):
-			if not self.canvas.activeSignal:				
-				if xmax1_sb.value() >=xmin1_sb.value():
+			if not self.canvas.activeSignal:
+				if self.xmax1_sb.value() >=self.xmin1_sb.value():
 					self.canvas.activeSignal=True
-					self.canvas.onselect(xmin1_sb.value(),xmax1_sb.value())
+					self.canvas.onselect(self.xmin1_sb.value(),self.xmax1_sb.value())
+			self.save_sig_back_values(self.actual_in_graph)
 
 			
 		def x2_sb_change(buttom):
 			if not self.canvas.activeBackground:				
-				if xmax2_sb.value() >=xmin2_sb.value():
+				if self.xmax2_sb.value() >=self.xmin2_sb.value():
 					self.canvas.activeBackground=True
-					self.canvas.onselect(xmin2_sb.value(),xmax2_sb.value())
+					self.canvas.onselect(self.xmin2_sb.value(),self.xmax2_sb.value())
+			self.save_sig_back_values(self.actual_in_graph)
+			
 				
 		if self.canvas.allGraphic_X!=[] and self.canvas.allGraphic_Y!=[]:
 			self.canvas.mousePressEvent=SpanSelector(
@@ -481,19 +830,19 @@ class UI_GenRep(UI_GenSec_Base):
 			self.canvas.mpl_connect('axes_enter_event', enter_axes)
 			self.canvas.mpl_connect('axes_leave_event', leave_axes)
 			
-			xmin1_sb.setMinimum(min(X))
-			xmin1_sb.setMaximum(max(X))
-			xmax1_sb.setMinimum(min(X))
-			xmax1_sb.setMaximum(max(X))
-			xmin2_sb.setMinimum(min(X))
-			xmin2_sb.setMaximum(max(X))
-			xmax2_sb.setMinimum(min(X))
-			xmax2_sb.setMaximum(max(X))
+			self.xmin1_sb.setMinimum(min(X))
+			self.xmin1_sb.setMaximum(max(X))
+			self.xmax1_sb.setMinimum(min(X))
+			self.xmax1_sb.setMaximum(max(X))
+			self.xmin2_sb.setMinimum(min(X))
+			self.xmin2_sb.setMaximum(max(X))
+			self.xmax2_sb.setMinimum(min(X))
+			self.xmax2_sb.setMaximum(max(X))
 			
-			xmin1_sb.valueChanged.connect(partial(x1_sb_change,1))
-			xmax1_sb.valueChanged.connect(partial(x1_sb_change,2))
-			xmin2_sb.valueChanged.connect(partial(x2_sb_change,1))
-			xmax2_sb.valueChanged.connect(partial(x2_sb_change,2))	
+			self.xmin1_sb.valueChanged.connect(partial(x1_sb_change,1))
+			self.xmax1_sb.valueChanged.connect(partial(x1_sb_change,2))
+			self.xmin2_sb.valueChanged.connect(partial(x2_sb_change,1))
+			self.xmax2_sb.valueChanged.connect(partial(x2_sb_change,2))	
 			self.canvas.signal_change.connect(fill_x_1)
 			self.canvas.background_change.connect(fill_x_2)
 			
@@ -530,23 +879,20 @@ class UI_GenRep(UI_GenSec_Base):
 		self.treeWidget_2.setFrameShape(QtGui.QFrame.StyledPanel)
 		self.treeWidget_2.setFrameShadow(QtGui.QFrame.Sunken)
 		self.treeWidget_2.setTabKeyNavigation(True)
-		self.treeWidget_2.setStyleSheet(TREEW2_STYLE)
 		self.treeWidget_2.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
 		self.treeWidget_2.headerItem().setText(0, QtGui.QApplication.translate('MainWindow',"Columns"))
-		self.treeWidget_2.header().setStyleSheet(HEADER)	
 		
 		self.mainWidget=QtGui.QWidget()
 		self.form1.setCentralWidget(self.mainWidget)
 		
 		#Panel de abajo
 		self.down_area= QtGui.QWidget()
-		#self.down_area.setStyleSheet('background:red;')
 		self.down_area_layout=QtGui.QGridLayout(self.down_area)
 		self.active_bar=QtGui.QLabel()
 		self.active_bar.mouseDoubleClickEvent=self.chow_hidden_down_area
 		self.active_bar.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
 		self.active_bar.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Show/Hidde graphic'))
-		self.active_bar.setStyleSheet('background:qlineargradient( x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #d3d3d3, stop: 0.1 #d3d3d3,stop: 0.49 #ffffff, stop: 0.5 #ffffff, stop: 0.9 #f0f0f0,stop: 1 #f0f0f0)')
+		self.active_bar.setStyleSheet('background:#E8E8E8')
 		self.down_area_layout.setContentsMargins(0, 0, 0, 0)
 		self.down_area_layout.addWidget(self.active_bar,0,0,1,4)
 		self.down_area_layout.addWidget(self.verticalLayoutWidget,1,0,10,3)
@@ -701,21 +1047,22 @@ class UI_GenRep(UI_GenSec_Base):
 			self.groupsColors[g]=color
 			data=g.split(',')
 			row=int(data[0])
-			columns.append(int(data[1]))		
-		delegate = BackgroundColorDelegate(self.treeWidget,columns,colorear,dejar,color) 
+			columns.append(int(data[1]))
+		delegate = BackgroundColorDelegate(self.treeWidget,columns,colorear,dejar,color,self.fondo) 
 		self.treeWidget.setItemDelegateForRow(row,delegate)
-
+		
 	
 	def dejar(self,row,toGroup):
-		list={}
-		item = self.treeWidget.topLevelItem(row)
-		for column in range(self.treeWidget.columnCount()):
-			if not (str(row)+','+str(column)) in toGroup:
-				for group in range(len(self.inGroup)):
-					if (str(row)+','+str(column)) in self.inGroup[group]:
-						g=str(row)+','+str(column)
-						list[column]=self.groupsColors[g]
-		return list
+		if row!=None:
+			list={}
+			item = self.treeWidget.topLevelItem(row)
+			for column in range(self.treeWidget.columnCount()):
+				if not (str(row)+','+str(column)) in toGroup:
+					for group in range(len(self.inGroup)):
+						if (str(row)+','+str(column)) in self.inGroup[group]:
+							g=str(row)+','+str(column)
+							list[column]=self.groupsColors[g]
+			return list
 		
 		
 	def deleteinGroup(self,borrar):
@@ -727,11 +1074,220 @@ class UI_GenRep(UI_GenSec_Base):
 		self.action_ungroup.setEnabled(False)
 	
 	
-	def group(self):
+	def getData(self,info,data,muestra):
+			try:
+				if data=="Sample ID":
+					return muestra
+				elif data=="Process Order":
+					return float(info['process_order_id'])
+				elif data=="Data Type":
+					return info['date_type']
+				elif data=="Beta Irradiation Time" and info['id']==1:
+					return float(info['time'])
+				elif data=="Beta Dose"  and info['id']==1:
+					return float(info['time'])*float(self.dosis)
+				elif data=="External Irradiation Time"  and info['id']==0:
+					return float(info['time'])
+				elif data=="External Dose"  and info['id']==0:
+					return float(info['time'])*float(self.dosisE)
+				elif data=="Preheating Temperature" and info['id']==7:
+					return float(info['final_temp'])
+				elif data=="Measuring Temperature" and (info['id']==2  or info['id']==3  or info['id']==4  or info['id']==5  or info['id']==6):
+					return float(info['final_temp'])
+				elif data=="Preheating Rate" and info['id']==7:
+					return float(info['heating_rate'])
+				elif data=="Heating Rate" and (info['id']==2  or info['id']==3  or info['id']==4  or info['id']==5  or info['id']==6):
+					return float(info['heating_rate'])
+				elif data=="Light Source":
+					return str(info['light_source'])
+				elif data=="Optical Power":
+					return float(info['start_optical_power'])
+				elif data=="Electric Stimulation":
+					return float(info['excV'])
+				elif data=="Electric Frequency":
+					return float(info['excF'])
+				elif data=="Time of Beta irradiation" and info['id']==1:
+					return str(info['Tiempo2'])
+				elif data=="Time of External irradiation" and info['id']==0:
+					return str(info['Tiempo2'])
+				elif data=="Time of Measurement" and (info['id']==2  or info['id']==3  or info['id']==4  or info['id']==5  or info['id']==6):
+					return str(info['Tiempo1'])
+				else:
+					return 'error'
+			except:
+				return 'error'
+				
+	def association_ready(self):
+		self.criterias,self.consecutives=self.association.fill_data()
+		for i in range(self.treeWidget.topLevelItemCount()):
+			item = self.treeWidget.topLevelItem( i )
+			if item.text(1):
+				muestra=str(item.text(1))					
+				first={}
+				if self.criterias[0][0]!='':	
+					for column in range(self.comandos+1)[2:]:
+						if item.text(column):
+							criteria=self.criterias[0]
+							info=self.processData[str(i)+','+str(column)]
+							data=self.getData(info,criteria[0],muestra)
+							if data!='error':
+								if criteria[1]=='Same':
+									first.setdefault(data, []).append (INDEX(i,column))
+								elif criteria[1]=='Different':
+									if str(data)!=str(criteria[2]):
+										first.setdefault(data, []).append (INDEX(i,column))
+								elif criteria[1]=='Value':
+									value=str(criteria[2])										
+									if '*' in value:
+										data=str(data)
+										while ('*' in value):
+											p=value.find('*')
+											if data[:p]!=value[:p]:
+												break
+											value=value[p+1:]
+											data=data[p+1:]		
+										if data==value:
+											first.setdefault(str(criteria[2]), []).append (INDEX(i,column))											
+									else:
+										if type(data)==float:
+											try:
+												value=float(value)
+											except:
+												value='error'
+										if str(data)==str(value):
+											first.setdefault(data, []).append (INDEX(i,column))
+								
+				if len(self.criterias)>1!='':					
+					for list in first.values():
+						second={}
+						if len(list)>1:
+							for i in list:							
+								criteria=self.criterias[1]
+								info=self.processData[str(i.row())+','+str(i.column())]
+								data=self.getData(info,criteria[0],muestra)
+								if data!='error':
+									if criteria[1]=='Same':
+										second.setdefault(data, []).append (INDEX(i.row(),i.column()))
+									elif criteria[1]=='Different':
+										if str(data)!=str(criteria[2]):
+											second.setdefault(data, []).append (INDEX(i.row(),i.column()))
+									elif criteria[1]=='Value':
+										value=str(criteria[2])										
+										if '*' in value:
+											data=str(data)
+											while ('*' in value):
+												p=value.find('*')
+												if data[:p]!=value[:p]:
+													break
+												value=value[p+1:]
+												data=data[p+1:]		
+											if data==value:
+												second.setdefault(str(criteria[2]), []).append (INDEX(i.row(),i.column()))										
+										else:
+											if type(data)==float:
+												try:
+													value=float(value)
+												except:
+													value='error'
+											if str(data)==str(value):
+												second.setdefault(data, []).append (INDEX(i.row(),i.column()))
+											
+						if len(self.criterias)>2!='':		
+							for list in second.values():
+								tercero={}
+								if len(list)>1:
+									for i in list:							
+										criteria=self.criterias[2]
+										info=self.processData[str(i.row())+','+str(i.column())]
+										data=self.getData(info,criteria[0],muestra)
+										if data!='error':
+											if criteria[1]=='Same':
+												tercero.setdefault(data, []).append (INDEX(i.row(),i.column()))
+											elif criteria[1]=='Different':
+												if str(data)!=str(criteria[2]):
+													tercero.setdefault(data, []).append (INDEX(i.row(),i.column()))
+											elif criteria[1]=='Value':
+												value=str(criteria[2])										
+												if '*' in value:
+													data=str(data)
+													while ('*' in value):
+														p=value.find('*')
+														if data[:p]!=value[:p]:
+															break
+														value=value[p+1:]
+														data=data[p+1:]		
+													if data==value:
+														tercero.setdefault(str(criteria[2]), []).append (INDEX(i.row(),i.column()))										
+												else:
+													if type(data)==float:
+														try:
+															value=float(value)
+														except:
+															value='error'
+													if str(data)==str(value):
+														tercero.setdefault(data, []).append (INDEX(i.row(),i.column()))
+													
+								if len(self.criterias)>3!='':		
+									for list in tercero.values():
+										cuarto={}
+										if len(list)>1:
+											for i in list:							
+												criteria=self.criterias[3]
+												info=self.processData[str(i.row())+','+str(i.column())]
+												data=self.getData(info,criteria[0],muestra)	
+												if data!='error':
+													if criteria[1]=='Same':
+														cuarto.setdefault(data, []).append (INDEX(i.row(),i.column()))
+													elif criteria[1]=='Different':
+														if str(data)!=str(criteria[2]):
+															cuarto.setdefault(data, []).append (INDEX(i.row(),i.column()))
+													elif criteria[1]=='Value':
+														value=str(criteria[2])										
+														if '*' in value:
+															data=str(data)
+															while ('*' in value):
+																p=value.find('*')
+																if data[:p]!=value[:p]:
+																	break
+																value=value[p+1:]
+																data=data[p+1:]		
+															if data==value:
+																cuarto.setdefault(str(criteria[2]), []).append (INDEX(i.row(),i.column()))										
+														else:
+															if type(data)==float:
+																try:
+																	value=float(value)
+																except:
+																	value='error'
+															if str(data)==str(value):
+																cuarto.setdefault(data, []).append (INDEX(i.row(),i.column()))
+										for list in cuarto.values():
+											if len(list)>1:
+												self.group(list)
+								else:
+									for list in tercero.values():
+										if len(list)>1:
+											self.group(list)
+						else:
+							for list in second.values():
+								if len(list)>1:
+									self.group(list)
+				else:
+					for list in first.values():
+						if len(list)>1:
+							self.group(list)
+								
+						
+		self.association.form1.close()
+	
+	def group(self,selected=False):
 		toGroup=[]
 		borrar=[]
 		row=None
-		for item in self.treeWidget.selectedIndexes():
+		if not selected:
+			selected=self.treeWidget.selectedIndexes()
+		
+		for item in selected:
 			i = self.treeWidget.topLevelItem(item.row())
 			if i.text(item.column())=='':
 				self.error(QtGui.QApplication.translate('MainWindow','Command ')+str(item.column()-1)+QtGui.QApplication.translate('MainWindow',' is empty'))
@@ -774,7 +1330,7 @@ class UI_GenRep(UI_GenSec_Base):
 		
 	def groupActive(self):
 			"""activa el boton merge cuando es posible usarlo, lo desactiva cuando no"""
-			if self.pertenecen_consecutivos():
+			if self.pertenecen_consecutivos() or not self.consecutives :
 				self.action_group.setEnabled(True)				
 			else:
 				self.action_group.setEnabled(False)
@@ -822,45 +1378,12 @@ class UI_GenRep(UI_GenSec_Base):
 		if self.action_ungroup.isEnabled():
 			menu.addAction(self.action_ungroup)
 		action = menu.exec_(self.treeWidget.mapToGlobal(pos))
-		
-	@cursorAction()
-	def save(self,temp=False):
-		"""Guarda la informacion en forma de xml"""
-		self.closeAllDialogs()
-		if self.directorioArchivo=='':
-			return self.saveAs()
-		else:
-			#guardarlo en la dir self.directorioArchivo
-			pass
-	
-	
-	@cursorAction()
-	def saveAs(self,dir=False):
-		"""Ventana para guardar un documanto"""
-		self.closeAllDialogs()
-		dialog=QtGui.QFileDialog(self.form1)
-		if not dir:
-			self.directorioArchivo=dialog.getSaveFileName(
-				self.form1,
-				QtGui.QApplication.translate('MainWindow',"Save"),
-				self.fileLocation,
-				QtGui.QApplication.translate('MainWindow','File')+' XLS (*.xls);; '+QtGui.QApplication.translate('MainWindow','File')+'RLS (*.rls);; '+QtGui.QApplication.translate('MainWindow','File')+'PDF (*.pdf)',
-			)
-		else:
-			self.directorioArchivo=dir
-		if self.directorioArchivo:
-			if not (self.directorioArchivo.endswith('.xls') or self.directorioArchivo.endswith('.xml') or self.directorioArchivo.endswith('.pdf')):
-				self.directorioArchivo+='.xls'
-			return True
-		else:
-			self.directorioArchivo=''
-		return False
 
 
 	def onCloseEvent(self,event):
 		self.closeAllDialogs()
-		self.config.saveGeneral(self.fuente,self.size,self.fileLocation,self.opacity,self.lang)		
-		self.config.saveGenRep(self.curve_to_show,self.show_tl,self.h_scale,self.h_min,self.h_max,self.h_great_unit,self.h_small_unit,self.unit,self.v_scale,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit,self.signal,self.background,self.s_low,self.s_high,self.b_low,self.b_high,self.parameters)
+		self.config.saveGeneral(self.fuente,self.size,self.fileLocation,self.opacity,self.lang,self.theme)		
+		self.config.saveGenRep(self.curve_to_show,self.show_tl,self.h_scale,self.h_min,self.h_max,self.h_great_unit,self.h_small_unit,self.unit,self.v_scale,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit,self.signal,self.background,self.s_low,self.s_high,self.b_low,self.b_high,self.consecutives,self.parameters)
 		event.accept()
 	
 	
@@ -948,7 +1471,6 @@ class UI_GenRep(UI_GenSec_Base):
 		font.setStyleStrategy(QtGui.QFont.PreferDefault)
 		self.toolButtonHeader.setFont(font)
 		self.toolButtonHeader.setObjectName(("toolButton"))
-		self.toolButtonHeader.setStyleSheet(HEADER_TOOLBUTTON_STYLE)
 		self.treeWidget.setItemWidget(item_0, 0,self.toolButtonHeader)
 		self.toolButtonHeader.clicked.connect(partial(self.selectRow,True,self.grupos+1))
 		vs=self.treeWidget.verticalScrollBar()
@@ -993,7 +1515,7 @@ class UI_GenRep(UI_GenSec_Base):
 			
 	
 	def selectRow(self, ok=False, row=False):
-		"""Selecciona un conjunto de filas, recibe por parametro un estrin de la forma: row,row,row...."""					
+		"""Selecciona un conjunto de filas, recibe por parametro un string de la forma: row,row,row...."""					
 		if not ok:
 			row, ok = QtGui.QInputDialog.getInteger(self.form1, QtGui.QApplication.translate('MainWindow','Row Number'), QtGui.QApplication.translate('MainWindow','Row')+':',0,1)			
 		if ok:				
@@ -1005,9 +1527,10 @@ class UI_GenRep(UI_GenSec_Base):
 				item = self.treeWidget.topLevelItem(row)
 				item.setSelected(True)
 				if self.selected_row[1]:
-					self.selected_row[1].setStyleSheet(HEADER_TOOLBUTTON_STYLE)
+					#self.selected_row[1].setStyleSheet(HEADER_TOOLBUTTON_STYLE)
+					pass
 				self.selected_row[1]=self.treeWidget.itemWidget(item,0)
-				self.selected_row[1].setStyleSheet(HEADER_TOOLBUTTON_STYLE2)
+				#self.selected_row[1].setStyleSheet(HEADER_TOOLBUTTON_STYLE2)
 				self.selected_row[0]=row
 				self.clear_lateral_panel()
 				self.fill_lateral_panel()
@@ -1032,25 +1555,28 @@ class UI_GenRep(UI_GenSec_Base):
 				if info['id'] > 1 and info['id'] < 7:
 					#Comprobar k curvas son las k necesito self.curve_to_show
 					header=self.header.model().headerData(column,QtCore.Qt.Horizontal).toString()						
+					
 					item_2 = QtGui.QTreeWidgetItem(self.treeWidget_2)
 					item_2.setFlags(QtCore.Qt.ItemIsSelectable|QtCore.Qt.ItemIsEnabled)
 					item_2.setText(0,header)
+					
 					for i in self.curve_to_show:
 						if info['Curva'+str(i)] !='':	
 							item_2.addChild(QtGui.QTreeWidgetItem(str(i)))
-							
-					if item_2.childCount ()>0:
-						self.treeWidget_2.setItemWidget(item_2, 0,QtGui.QWidget())
-
+					
+					if not item_2.childCount()>0:
+						item_2.setHidden(True)
+					
 
 
 class BackgroundColorDelegate(QtGui.QStyledItemDelegate):
-	def __init__(self, parent,columns,colorear,dejar,color):
+	def __init__(self, parent,columns,colorear,dejar,color,fondo):
 		super(BackgroundColorDelegate, self).__init__(parent)
 		self.columns=columns
 		self.colorear=colorear
 		self.dejar=dejar
 		self.color=color
+		self.fondo=fondo
 
 	def paint(self, painter, option, index):
 		if index.column() in self.columns and self.colorear:
@@ -1059,9 +1585,12 @@ class BackgroundColorDelegate(QtGui.QStyledItemDelegate):
 		elif index.column() in self.dejar:
 			painter.fillRect(option.rect, self.dejar[index.column()])
 			super(BackgroundColorDelegate, self).paint(painter, option, index)
-		else:			
+		elif index.row() %2==0:
+			painter.fillRect(option.rect, QtGui.QColor(self.fondo[0]),)
 			super(BackgroundColorDelegate, self).paint(painter, option, index)
-	
+		else:
+			painter.fillRect(option.rect, QtGui.QColor(self.fondo[1]),)
+			super(BackgroundColorDelegate, self).paint(painter, option, index)
 
 class Animation(QtCore.QPropertyAnimation):
 	LinearPath, CirclePath = range(2)

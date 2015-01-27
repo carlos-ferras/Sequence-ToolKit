@@ -2,23 +2,22 @@
 # -*- coding: utf-8 -*- 
 
 #~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
-#~ This file is part of Secuence-ToolKit.
+#~ This file is part of Sequence-ToolKit.
 
-#~ Secuence-ToolKit is free software: you can redistribute it and/or modify
+#~ Sequence-ToolKit is free software: you can redistribute it and/or modify
 #~ it under the terms of the GNU General Public License as published by
 #~ the Free Software Foundation, either version 3 of the License, or
 #~ (at your option) any later version.
 
-#~ Secuence-ToolKit is distributed in the hope that it will be useful,
+#~ Sequence-ToolKit is distributed in the hope that it will be useful,
 #~ but WITHOUT ANY WARRANTY; without even the implied warranty of
 #~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #~ GNU General Public License for more details.
 
 #~ You should have received a copy of the GNU General Public License
-#~ along with Secuence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
+#~ along with Sequence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
-from style import *
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -38,11 +37,10 @@ class Ui_Dialog(object):
         Dialog.setMaximumSize(QtCore.QSize(336, 235))
 	
         self.label = QtGui.QLabel(Dialog)
-        self.label.setGeometry(QtCore.QRect(0, 10, 241, 17))
-        self.label.setStyleSheet(LABEL_HEADER_STYLE)
+        self.label.setGeometry(QtCore.QRect(25, 10, 241, 17))
 	
 	self.check=QtGui.QCheckBox(Dialog)
-	self.check.setGeometry(QtCore.QRect(0, 2, 30, 30))
+	self.check.setGeometry(QtCore.QRect(3, 2, 20, 30))
 	
         self.listWidget = QtGui.QListWidget(Dialog)
         self.listWidget.setGeometry(QtCore.QRect(0, 30, 241, 201))
@@ -95,16 +93,12 @@ class Ui_Dialog(object):
         
 	self.pushButton_2 = QtGui.QPushButton(Dialog)
         self.pushButton_2.setGeometry(QtCore.QRect(245, 8, 85, 27))
-        self.pushButton_2.setStyleSheet(BUTTON_STYLE)
 	self.pushButton = QtGui.QPushButton(Dialog)
         self.pushButton.setGeometry(QtCore.QRect(245, 43, 85, 27))
-        self.pushButton.setStyleSheet(BUTTON_STYLE)
         self.pushButton_3 = QtGui.QPushButton(Dialog)
         self.pushButton_3.setGeometry(QtCore.QRect(245, 78, 85, 27))
-        self.pushButton_3.setStyleSheet(BUTTON_STYLE)
 	self.pushButton_4 = QtGui.QPushButton(Dialog)
         self.pushButton_4.setGeometry(QtCore.QRect(245, 113, 85, 27))
-        self.pushButton_4.setStyleSheet(BUTTON_STYLE)
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)

@@ -2,21 +2,20 @@
 # -*- coding: utf-8 -*- 
 
 #~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
-#~ This file is part of Secuence-ToolKit.
+#~ This file is part of Sequence-ToolKit.
 
-#~ Secuence-ToolKit is free software: you can redistribute it and/or modify
+#~ Sequence-ToolKit is free software: you can redistribute it and/or modify
 #~ it under the terms of the GNU General Public License as published by
 #~ the Free Software Foundation, either version 3 of the License, or
 #~ (at your option) any later version.
 
-#~ Secuence-ToolKit is distributed in the hope that it will be useful,
+#~ Sequence-ToolKit is distributed in the hope that it will be useful,
 #~ but WITHOUT ANY WARRANTY; without even the implied warranty of
 #~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #~ GNU General Public License for more details.
 
 #~ You should have received a copy of the GNU General Public License
-#~ along with Secuence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
-
+#~ along with Sequence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
 
 import threading
 from base import *
@@ -24,27 +23,25 @@ import time
 import datetime
 
 from Dialogs.operationsWid import operationsWid 
-from Dialogs.fontSelect import fontS 
 from Dialogs.priview import priview
 from Dialogs.process import eslWin,irraWin,ilumWin,lmosWin,oslWin,pauseWin,poslWin,pre_heatWin, tlWin
-from GenSecLib import createXML,loadXML
+
 
 class UI_GenSec_Base(UI_base): 
-		def __init__(self,title,appIcon,dir=False, parent=None):			
+		def __init__(self,title,appIcon,dir=False, parent=None):
 			UI_base.__init__(self,title,appIcon)
 			
-			self.form1.setCursor(QtCore.Qt.WaitCursor)			
+			self.form1.setCursor(QtCore.Qt.WaitCursor)
 			self.fill()
 				
 			self.comandos=8
 			self.grupos=0
 			
 			self.form1.closeEvent=self.onCloseEvent
-			self.header=self.treeWidget.header()			
-			self.header.setClickable(True)			
-			self.header.setStyleSheet(HEADER)		
+			self.header=self.treeWidget.header()
+			self.header.setClickable(True)
 			
-			self.actionSeleccionar_Fila.triggered.connect(self.selectRow)		
+			self.actionSeleccionar_Fila.triggered.connect(self.selectRow)
 			
 			widget=QtGui.QDesktopWidget()
 			mainScreenSize = widget.availableGeometry(widget.primaryScreen())
@@ -80,7 +77,7 @@ class UI_GenSec_Base(UI_base):
 			self.selected_row=[False,False]
 			self.inGroup=[]
 			self.colores_in_row={}
-						
+			
 			if dir:
 				self.directorioArchivo=dir
 				self.open(True)
@@ -111,8 +108,7 @@ class UI_GenSec_Base(UI_base):
 			self.treeWidget.setProperty("showDropIndicator", False)
 			self.treeWidget.setDragDropOverwriteMode(False)
 			self.treeWidget.setDragDropMode(QtGui.QAbstractItemView.NoDragDrop)
-			self.treeWidget.setDefaultDropAction(QtCore.Qt.MoveAction)		
-			self.treeWidget.setStyleSheet(TREEW_STYLE)		
+			self.treeWidget.setDefaultDropAction(QtCore.Qt.MoveAction)				
 			self.treeWidget.setAlternatingRowColors(True)
 			self.treeWidget.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)
 			self.treeWidget.setSelectionBehavior(QtGui.QAbstractItemView.SelectItems)
@@ -203,11 +199,13 @@ class UI_GenSec_Base(UI_base):
 					self.form1,
 					QtGui.QApplication.translate('MainWindow',"Open") +" SLF",
 					self.fileLocation,
-					QtGui.QApplication.translate('MainWindow','File')+' SLF (*.slf)' 
+					QtGui.QApplication.translate('MainWindow','File')+' SLF (*.slf)',
+					'0',
+					QtGui.QFileDialog.DontUseNativeDialog,
 				)				
 			if self.directorioArchivo:
 				try:
-					myLoader=loadXML.Loader(self.directorioArchivo)
+					myLoader=loadSLF.Loader(self.directorioArchivo)
 					list=myLoader.exportExtructure()				
 					if str(list[1][0][1])!='None':
 						self.nombre=list[1][0][1]

@@ -81,9 +81,9 @@ class Setup(setup.Ui_Form):
 			self.radiobutton_4.setChecked(True)
 			
 			
-		if h_scale=='lineal':
+		if h_scale=='linear':
 			self.radiobutton_5.setChecked(True)
-		elif h_scale=='log10':
+		elif h_scale=='log':
 			self.radiobutton_6.setChecked(True)
 		elif h_scale=='ln':
 			self.radiobutton_7.setChecked(True)
@@ -118,13 +118,13 @@ class Setup(setup.Ui_Form):
 			
 		self.combobox.setCurrentIndex(unit)
 			
-		
-		if v_scale=='lineal':
-			self.radiobutton_16.setChecked(True)
-		elif v_scale=='log10':
+		if v_scale=='log':
 			self.radiobutton_17.setChecked(True)
 		elif v_scale=='ln':
 			self.radiobutton_18.setChecked(True)
+		else:
+			self.radiobutton_16.setChecked(True)
+		
 			
 		if v_min==-1:
 			self.radiobutton_19.setChecked(True)
@@ -227,9 +227,9 @@ class Setup(setup.Ui_Form):
 			
 
 		if self.radiobutton_5.isChecked():		
-			h_scale='lineal'
+			h_scale='linear'
 		elif self.radiobutton_6.isChecked():		
-			h_scale='log10'
+			h_scale='log'
 		elif self.radiobutton_7.isChecked():		
 			h_scale='ln'
 			
@@ -255,13 +255,12 @@ class Setup(setup.Ui_Form):
 		
 		unit=self.combobox.currentIndex()
 				
-		
-		if self.radiobutton_16.isChecked():		
-			v_scale='lineal'
+		if self.radiobutton_18.isChecked():		
+			v_scale='ln'		
 		elif self.radiobutton_17.isChecked():		
-			v_scale='log10'
-		elif self.radiobutton_18.isChecked():		
-			v_scale='ln'
+			v_scale='log'
+		else:	
+			v_scale='linear'
 			
 		if self.radiobutton_19.isChecked():		
 			v_min=-1

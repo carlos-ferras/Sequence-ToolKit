@@ -2,37 +2,29 @@
 # -*- coding: utf-8 -*- 
 
 #~ Copyright (C) 2014 Carlos Manuel Ferras Hernandez <c4rlos.ferra5@gmail.com>
-#~ This file is part of Secuence-ToolKit.
+#~ This file is part of Sequence-ToolKit.
 
-#~ Secuence-ToolKit is free software: you can redistribute it and/or modify
+#~ Sequence-ToolKit is free software: you can redistribute it and/or modify
 #~ it under the terms of the GNU General Public License as published by
 #~ the Free Software Foundation, either version 3 of the License, or
 #~ (at your option) any later version.
 
-#~ Secuence-ToolKit is distributed in the hope that it will be useful,
+#~ Sequence-ToolKit is distributed in the hope that it will be useful,
 #~ but WITHOUT ANY WARRANTY; without even the implied warranty of
 #~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #~ GNU General Public License for more details.
 
 #~ You should have received a copy of the GNU General Public License
-#~ along with Secuence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
+#~ along with Sequence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
 
-PROCESS_WIN_STYLE="""
+def LOAD(theme):
+	if os.path.exists('theme/'+theme+'.stkthm'):
+		theme_values=open('theme/'+theme+'.stkthm')
+		lines=theme_values.readlines()
+		colors=[]
+		for i in range(len(lines)):
+			colors.append(str(lines[i].split(' ')[1][:-1]))
+	return colors
 
-QLabel{
-	font-size:14px;
-	}
-*{
-	font-size:14px;
-	}
- 
-"""
-
-PROCESS_BUTTONS_STYLE="""
-
-QPushButton{
-	font-size:14px;
-	}
- 
-"""

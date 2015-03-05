@@ -26,6 +26,7 @@ from Dialogs.setup import Setup
 from Dialogs.profile import Profile 
 from Dialogs.association import Association
 from Dialogs.apply_to import Apply_To
+from XMLDriver import createRLF
 
 import math
 
@@ -103,8 +104,12 @@ class UI_GenRep(UI_GenSec_Base):
 			"Time of Beta irradiation",
 			"Time of External irradiation",
 			"Time of Measurement",
+			"Illumination Source",
+			"Illumination Power",
+			"Illumination Temperature",
 		)
 		
+		self.NMuestras=0
 		UI_GenSec_Base.__init__(self,'GenRep','pixmaps/genrep.ico',dir)
 				
 		self.treeWidget.itemSelectionChanged.connect(self.groupActive)
@@ -143,8 +148,13 @@ class UI_GenRep(UI_GenSec_Base):
 		if self.directorioArchivo=='':
 			return self.saveAs()
 		else:
-			#guardarlo en la dir self.directorioArchivo
-			pass
+			if (type(self.directorioArchivo)==QtCore.QString and (self.directorioArchivo.endsWith('.rlf') or self.directorioArchivo.endsWith('.xml'))) or (type(self.directorioArchivo)==str and (self.directorioArchivo.endswith('.rlf') or self.directorioArchivo.endswith('.xml'))):
+				self.createXML()
+				self.myREP.save(str(self.directorioArchivo),True)
+				#self.thereAreCanges=False
+				self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"The document has been saved"))
+				
+			# faltan el slf, pdfs
 	
 	
 	@cursorAction()
@@ -157,80 +167,202 @@ class UI_GenRep(UI_GenSec_Base):
 				self.form1,
 				QtGui.QApplication.translate('MainWindow',"Save"),
 				self.fileLocation,
-				QtGui.QApplication.translate('MainWindow','File')+' XLS (*.xls);; '+QtGui.QApplication.translate('MainWindow','File')+'RLS (*.rls);; '+QtGui.QApplication.translate('MainWindow','File')+'PDF (*.pdf)',
+				QtGui.QApplication.translate('MainWindow','File')+' RLF (*.rlf);; '+QtGui.QApplication.translate('MainWindow','File')+'XLS (*.xls);; '+QtGui.QApplication.translate('MainWindow','File')+'XML (*.xml);; '+QtGui.QApplication.translate('MainWindow','File')+'PDF (*.pdf)',
 				'0',
 				QtGui.QFileDialog.DontUseNativeDialog,
 			)
 		else:
 			self.directorioArchivo=dir
 		if self.directorioArchivo:
-			if not (self.directorioArchivo.endswith('.xls') or self.directorioArchivo.endswith('.xml') or self.directorioArchivo.endswith('.pdf')):
-				self.directorioArchivo+='.xls'
-			#Ak ya se redirecciona para un metodo distinto dependiendo de lo k se balla a hacer
+			if (type(self.directorioArchivo)==QtCore.QString and not (self.directorioArchivo.endsWith('.xls') or self.directorioArchivo.endsWith('.rlf') or self.directorioArchivo.endsWith('.xml') or self.directorioArchivo.endsWith('.pdf'))) or (type(self.directorioArchivo)==str and not (self.directorioArchivo.endswith('.xls') or self.directorioArchivo.endswith('.rlf') or self.directorioArchivo.endswith('.xml') or self.directorioArchivo.endswith('.pdf'))):
+				self.directorioArchivo+='.rlf'
+			
+			if (type(self.directorioArchivo)==QtCore.QString and (self.directorioArchivo.endsWith('.rlf') or self.directorioArchivo.endsWith('.xml'))) or (type(self.directorioArchivo)==str and (self.directorioArchivo.endswith('.rlf') or self.directorioArchivo.endswith('.xml'))):
+				self.createXML()
+				self.myREP.save(str(self.directorioArchivo),True)
+				#self.thereAreCanges=False
+				self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"The document has been saved"))
+				
+			# faltan el slf, pdf
 			return True
 		else:
 			self.directorioArchivo=''
 		return False
 		
-	def getAllData(self):
-		allData={}
+	
+	def createXML(self):
+		"""Genera una estructura xml a partir de los datos entrados por el usuario"""
+		self.myREP=None
+		tabla=self.getallData()		
+		self.myREP=createRLF.REP(nmuestras=self.NMuestras,name=self.nombre,owner=self.propietario,n2flow=self.nitrogeno,doserate=self.dosis,extdoserate=self.dosisE,protocol=self.protocolo,status=self.STATUS,reader_id=self.id_lector,datecrea=self.datecrea)
+		
+		for item in tabla:
+				ran=item[0]				
+				samples=ran.split(',')
+				for sample in samples:
+					if len(sample)==1:
+						samples_id=sample
+					elif len(sample)>1:
+						val=sample.split('-')
+						samples_id=range(int(val[0]),int(val[-1])+1)
+					for sample_id in samples_id:						
+						Sample_ID=self.myREP.createSample(sample_id)
+						po_id=1
+						for command in item[1]:
+							cant=command[1].keys()
+							if cant!=[]:
+								curves=[]
+								for curve in command[1]:
+									curv=int(curve.split(',')[2])
+									curves.append(self.myREP.createCurve(curv,command[1][curve][2], command[1][curve][0][0], command[1][curve][0][1], command[1][curve][3], command[1][curve][1][0],command[1][curve][1][1]))
+								
+								data={}
+								pos=cant[0][:-2]
+								for group in self.inGroup:
+									if pos in group:
+										for cm in (y for y in group if y != pos):
+											info=self.processData[cm]
+											
+											if info['id']==0:
+												if 2 in self.parameters:
+													data["External_irradiation"]=self.getData(info,"External Irradiation Time",False)
+												if 3 in self.parameters:
+													data["External_dose"]=self.getData(info,"External Dose",False)
+												if 13 in self.parameters:
+													data["Time_external_irradiation"]=self.getData(info,"Time of External irradiation",False)
+													
+											if info['id']==1:
+												if 0 in self.parameters:
+													data["Beta_irradiation_time"]=self.getData(info,"Beta Irradiation Time",False)
+												if 1 in self.parameters:
+													data["Beta_dose"]=self.getData(info,"Beta Dose",False)
+												if 12 in self.parameters:
+													data["Time_beta_irradiation"]=self.getData(info,"Time of Beta irradiation",False)											
+												
+											if info['id']==7:
+												if 4 in self.parameters:
+													data["Preheating_temperature"]=self.getData(info,"Preheating Temperature",False)
+												if 6 in self.parameters:
+													data["Preheating_rate"]=self.getData(info,"Preheating Rate",False)	
+
+											if info['id']==8:
+												if 15 in self.parameters:
+													data["Illumination_source"]=self.getData(info,"Illumination Source",False)
+												if 16 in self.parameters:
+													data["Illumination_power"]=self.getData(info,"Illumination Power",False)	
+												if 17 in self.parameters:
+													data["Illumination_temperature"]=self.getData(info,"Illumination Temperature",False)		
+										break
+			
+								info=self.processData[pos]
+								if info['id']==3 or info['id']==4 or info['id']==5:
+									if 8 in self.parameters:
+										data["Light_source"]=self.getData(info,"Light Sour",False)
+									if 9 in self.parameters:
+										data["Optical_power"]=self.getData(info,"Optical Power",False)		
+								
+								if info['id']==6:
+									if 10 in self.parameters:
+										data["Electric_stimulation"]=self.getData(info,"Electric Stimulation",False)
+									if 11 in self.parameters:
+										data["Electric_frequency"]=self.getData(info,"Electric Frequency",False)
+								
+								if 5 in self.parameters:
+									data["Measuring_temperature"]=self.getData(info,"Measuring Temperature",False)
+								if 7 in self.parameters:
+									data["Heating_rate"]=self.getData(info,"Heating Rate",False)
+								if 14 in self.parameters:
+									data["Time_external_irradiation"]=self.getData(info,"Time of Measurement",False)
+										
+								if info['id']==2:
+									p='TL'
+								if info['id']==3:
+									p='OSL'
+								if info['id']==4:
+									p='POSL'
+								if info['id']==5:
+									p='LMOSL'
+								if info['id']==6:
+									p='ESL'									
+								
+								self.myREP.createProcessOrder(Sample_ID,po_id,p,info['date_type'],curves,data)
+								po_id +=1
+							
+		
+	def getallData(self):
+		muestras=[]
 		for i in range(self.treeWidget.topLevelItemCount()):
 			item = self.treeWidget.topLevelItem( i )
-			for column in range(self.comandos+1)[2:]:
-				dato=item.text(column)
-				if dato!='':				
-					info=self.processData[str(i)+','+str(column)]
-					if info['id'] > 1 and info['id'] < 7:
-						for j in self.curve_to_show:
-							if info['Curva'+str(j)] !='':
-								
-								sig_range=[None,None]
-								back_range=[None,None]
-								
-								if self.values_sig.has_key(str(i)+','+str(column)):									
-									sig=self.values_sig[str(i)+','+str(column)]
-									back=self.values_back[str(i)+','+str(column)]
-								else:
-									sig=[self.canvas.allGraphic_X[int(self.s_low)],self.canvas.allGraphic_X[int(self.s_high)]]
-									if self.b_high==0:
-										max=len(self.canvas.allGraphic_X)-1
+			if item.text(1):
+				muestra=[str(item.text(1)),[]]
+				for column in range(self.comandos+1)[2:]:
+					dato=item.text(column)
+					if dato!='':				
+						info=self.processData[str(i)+','+str(column)]						
+						if info['id'] > 1 and info['id'] < 7:
+							curves={}
+							for j in self.curve_to_show:
+								if info['Curva'+str(j)] !='':
+									
+									sig_range=[None,None]
+									back_range=[None,None]
+									
+									X,Y=self.getX_Y(i,column,str(j))
+									
+									if self.values_sig.has_key(str(i)+','+str(column)):									
+										sig=self.values_sig[str(i)+','+str(column)]
+										back=self.values_back[str(i)+','+str(column)]
 									else:
-										max=int(self.b_high)
-									back=[self.canvas.allGraphic_X[int(self.b_low)],self.canvas.allGraphic_X[max]]
-								
-								sig_range[0]=int(self.canvas.allGraphic_X.index(sig[0]))
-								sig_range[1]=int(self.canvas.allGraphic_X.index(sig[1])+1)
-								back_range[0]=int(self.canvas.allGraphic_X.index(back[0]))
-								back_range[1]=int(self.canvas.allGraphic_X.index(back[1])+1)
+										sig=[X[int(self.s_low)],X[int(self.s_high)]]
+										if self.b_high==0:
+											max=len(X)-1
+										else:
+											max=int(self.b_high)
+										back=[X[int(self.b_low)],X[max]]
 									
-								sig_values=self.canvas.allGraphic_Y[sig_range[0]:sig_range[1]]
-								back_values=self.canvas.allGraphic_Y[back_range[0]:back_range[1]]
+									sig_range[0]=int(X.index(sig[0]))
+									sig_range[1]=int(X.index(sig[1])+1)
+									back_range[0]=int(X.index(back[0]))
+									back_range[1]=int(X.index(back[1])+1)
+										
+									sig_values=Y[sig_range[0]:sig_range[1]]
+									back_values=Y[back_range[0]:back_range[1]]
 
-								sig_count=0
-								back_count=0
-								
-								for k in sig_values:
-									sig_count+=k
-								for k in back_values:
-									back_count+=k
+									sig_count=0
+									back_count=0
 									
-								allData[str(i)+','+str(column)]=[sig,back,sig_count,back_count]
-		return allData					
+									for k in sig_values:
+										sig_count+=k
+									for k in back_values:
+										back_count+=k
+										
+									curves[str(i)+','+str(column)+','+str(j)]=[sig,back,sig_count,back_count]
+							muestra[1].append([info,curves])
+				muestras.append(muestra)
+		return muestras					
+
+
+	def changeTheme(self,them):
+		"""cambia el idioma por defecto de la aplicacion"""
+		self.theme=them
+		COL1,COL2,COL3,COL4,COL5,COL6,COL7,COL8=LOAD(them)		
+		self.form1.setStyleSheet(BASE(COL1,COL2,COL3,COL4,COL5,COL6,COL7,COL8,False))
 		
-	def affter_theme(self):
 		COL1,COL2,COL3,COL4,COL5,COL6,COL7,COL8=LOAD(self.theme)	
 		self.fondo=[COL2,COL3]
 		self.fondo_graph=[COL1,COL2]
 		self.font_color=COL8
 		self.create_graphic(self.canvas.allGraphic_X,self.canvas.allGraphic_Y)
-		
+		self.establecerFondo()
+		self.down_area_visible=True
+	
 	def establecerFondo(self):
 		columns=range(self.comandos+1)
 		rows=range(self.treeWidget.topLevelItemCount())
-		dejar=[]
 		color=''
 		colorear=''
 		for row in rows:
+			dejar=self.dejar(row,[])
 			delegate = BackgroundColorDelegate(self.treeWidget,columns,colorear,dejar,color,self.fondo) 
 			self.treeWidget.setItemDelegateForRow(row,delegate)
 	
@@ -242,26 +374,32 @@ class UI_GenRep(UI_GenSec_Base):
 			item = self.treeWidget.topLevelItem(self.selected_row[0])
 			for column in range(self.comandos+1)[2:]:				
 				if self.header.model().headerData(column,QtCore.Qt.Horizontal).toString()==parent:					
-					info=self.processData[str(self.selected_row[0])+','+str(column)]					
-					sum=int(info['datapoints1']+info['datapoints2']+info['datapoints3'])
-					Y=[float(i) for i in info['Curva'+headerName].split(';')[:sum]]
-					if info['id']==2 and self.show_tl:
-						X=[float("{0:.4f}".format(i)) for i in info['Curva3'].split(';')[:sum]]
-					else:
-						X=range(1,sum+1)
-					if self.unit:
-						X=[ (i*info['timePerCanel']) for i in X]
-					if len(X)>0 and X[0]==0 and (self.h_scale=='log' or self.h_scale=='ln'):
-						del X[0]
-						new= X[-1]+1
-						X.append(new)
+					X,Y=self.getX_Y(self.selected_row[0],column,headerName)					
 					self.actual_in_graph=str(self.selected_row[0])+','+str(column)
 					self.create_graphic(X,Y)
+					
+					
+	def getX_Y(self,r,c,headerName):
+		info=self.processData[str(r)+','+str(c)]					
+		sum=int(info['datapoints1']+info['datapoints2']+info['datapoints3'])
+		Y=[float(i) for i in info['Curva'+headerName].split(';')[:sum]]
+		if info['id']==2 and self.show_tl:
+			X=[float("{0:.4f}".format(i)) for i in info['Curva3'].split(';')[:sum]]
+		else:
+			X=range(1,sum+1)
+		if self.unit:
+			X=[ (i*info['timePerCanel']) for i in X]
+		if len(X)>0 and X[0]==0 and (self.h_scale=='log' or self.h_scale=='ln'):
+			del X[0]
+			new= X[-1]+1
+			X.append(new)
+		X=[float('%.4f'%i ) for i in X]
+		return X,Y
 		
 			
 	def save_sig_back_values(self,pos):
-		self.values_sig[pos]=(self.xmin1_sb.value(),self.xmax1_sb.value())
-		self.values_back[pos]=(self.xmin2_sb.value(),self.xmax2_sb.value())
+		self.values_sig[pos]=(float(self.spin_values[self.xmin1_sb.value()]),float(self.spin_values[self.xmax1_sb.value()]))
+		self.values_back[pos]=(float(self.spin_values[self.xmin2_sb.value()]),float(self.spin_values[self.xmax2_sb.value()]))
 		
 	
 	def Apply_To(self):
@@ -493,9 +631,10 @@ class UI_GenRep(UI_GenSec_Base):
 		
 		self.clear_lateral_panel()
 		self.fill_lateral_panel()
+		
 		self.create_graphic(self.canvas.allGraphic_X,self.canvas.allGraphic_Y)
 					
-	def afterOpen(self):
+	def afterOpen(self):		
 		X=[]
 		Y=[]
 		self.groupsColors={}
@@ -506,15 +645,12 @@ class UI_GenRep(UI_GenSec_Base):
 		self.create_graphic(X,Y)
 		self.clear_lateral_panel()
 		
-		if self.selected_row[1]:
-			#self.selected_row[1].setStyleSheet(HEADER_TOOLBUTTON_STYLE)
-			pass
 		self.selected_row=[False,False]
 		self.colores_in_row={}
 		for group in self.inGroup:		
 			self.colorearGrupo([group[0]],False,[])
 		self.inGroup=[]
-		
+		self.directorioArchivo=''
 		
 	@cursorAction()
 	def create_graphic(self,X,Y):
@@ -684,23 +820,16 @@ class UI_GenRep(UI_GenSec_Base):
 				act.setIcon(icon)
 		self.canvas.fig.set_facecolor(self.fondo_graph[0])
 		
+		self.spin_values=['%.4f'%i for i in self.canvas.allGraphic_X]
+		
 		xmin1_label=QtGui.QLabel('low')		
 		xmin1_label.setStyleSheet('color:green')
-		self.xmin1_sb = QtGui.QDoubleSpinBox()
-		self.xmin1_sb.setDecimals(4)
-		if self.unit:
-			self.xmin1_sb.setSingleStep(0.1) 
-		"""Lo k necesito no es declarar un margen de salto sino la forma
-		de hacer k salte segun los valoresd e una lista"""
+		self.xmin1_sb = ValuesSpinBox(self.spin_values)		
 		self.xmin1_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Low channel to signal'))	
 		
 		xmax1_label=QtGui.QLabel('high')
 		xmax1_label.setStyleSheet('color:green')
-		self.xmax1_sb = QtGui.QDoubleSpinBox()
-		self.xmax1_sb.setDecimals(4)
-		if self.unit:
-			""""""
-			self.xmax1_sb.setSingleStep(0.1) 
+		self.xmax1_sb =ValuesSpinBox(self.spin_values)	
 		self.xmax1_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'High channel to signal'))
 		
 		sign_count_label=QtGui.QLabel('signal')
@@ -716,20 +845,13 @@ class UI_GenRep(UI_GenSec_Base):
 			
 		xmin2_label=QtGui.QLabel('low')
 		xmin2_label.setStyleSheet('color:#1A297D')
-		self.xmin2_sb = QtGui.QDoubleSpinBox()
-		self.xmin2_sb.setDecimals(4)
-		if self.unit:
-			""""""
-			self.xmin2_sb.setSingleStep(0.1) 
+
+		self.xmin2_sb = ValuesSpinBox(self.spin_values)	
 		self.xmin2_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Low channel to Background'))
 		
 		xmax2_label=QtGui.QLabel('high')
 		xmax2_label.setStyleSheet('color:#1A297D')
-		self.xmax2_sb = QtGui.QDoubleSpinBox()
-		self.xmax2_sb.setDecimals(4)
-		if self.unit:
-			""""""
-			self.xmax2_sb.setSingleStep(0.1) 
+		self.xmax2_sb =ValuesSpinBox(self.spin_values)	
 		self.xmax2_sb.setStatusTip(QtGui.QApplication.translate("MainWindow", 'High channel to Background'))
 		
 		back_count_label=QtGui.QLabel('background')
@@ -789,23 +911,28 @@ class UI_GenRep(UI_GenSec_Base):
 				count+=i
 			back_count_line.setText(str(int(count)))
 		
+
 		def fill_x_1(x1,x2):
+			x1=self.spin_values.index('%.4f'%x1)
+			x2=self.spin_values.index('%.4f'%x2)
 			self.xmin1_sb.setValue(x1)
 			self.xmax1_sb.setValue(x2)			
-			count_signal()
-			self.getAllData()
-		
+			count_signal()			
+
 		def fill_x_2(x1,x2):
+			x1=self.spin_values.index('%.4f'%x1)
+			x2=self.spin_values.index('%.4f'%x2)
 			self.xmin2_sb.setValue(x1)
 			self.xmax2_sb.setValue(x2)
 			count_background()
-			
+			self.flag=True
 		
 		def x1_sb_change(buttom):
 			if not self.canvas.activeSignal:
 				if self.xmax1_sb.value() >=self.xmin1_sb.value():
+					pass
 					self.canvas.activeSignal=True
-					self.canvas.onselect(self.xmin1_sb.value(),self.xmax1_sb.value())
+					self.canvas.onselect(float(self.spin_values[self.xmin1_sb.value()]),float(self.spin_values[self.xmax1_sb.value()]),True)
 			self.save_sig_back_values(self.actual_in_graph)
 
 			
@@ -813,7 +940,7 @@ class UI_GenRep(UI_GenSec_Base):
 			if not self.canvas.activeBackground:				
 				if self.xmax2_sb.value() >=self.xmin2_sb.value():
 					self.canvas.activeBackground=True
-					self.canvas.onselect(self.xmin2_sb.value(),self.xmax2_sb.value())
+					self.canvas.onselect(float(self.spin_values[self.xmin2_sb.value()]),float(self.spin_values[self.xmax2_sb.value()]),True)
 			self.save_sig_back_values(self.actual_in_graph)
 			
 				
@@ -830,15 +957,7 @@ class UI_GenRep(UI_GenSec_Base):
 			self.canvas.mpl_connect('axes_enter_event', enter_axes)
 			self.canvas.mpl_connect('axes_leave_event', leave_axes)
 			
-			self.xmin1_sb.setMinimum(min(X))
-			self.xmin1_sb.setMaximum(max(X))
-			self.xmax1_sb.setMinimum(min(X))
-			self.xmax1_sb.setMaximum(max(X))
-			self.xmin2_sb.setMinimum(min(X))
-			self.xmin2_sb.setMaximum(max(X))
-			self.xmax2_sb.setMinimum(min(X))
-			self.xmax2_sb.setMaximum(max(X))
-			
+
 			self.xmin1_sb.valueChanged.connect(partial(x1_sb_change,1))
 			self.xmax1_sb.valueChanged.connect(partial(x1_sb_change,2))
 			self.xmin2_sb.valueChanged.connect(partial(x2_sb_change,1))
@@ -889,7 +1008,7 @@ class UI_GenRep(UI_GenSec_Base):
 		self.down_area= QtGui.QWidget()
 		self.down_area_layout=QtGui.QGridLayout(self.down_area)
 		self.active_bar=QtGui.QLabel()
-		self.active_bar.mouseDoubleClickEvent=self.chow_hidden_down_area
+		self.active_bar.mouseDoubleClickEvent=self.show_hidden_down_area
 		self.active_bar.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
 		self.active_bar.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Show/Hidde graphic'))
 		self.active_bar.setStyleSheet('background:#E8E8E8')
@@ -1112,6 +1231,12 @@ class UI_GenRep(UI_GenSec_Base):
 					return str(info['Tiempo2'])
 				elif data=="Time of Measurement" and (info['id']==2  or info['id']==3  or info['id']==4  or info['id']==5  or info['id']==6):
 					return str(info['Tiempo1'])
+				elif data=="Illumination Source" and info['id']==8:
+					return str(info['light_source'])
+				elif data=="Illumination Power" and info['id']==8:
+					return str(info['start_optical_power'])
+				elif data=="Illumination Temperature" and info['id']==8:
+					return str(info['final_temp'])
 				else:
 					return 'error'
 			except:
@@ -1355,7 +1480,7 @@ class UI_GenRep(UI_GenSec_Base):
 			self.layout.setContentsMargins(0, 0, 0, 0)
 			self.verticalLayoutWidget.setEnabled(True)
 	
-	def chow_hidden_down_area(self,event):
+	def show_hidden_down_area(self,event):
 		self.verticalLayoutWidget.setEnabled(False)
 		if self.down_area_visible:
 			self.layout.addWidget(self.treeWidget, 1, 0,4, -1)
@@ -1547,26 +1672,29 @@ class UI_GenRep(UI_GenSec_Base):
 	
 	
 	def fill_lateral_panel(self):
-		item = self.treeWidget.topLevelItem(self.selected_row[0])
-		for column in range(self.comandos+1)[2:]:
-			dato=item.text(column)
-			if dato!='':
-				info=self.processData[str(self.selected_row[0])+','+str(column)]
-				if info['id'] > 1 and info['id'] < 7:
-					#Comprobar k curvas son las k necesito self.curve_to_show
-					header=self.header.model().headerData(column,QtCore.Qt.Horizontal).toString()						
-					
-					item_2 = QtGui.QTreeWidgetItem(self.treeWidget_2)
-					item_2.setFlags(QtCore.Qt.ItemIsSelectable|QtCore.Qt.ItemIsEnabled)
-					item_2.setText(0,header)
-					
-					for i in self.curve_to_show:
-						if info['Curva'+str(i)] !='':	
-							item_2.addChild(QtGui.QTreeWidgetItem(str(i)))
-					
-					if not item_2.childCount()>0:
-						item_2.setHidden(True)
-					
+		if type(self.selected_row[0])==int:
+			item = self.treeWidget.topLevelItem(self.selected_row[0])
+			for column in range(self.comandos+1)[2:]:
+				dato=item.text(column)
+				if dato!='':
+					info=self.processData[str(self.selected_row[0])+','+str(column)]
+					if info['id'] > 1 and info['id'] < 7:
+						#Comprobar k curvas son las k necesito self.curve_to_show
+						header=self.header.model().headerData(column,QtCore.Qt.Horizontal).toString()						
+						
+						item_2 = QtGui.QTreeWidgetItem(self.treeWidget_2)
+						item_2.setFlags(QtCore.Qt.ItemIsSelectable|QtCore.Qt.ItemIsEnabled)
+						item_2.setText(0,header)
+						
+						for i in self.curve_to_show:
+							if info['Curva'+str(i)] !='':	
+								item_2.addChild(QtGui.QTreeWidgetItem(str(i)))
+						
+						item_2.setExpanded (True)
+						
+						if not item_2.childCount()>0:
+							item_2.setHidden(True)
+						
 
 
 class BackgroundColorDelegate(QtGui.QStyledItemDelegate):
@@ -1629,3 +1757,25 @@ class Animation(QtCore.QPropertyAnimation):
 			self.valueChanged.emit(pt)
 		else:
 			super(Animation, self).updateCurrentTime(currentTime)
+			
+			
+class ValuesSpinBox(QtGui.QSpinBox):
+    def __init__(self, values, parent=None):
+        super(ValuesSpinBox, self).__init__(parent)
+        if values==[]:
+			values=['0,0000']
+        self.setStrings(values)
+
+    def strings(self):
+        return self._strings
+
+    def setStrings(self, strings):
+        self._strings = tuple(strings)
+        self._values = dict(zip(strings, range(len(strings))))
+        self.setRange(0, len(strings) - 1)
+
+    def textFromValue(self, value):
+        return self._strings[value]
+
+    def valueFromText(self, text):
+        return self._values[text]

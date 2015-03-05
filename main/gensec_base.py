@@ -26,11 +26,16 @@ from Dialogs.operationsWid import operationsWid
 from Dialogs.priview import priview
 from Dialogs.process import eslWin,irraWin,ilumWin,lmosWin,oslWin,pauseWin,poslWin,pre_heatWin, tlWin
 
+from XMLDriver import loadSLF
 
 class UI_GenSec_Base(UI_base): 
 		def __init__(self,title,appIcon,dir=False, parent=None):
+			self.Title=str(title)
+			if dir:
+				title=title+' *'+dir
+			else:
+				title=title+' *Untitled'
 			UI_base.__init__(self,title,appIcon)
-			
 			self.form1.setCursor(QtCore.Qt.WaitCursor)
 			self.fill()
 				
@@ -177,6 +182,7 @@ class UI_GenSec_Base(UI_base):
 			self.protocolo=''
 			self.id_lector=QtGui.QApplication.translate('MainWindow','Unknown')
 			self.directorioArchivo=''
+			self.form1.setWindowTitle(self.Title+' *Untitled')
 
 		
 		@cursorAction()
@@ -209,11 +215,11 @@ class UI_GenSec_Base(UI_base):
 					list=myLoader.exportExtructure()				
 					if str(list[1][0][1])!='None':
 						self.nombre=list[1][0][1]
-					STATUS=list[1][1][1]
+					self.STATUS=list[1][1][1]
 					self.datecrea=str(list[1][2][1])
 					Datemod=list[1][3][1]
 					self.propietario=str(list[1][4][1])
-					NMuestras=list[1][5][1]
+					self.NMuestras=list[1][5][1]
 					self.id_lector=str(list[1][6][1])
 					self.nitrogeno=int(list[1][7][1])
 					self.dosis=float(list[1][8][1])
@@ -415,9 +421,9 @@ class UI_GenSec_Base(UI_base):
 				
 				self.thereAreCanges=False
 				self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"The document has been opened"))
+				self.form1.setWindowTitle(self.Title+' *'+self.directorioArchivo)     
 			else:
-				self.directorioArchivo=''
-				
+				self.directorioArchivo=''				
 			self.afterOpen()
 			
 		def afterOpen(self):

@@ -188,15 +188,16 @@ class Lienzo(FigureCanvas):
 			self.activeBackground=True
 			self.onselect(bl,bh)
 	
-	def fillSignal(self,x,y,typ):
+	def fillSignal(self,x,y,typ,manual=False):
 		if self.active_sig:
 			self.line1.remove()
 			self.line1, = self.Signal.plot([], [], typ,color='blue')
 			self.line1.set_data(x, y)
 			self.Signal_X=x
 			self.Signal_Y=y
-			self.Signal.set_xlim(min(x), max(x))			
-			self.signal_change.emit(float(min(x)), float(max(x)))
+			self.Signal.set_xlim(min(x), max(x))	
+			if not manual:
+				self.signal_change.emit(float(min(x)), float(max(x)))
 			
 			if self.v_min==-1:
 				self.v_min=min(self.allGraphic_Y)
@@ -213,7 +214,7 @@ class Lienzo(FigureCanvas):
 		self.activeSignal=False
 		
 
-	def fillBackground(self,x,y,typ):
+	def fillBackground(self,x,y,typ,manual=False):
 		if self.active_back:
 			self.line2.remove()
 			self.line2, = self.Background.plot([], [], typ,color='blue')
@@ -221,7 +222,8 @@ class Lienzo(FigureCanvas):
 			self.Background_X=x
 			self.Background_Y=y
 			self.Background.set_xlim(min(x), max(x))
-			self.background_change.emit(float(min(x)), float(max(x)))
+			if not manual:
+				self.background_change.emit(float(min(x)), float(max(x)))
 			
 			if self.v_min==-1:
 				self.v_min=min(self.allGraphic_Y)
@@ -238,29 +240,33 @@ class Lienzo(FigureCanvas):
 		self.activeBackground=False
 		
 		
-	def onselect(self,xmin, xmax):
-		if self.activeBackground or self.activeSignal:
+	def onselect(self,xmin, xmax, manual=False):		
+		if self.activeBackground or self.activeSignal:			
 			if xmin>=min(self.allGraphic_X) and xmax<=max(self.allGraphic_X):
-				indmin, indmax = npy.searchsorted(self.allGraphic_X, (xmin, xmax))
-				if indmin>xmin:
-					indmin-=1
+				
+				if manual:
+					indmin=self.allGraphic_X.index(xmin)
+					indmax=self.allGraphic_X.index(xmax)
+				else:
+					indmin, indmax = npy.searchsorted(self.allGraphic_X, (xmin, xmax))				
+					if indmin>xmin:
+						indmin-=1
 				if indmin!= indmax:
 					x=self.allGraphic_X[indmin:indmax+1]
 					y=self.allGraphic_Y[indmin:indmax+1]
 					
 					if self.activeSignal:
-						self.fillSignal(x,y,'-')
+						self.fillSignal(x,y,'-',manual)
 					if self.activeBackground:
-						self.fillBackground(x,y,'-')
+						self.fillBackground(x,y,'-',manual)
 				else:
 					x=[self.allGraphic_X[indmin]]
 					y=[self.allGraphic_Y[indmin]]
 					
 					if self.activeSignal:
-						self.fillSignal(x,y,'.')
+						self.fillSignal(x,y,'.',manual)
 					if self.activeBackground:
-						self.fillBackground(x,y,'.')
-			
+						self.fillBackground(x,y,'.',manual)			
 			else:
 				#puedo mostrar un mensage de k deve seleccionar una zona valida
 				self.activeSignal=False

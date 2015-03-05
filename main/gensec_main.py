@@ -19,6 +19,7 @@
 
 import threading
 from gensec_base import *
+from XMLDriver import createSLF
 
 
 class UI_GenSec(UI_GenSec_Base): 
@@ -259,6 +260,13 @@ class UI_GenSec(UI_GenSec_Base):
 			self.Tools_ToolBar.addAction(self.actionReset)
 
 		
+		def changeTheme(self,them):
+			"""cambia el idioma por defecto de la aplicacion"""
+			self.theme=them
+			COL1,COL2,COL3,COL4,COL5,COL6,COL7,COL8=LOAD(them)		
+			self.form1.setStyleSheet(BASE(COL1,COL2,COL3,COL4,COL5,COL6,COL7,COL8,True))
+			
+		
 		def beforeGenRep(self):
 			if not self.isEmpty():
 				import commands
@@ -491,9 +499,11 @@ class UI_GenSec(UI_GenSec_Base):
 				self.mySEQ.save(str(self.directorioArchivo),True)
 				self.thereAreCanges=False
 				self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"The document has been saved"))
+				self.form1.setWindowTitle(self.Title+' *'+self.directorioArchivo)  
 				return True
 			else:
 				self.directorioArchivo=''
+				self.form1.setWindowTitle(self.Title+' *Untitled')
 			return False
 			
 		

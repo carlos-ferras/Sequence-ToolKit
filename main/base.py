@@ -29,7 +29,6 @@ from load_theme import LOAD
 
 from Dialogs.fontSelect import fontS 
 from Dialogs.about import about
-from XMLDriver import createSLF,loadSLF
 
 def cursorAction():
 	def decorador(fun):
@@ -210,13 +209,6 @@ class UI_base(MainWindows.Ui_MainWindow):
 	
 	def changeTheme(self,them):
 		"""cambia el idioma por defecto de la aplicacion"""
-		self.theme=them
-		COL1,COL2,COL3,COL4,COL5,COL6,COL7,COL8=LOAD(them)		
-		self.form1.setStyleSheet(BASE(COL1,COL2,COL3,COL4,COL5,COL6,COL7,COL8,True))
-		
-		self.affter_theme()
-		
-	def affter_theme(self):
 		pass
 		
 	

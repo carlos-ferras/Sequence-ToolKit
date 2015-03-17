@@ -102,7 +102,7 @@ class Lienzo(FigureCanvas):
 				-0.5,
 				0.15, 
 				'Count',
-				rotation='vertical',
+				#rotation='vertical',
 				color=self.font_color,
 				size = 14,
 				transform=self.Signal.transAxes)
@@ -137,12 +137,12 @@ class Lienzo(FigureCanvas):
 		self.axvspanSignal= self.allGraphic.axvspan(0, 0, facecolor='g', alpha=0)
 		self.axvspanBackground= self.allGraphic.axvspan(0, 0, facecolor='#1A297D', alpha=0)
 			 
-		plt.setp(self.allGraphic.get_xticklabels(), fontsize=10, rotation='vertical')
+		plt.setp(self.allGraphic.get_xticklabels(), fontsize=10)#, rotation='vertical')
 		if self.active_sig:
 			plt.setp(self.Signal.get_yticklabels(), fontsize=10)
-			plt.setp(self.Signal.get_xticklabels(), fontsize=10, rotation='vertical')
+			plt.setp(self.Signal.get_xticklabels(), fontsize=10)#, rotation='vertical')
 		if self.active_back:
-			plt.setp(self.Background.get_xticklabels(), fontsize=10, rotation='vertical')
+			plt.setp(self.Background.get_xticklabels(), fontsize=10)#, rotation='vertical')
 		
 		FigureCanvas.__init__(self, self.fig)
 		self.setParent(parent)

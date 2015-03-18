@@ -356,7 +356,7 @@ def about(parent,name,title,description,version,appIcon):
 		"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-righ"
 		"t:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;\"><br /></p>\n"
 		"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+QtGui.QApplication.translate("MainWindow", "XML structure and concepts", None, QtGui.QApplication.UnicodeUTF8)+":</p>\n"
-		"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; font-size:12pt; text-indent:0px;\">"+QtGui.QApplication.translate("MainWindow", "Luminescence Dating Laboratory at CEADEN", None, QtGui.QApplication.UnicodeUTF8)+"</p>\n"
+		"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">"+QtCore.QString.fromUtf8("Luis Baly Gil")+"</span></p>\n"
 		"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-righ"
 		"t:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;\"><br /></p>\n"
 		"</body></html>")

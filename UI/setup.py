@@ -25,9 +25,7 @@ except AttributeError:
     _fromUtf8 = lambda s: s
 
 class Ui_Form(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName(_fromUtf8("Dialog"))
-	
+    def setupUi(self, Dialog):	
 	widget=QtGui.QDesktopWidget()
 	mainScreenSize = widget.availableGeometry(widget.primaryScreen())
 	x= mainScreenSize.width()/2-225
@@ -38,7 +36,6 @@ class Ui_Form(object):
 	
         self.tabWidget = QtGui.QTabWidget(Dialog)
         self.tabWidget.setGeometry(QtCore.QRect(0, 0, 450, 230))
-        self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
         
 	self.tab = QtGui.QWidget()
         self.tabWidget.addTab(self.tab, _fromUtf8(""))	
@@ -134,7 +131,7 @@ class Ui_Form(object):
 	self.label_12.setGeometry(QtCore.QRect(10, 160, 40, 30))
 	self.combobox=QtGui.QComboBox(self.tab_3)
 	self.combobox.setGeometry(QtCore.QRect(50, 160, 130, 30))
-	self.combobox.addItem( "channels")
+	self.combobox.addItem(QtGui.QApplication.translate("MainWindow", "channels"))
         self.combobox.addItem("s")
 	
 	self.tab_4 = QtGui.QWidget()
@@ -256,13 +253,13 @@ class Ui_Form(object):
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Form", "SetUp", None, QtGui.QApplication.UnicodeUTF8))
+        Dialog.setWindowTitle(QtGui.QApplication.translate("MainWindow", "SetUp", None, QtGui.QApplication.UnicodeUTF8))
         
-	self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("Form", "Curve to Show", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtGui.QApplication.translate("Form", "For TL", None, QtGui.QApplication.UnicodeUTF8))
-	self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QtGui.QApplication.translate("Form", "Format Horizontal Axis", None, QtGui.QApplication.UnicodeUTF8))
-	self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), QtGui.QApplication.translate("Form", "Format Vertical Axis", None, QtGui.QApplication.UnicodeUTF8))
-	self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), QtGui.QApplication.translate("Form", "Cursors", None, QtGui.QApplication.UnicodeUTF8))
+	self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("MainWindow", "Curve to Show", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtGui.QApplication.translate("MainWindow", "For TL", None, QtGui.QApplication.UnicodeUTF8))
+	self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QtGui.QApplication.translate("MainWindow", "Format Horizontal Axis", None, QtGui.QApplication.UnicodeUTF8))
+	self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), QtGui.QApplication.translate("MainWindow", "Format Vertical Axis", None, QtGui.QApplication.UnicodeUTF8))
+	self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), QtGui.QApplication.translate("MainWindow", "Cursors", None, QtGui.QApplication.UnicodeUTF8))
 	self.pushButton.setText(QtGui.QApplication.translate("MainWindow", "Accept", None, QtGui.QApplication.UnicodeUTF8))
 	self.pushButton_2.setText(QtGui.QApplication.translate("MainWindow", "Cancel", None, QtGui.QApplication.UnicodeUTF8))
 	self.checkbox.setText(QtGui.QApplication.translate("MainWindow", "Curve", None, QtGui.QApplication.UnicodeUTF8)+' 1')

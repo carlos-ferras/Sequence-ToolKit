@@ -4,634 +4,624 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="about_genvis.py" line="122"/>
+        <location filename="about.py" line="122"/>
         <source>License Information</source>
         <translation>Información de licencia</translation>
     </message>
     <message>
-        <location filename="about_genvis.py" line="124"/>
+        <location filename="about.py" line="124"/>
         <source>Contact the Developers</source>
         <translation>Contacto con los Desarrolladores</translation>
     </message>
     <message>
-        <location filename="about_genvis.py" line="148"/>
+        <location filename="about.py" line="147"/>
         <source>License</source>
         <translation>Licencia</translation>
     </message>
     <message>
-        <location filename="operations.py" line="111"/>
+        <location filename="operations.py" line="101"/>
         <source>ESL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="OSL.py" line="158"/>
+        <location filename="OSL.py" line="153"/>
         <source>Ligth Source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="Ilumination.py" line="120"/>
+        <location filename="profile1.py" line="86"/>
         <source>Optical Power (%)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ESL.py" line="168"/>
+        <location filename="ESL.py" line="163"/>
         <source>Light Co-Stimulat.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ESL.py" line="169"/>
+        <location filename="ESL.py" line="164"/>
         <source>EE Frequency (KHz)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ESL.py" line="170"/>
+        <location filename="ESL.py" line="165"/>
         <source>EE Voltage (V)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="POSL.py" line="181"/>
+        <location filename="POSL.py" line="177"/>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="POSL.py" line="177"/>
+        <location filename="POSL.py" line="173"/>
         <source>Stabilization (s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ESL.py" line="178"/>
+        <location filename="ESL.py" line="173"/>
         <source>Record During EE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="POSL.py" line="170"/>
+        <location filename="POSL.py" line="166"/>
         <source>Channels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="TL.py" line="90"/>
+        <location filename="TL.py" line="89"/>
         <source>Accept</source>
         <translation>Aceptar</translation>
     </message>
     <message>
-        <location filename="TL.py" line="91"/>
+        <location filename="TL.py" line="90"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="fontSelect.py" line="64"/>
+        <location filename="fontSelect1.py" line="62"/>
         <source>Font Select</source>
         <translation>Seleccionar fuente</translation>
     </message>
     <message>
-        <location filename="fontSelect.py" line="65"/>
+        <location filename="fontSelect1.py" line="63"/>
         <source>Font</source>
         <translation>Fuente</translation>
     </message>
     <message>
-        <location filename="fontSelect.py" line="66"/>
+        <location filename="fontSelect1.py" line="64"/>
         <source>Size</source>
         <translation>Tamaño</translation>
     </message>
     <message>
-        <location filename="Ilumination.py" line="111"/>
+        <location filename="Ilumination.py" line="106"/>
         <source>Ilumination</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="Pause.py" line="69"/>
+        <location filename="Pause.py" line="64"/>
         <source>Time (s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="Information.py" line="69"/>
+        <location filename="Information.py" line="65"/>
         <source>Information</source>
         <translation>Información</translation>
     </message>
     <message>
-        <location filename="Information.py" line="70"/>
+        <location filename="Information.py" line="66"/>
         <source>Date Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="Information.py" line="71"/>
+        <location filename="Information.py" line="67"/>
         <source>Comments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="operations.py" line="117"/>
+        <location filename="operations.py" line="107"/>
         <source>Irradiation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="Irradiation.py" line="117"/>
+        <location filename="Irradiation.py" line="112"/>
         <source>Irradiation Source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="operations.py" line="115"/>
+        <location filename="operations.py" line="105"/>
         <source>LMOSL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="512"/>
+        <location filename="gensec_main.py" line="345"/>
         <source>Unknown</source>
         <translation>Desconocido</translation>
     </message>
     <message>
-        <location filename="genvis_main.py" line="406"/>
+        <location filename="base.py" line="247"/>
         <source>Aply</source>
         <translation>Aplicar</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="493"/>
+        <location filename="base.py" line="358"/>
         <source>Save changes?</source>
         <translation>¿Desea guardar los cambios?</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="495"/>
+        <location filename="base.py" line="360"/>
         <source>No</source>
         <translation>No</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="496"/>
+        <location filename="base.py" line="361"/>
         <source>Yes</source>
         <translation>Si</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="561"/>
+        <location filename="gensec_base.py" line="204"/>
         <source>Open</source>
         <translation>Abrir</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="800"/>
+        <location filename="profile.py" line="84"/>
         <source>File</source>
         <translation>Archivo</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="589"/>
+        <location filename="gensec_base.py" line="234"/>
         <source>Invalid file</source>
         <translation>Archivo no válido</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="695"/>
+        <location filename="gensec_base.py" line="339"/>
         <source>The file could not be opened correctly, were recovered only general data.</source>
         <translation>El archivo no se pudo abrir correctamente, se recuperaron sólo datos generales.</translation>
     </message>
     <message>
-        <location filename="vistaPrevia.py" line="58"/>
+        <location filename="vistaPrevia.py" line="57"/>
         <source>Save</source>
         <translation>Guardar</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="856"/>
+        <location filename="gensec_main.py" line="547"/>
         <source>Unable to perform the operation, the process </source>
         <translation>No se ha podido realizar la operación, el proceso </translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="856"/>
+        <location filename="gensec_main.py" line="547"/>
         <source> does not support merging</source>
         <translation> no es compatible con la unión</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="88"/>
+        <location filename="gensec_main.py" line="1429"/>
         <source>Command </source>
         <translation>Comando</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="861"/>
+        <location filename="gensec_main.py" line="552"/>
         <source> is empty</source>
         <translation> está vacío</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1037"/>
+        <location filename="gensec_main.py" line="681"/>
         <source>This column is locked</source>
         <translation>Esta columna está bloqueada</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1210"/>
+        <location filename="gensec_main.py" line="854"/>
         <source>The irradiation process with external source must be set to an empty column.</source>
         <translation>El proceso irradiación con fuente externa se debe establecer en una columna vacía.</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1503"/>
+        <location filename="gensec_main.py" line="1107"/>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1103"/>
+        <location filename="gensec_main.py" line="747"/>
         <source>The Name field should contain only text</source>
         <translation>El campo Nombre debería contener solo texto</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1503"/>
+        <location filename="gensec_main.py" line="1107"/>
         <source>Owner</source>
         <translation>Propietario</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1117"/>
+        <location filename="gensec_main.py" line="761"/>
         <source>The Owner field should contain only text</source>
         <translation>The Owner field should cont</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1122"/>
+        <location filename="gensec_main.py" line="766"/>
         <source>Nitrogen</source>
         <translation>Nitrogeno</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1503"/>
+        <location filename="gensec_main.py" line="1107"/>
         <source>Nitrogen Use</source>
         <translation>Uso de Nitrogeno</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1503"/>
+        <location filename="gensec_main.py" line="1107"/>
         <source>Dose Rate</source>
         <translation>Tasa de Dosis</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1503"/>
+        <location filename="gensec_main.py" line="1107"/>
         <source>External Dose Rate</source>
         <translation>Tasa de Dosis Externa</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1503"/>
+        <location filename="gensec_main.py" line="1107"/>
         <source>Protocol</source>
         <translation>Protocolo</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1164"/>
+        <location filename="gensec_main.py" line="808"/>
         <source>The Protocol field must be a string of 16 characters</source>
         <translation>El Campo Protocolo debe ser una cadena de 16 caracteres</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1503"/>
+        <location filename="gensec_main.py" line="1107"/>
         <source>Reader ID</source>
         <translation>ID del Lector</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1202"/>
+        <location filename="gensec_main.py" line="846"/>
         <source>Column wiht command</source>
         <translation>La columna con el comando</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1202"/>
+        <location filename="gensec_main.py" line="846"/>
         <source> is locked</source>
         <translation>está bloqueada</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1341"/>
+        <location filename="gensec_main.py" line="1386"/>
         <source>Row Number</source>
         <translation>Número de Fila</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1341"/>
+        <location filename="gensec_main.py" line="1386"/>
         <source>Row</source>
         <translation>Fila</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1503"/>
+        <location filename="gensec_main.py" line="1107"/>
         <source>Created</source>
         <translation>Creada</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="77"/>
+        <location filename="gensec_main.py" line="1147"/>
         <source>Group</source>
         <translation>Grupo</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="78"/>
+        <location filename="gensec_main.py" line="1289"/>
         <source>Sample</source>
         <translation>Muestra</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1651"/>
+        <location filename="gensec_base.py" line="548"/>
         <source>The column parameter must be a number greater than 0</source>
         <translation>El parámetro columna debe ser un número mayor que 0</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1743"/>
+        <location filename="gensec_main.py" line="1306"/>
         <source>samples ranges must be low to high, and should not have repeated elements.</source>
         <translation>Los rangos de muestras deben ser de menor a mayor, y no deben tener elementos repetidos.</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1772"/>
+        <location filename="gensec_main.py" line="1335"/>
         <source>There are repeated number in sample sequence</source>
         <translation>Hay un número repetido de la secuencia de muestras</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1740"/>
+        <location filename="gensec_main.py" line="1303"/>
         <source>Samples must have the structure [1-3,4,5]
 only contains ranges and numbers separated by commas</source>
         <translation>Las muestras deben tener la estructura [1-3,4,5]
 sólo contiene rangos y números separados por comas</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="90"/>
+        <location filename="gensec_main.py" line="1430"/>
         <source>Add Command</source>
         <translation>Adicionar Comando</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1848"/>
+        <location filename="gensec_main.py" line="1407"/>
         <source>Add Group</source>
         <translation>Adicionar Grupo</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="406"/>
+        <location filename="gensec_main.py" line="235"/>
         <source>Merge</source>
         <translation>Unir</translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="282"/>
+        <location filename="MainWindows.py" line="261"/>
         <source>&amp;File</source>
         <translation>&amp;Archivo</translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="283"/>
+        <location filename="MainWindows.py" line="262"/>
         <source>&amp;Edit</source>
         <translation>&amp;Editar</translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="284"/>
+        <location filename="MainWindows.py" line="263"/>
         <source>&amp;Options</source>
         <translation>&amp;Opciones</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="497"/>
-        <source>&amp;GenSec Options</source>
-        <translation>Opciones de &amp;GenSec</translation>
-    </message>
-    <message>
-        <location filename="MainWindows_gensec.py" line="498"/>
+        <location filename="gensec_main.py" line="224"/>
         <source>&amp;Merge Colors</source>
         <translation>Color&amp;es</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="500"/>
+        <location filename="gensec_main.py" line="211"/>
         <source>&amp;Sequence Options</source>
         <translation>Opciones de &amp;Secuencia</translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="292"/>
+        <location filename="MainWindows.py" line="276"/>
         <source>&amp;Help</source>
         <translation>Ay&amp;uda</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="502"/>
+        <location filename="MainWindows.py" line="268"/>
         <source>&amp;New</source>
         <translation>&amp;Nuevo</translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="287"/>
+        <location filename="MainWindows.py" line="269"/>
         <source>&amp;Open</source>
         <translation>&amp;Abrir</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="504"/>
+        <location filename="MainWindows.py" line="270"/>
         <source>&amp;Save</source>
         <translation>&amp;Guardar</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="505"/>
+        <location filename="MainWindows.py" line="271"/>
         <source>Save &amp;as..</source>
         <translation>Guardar &amp;como..</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="506"/>
+        <location filename="gensec_main.py" line="91"/>
         <source>&amp;Preview</source>
         <translation>&amp;Vista Previa</translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="288"/>
+        <location filename="MainWindows.py" line="272"/>
         <source>&amp;Exit</source>
         <translation>&amp;Salir</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="508"/>
+        <location filename="MainWindows.py" line="273"/>
         <source>&amp;Paste</source>
         <translation>&amp;Pegar</translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="295"/>
+        <location filename="MainWindows.py" line="274"/>
         <source>&amp;Copy</source>
         <translation>&amp;Copiar</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="510"/>
+        <location filename="gensec_main.py" line="144"/>
         <source>Cl&amp;ear Seleccion</source>
         <translation>&amp;Limpiar Selección</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="512"/>
+        <location filename="MainWindows.py" line="275"/>
         <source>C&amp;ut</source>
         <translation>Cor&amp;tar</translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="289"/>
+        <location filename="MainWindows.py" line="277"/>
         <source>&amp;About</source>
         <translation>&amp;Acerca de</translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="290"/>
+        <location filename="MainWindows.py" line="278"/>
         <source>Prin&amp;t</source>
         <translation>&amp;Imprimir</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="519"/>
+        <location filename="gensec_main.py" line="80"/>
         <source>&amp;Clear All</source>
         <translation>Limpiar &amp;Todo</translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="291"/>
+        <location filename="MainWindows.py" line="279"/>
         <source>&amp;Font</source>
         <translation>&amp;Fuente</translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="293"/>
+        <location filename="MainWindows.py" line="280"/>
         <source>&amp;Default Location</source>
         <translation>&amp;Ubicacion de Archivo</translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="294"/>
+        <location filename="MainWindows.py" line="281"/>
         <source>Window &amp;Opacity</source>
         <translation>&amp;Opacidad de al Ventana</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="524"/>
-        <source>&amp;Run Command</source>
-        <translation>&amp;Ejecutar Comando</translation>
-    </message>
-    <message>
-        <location filename="MainWindows_gensec.py" line="526"/>
+        <location filename="gensec_main.py" line="103"/>
         <source>Add &amp;Row</source>
         <translation>Adicionar &amp;Fila</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="527"/>
+        <location filename="gensec_main.py" line="113"/>
         <source>Add Colu&amp;mn</source>
         <translation>Adicionar &amp;Columna</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="528"/>
+        <location filename="gensec_main.py" line="123"/>
         <source>&amp;Select Row</source>
         <translation>&amp;Seleccionar Fila</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="529"/>
+        <location filename="gensec_main.py" line="204"/>
         <source>&amp;Name</source>
         <translation>&amp;Nombre</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="530"/>
+        <location filename="gensec_main.py" line="205"/>
         <source>&amp;Owner</source>
         <translation>&amp;Propietario</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="531"/>
+        <location filename="gensec_main.py" line="206"/>
         <source>Nitrogen &amp;Use</source>
         <translation>&amp;Uso de Nitrógeno</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="532"/>
+        <location filename="gensec_main.py" line="207"/>
         <source>&amp;Dose Rate</source>
         <translation>&amp;Tasa de Dosis</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="533"/>
+        <location filename="gensec_main.py" line="208"/>
         <source>&amp;External Dose Rate</source>
         <translation>Tasa de Dosis &amp;Externa</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="534"/>
+        <location filename="gensec_main.py" line="209"/>
         <source>&amp;Protocol</source>
         <translation>Pr&amp;otocolo</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="535"/>
+        <location filename="gensec_main.py" line="210"/>
         <source>&amp;Reader ID</source>
         <translation>&amp;Id del Lector</translation>
     </message>
     <message>
-        <location filename="operations.py" line="109"/>
+        <location filename="operations.py" line="99"/>
         <source>Process    </source>
         <translation>Proceso</translation>
     </message>
     <message>
-        <location filename="TL.py" line="89"/>
+        <location filename="TL.py" line="88"/>
         <source>TL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="OSL.py" line="155"/>
+        <location filename="OSL.py" line="150"/>
         <source>OSL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="Pause.py" line="68"/>
+        <location filename="Pause.py" line="63"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="POSL.py" line="161"/>
+        <location filename="POSL.py" line="157"/>
         <source>POSL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="Pre_Heat.py" line="82"/>
+        <location filename="Pre_Heat.py" line="78"/>
         <source>Pre Heat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="operations.py" line="118"/>
+        <location filename="operations.py" line="108"/>
         <source>Illumination</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="OSL.py" line="162"/>
+        <location filename="OSL.py" line="157"/>
         <source>Start Optical Power (%)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="OSL.py" line="165"/>
+        <location filename="OSL.py" line="160"/>
         <source>Time per Chan:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="OSL.py" line="171"/>
+        <location filename="OSL.py" line="166"/>
         <source>After Stimulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="OSL.py" line="172"/>
+        <location filename="OSL.py" line="167"/>
         <source>During Stimulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="OSL.py" line="173"/>
+        <location filename="OSL.py" line="168"/>
         <source>Before Stimulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="POSL.py" line="162"/>
+        <location filename="POSL.py" line="158"/>
         <source>During Simulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="POSL.py" line="163"/>
+        <location filename="POSL.py" line="159"/>
         <source>Before Simulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="POSL.py" line="164"/>
+        <location filename="POSL.py" line="160"/>
         <source>After Simulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="POSL.py" line="165"/>
+        <location filename="profile1.py" line="84"/>
         <source>Light Source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="POSL.py" line="169"/>
+        <location filename="POSL.py" line="165"/>
         <source>Optical Power(%)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="POSL.py" line="172"/>
+        <location filename="POSL.py" line="168"/>
         <source>Time per Chan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="POSL.py" line="174"/>
+        <location filename="POSL.py" line="170"/>
         <source>Number of Scan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="vistaPrevia.py" line="69"/>
+        <location filename="vistaPrevia.py" line="67"/>
         <source>Save as</source>
         <translation>Guardar como</translation>
     </message>
     <message>
-        <location filename="vistaPrevia.py" line="78"/>
+        <location filename="vistaPrevia.py" line="75"/>
         <source>Preview</source>
         <translation>Vista Previa</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="513"/>
+        <location filename="gensec_main.py" line="225"/>
         <source>Color &amp;1</source>
         <translation>Color &amp;1</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="514"/>
+        <location filename="gensec_main.py" line="226"/>
         <source>Color &amp;2</source>
         <translation>Color &amp;2</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="515"/>
+        <location filename="gensec_main.py" line="227"/>
         <source>Color &amp;3</source>
         <translation>Color &amp;3</translation>
     </message>
     <message utf8="true">
-        <location filename="about_genvis.py" line="156"/>
+        <location filename="about.py" line="155"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -864,451 +854,906 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;FIN DE TÉRMINOS Y CONDICIONES&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="genvis_main.py" line="184"/>
+        <location filename="gensec_main.py" line="465"/>
         <source>Ready</source>
         <translation>Listo</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="812"/>
+        <location filename="gensec_main.py" line="501"/>
         <source>The document has been saved</source>
         <translation>El documento se ha guardado </translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="789"/>
+        <location filename="gensec_base.py" line="423"/>
         <source>The document has been opened</source>
         <translation>El documento ha sido abierto </translation>
     </message>
     <message>
-        <location filename="genvis_main.py" line="363"/>
+        <location filename="gensec_base.py" line="499"/>
         <source>The font has been changed</source>
         <translation>El tipo de letra se ha cambiado </translation>
     </message>
     <message>
-        <location filename="genvis_main.py" line="270"/>
+        <location filename="gensec_main.py" line="1171"/>
         <source>The document has been printed</source>
         <translation>El documento ha sido impreso</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="129"/>
+        <location filename="MainWindows.py" line="67"/>
         <source>Create a new file</source>
         <translation>Crear un nuevo archivo</translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="179"/>
+        <location filename="MainWindows.py" line="76"/>
         <source>Open an existing file</source>
         <translation>Abre un archivo existente</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="146"/>
+        <location filename="MainWindows.py" line="84"/>
         <source>Save the document to disk</source>
         <translation>Guarda el documento en el disco</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="155"/>
+        <location filename="MainWindows.py" line="93"/>
         <source>Save the document under a new name</source>
         <translation>Guarda el documento con un nuevo nombre</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="164"/>
+        <location filename="gensec_main.py" line="88"/>
         <source>Open a PreView of the xml file</source>
         <translation>Abre una vista previa del archivo xml </translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="197"/>
+        <location filename="MainWindows.py" line="102"/>
         <source>Close the application</source>
         <translation>Cierra la aplicación </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="182"/>
+        <location filename="MainWindows.py" line="111"/>
         <source>Paste the clipboard content into the current selection</source>
         <translation>Pega el contenido del portapapeles en la selección actual </translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="188"/>
+        <location filename="MainWindows.py" line="120"/>
         <source>Copy the current selection content to the clipboard</source>
         <translation>Copia el contenido de la selección actual en el portapapeles</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="200"/>
+        <location filename="gensec_main.py" line="142"/>
         <source>Delete the content of the selection rows</source>
         <translation>Borra el contenido de las filas de selección </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="218"/>
+        <location filename="MainWindows.py" line="129"/>
         <source>Cut the current selection content to the clipboard</source>
         <translation>Corta el contenido actual de selección en el portapapeles </translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="242"/>
+        <location filename="MainWindows.py" line="138"/>
         <source>Open the help of the application</source>
         <translation>Abre la ayuda de la aplicación </translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="251"/>
+        <location filename="MainWindows.py" line="147"/>
         <source>Show information about the application</source>
         <translation>Muestra información sobre la aplicación </translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="206"/>
+        <location filename="MainWindows.py" line="156"/>
         <source>Print the current table</source>
         <translation>Imprime la tabla actual </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="254"/>
+        <location filename="gensec_main.py" line="78"/>
         <source>Delete all the content of the table</source>
         <translation>Elimina todo el contenido de la tabla </translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="215"/>
+        <location filename="MainWindows.py" line="165"/>
         <source>Change the font type and size</source>
         <translation>Cambia el tipo de letra y tamaño </translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="224"/>
+        <location filename="MainWindows.py" line="174"/>
         <source>Change the default file location</source>
         <translation>Cambia el ubicación predeterminada del archivo </translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="233"/>
+        <location filename="MainWindows.py" line="183"/>
         <source>Change the opacity of the windows</source>
         <translation>Cambir la opacidad de la ventana </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="324"/>
+        <location filename="gensec_main.py" line="101"/>
         <source>Add one row at end of the table</source>
         <translation>Añade una fila al final de la tabla </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="333"/>
+        <location filename="gensec_main.py" line="111"/>
         <source>Add one column at end of the table</source>
         <translation>Añade una columna a la final de la tabla </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="342"/>
+        <location filename="gensec_main.py" line="121"/>
         <source>Select one row of the table</source>
         <translation>Selecciona una fila de la tabla </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="350"/>
+        <location filename="gensec_main.py" line="152"/>
         <source>Change the sequence&apos;s name</source>
         <translation>Cambia el nombre de la secuencia </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="358"/>
+        <location filename="gensec_main.py" line="159"/>
         <source>Change the name of the sequence&apos;s owner</source>
         <translation>Cambia el nombre del propietario de la secuencia </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="366"/>
+        <location filename="gensec_main.py" line="166"/>
         <source>Change the use of nitrogen in the sequence</source>
         <translation>Cambia el uso de nitrógeno en la secuencia </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="374"/>
+        <location filename="gensec_main.py" line="173"/>
         <source>Change the dose rate of the sequence</source>
         <translation>Cambia la tasa de dosis de la secuencia </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="382"/>
+        <location filename="gensec_main.py" line="180"/>
         <source>Change the external dose rate of the sequence</source>
         <translation>Cambia la tasa de dosis externa de la secuencia  </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="390"/>
+        <location filename="gensec_main.py" line="187"/>
         <source>Change the protocol of the sequence</source>
         <translation>Cambia el protocolo de la secuencia  </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="398"/>
+        <location filename="gensec_main.py" line="194"/>
         <source>Show the sequence&apos;s  reader id</source>
         <translation>Muestra el identificador del lector de la secuencia  </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="408"/>
+        <location filename="gensec_main.py" line="237"/>
         <source>Merge several commands in the same proces_order</source>
         <translation>Combina varios comandos en el mismo proces_order  </translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="390"/>
+        <location filename="gensec_main.py" line="426"/>
         <source>Invalid color, the color must be different to black and white</source>
         <translation>Color inválido, el color debe ser diferente a blanco y negro</translation>
     </message>
     <message>
-        <location filename="genvis_main.py" line="432"/>
+        <location filename="base.py" line="337"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="about_genvis.py" line="331"/>
+        <location filename="about.py" line="330"/>
         <source>Credits</source>
         <translation>Créditos</translation>
     </message>
     <message>
-        <location filename="about_genvis.py" line="339"/>
+        <location filename="about.py" line="338"/>
         <source>Created and Designed by</source>
         <translation>Creado y Diseñado por</translation>
     </message>
     <message>
-        <location filename="about_genvis.py" line="339"/>
+        <location filename="about.py" line="338"/>
         <source>Documented by</source>
         <translation>Documentado por</translation>
     </message>
     <message>
-        <location filename="genvis_main.py" line="128"/>
+        <location filename="base.py" line="82"/>
         <source>locale</source>
         <translation>local</translation>
     </message>
     <message>
-        <location filename="genvis_main.py" line="130"/>
+        <location filename="base.py" line="84"/>
         <source>Change the language to default language on your PC</source>
         <translation>Cambia el idioma al idioma por defecto en su PC</translation>
     </message>
     <message>
-        <location filename="genvis_main.py" line="146"/>
+        <location filename="base.py" line="100"/>
         <source>Change the language to </source>
         <translation>Cambia el idioma a</translation>
     </message>
     <message>
-        <location filename="genvis_main.py" line="253"/>
+        <location filename="base.py" line="208"/>
         <source>To save the changes you must restart</source>
         <translation>Para guardar los cambios debe reiniciar</translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="285"/>
+        <location filename="MainWindows.py" line="265"/>
         <source>&amp;Select Language</source>
         <translation>&amp;Cambiar Idioma</translation>
     </message>
     <message>
-        <location filename="genvis_main.py" line="75"/>
+        <location filename="genrep_main.py" line="785"/>
         <source>Reset Original View</source>
         <translation>Regresar a la vista original</translation>
     </message>
     <message>
-        <location filename="genvis_main.py" line="81"/>
+        <location filename="genrep_main.py" line="791"/>
         <source>Back to previous view</source>
         <translation>Regresar a la vista anterior</translation>
     </message>
     <message>
-        <location filename="genvis_main.py" line="87"/>
+        <location filename="genrep_main.py" line="797"/>
         <source>Forward to next view</source>
         <translation>Ir a la vista siguiente</translation>
     </message>
     <message>
-        <location filename="genvis_main.py" line="74"/>
+        <location filename="genrep_main.py" line="784"/>
         <source>Home</source>
         <translation>Casa</translation>
     </message>
     <message>
-        <location filename="genvis_main.py" line="80"/>
+        <location filename="genrep_main.py" line="790"/>
         <source>Back</source>
         <translation>Atras</translation>
     </message>
     <message>
-        <location filename="genvis_main.py" line="86"/>
+        <location filename="genrep_main.py" line="796"/>
         <source>Forward</source>
         <translation>Adelante</translation>
     </message>
     <message>
-        <location filename="genvis_main.py" line="98"/>
+        <location filename="genrep_main.py" line="810"/>
         <source>Zoom</source>
         <translation>Ampliar</translation>
     </message>
     <message>
-        <location filename="MainWindows_genvis.py" line="79"/>
-        <source>Column </source>
-        <translation>Columna</translation>
-    </message>
-    <message>
-        <location filename="MainWindows_genvis.py" line="119"/>
+        <location filename="genrep_main.py" line="1002"/>
         <source>Columns</source>
         <translation>Columnas</translation>
     </message>
     <message>
-        <location filename="genvis_main.py" line="92"/>
+        <location filename="genrep_main.py" line="803"/>
         <source>Drag</source>
         <translation>Arrastrar</translation>
     </message>
     <message>
-        <location filename="genvis_main.py" line="93"/>
+        <location filename="genrep_main.py" line="804"/>
         <source>Drag with left mouse, zoom with right</source>
         <translation>Arrastra la gráfica con el click isquierdo y amplia con el derecho</translation>
     </message>
     <message>
-        <location filename="genvis_main.py" line="99"/>
+        <location filename="genrep_main.py" line="811"/>
         <source>Zoom the rectangle</source>
         <translation>Amplia la gráfica</translation>
     </message>
     <message>
-        <location filename="genvis_main.py" line="105"/>
+        <location filename="genrep_main.py" line="817"/>
         <source>Save the figure as image</source>
         <translation>Guarda la gráfica como una imagen</translation>
     </message>
     <message>
-        <location filename="about_genvis.py" line="128"/>
+        <location filename="gensec_main.py" line="43"/>
         <source>Sequence Generator</source>
         <translation>Generador de Secuencia</translation>
     </message>
     <message>
-        <location filename="about_genvis.py" line="128"/>
+        <location filename="gensec_main.py" line="43"/>
         <source>This application generates a xml file with the data used by the LF02 automated luminescence reader to run a measuring sequence.</source>
         <translation>Esta aplicación genera un archivo XML con los datos utilizados por el lector de luminiscencia automatizado LF02 para ejecutar una secuencia de medición.</translation>
     </message>
     <message>
-        <location filename="about_genvis.py" line="339"/>
+        <location filename="about.py" line="338"/>
         <source>This application is the result of the collaboration between the department of free software from the University of Informatics Sciences (UCI) in Havana and the Luminescence Dating Laboratory at CEADEN.</source>
         <translation>Esta aplicación es el resultado de la colaboración entre el departamento de software libre de la Universidad de las Ciencias Informáticas (UCI) en La Habana y el Laboratorio de fechado mediante luminiscencia en CEADEN.</translation>
     </message>
     <message>
-        <location filename="about_genvis.py" line="339"/>
+        <location filename="about.py" line="338"/>
         <source>XML structure and concepts</source>
         <translation>Estructura XML y conceptos</translation>
     </message>
     <message>
-        <location filename="about_genvis.py" line="339"/>
-        <source>Luminescence Dating Laboratory at CEADEN</source>
-        <translation>Laboratorio de fechado mediante luminiscencia en CEADEN</translation>
-    </message>
-    <message>
-        <location filename="TL.py" line="96"/>
+        <location filename="TL.py" line="95"/>
         <source>&amp;Sample Info.</source>
-        <translation>&amp;Información</translation>
-    </message>
-    <message>
-        <location filename="MainWindows_genvis.py" line="268"/>
-        <source>Tool bar</source>
-        <translation>Barra de herramientas</translation>
+        <translation>&amp;Información.</translation>
     </message>
     <message utf8="true">
-        <location filename="TL.py" line="92"/>
+        <location filename="TL.py" line="91"/>
         <source>Heating Rate (°C/s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message utf8="true">
-        <location filename="ESL.py" line="176"/>
+        <location filename="ESL.py" line="171"/>
         <source>EE Temp (°C)</source>
         <translation type="unfinished"></translation>
     </message>
     <message utf8="true">
-        <location filename="TL.py" line="93"/>
+        <location filename="TL.py" line="92"/>
         <source>Final Temperature (°C)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="LMOSL.py" line="156"/>
+        <location filename="LMOSL.py" line="151"/>
         <source>End Optical Power (%)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="415"/>
+        <location filename="gensec_main.py" line="243"/>
         <source>Split</source>
         <translation>Separar</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="417"/>
+        <location filename="gensec_main.py" line="245"/>
         <source>Split the selected merges </source>
         <translation>Separa las uniones seleccionadas</translation>
     </message>
     <message>
-        <location filename="TL.py" line="94"/>
+        <location filename="TL.py" line="93"/>
         <source>Time at Final Temp (s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="Irradiation.py" line="122"/>
+        <location filename="Irradiation.py" line="117"/>
         <source>Dose (Gy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="525"/>
-        <source>&amp;Run Sequence analyzer</source>
-        <translation>&amp;Ejecutar el analizador de secuencia</translation>
-    </message>
-    <message>
-        <location filename="ESL.py" line="180"/>
+        <location filename="ESL.py" line="175"/>
         <source>Time per Channel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="LMOSL.py" line="154"/>
+        <location filename="LMOSL.py" line="149"/>
         <source>Time per Channel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="299"/>
+        <location filename="gensec_main.py" line="253"/>
         <source>Set all states to &apos;pend&apos;, clean all &apos;data&apos; tags of all process and restores name, datecreation and reader ID of the sequence.</source>
         <translation>Cambia todos los estados a &apos;pend&apos;, borra todas las etiquetas &apos;data&apos; y restaura los valores del nombre, fecha de creacion y ID del lector de la secuencia. </translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="523"/>
+        <location filename="gensec_main.py" line="256"/>
         <source>Rese&amp;t</source>
         <translation>Res&amp;taurar</translation>
     </message>
     <message>
-        <location filename="OSL.py" line="163"/>
+        <location filename="OSL.py" line="158"/>
         <source>Channels:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="TL.py" line="95"/>
+        <location filename="TL.py" line="94"/>
         <source>Channel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="213"/>
+        <location filename="base.py" line="46"/>
         <source>Attention!</source>
         <translation>Atención!</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1133"/>
+        <location filename="gensec_main.py" line="777"/>
         <source>Dose Rate (Gy/s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1144"/>
+        <location filename="gensec_main.py" line="788"/>
         <source>External Dose Rate (Gy/s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="268"/>
+        <location filename="gensec_main.py" line="340"/>
         <source>Continue with reset?</source>
         <translation>¿Continuar la restauración?</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="335"/>
-        <source>Unable to launch GenVis</source>
-        <translation>No se puede iniciar GenVis</translation>
-    </message>
-    <message>
-        <location filename="gensec_main.py" line="1629"/>
+        <location filename="gensec_main.py" line="1242"/>
         <source>Are you sure you want to delete all the information?</source>
         <translation>¿Seguro que quieres borrar toda la información?</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1776"/>
+        <location filename="gensec_main.py" line="1339"/>
         <source>Samples must have the structure [1-3,4,5]
 only contains ranges and numbers between 1-24 separated by commas</source>
         <translation>Las muestras deben tener la estructura [1-3,4,5]
 sólo contiene rangos y números entre 1-24 separadas por comas</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1213"/>
+        <location filename="gensec_main.py" line="857"/>
         <source>The irradiation process with external source can not be defined when a sample appears in more than one row.</source>
         <translation>El proceso irradiación confuente externa no puede ser definido cuando un número de muestra aparece en más d euna fila. </translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1767"/>
+        <location filename="gensec_main.py" line="1330"/>
         <source>Incompatible sample declaration</source>
         <translation>Declaración de muestra incompatible</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="209"/>
+        <location filename="gensec_main.py" line="132"/>
         <source>Sorts the contents of the table by the number of samples</source>
         <translation>Ordena el contenido de la tabla por el número de la muestra</translation>
     </message>
     <message>
-        <location filename="MainWindows_gensec.py" line="511"/>
+        <location filename="gensec_main.py" line="134"/>
         <source>&amp;Order by Sample</source>
         <translation>&amp;Ordenar por Muestra</translation>
+    </message>
+    <message>
+        <location filename="about.py" line="338"/>
+        <source>Iconography by</source>
+        <translation>Iconografía</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="869"/>
+        <source>Apply this to</source>
+        <translation>Aplicar a</translation>
+    </message>
+    <message>
+        <location filename="association1.py" line="117"/>
+        <source>Criterion</source>
+        <translation>Criterio</translation>
+    </message>
+    <message>
+        <location filename="association1.py" line="118"/>
+        <source>Condition</source>
+        <translation>Condición</translation>
+    </message>
+    <message>
+        <location filename="association1.py" line="141"/>
+        <source>Value</source>
+        <translation>Valor</translation>
+    </message>
+    <message>
+        <location filename="association1.py" line="120"/>
+        <source>Cancelar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="apply_to1.py" line="118"/>
+        <source>Aceptar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="873"/>
+        <source>Apply to all</source>
+        <translation>Aplicar a todos</translation>
+    </message>
+    <message>
+        <location filename="association1.py" line="129"/>
+        <source>&lt;&lt;select&gt;&gt;</source>
+        <translation>&lt;&lt;seleccionar&gt;&gt;</translation>
+    </message>
+    <message>
+        <location filename="association1.py" line="139"/>
+        <source>Same</source>
+        <translation>Igual</translation>
+    </message>
+    <message>
+        <location filename="association1.py" line="140"/>
+        <source>Different</source>
+        <translation>Diferente</translation>
+    </message>
+    <message>
+        <location filename="association.py" line="82"/>
+        <source>Group Cells</source>
+        <translation>Agrupar Celdas</translation>
+    </message>
+    <message>
+        <location filename="profile.py" line="84"/>
+        <source>Load</source>
+        <translation>Cargar</translation>
+    </message>
+    <message>
+        <location filename="association1.py" line="124"/>
+        <source>Consecutives</source>
+        <translation>Consecutivos</translation>
+    </message>
+    <message>
+        <location filename="base.py" line="181"/>
+        <source>Unable to launch GenRep</source>
+        <translation>No se puede iniciar GenRep</translation>
+    </message>
+    <message>
+        <location filename="base.py" line="197"/>
+        <source>Unable to launch GenSec</source>
+        <translation>No se puede iniciar GenSec</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="119"/>
+        <source>Report Generator</source>
+        <translation>Generador de Reporte</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="119"/>
+        <source>Description</source>
+        <translation>Descripción</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="712"/>
+        <source>Signal area is selected</source>
+        <translation>Ell área de señal está seleccionada</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="722"/>
+        <source>Background area is selected</source>
+        <translation>Ell área de fondo está seleccionada</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="735"/>
+        <source>Slect area to change</source>
+        <translation>Seleccione el área a cambiar</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="828"/>
+        <source>Low channel to signal</source>
+        <translation>Canal menor para señal</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="833"/>
+        <source>High channel to signal</source>
+        <translation>Canal mayor para señal</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="839"/>
+        <source>Count of signal area</source>
+        <translation>Conteos del área de señal</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="850"/>
+        <source>Low channel to Background</source>
+        <translation>Canal menor para fondo</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="855"/>
+        <source>High channel to Background</source>
+        <translation>Canal mayor para fondo</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="861"/>
+        <source>Count of background area</source>
+        <translation>Conteos del área de fondo</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1013"/>
+        <source>Show/Hidde graphic</source>
+        <translation>Mostrar/Ocultar gráfica</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1086"/>
+        <source>Defines how they are to be displayed the results</source>
+        <translation>Define cómo se mostrarán los resultados</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1065"/>
+        <source>Set&amp;Up</source>
+        <translation>Configura&amp;ción</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1075"/>
+        <source>Define the parameters to report</source>
+        <translation>Define los parámetros a reportar</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1076"/>
+        <source>Pro&amp;file</source>
+        <translation>Pe&amp;rfil</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1087"/>
+        <source>&amp;Association by criteria</source>
+        <translation>&amp;Asociación por criterio</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1098"/>
+        <source>Ungroup all the associated processes</source>
+        <translation>Desagrupar todos los procesos asociados</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1099"/>
+        <source>&amp;Ungroup All</source>
+        <translation>&amp;Desagrupar todo</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1108"/>
+        <source>Define the associated processes to a measurement</source>
+        <translation>Define los procesos asociados a medir</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1118"/>
+        <source>Ungroup the associated processes</source>
+        <translation>Desagrupa los procesos asociados</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1119"/>
+        <source>Ungroup</source>
+        <translation>Desagrupar</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1128"/>
+        <source>Make a report</source>
+        <translation>Generar el Reporte</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1129"/>
+        <source>Report</source>
+        <translation>Reporte</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1448"/>
+        <source>Are you sure you want to continue, you will lose all associations?</source>
+        <translation>¿Seguro que desea continuar, perderá todas las asociaciones?</translation>
+    </message>
+    <message>
+        <location filename="MainWindows.py" line="242"/>
+        <source>Standar Bar</source>
+        <translation>Brarra Estándar</translation>
+    </message>
+    <message>
+        <location filename="MainWindows.py" line="248"/>
+        <source>Tools Bar</source>
+        <translation>Barra de Herramientas</translation>
+    </message>
+    <message>
+        <location filename="MainWindows.py" line="251"/>
+        <source>Applications Bar</source>
+        <translation>Barra de Aplicaciones</translation>
+    </message>
+    <message>
+        <location filename="MainWindows.py" line="264"/>
+        <source>Se&amp;ttings</source>
+        <translation>Ajus&amp;tes</translation>
+    </message>
+    <message>
+        <location filename="MainWindows.py" line="266"/>
+        <source>&amp;Theme</source>
+        <translation>Te&amp;ma</translation>
+    </message>
+    <message>
+        <location filename="MainWindows.py" line="282"/>
+        <source>Run &amp;Command</source>
+        <translation>Ej&amp;ecutar Comando</translation>
+    </message>
+    <message>
+        <location filename="MainWindows.py" line="283"/>
+        <source>&amp;Report Generator</source>
+        <translation>&amp;Generador de Reporte</translation>
+    </message>
+    <message>
+        <location filename="MainWindows.py" line="284"/>
+        <source>Sequence &amp;Generator</source>
+        <translation>Generador de &amp;Secuencia</translation>
+    </message>
+    <message>
+        <location filename="profile.py" line="84"/>
+        <source>Profile</source>
+        <translation>Perfil</translation>
+    </message>
+    <message>
+        <location filename="profile1.py" line="64"/>
+        <source>Select the Parameters</source>
+        <translation>Seleccione los Parámetros</translation>
+    </message>
+    <message>
+        <location filename="profile1.py" line="68"/>
+        <source>Beta Irradiation Time (s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="profile1.py" line="70"/>
+        <source>Beta Dose (Gy)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="profile1.py" line="72"/>
+        <source>External Irradiation Time (s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="profile1.py" line="74"/>
+        <source>External Dose (Gy)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <location filename="profile1.py" line="76"/>
+        <source>Preheating Temperature (°C)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <location filename="profile1.py" line="78"/>
+        <source>Measuring Temperature (°C)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <location filename="profile1.py" line="80"/>
+        <source>Preheating Rate (°C/s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="profile1.py" line="88"/>
+        <source>Electric Stimulation (V)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="profile1.py" line="90"/>
+        <source>Electric Frequency (KHz)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="profile1.py" line="92"/>
+        <source>Time of Beta irradiation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="profile1.py" line="94"/>
+        <source>Time of External irradiation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="profile1.py" line="96"/>
+        <source>Time of Measurement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="profile1.py" line="98"/>
+        <source>Illumination Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="profile1.py" line="100"/>
+        <source>Illumination Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="profile1.py" line="102"/>
+        <source>Illumination Temperature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="134"/>
+        <source>channels</source>
+        <translation>canales</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="256"/>
+        <source>SetUp</source>
+        <translation>Configuración</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="258"/>
+        <source>Curve to Show</source>
+        <translation>Curva a mostrar</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="259"/>
+        <source>For TL</source>
+        <translation>Para TL</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="260"/>
+        <source>Format Horizontal Axis</source>
+        <translation>Formato del Eje Horizontal</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="261"/>
+        <source>Format Vertical Axis</source>
+        <translation>Formato del Eje Vertical</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="262"/>
+        <source>Cursors</source>
+        <translation>Cursores</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="267"/>
+        <source>Curve</source>
+        <translation>Curva</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="268"/>
+        <source>Show</source>
+        <translation>Mostrar</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="269"/>
+        <source>Curve vs Time</source>
+        <translation>Curva vs Tiempo</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="270"/>
+        <source>Curve vs Temperature</source>
+        <translation>Curva vs Temperatura</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="288"/>
+        <source>Scale</source>
+        <translation>Escala</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="289"/>
+        <source>Lineal</source>
+        <translation>Lineal</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="290"/>
+        <source>Log10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="291"/>
+        <source>Ln</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="292"/>
+        <source>Minimum</source>
+        <translation>Mínimo</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="293"/>
+        <source>Maximum</source>
+        <translation>Máximo</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="294"/>
+        <source>Greater Unity</source>
+        <translation>Unidad Máxima</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="295"/>
+        <source>Smallest Unity</source>
+        <translation>Unidad Mínima</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="299"/>
+        <source>Automatic</source>
+        <translation>Automático</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="303"/>
+        <source>Fixed</source>
+        <translation>Fijo</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="304"/>
+        <source>Axis values</source>
+        <translation>Valor del eje</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="305"/>
+        <source>Units</source>
+        <translation>Unidades</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="306"/>
+        <source>Show Cursors</source>
+        <translation>Mostrar Cursores</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="307"/>
+        <source>Signal</source>
+        <translation>Señal</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="308"/>
+        <source>Background</source>
+        <translation>Fondo</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="309"/>
+        <source>Default Position</source>
+        <translation>Posición Predeterminada</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="312"/>
+        <source>Low</source>
+        <translation>Menor</translation>
+    </message>
+    <message>
+        <location filename="setup1.py" line="313"/>
+        <source>High</source>
+        <translation>Mayor</translation>
+    </message>
+    <message>
+        <location filename="TL.py" line="96"/>
+        <source>Save Temp.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

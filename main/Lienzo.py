@@ -91,18 +91,28 @@ class Lienzo(FigureCanvas):
 			self.Signal = self.divider.append_axes("left", 1.4, pad=0.4, sharey=self.allGraphic)
 			self.line1, = self.Signal.plot([], [], '-',color=self.font_color)
 			self.Signal.set_title('Signal(SG)',color='g',position=(0.5,1.05))
+			self.allGraphic.grid(True)
 			self.Signal.yaxis.grid(True,'minor',linewidth=1)
 			self.Signal.yaxis.grid(True,'major',linewidth=2)
 			try:
 				self.Signal.yaxis.set_major_locator(MultipleLocator(self.v_great_unit))
 				self.Signal.yaxis.set_minor_locator(MultipleLocator(self.v_small_unit))
 			except:
-				pass			
+				pass	
+			#*********************************
+			self.Signal.xaxis.grid(True,'minor',linewidth=1)
+			self.Signal.xaxis.grid(True,'major',linewidth=2)
+			try:
+				self.Signal.xaxis.set_major_locator(MultipleLocator(self.h_great_unit))
+				self.Signal.xaxis.set_minor_locator(MultipleLocator(self.h_small_unit))
+			except:
+				pass
+			#************************************		
 			self.Signal.text(
 				-0.5,
 				0.15, 
 				'Count',
-				#rotation='vertical',
+				rotation='vertical',
 				color=self.font_color,
 				size = 14,
 				transform=self.Signal.transAxes)
@@ -126,6 +136,15 @@ class Lienzo(FigureCanvas):
 				self.Background.yaxis.set_minor_locator(MultipleLocator(self.v_small_unit))
 			except:
 				pass
+			#*********************************
+			self.Background.xaxis.grid(True,'minor',linewidth=1)
+			self.Background.xaxis.grid(True,'major',linewidth=2)
+			try:
+				self.Background.xaxis.set_major_locator(MultipleLocator(self.h_great_unit))
+				self.Background.xaxis.set_minor_locator(MultipleLocator(self.h_small_unit))
+			except:
+				pass
+			#************************************	
 			plt.setp(self.Background.get_yticklabels(),visible=False)
 			self.Background.patch.set_facecolor(self.fondo[1])
 			self.Background.spines['left'].set_color(self.font_color)

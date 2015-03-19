@@ -1244,6 +1244,9 @@ class UI_GenRep(UI_GenSec_Base):
 				
 	def association_ready(self):
 		self.criterias,self.consecutives=self.association.fill_data()
+		print self.criterias
+		print self.consecutives
+		
 		for i in range(self.treeWidget.topLevelItemCount()):
 			item = self.treeWidget.topLevelItem( i )
 			if item.text(1):
@@ -1279,9 +1282,14 @@ class UI_GenRep(UI_GenSec_Base):
 												value=float(value)
 											except:
 												value='error'
+										print data
+										print value
+										print str(data)==str(value)
+										print "*****************************"
 										if str(data)==str(value):
 											first.setdefault(data, []).append (INDEX(i,column))
-								
+		
+				
 				if len(self.criterias)>1!='':					
 					for list in first.values():
 						second={}

@@ -71,95 +71,95 @@ class ProcessOrder:
 			
 		try:
 			Beta_irradiation_time.appendChild(self.xml.createTextNode(str(parameters['Beta_irradiation_time']))),
+			self.processOrder.appendChild(Beta_irradiation_time)
 		except:
 			pass
 		try:
 			Beta_dose.appendChild(self.xml.createTextNode(str(parameters['Beta_dose']))),
+			self.processOrder.appendChild(Beta_dose)
 		except:
 			pass
 		try:
 			External_irradiation.appendChild(self.xml.createTextNode(str(parameters['External_irradiation']))),
+			self.processOrder.appendChild(External_irradiation)
 		except:
 			pass
 		try:
 			External_dose.appendChild(self.xml.createTextNode(str(parameters['External_dose']))),
+			self.processOrder.appendChild(External_dose)
 		except:
 			pass
 		try:
 			Preheating_temperature.appendChild(self.xml.createTextNode(str(parameters['Preheating_temperature']))),
+			self.processOrder.appendChild(Preheating_temperature)
 		except:
 			pass
 		try:
 			Measuring_temperature.appendChild(self.xml.createTextNode(str(parameters['Measuring_temperature']))),
+			self.processOrder.appendChild(Measuring_temperature)
 		except:
 			pass
 		try:
 			Preheating_rate.appendChild(self.xml.createTextNode(str(parameters['Preheating_rate']))),
+			self.processOrder.appendChild(Preheating_rate)
 		except:
 			pass
 		try:
 			Heating_rate.appendChild(self.xml.createTextNode(str(parameters['Heating_rate']))),
+			self.processOrder.appendChild(Heating_rate)
 		except:
 			pass
 		try:
 			Light_source.appendChild(self.xml.createTextNode(str(parameters['Light_source']))),
+			self.processOrder.appendChild(Light_source)
 		except:
 			pass
 		try:
 			Optical_power.appendChild(self.xml.createTextNode(str(parameters['Optical_power']))),
+			self.processOrder.appendChild(Optical_power)
 		except:
 			pass
 		try:
 			Electric_stimulation.appendChild(self.xml.createTextNode(str(parameters['Electric_stimulation']))),
+			self.processOrder.appendChild(Electric_stimulation)
 		except:
 			pass
 		try:
 			Electric_frequency.appendChild(self.xml.createTextNode(str(parameters['Electric_frequency']))),
+			self.processOrder.appendChild(Electric_frequency)
 		except:
 			pass
 		try:
 			Time_beta_irradiation.appendChild(self.xml.createTextNode(str(parameters['Time_beta_irradiation']))),
+			self.processOrder.appendChild(Time_beta_irradiation)
 		except:
 			pass
 		try:
 			Time_external_irradiation.appendChild(self.xml.createTextNode(str(parameters['Time_external_irradiation']))),
+			self.processOrder.appendChild(Time_external_irradiation)
 		except:
 			pass
 		try:
 			Time_measurement.appendChild(self.xml.createTextNode(str(parameters['Time_measurement']))),
+			self.processOrder.appendChild(Time_measurement)
 		except:
 			pass
 		try:
 			Illumination_source.appendChild(self.xml.createTextNode(str(parameters['Illumination_source']))),
+			self.processOrder.appendChild(Illumination_source)
 		except:
 			pass
 		try:
 			Illumination_power.appendChild(self.xml.createTextNode(str(parameters['Illumination_power']))),
+			self.processOrder.appendChild(Illumination_power)
 		except:
 			pass
 		try:
 			Illumination_temperature.appendChild(self.xml.createTextNode(str(parameters['Illumination_temperature']))),
+			self.processOrder.appendChild(Illumination_temperature)
 		except:
 			pass
 		
-		self.processOrder.appendChild(Beta_irradiation_time)
-		self.processOrder.appendChild(Beta_dose)
-		self.processOrder.appendChild(External_irradiation)
-		self.processOrder.appendChild(External_dose)
-		self.processOrder.appendChild(Preheating_temperature)
-		self.processOrder.appendChild(Measuring_temperature)
-		self.processOrder.appendChild(Preheating_rate)
-		self.processOrder.appendChild(Heating_rate)
-		self.processOrder.appendChild(Light_source)
-		self.processOrder.appendChild(Optical_power)
-		self.processOrder.appendChild(Electric_stimulation)
-		self.processOrder.appendChild(Electric_frequency)
-		self.processOrder.appendChild(Time_beta_irradiation)
-		self.processOrder.appendChild(Time_external_irradiation)
-		self.processOrder.appendChild(Time_measurement)
-		self.processOrder.appendChild(Illumination_source)
-		self.processOrder.appendChild(Illumination_power)
-		self.processOrder.appendChild(Illumination_temperature)
 		
 class Curve:
 	def __init__(self,num,Conteos_SG, Canal_inf_SG, Canal_sup_SG, Conteos_BG, Canal_inf_BG,Canal_sup_BG):

@@ -1020,20 +1020,25 @@ class UI_GenSec(UI_GenSec_Base):
 		
 		def createXML(self):
 			"""Genera una estructura xml a partir de los datos entrados por el usuario"""
+			all=[]
 			self.mySEQ=None
 			tabla=self.generar()
 			self.nmuestras=0
 			for row in tabla:
 				ran=row[0]
-				samples=ran.split(',')
+				samples=ran.split(',')				
 				for sample in samples:
-					if len(sample)==1:
-						self.nmuestras+=1
-					elif len(sample)>1:
-						val1=int(sample[0])
-						val2=int(sample[-1])
+					if '-' in sample:
+						extremos=sample.split('-')
+						val1=int(extremos[0])
+						val2=int(extremos[-1])
 						for val in range(val1,val2+1):
-							self.nmuestras+=1
+							if not val in all:
+								self.nmuestras+=1
+								all.append(val)
+					elif not int(sample) in all:
+						self.nmuestras+=1
+						all.append(int(sample))
 			
 			self.mySEQ=createSLF.SEQ(nmuestras=self.nmuestras,name=self.nombre,owner=self.propietario,n2flow=self.nitrogeno,doserate=self.dosis,extdoserate=self.dosisE,protocol=self.protocolo,reader_id=self.id_lector,datecrea=self.datecrea)
 			

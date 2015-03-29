@@ -318,11 +318,3 @@ class REP:
 				return True
 			else:
 				raise ValueError( 'Directory does not exist '+directorio)	
-
-"""				
-rep=REP(1,'','','','','','','','','')
-sample=rep.createSample(1)
-curves=[rep.createCurve(1,343434, 1, 12, 6577, 200,250)]
-rep.createProcessOrder(sample,1,'OSL','T0',curves,{})
-rep.save('/home/carlitos/Descargas/temp')
-"""

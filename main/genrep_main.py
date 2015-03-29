@@ -138,8 +138,7 @@ class UI_GenRep(UI_GenSec_Base):
 		self.actual_in_graph=''	
 		
 		self.establecerFondo()
-		self.create_graphic(X,Y)
-		
+		self.create_graphic(X,Y)			
 	
 	@cursorAction()
 	def save(self,temp=False):
@@ -167,7 +166,7 @@ class UI_GenRep(UI_GenSec_Base):
 				self.form1,
 				QtGui.QApplication.translate('MainWindow',"Save"),
 				self.fileLocation,
-				QtGui.QApplication.translate('MainWindow','File')+' RLF (*.rlf);; '+QtGui.QApplication.translate('MainWindow','File')+'XLS (*.xls);; '+QtGui.QApplication.translate('MainWindow','File')+'XML (*.xml);; '+QtGui.QApplication.translate('MainWindow','File')+'PDF (*.pdf)',
+				QtGui.QApplication.translate('MainWindow','File')+' RLF (*.rlf *.xml);; '+QtGui.QApplication.translate('MainWindow','File')+'XLS (*.xls)',
 				'0',
 				QtGui.QFileDialog.DontUseNativeDialog,
 			)
@@ -182,8 +181,8 @@ class UI_GenRep(UI_GenSec_Base):
 				self.myREP.save(str(self.directorioArchivo),True)
 				#self.thereAreCanges=False
 				self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"The document has been saved"))
-				
-			# faltan el slf, pdf
+			elif (type(self.directorioArchivo)==QtCore.QString and self.directorioArchivo.endsWith('.xls')) or (type(self.directorioArchivo)==str and self.directorioArchivo.endswith('.xls')):	
+				pass
 			return True
 		else:
 			self.directorioArchivo=''
@@ -336,7 +335,7 @@ class UI_GenRep(UI_GenSec_Base):
 									for k in back_values:
 										back_count+=k
 										
-									curves[str(i)+','+str(column)+','+str(j)]=[sig,back,sig_count,back_count]
+									curves[str(i)+','+str(column)+','+str(j)]=[sig,back,sig_count,back_count,X,Y]
 							muestra[1].append([info,curves])
 				muestras.append(muestra)
 		return muestras					
@@ -672,7 +671,7 @@ class UI_GenRep(UI_GenSec_Base):
 			bh=self.values_back[self.actual_in_graph][1]
 			default=False
 		
-		self.canvas = Lienzo(X,Y,w,sl,sh,bl,bh,default,self.signal,self.background,self.h_min,self.h_max,self.h_great_unit,self.h_small_unit,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit,self.fondo_graph,self.font_color,self.verticalLayoutWidget)
+		self.canvas = Lienzo(X,Y,w,sl,sh,bl,bh,default,self.signal,self.background,self.h_min,self.h_max,self.h_great_unit,self.h_small_unit,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit,self.fondo_graph,False,self.verticalLayoutWidget)
 		try:
 			if self.v_scale=='log':
 				self.canvas.allGraphic.set_yscale('log', basey=10)
@@ -703,7 +702,7 @@ class UI_GenRep(UI_GenSec_Base):
 					self.canvas.Background.set_xscale('log', basey=math.e)
 		except:
 			pass
-		
+			
 		def onClick(event):
 			if event.button==1 and (not self.pan) and (not self.zoom):
 				try:
@@ -1528,12 +1527,13 @@ class UI_GenRep(UI_GenSec_Base):
 			clipboard.setText(text)
 
 	
-	def imprimir(self):
+	@cursorAction()
+	def imprimir(self,temp=False):
 		"""Imprime toda la informacion de la aplicacion"""
 		printer =QtGui.QPrinter(QtGui.QPrinter.HighResolution)
 		if os.sys.platform=='linux' or os.sys.platform=='linux2':
 			printer.setOutputFormat(QtGui.QPrinter.PdfFormat)
-			printer.setOutputFileName(str(self.fileLocation)+'/gensec.pdf')
+			printer.setOutputFileName(str(self.fileLocation)+'/report.pdf')
 		dialog = QtGui.QPrintDialog(printer,self.form1)
 		dialog.addEnabledOption(QtGui.QAbstractPrintDialog.PrintSelection)
 		dialog.setWindowTitle('Print Table')
@@ -1541,39 +1541,188 @@ class UI_GenRep(UI_GenSec_Base):
 		if dialog.exec_() == QtGui.QDialog.Accepted:
 			document=QtGui.QTextDocument()
 			document.setHtml(QtCore.QString.fromUtf8(self.buildHtml()))
-			document.print_(printer)
+			document.print_(printer)			
+			map( os.unlink, [os.path.join( 'pixmaps/temp/',f) for f in os.listdir('pixmaps/temp/')] )
 			self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"The document has been printed"))
 		dialog.show()	
 			
 			
+	
+	def getImg(self,data,name):
+		X=data[4]
+		Y=data[5]
+		
+		w=12
+		
+		sl=data[0][0]
+		sh=data[0][1]
+		bl=data[1][0]
+		bh=data[1][1]
+		default=True
+		
+		canvas = Lienzo(X,Y,w,sl,sh,bl,bh,default,self.signal,self.background,self.h_min,self.h_max,self.h_great_unit,self.h_small_unit,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit,self.fondo_graph,True)
+		try:
+			if self.v_scale=='log':
+				canvas.allGraphic.set_yscale('log', basey=10)
+				if self.canvas.active_sig:
+					canvas.Signal.set_yscale('log', basey=10)
+				if self.canvas.active_back:
+					canvas.Background.set_yscale('log', basey=10)
+			elif self.v_scale=='ln':
+				canvas.allGraphic.set_yscale('log', basey=math.e)
+				if self.canvas.active_sig:
+					canvas.Signal.set_yscale('log', basey=math.e)
+				if self.canvas.active_back:
+					canvas.Background.set_yscale('log', basey=math.e)
+		except:
+			pass
+		try:
+			if self.h_scale=='log':
+				canvas.allGraphic.set_xscale('log', basey=10)
+				if self.canvas.active_sig:
+					canvas.Signal.set_xscale('log', basey=10)
+				if self.canvas.active_back:
+					canvas.Background.set_xscale('log', basey=10)
+			elif self.h_scale=='ln':
+				canvas.allGraphic.set_xscale('log', basey=math.e)
+				if self.canvas.active_sig:
+					canvas.Signal.set_xscale('log', basey=math.e)
+				if self.canvas.active_back:
+					canvas.Background.set_xscale('log', basey=math.e)
+		except:
+			pass
+		
+		#extent = canvas.allGraphic.get_window_extent().transformed(canvas.fig.dpi_scale_trans.inverted())
+		canvas.fig.savefig('pixmaps/temp/'+str(name)+'.png', bbox_inches='tight')
+	
+	
 	def buildHtml(self):			
 		"""Construye una tabla html con estructura igual a la del gensec, con la informacion de esta"""
 		hora='<table><tr><td> GenRep : '+str(datetime.datetime.fromtimestamp(time.time()))+'</td></tr></td></tr><tr><td> </td></tr></table>'
+		general='<table><tr><td>'+QtGui.QApplication.translate('MainWindow','Name')+': </td><td>'+ self.nombre +'</td></tr><tr><td>'+QtGui.QApplication.translate('MainWindow','Owner')+': </td><td>'+ self.propietario +'</td></tr><tr><td>'+QtGui.QApplication.translate('MainWindow','Created')+': </td><td>'+ str(self.datecrea) +'</td></tr><tr><td>'+QtGui.QApplication.translate('MainWindow','Nitrogen Use')+': </td><td>'+ str(self.nitrogeno) +'</td></tr><tr><td>'+QtGui.QApplication.translate('MainWindow','Dose Rate')+': </td><td>'+ str(self.dosis) +'</td></tr><tr><td>'+QtGui.QApplication.translate('MainWindow','External Dose Rate')+': </td><td>'+ str(self.dosisE) +'</td></tr><tr><td>'+QtGui.QApplication.translate('MainWindow','Protocol')+': </td><td>'+ self.protocolo +'</td></tr><tr><td>'+QtGui.QApplication.translate('MainWindow','Reader ID')+': </td><td>'+ self.id_lector +'</td></tr><tr><td> </td><td> </td></tr></table>'
 		html=''
-		cant_filas=0
-		for i in range(self.treeWidget.topLevelItemCount()):
-			item = self.treeWidget.topLevelItem( i )
-			cant_filas+=1
-			colum=0
-			html+='<tr>'
-			for column in range(self.treeWidget.columnCount()):
-				if not self.treeWidget.isColumnHidden(column):
-					color= item.textColor(column).name()
-					font= self.treeWidget.font().family()
-					size= str(self.treeWidget.font().pointSize())
-					dato=item.text(column)
-					html+='<td style="font-family:'+font+'; font-size:'+size+'; color:'+color+';">     '+dato+'     </td>'
-			html+='</tr>'
-		html+="</table></body></html>"
+		img_name=1
+		tabla=self.getallData()	
+		for item in tabla:
+			ran=item[0]				
+			samples=ran.split(',')
+			for sample in samples:
+				if len(sample)==1:
+					samples_id=sample
+				elif len(sample)>1:
+					val=sample.split('-')
+					samples_id=range(int(val[0]),int(val[-1])+1)
+				for sample_id in samples_id:
+					sample_table='<p style="background:#ACD6FF" ><b>'+QtGui.QApplication.translate('MainWindow','Sample')+' '+str(sample_id)+'</b></p>'
+					
+					for command in item[1]:
+						cant=command[1].keys()
+						if cant!=[]:
+							pos=cant[0][:-2]
+							info=self.processData[pos]
+							if info['id']==2:
+								p='TL'
+							if info['id']==3:
+								p='OSL'
+							if info['id']==4:
+								p='POSL'
+							if info['id']==5:
+								p='LMOSL'
+							if info['id']==6:
+								p='ESL'
+								
+							comand_table='<table>'
+							comand_table='<tr style="font-weight: bold;" colspan="2"><td>'+QtGui.QApplication.translate('MainWindow','Process')+' '+p+'</td><td></td></tr>'
+							comand_table+= '<tr><td>'+QtGui.QApplication.translate('MainWindow','Parameter')+'</td><td style="padding-left:30px;">'+QtGui.QApplication.translate('MainWindow','Data')+'</td><td style="padding-left:30px;">'+QtGui.QApplication.translate('MainWindow','Plot')+'</td></tr>'
+							comand_table+= '<tr><td>'+QtGui.QApplication.translate('MainWindow','Date Type')+'</td><td style="padding-left:30px;">'+str(info['date_type'])+'</td><td></td></tr>'
+							
+							curves={1:False,2:False,3:False}
+							for curve in command[1]:
+								curv=int(curve.split(',')[2])								
+								self.getImg(command[1][curve],img_name)
+								curve_data= '<tr><td> Curve '+str(curv)+' '+QtGui.QApplication.translate('MainWindow','Signal Count')+'</td><td style="padding-left:30px;">'+str(command[1][curve][2])+'</td><td rowspan="6" style="padding-left:30px;"><img src="pixmaps/temp/'+str(img_name)+'.png" width="300"></td></tr>'
+								curve_data+= '<tr><td> Curve '+str(curv)+' '+QtGui.QApplication.translate('MainWindow','Signal Min Channel')+'</td><td style="padding-left:30px;">'+str(command[1][curve][0][0])+'</td></tr>'
+								curve_data+= '<tr><td> Curve '+str(curv)+' '+QtGui.QApplication.translate('MainWindow','Signal Max Channel')+'</td><td style="padding-left:30px;">'+str(command[1][curve][0][1])+'</td></tr>'
+								curve_data+= '<tr><td> Curve '+str(curv)+' '+QtGui.QApplication.translate('MainWindow','Background Count')+'</td><td style="padding-left:30px;">'+str(command[1][curve][3])+'</td></tr>'
+								curve_data+= '<tr><td> Curve '+str(curv)+' '+QtGui.QApplication.translate('MainWindow','Background Min Channel')+'</td><td style="padding-left:30px;">'+str(command[1][curve][1][0])+'</td></tr>'
+								curve_data+= '<tr><td> Curve '+str(curv)+' '+QtGui.QApplication.translate('MainWindow','Background Max Channel')+'</td><td style="padding-left:30px;">'+str(command[1][curve][1][1])+'</td></tr>'								
+								
+								img_name+=1
+								curves[int(curv)]=curve_data
+							
+							
+							for curve_data in curves:
+								if curves[curve_data]:
+									comand_table+=curves[curve_data]
+								
+							data=[]
+							
+							for group in self.inGroup:
+								if pos in group:
+									for cm in (y for y in group if y != pos):
+										info=self.processData[cm]
+										
+										if info['id']==0:
+											if 2 in self.parameters:
+												data.append(["External Irradiation Time",self.getData(info,"External Irradiation Time",False)])
+											if 3 in self.parameters:
+												data.append(["External Dose",self.getData(info,"External Dose",False)])
+											if 13 in self.parameters:
+												data.append(["Time of External irradiation",self.getData(info,"Time of External irradiation",False)])
+												
+										if info['id']==1:
+											if 0 in self.parameters:
+												data.append(["Beta Irradiation Time",self.getData(info,"Beta Irradiation Time",False)])
+											if 1 in self.parameters:
+												data.append(["Beta Dose",self.getData(info,"Beta Dose",False)])
+											if 12 in self.parameters:
+												data.append(["Time of Beta irradiation",self.getData(info,"Time of Beta irradiation",False)])								
+											
+										if info['id']==7:
+											if 4 in self.parameters:
+												data.append(["Preheating Temperature",self.getData(info,"Preheating Temperature",False)])
+											if 6 in self.parameters:
+												data.append(["Preheating Rate",self.getData(info,"Preheating Rate",False)])
+
+										if info['id']==8:
+											if 15 in self.parameters:
+												data.append(["Illumination Source",self.getData(info,"Illumination Source",False)])
+											if 16 in self.parameters:
+												data.append(["Illumination Power",self.getData(info,"Illumination Power",False)])
+											if 17 in self.parameters:
+												data.append(["Illumination Temperature",self.getData(info,"Illumination Temperature",False)])
+									break
 		
-		header='<table border="2"><tr>'
-		for column in range(self.treeWidget.columnCount()):
-			if not self.treeWidget.isColumnHidden(column):
-				columna=self.header.model().headerData(column,QtCore.Qt.Horizontal).toString()
-				header+='<td>     '+str(columna)+'     </td>'			
-		header+='</tr>'
+							
+							if info['id']==3 or info['id']==4 or info['id']==5:
+								if 8 in self.parameters:
+									data.append(["Light Sour",self.getData(info,"Light Sour",False)])
+								if 9 in self.parameters:
+									data.append(["Optical Power",self.getData(info,"Optical Power",False)])
+							
+							if info['id']==6:
+								if 10 in self.parameters:
+									data.append(["Electric Stimulation",self.getData(info,"Electric Stimulation",False)])
+								if 11 in self.parameters:
+									data.append(["Electric Frequency",self.getData(info,"Electric Frequency",False)])
+							
+							if 5 in self.parameters:
+								data.append(["Measuring Temperature",self.getData(info,"Measuring Temperature",False)])
+							if 7 in self.parameters:
+								data.append(["Heating Rate",self.getData(info,"Heating Rate",False)])
+							if 14 in self.parameters:
+								data.append(["Time of Measurement",self.getData(info,"Time of Measurement",False)])
+									
+							
+							for parameter in data:
+								comand_table+= '<tr><td>'+parameter[0]+'</td><td style="padding-left:30px;">'+str(parameter[1])+'</td><td></td></tr>'
+							
+							comand_table+='</table>'
+							sample_table+=comand_table									
+														
+					html+=sample_table
 		
-		html=hora+header+html
+		html=hora+general+html
 		return html
 		
 	

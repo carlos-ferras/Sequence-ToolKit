@@ -33,7 +33,7 @@ class Lienzo(FigureCanvas):
 	signal_change = QtCore.pyqtSignal(float,float)
 	background_change = QtCore.pyqtSignal(float,float)
 	
-	def __init__(self,X,Y,w,sl,sh,bl,bh,default,sig,back,h_min,h_max,h_great_unit,h_small_unit,v_min,v_max,v_great_unit,v_small_unit,fondo,font_color, parent=None):        
+	def __init__(self,X,Y,w,sl,sh,bl,bh,default,sig,back,h_min,h_max,h_great_unit,h_small_unit,v_min,v_max,v_great_unit,v_small_unit,fondo,auto, parent=None):        
 		self.fig = Figure(figsize=(w,8))
 		#self.fig.subplots_adjust(left=0, right=0.8)
 		self.fig.subplots_adjust(bottom=0.2)
@@ -47,7 +47,7 @@ class Lienzo(FigureCanvas):
 		self.v_great_unit=v_great_unit
 		self.v_small_unit=v_small_unit
 		self.fondo=fondo
-		self.font_color=font_color
+		self.font_color='black'
 		
 		self.allGraphic = self.fig.add_subplot(111,axisbg=self.fondo[1])	
 		
@@ -169,7 +169,7 @@ class Lienzo(FigureCanvas):
 		FigureCanvas.updateGeometry(self)
 		
 		if X!=[] and Y!=[]:
-			if default:
+			if default and not auto:
 				if sl==0 and sh==0:
 					sl=self.allGraphic_X[:11][0]
 					sh=self.allGraphic_X[:11][-1]
@@ -188,7 +188,12 @@ class Lienzo(FigureCanvas):
 						bh=self.allGraphic_X[-1]
 					else:
 						bh=self.allGraphic_X[int(bh)]
-				sh=self.allGraphic_X[int(sh)]			
+				sh=self.allGraphic_X[int(sh)]		
+			elif default and auto:
+				sl=self.allGraphic_X[self.allGraphic_X.index(sl)]
+				sh=self.allGraphic_X[self.allGraphic_X.index(sh)]
+				bl=self.allGraphic_X[self.allGraphic_X.index(bl)]
+				bh=self.allGraphic_X[self.allGraphic_X.index(bh)]
 			
 			self.Signal_X=sl
 			self.Signal_Y=False

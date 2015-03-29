@@ -1164,7 +1164,7 @@ class UI_GenSec(UI_GenSec_Base):
 			printer =QtGui.QPrinter(QtGui.QPrinter.HighResolution)
 			if os.sys.platform=='linux' or os.sys.platform=='linux2':
 				printer.setOutputFormat(QtGui.QPrinter.PdfFormat)
-				printer.setOutputFileName(str(self.fileLocation)+'/gensec.pdf')
+				printer.setOutputFileName(str(self.fileLocation)+'/sequence.pdf')
 			dialog = QtGui.QPrintDialog(printer,self.form1)
 			dialog.addEnabledOption(QtGui.QAbstractPrintDialog.PrintSelection)
 			dialog.setWindowTitle('Print Table')

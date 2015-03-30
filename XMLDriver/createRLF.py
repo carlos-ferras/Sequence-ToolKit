@@ -162,30 +162,29 @@ class ProcessOrder:
 		
 		
 class Curve:
-	def __init__(self,num,Conteos_SG, Canal_inf_SG, Canal_sup_SG, Conteos_BG, Canal_inf_BG,Canal_sup_BG):
+	def __init__(self,num,signal,background,Conteos_SG, Canal_inf_SG, Canal_sup_SG, Conteos_BG, Canal_inf_BG,Canal_sup_BG):
 		self.xml = Document()		
 		self.Curve =self.xml.createElement("Curve"+str(num))
-		
-		self.Conteos_SG =self.xml.createElement("Conteos_SG")
-		self.Canal_inf_SG =self.xml.createElement("Canal_inf_SG")
-		self.Canal_sup_SG =self.xml.createElement("Canal_sup_SG")
-		self.Conteos_BG =self.xml.createElement("Conteos_BG")
-		self.Canal_inf_BG =self.xml.createElement("Canal_inf_BG")
-		self.Canal_sup_BG =self.xml.createElement("Canal_sup_BG")
-		
-		self.Conteos_SG.appendChild(self.xml.createTextNode(str(Conteos_SG)))
-		self.Canal_inf_SG.appendChild(self.xml.createTextNode(str(Canal_inf_SG)))
-		self.Canal_sup_SG.appendChild(self.xml.createTextNode(str(Canal_sup_SG)))
-		self.Conteos_BG.appendChild(self.xml.createTextNode(str(Conteos_BG)))
-		self.Canal_inf_BG.appendChild(self.xml.createTextNode(str(Canal_inf_BG)))
-		self.Canal_sup_BG.appendChild(self.xml.createTextNode(str(Canal_sup_BG)))
-		
-		self.Curve.appendChild(self.Conteos_SG)
-		self.Curve.appendChild(self.Canal_inf_SG)
-		self.Curve.appendChild(self.Canal_sup_SG)
-		self.Curve.appendChild(self.Conteos_BG)
-		self.Curve.appendChild(self.Canal_inf_BG)
-		self.Curve.appendChild(self.Canal_sup_BG)
+		if signal:
+			self.Conteos_SG =self.xml.createElement("Conteos_SG")
+			self.Canal_inf_SG =self.xml.createElement("Canal_inf_SG")
+			self.Canal_sup_SG =self.xml.createElement("Canal_sup_SG")
+			self.Conteos_SG.appendChild(self.xml.createTextNode(str(Conteos_SG)))
+			self.Canal_inf_SG.appendChild(self.xml.createTextNode(str(Canal_inf_SG)))
+			self.Canal_sup_SG.appendChild(self.xml.createTextNode(str(Canal_sup_SG)))
+			self.Curve.appendChild(self.Conteos_SG)
+			self.Curve.appendChild(self.Canal_inf_SG)
+			self.Curve.appendChild(self.Canal_sup_SG)
+		if background:
+			self.Conteos_BG =self.xml.createElement("Conteos_BG")
+			self.Canal_inf_BG =self.xml.createElement("Canal_inf_BG")
+			self.Canal_sup_BG =self.xml.createElement("Canal_sup_BG")		
+			self.Conteos_BG.appendChild(self.xml.createTextNode(str(Conteos_BG)))
+			self.Canal_inf_BG.appendChild(self.xml.createTextNode(str(Canal_inf_BG)))
+			self.Canal_sup_BG.appendChild(self.xml.createTextNode(str(Canal_sup_BG)))		
+			self.Curve.appendChild(self.Conteos_BG)
+			self.Curve.appendChild(self.Canal_inf_BG)
+			self.Curve.appendChild(self.Canal_sup_BG)
 	
 		
 class REP:
@@ -280,8 +279,8 @@ class REP:
 		self.setDateMod()
 		return processO
 		
-	def createCurve(self,num,Conteos_SG, Canal_inf_SG, Canal_sup_SG, Conteos_BG, Canal_inf_BG,Canal_sup_BG):
-		curve=Curve(num,Conteos_SG, Canal_inf_SG, Canal_sup_SG, Conteos_BG, Canal_inf_BG,Canal_sup_BG)
+	def createCurve(self,num,signal,background,Conteos_SG, Canal_inf_SG, Canal_sup_SG, Conteos_BG, Canal_inf_BG,Canal_sup_BG):
+		curve=Curve(num,signal,background,Conteos_SG, Canal_inf_SG, Canal_sup_SG, Conteos_BG, Canal_inf_BG,Canal_sup_BG)
 		self.setDateMod()
 		return curve.Curve	
 		

@@ -213,8 +213,7 @@ class UI_GenRep(UI_GenSec_Base):
 								curves=[]
 								for curve in command[1]:
 									curv=int(curve.split(',')[2])
-									curves.append(self.myREP.createCurve(curv,command[1][curve][2], command[1][curve][0][0], command[1][curve][0][1], command[1][curve][3], command[1][curve][1][0],command[1][curve][1][1]))
-								
+									curves.append(self.myREP.createCurve(curv,self.signal,self.background,command[1][curve][2], command[1][curve][0][0], command[1][curve][0][1], command[1][curve][3], command[1][curve][1][0],command[1][curve][1][1]))
 								data={}
 								pos=cant[0][:-2]
 								for group in self.inGroup:
@@ -1560,7 +1559,7 @@ class UI_GenRep(UI_GenSec_Base):
 		bh=data[1][1]
 		default=True
 		
-		canvas = Lienzo(X,Y,w,sl,sh,bl,bh,default,self.signal,self.background,self.h_min,self.h_max,self.h_great_unit,self.h_small_unit,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit,self.fondo_graph,True)
+		canvas = Lienzo(X,Y,w,sl,sh,bl,bh,default,self.signal,self.background,self.h_min,self.h_max,20,5,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit,self.fondo_graph,True)
 		try:
 			if self.v_scale=='log':
 				canvas.allGraphic.set_yscale('log', basey=10)
@@ -1640,12 +1639,15 @@ class UI_GenRep(UI_GenSec_Base):
 							for curve in command[1]:
 								curv=int(curve.split(',')[2])								
 								self.getImg(command[1][curve],img_name)
-								curve_data= '<tr><td> Curve '+str(curv)+' '+QtGui.QApplication.translate('MainWindow','Signal Count')+'</td><td style="padding-left:30px;">'+str(command[1][curve][2])+'</td><td rowspan="6" style="padding-left:30px;"><img src="pixmaps/temp/'+str(img_name)+'.png" width="300"></td></tr>'
-								curve_data+= '<tr><td> Curve '+str(curv)+' '+QtGui.QApplication.translate('MainWindow','Signal Min Channel')+'</td><td style="padding-left:30px;">'+str(command[1][curve][0][0])+'</td></tr>'
-								curve_data+= '<tr><td> Curve '+str(curv)+' '+QtGui.QApplication.translate('MainWindow','Signal Max Channel')+'</td><td style="padding-left:30px;">'+str(command[1][curve][0][1])+'</td></tr>'
-								curve_data+= '<tr><td> Curve '+str(curv)+' '+QtGui.QApplication.translate('MainWindow','Background Count')+'</td><td style="padding-left:30px;">'+str(command[1][curve][3])+'</td></tr>'
-								curve_data+= '<tr><td> Curve '+str(curv)+' '+QtGui.QApplication.translate('MainWindow','Background Min Channel')+'</td><td style="padding-left:30px;">'+str(command[1][curve][1][0])+'</td></tr>'
-								curve_data+= '<tr><td> Curve '+str(curv)+' '+QtGui.QApplication.translate('MainWindow','Background Max Channel')+'</td><td style="padding-left:30px;">'+str(command[1][curve][1][1])+'</td></tr>'								
+								curve_data= '<tr><td>'+QtGui.QApplication.translate('MainWindow','Curve')+' '+str(curv)+'</td><td> </td><td rowspan="7" style="padding-left:30px;"><img src="pixmaps/temp/'+str(img_name)+'.png" width="300"></td></tr>'
+								if self.signal:
+									curve_data+= '<tr><td style="padding-left:15px;">'+QtGui.QApplication.translate('MainWindow','Signal Count')+'</td><td style="padding-left:30px;">'+str(command[1][curve][2])+'</td></tr>'
+									curve_data+= '<tr><td style="padding-left:15px;">'+QtGui.QApplication.translate('MainWindow','Signal Min Channel')+'</td><td style="padding-left:30px;">'+str(command[1][curve][0][0])+'</td></tr>'
+									curve_data+= '<tr><td style="padding-left:15px;">'+QtGui.QApplication.translate('MainWindow','Signal Max Channel')+'</td><td style="padding-left:30px;">'+str(command[1][curve][0][1])+'</td></tr>'
+								if self.background:
+									curve_data+= '<tr><td style="padding-left:15px;">'+QtGui.QApplication.translate('MainWindow','Background Count')+'</td><td style="padding-left:30px;">'+str(command[1][curve][3])+'</td></tr>'
+									curve_data+= '<tr><td style="padding-left:15px;">'+QtGui.QApplication.translate('MainWindow','Background Min Channel')+'</td><td style="padding-left:30px;">'+str(command[1][curve][1][0])+'</td></tr>'
+									curve_data+= '<tr><td style="padding-left:15px;">'+QtGui.QApplication.translate('MainWindow','Background Max Channel')+'</td><td style="padding-left:30px;">'+str(command[1][curve][1][1])+'</td></tr>'								
 								
 								img_name+=1
 								curves[int(curv)]=curve_data

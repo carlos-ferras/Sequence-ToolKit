@@ -255,7 +255,7 @@ class UI_GenRep(UI_GenSec_Base):
 								info=self.processData[pos]
 								if info['id']==3 or info['id']==4 or info['id']==5:
 									if 8 in self.parameters:
-										data["Light_source"]=self.getData(info,"Light Sour",False)
+										data["Light_source"]=self.getData(info,"Light Source",False)
 									if 9 in self.parameters:
 										data["Optical_power"]=self.getData(info,"Optical Power",False)		
 								
@@ -1216,6 +1216,7 @@ class UI_GenRep(UI_GenSec_Base):
 				elif data=="Heating Rate" and (info['id']==2  or info['id']==3  or info['id']==4  or info['id']==5  or info['id']==6):
 					return float(info['heating_rate'])
 				elif data=="Light Source":
+					print info
 					return str(info['light_source'])
 				elif data=="Optical Power":
 					return float(info['start_optical_power'])

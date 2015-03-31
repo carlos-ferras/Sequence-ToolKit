@@ -166,28 +166,238 @@ class UI_GenRep(UI_GenSec_Base):
 				self.form1,
 				QtGui.QApplication.translate('MainWindow',"Save"),
 				self.fileLocation,
-				QtGui.QApplication.translate('MainWindow','File')+' RLF (*.rlf *.xml);; '+QtGui.QApplication.translate('MainWindow','File')+'XLS (*.xls)',
+				QtGui.QApplication.translate('MainWindow','File')+' RLF (*.rlf *.xml);; '+QtGui.QApplication.translate('MainWindow','File')+'TXT (*.txt)',
 				'0',
 				QtGui.QFileDialog.DontUseNativeDialog,
 			)
 		else:
 			self.directorioArchivo=dir
 		if self.directorioArchivo:
-			if (type(self.directorioArchivo)==QtCore.QString and not (self.directorioArchivo.endsWith('.xls') or self.directorioArchivo.endsWith('.rlf') or self.directorioArchivo.endsWith('.xml') or self.directorioArchivo.endsWith('.pdf'))) or (type(self.directorioArchivo)==str and not (self.directorioArchivo.endswith('.xls') or self.directorioArchivo.endswith('.rlf') or self.directorioArchivo.endswith('.xml') or self.directorioArchivo.endswith('.pdf'))):
-				self.directorioArchivo+='.rlf'
-			
+			if (type(self.directorioArchivo)==QtCore.QString and not (self.directorioArchivo.endsWith('.txt') or self.directorioArchivo.endsWith('.rlf') or self.directorioArchivo.endsWith('.xml') or self.directorioArchivo.endsWith('.pdf'))) or (type(self.directorioArchivo)==str and not (self.directorioArchivo.endswith('.txt') or self.directorioArchivo.endswith('.rlf') or self.directorioArchivo.endswith('.xml') or self.directorioArchivo.endswith('.pdf'))):
+				self.directorioArchivo+='.rlf'			
 			if (type(self.directorioArchivo)==QtCore.QString and (self.directorioArchivo.endsWith('.rlf') or self.directorioArchivo.endsWith('.xml'))) or (type(self.directorioArchivo)==str and (self.directorioArchivo.endswith('.rlf') or self.directorioArchivo.endswith('.xml'))):
 				self.createXML()
 				self.myREP.save(str(self.directorioArchivo),True)
-				#self.thereAreCanges=False
+				self.thereAreCanges=False
 				self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"The document has been saved"))
-			elif (type(self.directorioArchivo)==QtCore.QString and self.directorioArchivo.endsWith('.xls')) or (type(self.directorioArchivo)==str and self.directorioArchivo.endswith('.xls')):	
-				pass
+			elif (type(self.directorioArchivo)==QtCore.QString and self.directorioArchivo.endsWith('.txt')) or (type(self.directorioArchivo)==str and self.directorioArchivo.endswith('.txt')):	
+				self.createTXT()
+				self.thereAreCanges=False
 			return True
 		else:
 			self.directorioArchivo=''
 		return False
 		
+	
+	def createTXT(self):
+		headder=[]		
+		headder.append([QtGui.QApplication.translate('MainWindow','Name'),self.nombre ])
+		headder.append([QtGui.QApplication.translate('MainWindow','Owner'),self.propietario])
+		headder.append([QtGui.QApplication.translate('MainWindow','Date Created'),str(self.datecrea)])
+		headder.append([QtGui.QApplication.translate('MainWindow','Date Modif'),str(str(datetime.datetime.fromtimestamp(time.time())))])
+		headder.append([QtGui.QApplication.translate('MainWindow','Nitrogen Use'),str(self.nitrogeno) ])
+		headder.append([QtGui.QApplication.translate('MainWindow','Dose Rate'),str(self.dosis)])
+		headder.append([QtGui.QApplication.translate('MainWindow','External Dose Rate'),str(self.dosisE)])
+		headder.append([QtGui.QApplication.translate('MainWindow','Protocol'),self.protocolo])
+		headder.append([QtGui.QApplication.translate('MainWindow','Reader ID'),self.id_lector])
+		
+		lines={}		
+		
+		tabla=self.getallData()	
+		for item in tabla:
+			ran=item[0]				
+			samples=ran.split(',')
+			for sample in samples:
+				if len(sample)==1:
+					samples_id=sample
+				elif len(sample)>1:
+					val=sample.split('-')
+					samples_id=range(int(val[0]),int(val[-1])+1)
+				for sample_id in samples_id:
+					for command in item[1]:
+						cant=command[1].keys()
+						if cant!=[]:
+							pos=cant[0][:-2]
+							info=self.processData[pos]
+							if info['id']==2:
+								p='TL'
+							if info['id']==3:
+								p='OSL'
+							if info['id']==4:
+								p='POSL'
+							if info['id']==5:
+								p='LMOSL'
+							if info['id']==6:
+								p='ESL'
+							
+							lines.setdefault("Sample", [] ).append(str(sample_id))
+						#QtGui.QApplication.translate('MainWindow','Sample')
+							
+							lines.setdefault("Process", [] ).append(p)
+							#QtGui.QApplication.translate('MainWindow','Process')
+							
+							lines.setdefault("Date Type", [] ).append(str(info['date_type']))
+							#QtGui.QApplication.translate('MainWindow','Date Type')
+							
+							for curve in command[1]:
+								curv=int(curve.split(',')[2])
+								if self.signal:
+									lines.setdefault('Curve'+str(curv)+' Signal Count',[]).append(str(command[1][curve][2]))	
+									#QtGui.QApplication.translate('MainWindow','Signal Count')
+									
+									lines.setdefault('Curve'+str(curv)+' Signal Min Channel',[]).append(str(command[1][curve][0][0]))	
+									#QtGui.QApplication.translate('MainWindow','Signal Min Channel')
+									
+									lines.setdefault('Curve'+str(curv)+' Signal Max Channel',[]).append(str(command[1][curve][0][1]))	
+									#QtGui.QApplication.translate('MainWindow','Signal Max Channel')
+								if self.background:
+									lines.setdefault('Curve'+str(curv)+' Background Count',[]).append(str(command[1][curve][3]))	
+									#QtGui.QApplication.translate('MainWindow','Background Count')
+									
+									lines.setdefault('Curve'+str(curv)+' Background Min Channel',[]).append(str(command[1][curve][1][0]))	
+									#QtGui.QApplication.translate('MainWindow','Background Min Channel')
+									
+									lines.setdefault('Curve'+str(curv)+' Background Max Channel',[]).append(str(command[1][curve][1][1]))	
+									#QtGui.QApplication.translate('MainWindow','Background Max Channel')
+								
+								#QtGui.QApplication.translate('MainWindow','Curve')
+							
+							for group in self.inGroup:
+								if pos in group:
+									for cm in (y for y in group if y != pos):
+										info=self.processData[cm]
+										
+										if info['id']==0:
+											if 2 in self.parameters:
+												n=self.getData(info,"External Irradiation Time",False) 
+												lines.setdefault('External Irradiation Time',[]).append( n if  n!='error' else ' ')
+											if 3 in self.parameters:
+												n=self.getData(info,"External Dose",False) 
+												lines.setdefault('External Dose',[]).append( n if  n!='error' else ' ')
+											if 13 in self.parameters:
+												n=self.getData(info,"Time of External irradiation",False) 
+												lines.setdefault('Time of External irradiation',[]).append( n if  n!='error' else ' ')
+												
+										if info['id']==1:
+											if 0 in self.parameters:
+												n=self.getData(info,"Beta Irradiation Time",False)
+												lines.setdefault('Beta Irradiation Time',[]).append(  n if  n!='error' else ' ')
+											if 1 in self.parameters:
+												n=self.getData(info,"Beta Dose",False) 
+												lines.setdefault('Beta Dose',[]).append( n if  n!='error' else ' ')
+											if 12 in self.parameters:
+												n=self.getData( info,"Time of Beta irradiation",False)
+												lines.setdefault('Time of Beta irradiation',[]).append( n if  n!='error' else ' ')						
+											
+										if info['id']==7:
+											if 4 in self.parameters:
+												n=self.getData( info,"Preheating Temperature",False)
+												lines.setdefault('Preheating Temperature',[]).append( n if  n!='error' else ' ')
+											if 6 in self.parameters:
+												n=self.getData(info,"Preheating Rate",False) 
+												lines.setdefault('Preheating Rate',[]).append( n if  n!='error' else ' ')
+
+										if info['id']==8:
+											if 15 in self.parameters:
+												n=self.getData(info,"Illumination Source",False) 
+												lines.setdefault('Illumination Source',[]).append( n if  n!='error' else ' ')
+											if 16 in self.parameters:
+												n=self.getData(info,"Illumination Power",False)
+												lines.setdefault('Illumination Power',[]).append( n if  n!='error' else ' ')
+											if 17 in self.parameters:
+												n=self.getData(info,"Illumination Temperature",False) 
+												lines.setdefault('Illumination Temperature',[]).append( n if  n!='error' else ' ')
+									break
+		
+							
+							if info['id']==3 or info['id']==4 or info['id']==5:
+								if 8 in self.parameters:
+									n=self.getData(info,"Light Source",False) 
+									lines.setdefault('Light Source',[]).append( n if  n!='error' else ' ')
+								if 9 in self.parameters:
+									n=self.getData(info,"Optical Power",False) 
+									lines.setdefault('Optical Power',[]).append( n if  n!='error' else ' ')
+							
+							if info['id']==6:
+								if 10 in self.parameters:
+									n=self.getData(info,"Electric Stimulation",False) 
+									lines.setdefault('Electric Stimulation',[]).append( n if  n!='error' else ' ')
+								if 11 in self.parameters:
+									n=self.getData(info,"Electric Frequency",False) 
+									lines.setdefault('Electric Frequency',[]).append( n if  n!='error' else ' ')
+							
+							if 5 in self.parameters:
+								n=self.getData(info,"Measuring Temperature",False) 
+								lines.setdefault('Measuring Temperature',[]).append( n if  n!='error' else ' ')
+							if 7 in self.parameters:
+								n=self.getData(info,"Heating Rate",False)
+								lines.setdefault('Heating Rate',[]).append( n if  n!='error' else ' ')
+							if 14 in self.parameters:
+								n=self.getData(info,"Time of Measurement",False) 
+								lines.setdefault('Time of Measurement',[]).append( n if  n!='error' else ' ')									
+		
+		
+		txt=open(str(self.directorioArchivo),'w+')
+		for line in headder:
+			txt.write(line[0]+'\t'+line[1]+'\n')
+		txt.write('\n')		
+		
+		param=[
+			'Sample',
+			'Process',
+			"Date Type",
+			
+			'Curve1 Signal Count',
+			'Curve1 Signal Min Channel',  
+			'Curve1 Signal Max Channel',
+			'Curve1 Background Count',
+			'Curve1 Background Min Channel',  
+			'Curve1 Background Max Channel',
+			
+			'Curve2 Signal Count',
+			'Curve2 Signal Min Channel',  
+			'Curve2 Signal Max Channel',
+			'Curve2 Background Count',
+			'Curve2 Background Min Channel',  
+			'Curve2 Background Max Channel',
+			
+			'Curve3 Signal Count',
+			'Curve3 Signal Min Channel',  
+			'Curve3 Signal Max Channel',
+			'Curve3 Background Count',
+			'Curve3 Background Min Channel',  
+			'Curve3 Background Max Channel',
+			
+			"Beta Irradiation Time", 
+			"Beta Dose",
+			"External Irradiation Time", 
+			"External Dose", 
+			"Preheating Temperature",
+			"Measuring Temperature",
+			"Preheating Rate",
+			"Heating Rate",
+			"Light Source",
+			"Optical Power",
+			"Electric Stimulation",
+			"Electric Frequency",
+			"Time of Beta irradiation",
+			"Time of External irradiation",
+			"Time of Measurement",
+			"Illumination Source",
+			"Illumination Power",
+			"Illumination Temperature"		
+		]
+		
+		for p in param:
+			if lines.has_key(p):
+				line=p
+				for i in lines[p]:
+					line+='\t'+str(i)
+				line+='\n'
+				txt.write(line)
+				
+		txt.close()
+	
 	
 	def createXML(self):
 		"""Genera una estructura xml a partir de los datos entrados por el usuario"""
@@ -1216,7 +1426,6 @@ class UI_GenRep(UI_GenSec_Base):
 				elif data=="Heating Rate" and (info['id']==2  or info['id']==3  or info['id']==4  or info['id']==5  or info['id']==6):
 					return float(info['heating_rate'])
 				elif data=="Light Source":
-					print info
 					return str(info['light_source'])
 				elif data=="Optical Power":
 					return float(info['start_optical_power'])
@@ -1699,7 +1908,7 @@ class UI_GenRep(UI_GenSec_Base):
 							
 							if info['id']==3 or info['id']==4 or info['id']==5:
 								if 8 in self.parameters:
-									data.append(["Light Sour",self.getData(info,"Light Sour",False)])
+									data.append(["Light Source",self.getData(info,"Light Source",False)])
 								if 9 in self.parameters:
 									data.append(["Optical Power",self.getData(info,"Optical Power",False)])
 							
@@ -1718,6 +1927,8 @@ class UI_GenRep(UI_GenSec_Base):
 									
 							
 							for parameter in data:
+								if parameter[1]=='error':
+									parameter[1]=' '
 								comand_table+= '<tr><td>'+parameter[0]+'</td><td style="padding-left:30px;">'+str(parameter[1])+'</td><td></td></tr>'
 							
 							comand_table+='</table>'

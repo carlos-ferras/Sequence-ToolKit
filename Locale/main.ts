@@ -29,7 +29,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="profile1.py" line="86"/>
+        <location filename="profile.py" line="86"/>
         <source>Optical Power (%)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -79,17 +79,17 @@
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="fontSelect1.py" line="62"/>
+        <location filename="fontSelect.py" line="62"/>
         <source>Font Select</source>
         <translation>Seleccionar fuente</translation>
     </message>
     <message>
-        <location filename="fontSelect1.py" line="63"/>
+        <location filename="fontSelect.py" line="63"/>
         <source>Font</source>
         <translation>Fuente</translation>
     </message>
     <message>
-        <location filename="fontSelect1.py" line="64"/>
+        <location filename="fontSelect.py" line="64"/>
         <source>Size</source>
         <translation>Tamaño</translation>
     </message>
@@ -164,7 +164,7 @@
         <translation>Abrir</translation>
     </message>
     <message>
-        <location filename="profile.py" line="84"/>
+        <location filename="profile2.py" line="84"/>
         <source>File</source>
         <translation>Archivo</translation>
     </message>
@@ -194,7 +194,7 @@
         <translation> no es compatible con la unión</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1429"/>
+        <location filename="gensec_main.py" line="1434"/>
         <source>Command </source>
         <translation>Comando</translation>
     </message>
@@ -214,7 +214,7 @@
         <translation>El proceso irradiación con fuente externa se debe establecer en una columna vacía.</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1107"/>
+        <location filename="gensec_main.py" line="1112"/>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
@@ -224,7 +224,7 @@
         <translation>El campo Nombre debería contener solo texto</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1107"/>
+        <location filename="gensec_main.py" line="1112"/>
         <source>Owner</source>
         <translation>Propietario</translation>
     </message>
@@ -239,22 +239,22 @@
         <translation>Nitrogeno</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1107"/>
+        <location filename="gensec_main.py" line="1112"/>
         <source>Nitrogen Use</source>
         <translation>Uso de Nitrogeno</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1107"/>
+        <location filename="gensec_main.py" line="1112"/>
         <source>Dose Rate</source>
         <translation>Tasa de Dosis</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1107"/>
+        <location filename="gensec_main.py" line="1112"/>
         <source>External Dose Rate</source>
         <translation>Tasa de Dosis Externa</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1107"/>
+        <location filename="gensec_main.py" line="1112"/>
         <source>Protocol</source>
         <translation>Protocolo</translation>
     </message>
@@ -264,7 +264,7 @@
         <translation>El Campo Protocolo debe ser una cadena de 16 caracteres</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1107"/>
+        <location filename="gensec_main.py" line="1112"/>
         <source>Reader ID</source>
         <translation>ID del Lector</translation>
     </message>
@@ -279,27 +279,27 @@
         <translation>está bloqueada</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1386"/>
+        <location filename="gensec_main.py" line="1391"/>
         <source>Row Number</source>
         <translation>Número de Fila</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1386"/>
+        <location filename="gensec_main.py" line="1391"/>
         <source>Row</source>
         <translation>Fila</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1107"/>
+        <location filename="gensec_main.py" line="1112"/>
         <source>Created</source>
         <translation>Creada</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1147"/>
+        <location filename="gensec_main.py" line="1152"/>
         <source>Group</source>
         <translation>Grupo</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1289"/>
+        <location filename="gensec_main.py" line="1294"/>
         <source>Sample</source>
         <translation>Muestra</translation>
     </message>
@@ -309,29 +309,29 @@
         <translation>El parámetro columna debe ser un número mayor que 0</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1306"/>
+        <location filename="gensec_main.py" line="1311"/>
         <source>samples ranges must be low to high, and should not have repeated elements.</source>
         <translation>Los rangos de muestras deben ser de menor a mayor, y no deben tener elementos repetidos.</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1335"/>
+        <location filename="gensec_main.py" line="1340"/>
         <source>There are repeated number in sample sequence</source>
         <translation>Hay un número repetido de la secuencia de muestras</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1303"/>
+        <location filename="gensec_main.py" line="1308"/>
         <source>Samples must have the structure [1-3,4,5]
 only contains ranges and numbers separated by commas</source>
         <translation>Las muestras deben tener la estructura [1-3,4,5]
 sólo contiene rangos y números separados por comas</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1430"/>
+        <location filename="gensec_main.py" line="1435"/>
         <source>Add Command</source>
         <translation>Adicionar Comando</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1407"/>
+        <location filename="gensec_main.py" line="1412"/>
         <source>Add Group</source>
         <translation>Adicionar Grupo</translation>
     </message>
@@ -576,7 +576,7 @@ sólo contiene rangos y números separados por comas</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="profile1.py" line="84"/>
+        <location filename="profile.py" line="84"/>
         <source>Light Source</source>
         <translation type="unfinished"></translation>
     </message>
@@ -874,7 +874,7 @@ p, li { white-space: pre-wrap; }
         <translation>El tipo de letra se ha cambiado </translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1171"/>
+        <location filename="gensec_main.py" line="1176"/>
         <source>The document has been printed</source>
         <translation>El documento ha sido impreso</translation>
     </message>
@@ -1069,62 +1069,62 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Cambiar Idioma</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="785"/>
+        <location filename="genrep_main.py" line="975"/>
         <source>Reset Original View</source>
         <translation>Regresar a la vista original</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="791"/>
+        <location filename="genrep_main.py" line="981"/>
         <source>Back to previous view</source>
         <translation>Regresar a la vista anterior</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="797"/>
+        <location filename="genrep_main.py" line="987"/>
         <source>Forward to next view</source>
         <translation>Ir a la vista siguiente</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="784"/>
+        <location filename="genrep_main.py" line="974"/>
         <source>Home</source>
         <translation>Casa</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="790"/>
+        <location filename="genrep_main.py" line="980"/>
         <source>Back</source>
         <translation>Atras</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="796"/>
+        <location filename="genrep_main.py" line="986"/>
         <source>Forward</source>
         <translation>Adelante</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="810"/>
+        <location filename="genrep_main.py" line="1000"/>
         <source>Zoom</source>
         <translation>Ampliar</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="1002"/>
+        <location filename="genrep_main.py" line="1192"/>
         <source>Columns</source>
         <translation>Columnas</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="803"/>
+        <location filename="genrep_main.py" line="993"/>
         <source>Drag</source>
         <translation>Arrastrar</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="804"/>
+        <location filename="genrep_main.py" line="994"/>
         <source>Drag with left mouse, zoom with right</source>
         <translation>Arrastra la gráfica con el click isquierdo y amplia con el derecho</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="811"/>
+        <location filename="genrep_main.py" line="1001"/>
         <source>Zoom the rectangle</source>
         <translation>Amplia la gráfica</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="817"/>
+        <location filename="genrep_main.py" line="1007"/>
         <source>Save the figure as image</source>
         <translation>Guarda la gráfica como una imagen</translation>
     </message>
@@ -1244,12 +1244,12 @@ p, li { white-space: pre-wrap; }
         <translation>¿Continuar la restauración?</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1242"/>
+        <location filename="gensec_main.py" line="1247"/>
         <source>Are you sure you want to delete all the information?</source>
         <translation>¿Seguro que quieres borrar toda la información?</translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1339"/>
+        <location filename="gensec_main.py" line="1344"/>
         <source>Samples must have the structure [1-3,4,5]
 only contains ranges and numbers between 1-24 separated by commas</source>
         <translation>Las muestras deben tener la estructura [1-3,4,5]
@@ -1261,7 +1261,7 @@ sólo contiene rangos y números entre 1-24 separadas por comas</translation>
         <translation>El proceso irradiación confuente externa no puede ser definido cuando un número de muestra aparece en más d euna fila. </translation>
     </message>
     <message>
-        <location filename="gensec_main.py" line="1330"/>
+        <location filename="gensec_main.py" line="1335"/>
         <source>Incompatible sample declaration</source>
         <translation>Declaración de muestra incompatible</translation>
     </message>
@@ -1281,67 +1281,47 @@ sólo contiene rangos y números entre 1-24 separadas por comas</translation>
         <translation>Iconografía</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="869"/>
+        <location filename="genrep_main.py" line="1059"/>
         <source>Apply this to</source>
         <translation>Aplicar a</translation>
     </message>
     <message>
-        <location filename="association1.py" line="117"/>
+        <location filename="association.py" line="117"/>
         <source>Criterion</source>
         <translation>Criterio</translation>
     </message>
     <message>
-        <location filename="association1.py" line="118"/>
+        <location filename="association.py" line="118"/>
         <source>Condition</source>
         <translation>Condición</translation>
     </message>
     <message>
-        <location filename="association1.py" line="141"/>
+        <location filename="association.py" line="119"/>
         <source>Value</source>
         <translation>Valor</translation>
     </message>
     <message>
-        <location filename="association1.py" line="120"/>
-        <source>Cancelar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="apply_to1.py" line="118"/>
-        <source>Aceptar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="genrep_main.py" line="873"/>
+        <location filename="genrep_main.py" line="1063"/>
         <source>Apply to all</source>
         <translation>Aplicar a todos</translation>
     </message>
     <message>
-        <location filename="association1.py" line="129"/>
+        <location filename="association.py" line="129"/>
         <source>&lt;&lt;select&gt;&gt;</source>
         <translation>&lt;&lt;seleccionar&gt;&gt;</translation>
     </message>
     <message>
-        <location filename="association1.py" line="139"/>
-        <source>Same</source>
-        <translation>Igual</translation>
-    </message>
-    <message>
-        <location filename="association1.py" line="140"/>
-        <source>Different</source>
-        <translation>Diferente</translation>
-    </message>
-    <message>
-        <location filename="association.py" line="82"/>
+        <location filename="association.py" line="116"/>
         <source>Group Cells</source>
         <translation>Agrupar Celdas</translation>
     </message>
     <message>
-        <location filename="profile.py" line="84"/>
+        <location filename="profile.py" line="106"/>
         <source>Load</source>
         <translation>Cargar</translation>
     </message>
     <message>
-        <location filename="association1.py" line="124"/>
+        <location filename="association.py" line="124"/>
         <source>Consecutives</source>
         <translation>Consecutivos</translation>
     </message>
@@ -1356,127 +1336,117 @@ sólo contiene rangos y números entre 1-24 separadas por comas</translation>
         <translation>No se puede iniciar GenSec</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="119"/>
+        <location filename="genrep_main.py" line="123"/>
         <source>Report Generator</source>
         <translation>Generador de Reporte</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="119"/>
+        <location filename="genrep_main.py" line="123"/>
         <source>Description</source>
         <translation>Descripción</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="712"/>
+        <location filename="genrep_main.py" line="902"/>
         <source>Signal area is selected</source>
         <translation>Ell área de señal está seleccionada</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="722"/>
+        <location filename="genrep_main.py" line="912"/>
         <source>Background area is selected</source>
         <translation>Ell área de fondo está seleccionada</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="735"/>
+        <location filename="genrep_main.py" line="925"/>
         <source>Slect area to change</source>
         <translation>Seleccione el área a cambiar</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="828"/>
+        <location filename="genrep_main.py" line="1018"/>
         <source>Low channel to signal</source>
         <translation>Canal menor para señal</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="833"/>
+        <location filename="genrep_main.py" line="1023"/>
         <source>High channel to signal</source>
         <translation>Canal mayor para señal</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="839"/>
+        <location filename="genrep_main.py" line="1029"/>
         <source>Count of signal area</source>
         <translation>Conteos del área de señal</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="850"/>
+        <location filename="genrep_main.py" line="1040"/>
         <source>Low channel to Background</source>
         <translation>Canal menor para fondo</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="855"/>
+        <location filename="genrep_main.py" line="1045"/>
         <source>High channel to Background</source>
         <translation>Canal mayor para fondo</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="861"/>
+        <location filename="genrep_main.py" line="1051"/>
         <source>Count of background area</source>
         <translation>Conteos del área de fondo</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="1013"/>
+        <location filename="genrep_main.py" line="1203"/>
         <source>Show/Hidde graphic</source>
         <translation>Mostrar/Ocultar gráfica</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="1086"/>
+        <location filename="genrep_main.py" line="1276"/>
         <source>Defines how they are to be displayed the results</source>
         <translation>Define cómo se mostrarán los resultados</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="1065"/>
+        <location filename="genrep_main.py" line="1255"/>
         <source>Set&amp;Up</source>
         <translation>Configura&amp;ción</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="1075"/>
+        <location filename="genrep_main.py" line="1265"/>
         <source>Define the parameters to report</source>
         <translation>Define los parámetros a reportar</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="1076"/>
+        <location filename="genrep_main.py" line="1266"/>
         <source>Pro&amp;file</source>
         <translation>Pe&amp;rfil</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="1087"/>
+        <location filename="genrep_main.py" line="1277"/>
         <source>&amp;Association by criteria</source>
         <translation>&amp;Asociación por criterio</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="1098"/>
+        <location filename="genrep_main.py" line="1288"/>
         <source>Ungroup all the associated processes</source>
         <translation>Desagrupar todos los procesos asociados</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="1099"/>
+        <location filename="genrep_main.py" line="1289"/>
         <source>&amp;Ungroup All</source>
         <translation>&amp;Desagrupar todo</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="1108"/>
+        <location filename="genrep_main.py" line="1298"/>
         <source>Define the associated processes to a measurement</source>
         <translation>Define los procesos asociados a medir</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="1118"/>
+        <location filename="genrep_main.py" line="1308"/>
         <source>Ungroup the associated processes</source>
         <translation>Desagrupa los procesos asociados</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="1119"/>
+        <location filename="genrep_main.py" line="1309"/>
         <source>Ungroup</source>
         <translation>Desagrupar</translation>
     </message>
     <message>
-        <location filename="genrep_main.py" line="1128"/>
-        <source>Make a report</source>
-        <translation>Generar el Reporte</translation>
-    </message>
-    <message>
-        <location filename="genrep_main.py" line="1129"/>
-        <source>Report</source>
-        <translation>Reporte</translation>
-    </message>
-    <message>
-        <location filename="genrep_main.py" line="1448"/>
+        <location filename="genrep_main.py" line="1629"/>
         <source>Are you sure you want to continue, you will lose all associations?</source>
         <translation>¿Seguro que desea continuar, perderá todas las asociaciones?</translation>
     </message>
@@ -1521,232 +1491,232 @@ sólo contiene rangos y números entre 1-24 separadas por comas</translation>
         <translation>Generador de &amp;Secuencia</translation>
     </message>
     <message>
-        <location filename="profile.py" line="84"/>
+        <location filename="profile.py" line="63"/>
         <source>Profile</source>
         <translation>Perfil</translation>
     </message>
     <message>
-        <location filename="profile1.py" line="64"/>
+        <location filename="profile.py" line="64"/>
         <source>Select the Parameters</source>
         <translation>Seleccione los Parámetros</translation>
     </message>
     <message>
-        <location filename="profile1.py" line="68"/>
+        <location filename="profile.py" line="68"/>
         <source>Beta Irradiation Time (s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="profile1.py" line="70"/>
+        <location filename="profile.py" line="70"/>
         <source>Beta Dose (Gy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="profile1.py" line="72"/>
+        <location filename="profile.py" line="72"/>
         <source>External Irradiation Time (s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="profile1.py" line="74"/>
+        <location filename="profile.py" line="74"/>
         <source>External Dose (Gy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message utf8="true">
-        <location filename="profile1.py" line="76"/>
+        <location filename="profile.py" line="76"/>
         <source>Preheating Temperature (°C)</source>
         <translation type="unfinished"></translation>
     </message>
     <message utf8="true">
-        <location filename="profile1.py" line="78"/>
+        <location filename="profile.py" line="78"/>
         <source>Measuring Temperature (°C)</source>
         <translation type="unfinished"></translation>
     </message>
     <message utf8="true">
-        <location filename="profile1.py" line="80"/>
+        <location filename="profile.py" line="80"/>
         <source>Preheating Rate (°C/s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="profile1.py" line="88"/>
+        <location filename="profile.py" line="88"/>
         <source>Electric Stimulation (V)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="profile1.py" line="90"/>
+        <location filename="profile.py" line="90"/>
         <source>Electric Frequency (KHz)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="profile1.py" line="92"/>
+        <location filename="profile.py" line="92"/>
         <source>Time of Beta irradiation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="profile1.py" line="94"/>
+        <location filename="profile.py" line="94"/>
         <source>Time of External irradiation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="profile1.py" line="96"/>
+        <location filename="profile.py" line="96"/>
         <source>Time of Measurement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="profile1.py" line="98"/>
+        <location filename="profile.py" line="98"/>
         <source>Illumination Source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="profile1.py" line="100"/>
+        <location filename="profile.py" line="100"/>
         <source>Illumination Power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="profile1.py" line="102"/>
+        <location filename="profile.py" line="102"/>
         <source>Illumination Temperature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setup1.py" line="134"/>
+        <location filename="setup.py" line="134"/>
         <source>channels</source>
         <translation>canales</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="256"/>
+        <location filename="setup.py" line="256"/>
         <source>SetUp</source>
         <translation>Configuración</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="258"/>
+        <location filename="setup.py" line="258"/>
         <source>Curve to Show</source>
         <translation>Curva a mostrar</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="259"/>
+        <location filename="setup.py" line="259"/>
         <source>For TL</source>
         <translation>Para TL</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="260"/>
+        <location filename="setup.py" line="260"/>
         <source>Format Horizontal Axis</source>
         <translation>Formato del Eje Horizontal</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="261"/>
+        <location filename="setup.py" line="261"/>
         <source>Format Vertical Axis</source>
         <translation>Formato del Eje Vertical</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="262"/>
+        <location filename="setup.py" line="262"/>
         <source>Cursors</source>
         <translation>Cursores</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="267"/>
+        <location filename="setup.py" line="267"/>
         <source>Curve</source>
         <translation>Curva</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="268"/>
+        <location filename="setup.py" line="268"/>
         <source>Show</source>
         <translation>Mostrar</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="269"/>
+        <location filename="setup.py" line="269"/>
         <source>Curve vs Time</source>
         <translation>Curva vs Tiempo</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="270"/>
+        <location filename="setup.py" line="270"/>
         <source>Curve vs Temperature</source>
         <translation>Curva vs Temperatura</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="288"/>
+        <location filename="setup.py" line="288"/>
         <source>Scale</source>
         <translation>Escala</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="289"/>
+        <location filename="setup.py" line="289"/>
         <source>Lineal</source>
         <translation>Lineal</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="290"/>
+        <location filename="setup.py" line="290"/>
         <source>Log10</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setup1.py" line="291"/>
+        <location filename="setup.py" line="291"/>
         <source>Ln</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setup1.py" line="292"/>
+        <location filename="setup.py" line="292"/>
         <source>Minimum</source>
         <translation>Mínimo</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="293"/>
+        <location filename="setup.py" line="293"/>
         <source>Maximum</source>
         <translation>Máximo</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="294"/>
+        <location filename="setup.py" line="294"/>
         <source>Greater Unity</source>
         <translation>Unidad Máxima</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="295"/>
+        <location filename="setup.py" line="295"/>
         <source>Smallest Unity</source>
         <translation>Unidad Mínima</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="299"/>
+        <location filename="setup.py" line="299"/>
         <source>Automatic</source>
         <translation>Automático</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="303"/>
+        <location filename="setup.py" line="303"/>
         <source>Fixed</source>
         <translation>Fijo</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="304"/>
+        <location filename="setup.py" line="304"/>
         <source>Axis values</source>
         <translation>Valor del eje</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="305"/>
+        <location filename="setup.py" line="305"/>
         <source>Units</source>
         <translation>Unidades</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="306"/>
+        <location filename="setup.py" line="306"/>
         <source>Show Cursors</source>
         <translation>Mostrar Cursores</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="307"/>
+        <location filename="setup.py" line="307"/>
         <source>Signal</source>
         <translation>Señal</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="308"/>
+        <location filename="setup.py" line="308"/>
         <source>Background</source>
         <translation>Fondo</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="309"/>
+        <location filename="setup.py" line="309"/>
         <source>Default Position</source>
         <translation>Posición Predeterminada</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="312"/>
+        <location filename="setup.py" line="312"/>
         <source>Low</source>
         <translation>Menor</translation>
     </message>
     <message>
-        <location filename="setup1.py" line="313"/>
+        <location filename="setup.py" line="313"/>
         <source>High</source>
         <translation>Mayor</translation>
     </message>
@@ -1754,6 +1724,66 @@ sólo contiene rangos y números entre 1-24 separadas por comas</translation>
         <location filename="TL.py" line="96"/>
         <source>Save Temp.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="197"/>
+        <source>Date Created</source>
+        <translation>Fecha de Creado</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="198"/>
+        <source>Date Modif</source>
+        <translation>Fecha de Modificado</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1816"/>
+        <source>Process</source>
+        <translation>Procesos</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1817"/>
+        <source>Parameter</source>
+        <translation>Parámetro</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1817"/>
+        <source>Data</source>
+        <translation>Dato</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1817"/>
+        <source>Plot</source>
+        <translation>Gráfica</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1826"/>
+        <source>Signal Count</source>
+        <translation>Conteos de Señal</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1827"/>
+        <source>Signal Min Channel</source>
+        <translation>Canal Mínimo de Señal</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1828"/>
+        <source>Signal Max Channel</source>
+        <translation>Canal Máximo de Señal</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1830"/>
+        <source>Background Count</source>
+        <translation>Conteos de Fondo</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1831"/>
+        <source>Background Min Channel</source>
+        <translation>Canal Mínimo de fondo</translation>
+    </message>
+    <message>
+        <location filename="genrep_main.py" line="1832"/>
+        <source>Background Max Channel</source>
+        <translation>Canal Máximo de Fondo</translation>
     </message>
 </context>
 </TS>

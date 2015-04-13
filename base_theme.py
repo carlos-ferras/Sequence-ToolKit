@@ -61,6 +61,14 @@ def BASE(COL1,COL2,COL3,COL4,COL5,COL6,COL7,COL8,usar=False):
 		 """
 	 
 	second="""
+	*[spacing="False"]{
+		padding:0px ;
+		margin-left:0px;
+		margin-right:0px;
+		margin-top:3px;
+		margin-bottom:3px;
+	}	
+	
 	QTreeWidget::item:hover {
 		background: %s;
 	}
@@ -149,7 +157,7 @@ def BASE(COL1,COL2,COL3,COL4,COL5,COL6,COL7,COL8,usar=False):
 		text-align:left;
 		background:%s;
 	}
-
+	
 	QPushButton:hover  {
 		background: %s;
 	}

@@ -130,8 +130,6 @@ class irraWin(Irradiation.Ui_Dialog):
 			self.line.setHidden(True)
 			self.line_2.setHidden(True)
 			
-			print "external"
-			
 			self.frame.setGeometry(QtCore.QRect(6, 10, 400, 105))
 
 			self.form1.resize(502, 125)

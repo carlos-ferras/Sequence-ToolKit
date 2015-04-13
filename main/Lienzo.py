@@ -22,7 +22,7 @@ from PyQt4 import QtGui ,QtCore
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt4agg  import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt4agg import NavigationToolbar2QTAgg as NavigationToolbar
-from matplotlib.ticker import MultipleLocator, FormatStrFormatter
+from matplotlib.ticker import MultipleLocator
 import numpy as npy
 from matplotlib.widgets import SpanSelector
 from mpl_toolkits.axes_grid1 import make_axes_locatable

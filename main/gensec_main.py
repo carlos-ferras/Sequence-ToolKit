@@ -24,7 +24,7 @@ from XMLDriver import createSLF
 
 class UI_GenSec(UI_GenSec_Base): 
 		def __init__(self,dir=False, parent=None):			
-			UI_GenSec_Base.__init__(self,'GenSec','pixmaps/gensec.ico',dir)
+			UI_GenSec_Base.__init__(self,'GenSec','pixmaps/gensec.png',dir)
 			
 			if self.gensec_config:
 				self.processDefaults=self.gensec_config[3]
@@ -40,7 +40,7 @@ class UI_GenSec(UI_GenSec_Base):
 			self.actionDsdsda.triggered.connect(self.previusly)
 			self.actionOrder.triggered.connect(self.orderBySample)
 			self.actionBorrar.triggered.connect(self.delete)
-			self.actionAcerda_de.triggered.connect(partial(about,self.form1,'GenSec',QtGui.QApplication.translate("MainWindow", 'Sequence Generator', None, QtGui.QApplication.UnicodeUTF8),QtGui.QApplication.translate("MainWindow", 'This application generates a xml file with the data used by the LF02 automated luminescence reader to run a measuring sequence.', None, QtGui.QApplication.UnicodeUTF8),'1.0.0',"pixmaps/gensec.ico"))
+			self.actionAcerda_de.triggered.connect(partial(about,self.form1,'GenSec',QtGui.QApplication.translate("MainWindow", 'Sequence Generator', None, QtGui.QApplication.UnicodeUTF8),QtGui.QApplication.translate("MainWindow", 'This application generates a xml file with the data used by the LF02 automated luminescence reader to run a measuring sequence.', None, QtGui.QApplication.UnicodeUTF8),'1.0.0',"pixmaps/gensec.png"))
 			self.actionNombre.triggered.connect(self.Nombre)
 			self.actionPropietario.triggered.connect(self.Propietario)
 			self.actionUso_de_Nitr_geno.triggered.connect(self.Nitrogeno)
@@ -122,6 +122,7 @@ class UI_GenSec(UI_GenSec_Base):
 			self.menuEditar.addAction(self.actionSeleccionar_Fila)
 			self.actionSeleccionar_Fila.setText(QtGui.QApplication.translate("MainWindow", "&Select Row", None, QtGui.QApplication.UnicodeUTF8))
 			self.menuEditar.addSeparator()
+			
 			#Order--------------------------------------------------------
 			self.actionOrder = QtGui.QAction(self.form1)
 			icon = QtGui.QIcon()
@@ -1385,22 +1386,7 @@ class UI_GenSec(UI_GenSec_Base):
 					self.oper.pushButton_9.clicked.connect(partial(self.irradiation,self.processDefaults[7][1],row,column,self.processDefaults[7][0]))
 					self.oper.pushButton_10.clicked.connect(partial(self.esl,self.processDefaults[4],row,column))
 					
-					
-		def selectRow(self):
-			"""Selecciona un conjunto de filas, recibe por parametro un estrin de la forma: row,row,row...."""					
-			row, ok = QtGui.QInputDialog.getText(self.form1, QtGui.QApplication.translate('MainWindow','Row Number'), QtGui.QApplication.translate('MainWindow','Row')+':')			
-			if ok:
-				rows=str(row).split(',')
-				for rw in rows:
-					if str(rw).isdigit():
-						row=int(rw)-1
-						try:
-							item = self.treeWidget.topLevelItem(row)
-							item.setSelected(True)
-						except:
-							pass
-							
-		
+												
 		def addGroup(self):
 			"""Adiciona una fila para otra muestra"""
 			self.closeAllDialogs()

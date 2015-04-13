@@ -193,7 +193,7 @@ class Ui_MainWindow(object):
 		#Ejecutar GenRep -------------------------------------------------------------
 		self.actionEjecutar_GenRep = QtGui.QAction(MainWindow)
 		icon = QtGui.QIcon()
-		icon.addPixmap(QtGui.QPixmap(_fromUtf8("pixmaps/genrep.ico")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		icon.addPixmap(QtGui.QPixmap(_fromUtf8("pixmaps/genrep.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 		self.actionEjecutar_GenRep.setIconVisibleInMenu(True)
 		self.actionEjecutar_GenRep.setIcon(icon)
 		#self.actionEjecutar_Analyzer.setShortcut("Ctrl+R")
@@ -201,7 +201,7 @@ class Ui_MainWindow(object):
 		#Ejecutar GenSec-------------------------------------------------------------
 		self.actionEjecutar_GenSec = QtGui.QAction(MainWindow)
 		icon = QtGui.QIcon()
-		icon.addPixmap(QtGui.QPixmap(_fromUtf8("pixmaps/gensec.ico")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		icon.addPixmap(QtGui.QPixmap(_fromUtf8("pixmaps/gensec.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 		self.actionEjecutar_GenSec.setIconVisibleInMenu(True)
 		self.actionEjecutar_GenSec.setIcon(icon)
 		#self.actionEjecutar_GenSec.setShortcut("Ctrl+R")

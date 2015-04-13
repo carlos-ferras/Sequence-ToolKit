@@ -30,6 +30,10 @@ from XMLDriver import createRLF
 
 import math
 
+#~ import warnings
+#~ import matplotlib.cbook
+#~ warnings.filterwarnings("ignore",category=matplotlib.cbook.mplDeprecation)
+
 class INDEX:
 	def __init__(self,row,column):
 		self.r=row
@@ -110,13 +114,13 @@ class UI_GenRep(UI_GenSec_Base):
 		)
 		
 		self.NMuestras=0
-		UI_GenSec_Base.__init__(self,'GenRep','pixmaps/genrep.ico',dir)
+		UI_GenSec_Base.__init__(self,'GenRep','pixmaps/genrep.png',dir)
 				
 		self.treeWidget.itemSelectionChanged.connect(self.groupActive)
 		self.header=self.treeWidget.header()			
 		self.header.setClickable(True)	
 		self.form1.resizeEvent = self.onResize
-		self.actionAcerda_de.triggered.connect(partial(about,self.form1,'GenRep',QtGui.QApplication.translate("MainWindow", 'Report Generator', None, QtGui.QApplication.UnicodeUTF8),QtGui.QApplication.translate("MainWindow", 'Description', None, QtGui.QApplication.UnicodeUTF8),'1.0.0',"pixmaps/genrep.ico"))
+		self.actionAcerda_de.triggered.connect(partial(about,self.form1,'GenRep',QtGui.QApplication.translate("MainWindow", 'Report Generator', None, QtGui.QApplication.UnicodeUTF8),QtGui.QApplication.translate("MainWindow", 'Description', None, QtGui.QApplication.UnicodeUTF8),'1.0.0',"pixmaps/genrep.png"))
 		self.action_setup.triggered.connect(self.data_setup)
 		self.action_profile.triggered.connect(self.data_profile)
 		self.action_group.triggered.connect(self.group)
@@ -124,7 +128,7 @@ class UI_GenRep(UI_GenSec_Base):
 		self.action_ungroup_all.triggered.connect(self.ungroupall)
 		self.action_association.triggered.connect(self.associationCriteria)			
 
-		self.treeWidget_2.itemClicked.connect(self.change_graphic)
+		self.treeWidget_2.itemSelectionChanged.connect(self.change_graphic)
 		
 		self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"Ready"),2000)
 		self.form1.setCursor(QtCore.Qt.ArrowCursor)
@@ -150,11 +154,8 @@ class UI_GenRep(UI_GenSec_Base):
 			if (type(self.directorioArchivo)==QtCore.QString and (self.directorioArchivo.endsWith('.rlf') or self.directorioArchivo.endsWith('.xml'))) or (type(self.directorioArchivo)==str and (self.directorioArchivo.endswith('.rlf') or self.directorioArchivo.endswith('.xml'))):
 				self.createXML()
 				self.myREP.save(str(self.directorioArchivo),True)
-				#self.thereAreCanges=False
-				self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"The document has been saved"))
-				
-			# faltan el slf, pdfs
-	
+				self.thereAreCanges=False
+				self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"The document has been saved"))	
 	
 	@cursorAction()
 	def saveAs(self,dir=False):
@@ -191,17 +192,25 @@ class UI_GenRep(UI_GenSec_Base):
 	
 	def createTXT(self):
 		headder=[]		
-		headder.append([QtGui.QApplication.translate('MainWindow','Name'),self.nombre ])
-		headder.append([QtGui.QApplication.translate('MainWindow','Owner'),self.propietario])
-		headder.append([QtGui.QApplication.translate('MainWindow','Date Created'),str(self.datecrea)])
-		headder.append([QtGui.QApplication.translate('MainWindow','Date Modif'),str(str(datetime.datetime.fromtimestamp(time.time())))])
-		headder.append([QtGui.QApplication.translate('MainWindow','Nitrogen Use'),str(self.nitrogeno) ])
-		headder.append([QtGui.QApplication.translate('MainWindow','Dose Rate'),str(self.dosis)])
-		headder.append([QtGui.QApplication.translate('MainWindow','External Dose Rate'),str(self.dosisE)])
-		headder.append([QtGui.QApplication.translate('MainWindow','Protocol'),self.protocolo])
-		headder.append([QtGui.QApplication.translate('MainWindow','Reader ID'),self.id_lector])
+		headder.append(['Name',self.nombre ])
+		headder.append(['Owner',self.propietario])
+		headder.append(['Date Created',str(self.datecrea)])
+		headder.append(['Date Modif',str(str(datetime.datetime.fromtimestamp(time.time())))])
+		headder.append(['Nitrogen Use',str(self.nitrogeno) ])
+		headder.append(['Dose Rate',str(self.dosis)])
+		headder.append(['External Dose Rate',str(self.dosisE)])
+		headder.append(['Protocol',self.protocolo])
+		headder.append(['Reader ID',self.id_lector])
 		
-		lines={}		
+		lines={}
+		
+		curves=[]
+		sc=[]
+		smc=[]
+		sxc=[]
+		bc=[]
+		bmc=[]
+		bxc=[]
 		
 		tabla=self.getallData()	
 		for item in tabla:
@@ -230,38 +239,26 @@ class UI_GenRep(UI_GenSec_Base):
 							if info['id']==6:
 								p='ESL'
 							
-							lines.setdefault("Sample", [] ).append(str(sample_id))
-						#QtGui.QApplication.translate('MainWindow','Sample')
-							
-							lines.setdefault("Process", [] ).append(p)
-							#QtGui.QApplication.translate('MainWindow','Process')
-							
-							lines.setdefault("Date Type", [] ).append(str(info['date_type']))
-							#QtGui.QApplication.translate('MainWindow','Date Type')
-							
-							for curve in command[1]:
-								curv=int(curve.split(',')[2])
+							for curve in sorted(command[1]):
+								curv=int(curve.split(',')[2])										
 								if self.signal:
-									lines.setdefault('Curve'+str(curv)+' Signal Count',[]).append(str(command[1][curve][2]))	
-									#QtGui.QApplication.translate('MainWindow','Signal Count')
-									
-									lines.setdefault('Curve'+str(curv)+' Signal Min Channel',[]).append(str(command[1][curve][0][0]))	
-									#QtGui.QApplication.translate('MainWindow','Signal Min Channel')
-									
-									lines.setdefault('Curve'+str(curv)+' Signal Max Channel',[]).append(str(command[1][curve][0][1]))	
-									#QtGui.QApplication.translate('MainWindow','Signal Max Channel')
+									sc.append(str(command[1][curve][2]))										
+									smc.append(str(command[1][curve][0][0]))										
+									sxc.append(str(command[1][curve][0][1]))	
 								if self.background:
-									lines.setdefault('Curve'+str(curv)+' Background Count',[]).append(str(command[1][curve][3]))	
-									#QtGui.QApplication.translate('MainWindow','Background Count')
-									
-									lines.setdefault('Curve'+str(curv)+' Background Min Channel',[]).append(str(command[1][curve][1][0]))	
-									#QtGui.QApplication.translate('MainWindow','Background Min Channel')
-									
-									lines.setdefault('Curve'+str(curv)+' Background Max Channel',[]).append(str(command[1][curve][1][1]))	
-									#QtGui.QApplication.translate('MainWindow','Background Max Channel')
-								
-								#QtGui.QApplication.translate('MainWindow','Curve')
+									bc.append(str(command[1][curve][3]))										
+									bmc.append(str(command[1][curve][1][0]))										
+									bxc.append(str(command[1][curve][1][1]))		
+								curves.append(command[1][curve][5])
 							
+							if lines.has_key('Sample') and ( str(sample_id) in lines['Sample'] ):
+								lines.setdefault('Sample', [] ).append(' ')
+							else:
+								lines.setdefault('Sample', [] ).append(str(sample_id))
+							lines.setdefault("Process", [] ).append(p)							
+							lines.setdefault("Date Type", [] ).append(str(info['date_type']))
+							lines.setdefault('Time Per Channel',[]).append('%.4f'%float(info['timePerCanel']))
+						
 							for group in self.inGroup:
 								if pos in group:
 									for cm in (y for y in group if y != pos):
@@ -346,27 +343,7 @@ class UI_GenRep(UI_GenSec_Base):
 			'Sample',
 			'Process',
 			"Date Type",
-			
-			'Curve1 Signal Count',
-			'Curve1 Signal Min Channel',  
-			'Curve1 Signal Max Channel',
-			'Curve1 Background Count',
-			'Curve1 Background Min Channel',  
-			'Curve1 Background Max Channel',
-			
-			'Curve2 Signal Count',
-			'Curve2 Signal Min Channel',  
-			'Curve2 Signal Max Channel',
-			'Curve2 Background Count',
-			'Curve2 Background Min Channel',  
-			'Curve2 Background Max Channel',
-			
-			'Curve3 Signal Count',
-			'Curve3 Signal Min Channel',  
-			'Curve3 Signal Max Channel',
-			'Curve3 Background Count',
-			'Curve3 Background Min Channel',  
-			'Curve3 Background Max Channel',
+			'Time Per Channel',
 			
 			"Beta Irradiation Time", 
 			"Beta Dose",
@@ -393,8 +370,71 @@ class UI_GenRep(UI_GenSec_Base):
 				line=p
 				for i in lines[p]:
 					line+='\t'+str(i)
+					for c in self.curve_to_show[1:]:
+						line+='\t '
 				line+='\n'
 				txt.write(line)
+		
+		line=' '
+		for i in range(len(lines['Process'])):
+			for c in self.curve_to_show:
+				line+='\tCurve'+str(c)
+		line+='\n'
+		txt.write(line)
+		
+		line='Signal Count'
+		for i in sc:
+			line+='\t'+str(i)
+		line+='\n'
+		txt.write(line)
+		
+		line='Signal Min Channel'
+		for i in smc:
+			line+='\t'+str(i)
+		line+='\n'
+		txt.write(line)
+		
+		line='Signal Max Channel'
+		for i in sxc:
+			line+='\t'+str(i)
+		line+='\n'
+		txt.write(line)
+		
+		line='Background Count'
+		for i in bc:
+			line+='\t'+str(i)
+		line+='\n'
+		txt.write(line)
+		
+		line='Background Min Channel'
+		for i in bmc:
+			line+='\t'+str(i)
+		line+='\n'
+		txt.write(line)
+		
+		line='Background Max Channel'
+		for i in bxc:
+			line+='\t'+str(i)
+		line+='\n'
+		txt.write(line)
+		
+		mx=0
+		for i in curves:
+			if len(i)>mx:
+				mx=len(i)
+		
+		name='Data'
+		for i in range(mx):
+			line=name
+			for j in curves:
+				try:
+					line+='\t'+str(j[i])
+				except:
+					line+='\t '
+			line+='\n'
+			txt.write(line)
+			name=' '
+		
 				
 		txt.close()
 	
@@ -480,7 +520,7 @@ class UI_GenRep(UI_GenSec_Base):
 								if 7 in self.parameters:
 									data["Heating_rate"]=self.getData(info,"Heating Rate",False)
 								if 14 in self.parameters:
-									data["Time_external_irradiation"]=self.getData(info,"Time of Measurement",False)
+									data["Time_external_irradiation"]=self.getData(info,"Time of External irradiation",False)
 										
 								if info['id']==2:
 									p='TL'
@@ -575,7 +615,8 @@ class UI_GenRep(UI_GenSec_Base):
 			self.treeWidget.setItemDelegateForRow(row,delegate)
 	
 	
-	def change_graphic(self,item):
+	def change_graphic(self):
+		item=self.treeWidget_2.selectedItems()[0]
 		headerName= str(item.text(0))
 		if headerName in ['1','2','3']:
 			parent=item.parent().text(0)			
@@ -1178,6 +1219,30 @@ class UI_GenRep(UI_GenSec_Base):
 			if self.background:
 				fill_x_2(self.canvas.Background_X[0],self.canvas.Background_X[-1])
 			
+	def goNext(self):
+		row=self.actualRow.value()
+		item = self.treeWidget.topLevelItem( row+1 )
+		if item.text(1):
+			self.selectRow(True, row+1)			
+	
+	def goBack(self):
+		row=self.actualRow.value()
+		if row-1>0:
+			item = self.treeWidget.topLevelItem( row-1 )
+			if item.text(1):
+				self.selectRow(True, row-1)
+			
+	def goThis(self):
+		row=self.actualRow.value()
+		item = self.treeWidget.topLevelItem( row )
+		try:
+			if item.text(1):
+				self.selectRow(True, row)
+			else:
+				self.actualRow.setValue(self.selected_row[0]+1)
+		except:
+			self.actualRow.setValue(self.selected_row[0]+1)
+		
 	def fillActions(self):
 		#Para la grafica
 		self.verticalLayoutWidget = QtGui.QWidget()		
@@ -1193,6 +1258,51 @@ class UI_GenRep(UI_GenSec_Base):
 		self.back_verticalLayout.setContentsMargins(0, 0, 0, 0)		
 		
 		#isquierda de la grafica
+		self.controlWidget = QtGui.QWidget()
+		self.controlLayout =QtGui.QGridLayout(self.controlWidget)
+		frame=QtGui.QFrame()
+		frame.setFrameShape(QtGui.QFrame.StyledPanel)
+		frame.setFrameShadow(QtGui.QFrame.Sunken)
+		self.back=QtGui.QPushButton()
+		self.back.setProperty('spacing','False')
+		icon = QtGui.QIcon()
+		icon.addPixmap(QtGui.QPixmap("pixmaps/icons/back.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		self.back.setIcon(icon)
+		self.back.setIconSize(QtCore.QSize(15,15))
+		self.back.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+		self.back.setStyleSheet('margin-left:3px;')
+		self.back.setShortcut("Left")
+		self.back.clicked.connect(self.goBack)
+		self.actualRow=QtGui.QSpinBox()
+		self.actualRow.setMinimum(1)
+		self.actualRow.setMaximum(99999999)
+		self.actualRow.setProperty('spacing','False')
+		self.actualRow.setButtonSymbols(QtGui.QAbstractSpinBox.NoButtons)
+		self.go=QtGui.QPushButton()
+		self.go.setProperty('spacing','False')
+		self.go.setText('go')
+		self.go.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+		self.go.clicked.connect(self.goThis)
+		self.next=QtGui.QPushButton()
+		self.next.setProperty('spacing','False')
+		icon = QtGui.QIcon()
+		icon.addPixmap(QtGui.QPixmap("pixmaps/icons/next.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		self.next.setIcon(icon)
+		self.next.setIconSize(QtCore.QSize(15,15))
+		self.next.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+		self.next.setShortcut("Right")
+		self.next.clicked.connect(self.goNext)
+		self.controlLayout.addWidget(frame,0,0,1,4)
+		self.controlLayout.addWidget(self.back,0,0,1,1)
+		self.controlLayout.addWidget(self.actualRow,0,1,1,1)		
+		self.controlLayout.addWidget(self.go,0,2,1,1)
+		self.controlLayout.addWidget(self.next,0,3,1,1)		
+		self.controlLayout.setColumnMinimumWidth(0,25)
+		self.controlLayout.setColumnMinimumWidth(1,50)
+		self.controlLayout.setColumnMinimumWidth(2,20)
+		self.controlLayout.setColumnMinimumWidth(3,25)
+		self.controlLayout.setContentsMargins(0, 0, 0, 0)
+		
 		self.treeWidget_2 = QtGui.QTreeWidget()
 		font = QtGui.QFont()
 		font.setFamily("Novason")
@@ -1223,7 +1333,8 @@ class UI_GenRep(UI_GenSec_Base):
 		self.down_area_layout.setContentsMargins(0, 0, 0, 0)
 		self.down_area_layout.addWidget(self.active_bar,0,0,1,4)
 		self.down_area_layout.addWidget(self.verticalLayoutWidget,1,0,10,3)
-		self.down_area_layout.addWidget(self.treeWidget_2,1,3,10,1)
+		self.down_area_layout.addWidget(self.controlWidget,1,3,1,1)
+		self.down_area_layout.addWidget(self.treeWidget_2,2,3,9,1)
 		self.down_area_layout.setColumnMinimumWidth(3,120)
 		
 		self.layout=QtGui.QGridLayout(self.mainWidget)
@@ -1327,21 +1438,11 @@ class UI_GenRep(UI_GenSec_Base):
 		self.action_ungroup.setText(QtGui.QApplication.translate("MainWindow", "Ungroup", None, QtGui.QApplication.UnicodeUTF8))
 		self.action_ungroup.setEnabled(False)
 		
-		#Reporte--------------------------------------------------------------------
-		self.action_report= QtGui.QAction(self.form1)
-		icon = QtGui.QIcon()
-		icon.addPixmap(QtGui.QPixmap("pixmaps/icons/report.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-		self.action_report.setIconVisibleInMenu(True)
-		self.action_report.setIcon(icon)
-		self.action_report.setStatusTip(QtGui.QApplication.translate("MainWindow", "Make a report", None, QtGui.QApplication.UnicodeUTF8))
-		self.action_report.setText(QtGui.QApplication.translate("MainWindow", "Report", None, QtGui.QApplication.UnicodeUTF8))
-		
 		self.Tools_ToolBar.setVisible(True)
 		self.Tools_ToolBar.addAction(self.action_profile)
 		self.Tools_ToolBar.addAction(self.action_setup)
 		self.Tools_ToolBar.addAction(self.action_group)
 		self.Tools_ToolBar.addAction(self.action_ungroup)
-		self.Tools_ToolBar.addAction(self.action_report)
 	
 	
 	def getGroupColor(self,row):
@@ -1451,6 +1552,11 @@ class UI_GenRep(UI_GenSec_Base):
 				return 'error'
 				
 	def association_ready(self):
+		for group in self.inGroup:		
+			self.colorearGrupo([group[0]],False,[])
+		self.inGroup=[]
+		self.colores_in_row={}
+		
 		self.criterias,self.consecutives=self.association.fill_data()		
 		for i in range(self.treeWidget.topLevelItemCount()):
 			item = self.treeWidget.topLevelItem( i )
@@ -1489,7 +1595,6 @@ class UI_GenRep(UI_GenSec_Base):
 												value='error'
 										if str(data)==str(value):
 											first.setdefault(data, []).append (INDEX(i,column))
-		
 				
 				if len(self.criterias)>1!='':					
 					for list in first.values():
@@ -1620,13 +1725,14 @@ class UI_GenRep(UI_GenSec_Base):
 		row=None
 		if not selected:
 			selected=self.treeWidget.selectedIndexes()
+			self.action_ungroup.setEnabled(True)
+			self.ungroup()
 		
 		for item in selected:
 			i = self.treeWidget.topLevelItem(item.row())
 			if i.text(item.column())=='':
 				self.error(QtGui.QApplication.translate('MainWindow','Command ')+str(item.column()-1)+QtGui.QApplication.translate('MainWindow',' is empty'))
 				return False
-			self.ungroup()
 			row=item.row()
 			toGroup.append(str(row)+','+str(item.column()))
 		
@@ -1634,7 +1740,6 @@ class UI_GenRep(UI_GenSec_Base):
 		self.inGroup.append(toGroup)
 		dejar=self.dejar(row,toGroup)
 		self.colorearGrupo(toGroup,True,dejar)
-		self.action_ungroup.setEnabled(True)
 		
 	
 	def ungroup(self):
@@ -1808,7 +1913,7 @@ class UI_GenRep(UI_GenSec_Base):
 	def buildHtml(self):			
 		"""Construye una tabla html con estructura igual a la del gensec, con la informacion de esta"""
 		hora='<table><tr><td> GenRep : '+str(datetime.datetime.fromtimestamp(time.time()))+'</td></tr></td></tr><tr><td> </td></tr></table>'
-		general='<table><tr><td>'+QtGui.QApplication.translate('MainWindow','Name')+': </td><td>'+ self.nombre +'</td></tr><tr><td>'+QtGui.QApplication.translate('MainWindow','Owner')+': </td><td>'+ self.propietario +'</td></tr><tr><td>'+QtGui.QApplication.translate('MainWindow','Created')+': </td><td>'+ str(self.datecrea) +'</td></tr><tr><td>'+QtGui.QApplication.translate('MainWindow','Nitrogen Use')+': </td><td>'+ str(self.nitrogeno) +'</td></tr><tr><td>'+QtGui.QApplication.translate('MainWindow','Dose Rate')+': </td><td>'+ str(self.dosis) +'</td></tr><tr><td>'+QtGui.QApplication.translate('MainWindow','External Dose Rate')+': </td><td>'+ str(self.dosisE) +'</td></tr><tr><td>'+QtGui.QApplication.translate('MainWindow','Protocol')+': </td><td>'+ self.protocolo +'</td></tr><tr><td>'+QtGui.QApplication.translate('MainWindow','Reader ID')+': </td><td>'+ self.id_lector +'</td></tr><tr><td> </td><td> </td></tr></table>'
+		general='<table><tr><td>Name: </td><td>'+ self.nombre +'</td></tr><tr><td>Owner: </td><td>'+ self.propietario +'</td></tr><tr><td>Created: </td><td>'+ str(self.datecrea) +'</td></tr><tr><td>Nitrogen Use: </td><td>'+ str(self.nitrogeno) +'</td></tr><tr><td>Dose Rate: </td><td>'+ str(self.dosis) +'</td></tr><tr><td>External Dose Rate: </td><td>'+ str(self.dosisE) +'</td></tr><tr><td>Protocol: </td><td>'+ self.protocolo +'</td></tr><tr><td>Reader ID: </td><td>'+ self.id_lector +'</td></tr><tr><td> </td><td> </td></tr></table>'
 		html=''
 		img_name=1
 		tabla=self.getallData()	
@@ -1822,7 +1927,7 @@ class UI_GenRep(UI_GenSec_Base):
 					val=sample.split('-')
 					samples_id=range(int(val[0]),int(val[-1])+1)
 				for sample_id in samples_id:
-					sample_table='<p style="background:#ACD6FF" ><b>'+QtGui.QApplication.translate('MainWindow','Sample')+' '+str(sample_id)+'</b></p>'
+					sample_table='<p style="background:#ACD6FF" ><b>Sample '+str(sample_id)+'</b></p>'
 					
 					for command in item[1]:
 						cant=command[1].keys()
@@ -1841,23 +1946,23 @@ class UI_GenRep(UI_GenSec_Base):
 								p='ESL'
 								
 							comand_table='<table>'
-							comand_table='<tr style="font-weight: bold;" colspan="2"><td>'+QtGui.QApplication.translate('MainWindow','Process')+' '+p+'</td><td></td></tr>'
-							comand_table+= '<tr><td>'+QtGui.QApplication.translate('MainWindow','Parameter')+'</td><td style="padding-left:30px;">'+QtGui.QApplication.translate('MainWindow','Data')+'</td><td style="padding-left:30px;">'+QtGui.QApplication.translate('MainWindow','Plot')+'</td></tr>'
-							comand_table+= '<tr><td>'+QtGui.QApplication.translate('MainWindow','Date Type')+'</td><td style="padding-left:30px;">'+str(info['date_type'])+'</td><td></td></tr>'
+							comand_table='<tr style="font-weight: bold;" colspan="2"><td>Process '+p+'</td><td></td></tr>'
+							comand_table+= '<tr><td>Parameter</td><td style="padding-left:30px;">Data</td><td style="padding-left:30px;">Plot</td></tr>'
+							comand_table+= '<tr><td>Date Type</td><td style="padding-left:30px;">'+str(info['date_type'])+'</td><td></td></tr>'
 							
 							curves={1:False,2:False,3:False}
 							for curve in command[1]:
 								curv=int(curve.split(',')[2])								
 								self.getImg(command[1][curve],img_name)
-								curve_data= '<tr><td>'+QtGui.QApplication.translate('MainWindow','Curve')+' '+str(curv)+'</td><td> </td><td rowspan="7" style="padding-left:30px;"><img src="pixmaps/temp/'+str(img_name)+'.png" width="300"></td></tr>'
+								curve_data= '<tr><td>Curve '+str(curv)+'</td><td> </td><td rowspan="7" style="padding-left:30px;"><img src="pixmaps/temp/'+str(img_name)+'.png" width="300"></td></tr>'
 								if self.signal:
-									curve_data+= '<tr><td style="padding-left:15px;">'+QtGui.QApplication.translate('MainWindow','Signal Count')+'</td><td style="padding-left:30px;">'+str(command[1][curve][2])+'</td></tr>'
-									curve_data+= '<tr><td style="padding-left:15px;">'+QtGui.QApplication.translate('MainWindow','Signal Min Channel')+'</td><td style="padding-left:30px;">'+str(command[1][curve][0][0])+'</td></tr>'
-									curve_data+= '<tr><td style="padding-left:15px;">'+QtGui.QApplication.translate('MainWindow','Signal Max Channel')+'</td><td style="padding-left:30px;">'+str(command[1][curve][0][1])+'</td></tr>'
+									curve_data+= '<tr><td style="padding-left:15px;">Signal Count</td><td style="padding-left:30px;">'+str(command[1][curve][2])+'</td></tr>'
+									curve_data+= '<tr><td style="padding-left:15px;">Signal Min Channel</td><td style="padding-left:30px;">'+str(command[1][curve][0][0])+'</td></tr>'
+									curve_data+= '<tr><td style="padding-left:15px;">Signal Max Channel</td><td style="padding-left:30px;">'+str(command[1][curve][0][1])+'</td></tr>'
 								if self.background:
-									curve_data+= '<tr><td style="padding-left:15px;">'+QtGui.QApplication.translate('MainWindow','Background Count')+'</td><td style="padding-left:30px;">'+str(command[1][curve][3])+'</td></tr>'
-									curve_data+= '<tr><td style="padding-left:15px;">'+QtGui.QApplication.translate('MainWindow','Background Min Channel')+'</td><td style="padding-left:30px;">'+str(command[1][curve][1][0])+'</td></tr>'
-									curve_data+= '<tr><td style="padding-left:15px;">'+QtGui.QApplication.translate('MainWindow','Background Max Channel')+'</td><td style="padding-left:30px;">'+str(command[1][curve][1][1])+'</td></tr>'								
+									curve_data+= '<tr><td style="padding-left:15px;">Background Count</td><td style="padding-left:30px;">'+str(command[1][curve][3])+'</td></tr>'
+									curve_data+= '<tr><td style="padding-left:15px;">Background Min Channel</td><td style="padding-left:30px;">'+str(command[1][curve][1][0])+'</td></tr>'
+									curve_data+= '<tr><td style="padding-left:15px;">Background Max Channel</td><td style="padding-left:30px;">'+str(command[1][curve][1][1])+'</td></tr>'								
 								
 								img_name+=1
 								curves[int(curv)]=curve_data
@@ -2004,7 +2109,7 @@ class UI_GenRep(UI_GenSec_Base):
 			
 	
 	def selectRow(self, ok=False, row=False):
-		"""Selecciona un conjunto de filas, recibe por parametro un string de la forma: row,row,row...."""					
+		"""Selecciona una fila"""					
 		if not ok:
 			row, ok = QtGui.QInputDialog.getInteger(self.form1, QtGui.QApplication.translate('MainWindow','Row Number'), QtGui.QApplication.translate('MainWindow','Row')+':',0,1)			
 		if ok:				
@@ -2015,14 +2120,11 @@ class UI_GenRep(UI_GenSec_Base):
 			try:
 				item = self.treeWidget.topLevelItem(row)
 				item.setSelected(True)
-				if self.selected_row[1]:
-					#self.selected_row[1].setStyleSheet(HEADER_TOOLBUTTON_STYLE)
-					pass
 				self.selected_row[1]=self.treeWidget.itemWidget(item,0)
-				#self.selected_row[1].setStyleSheet(HEADER_TOOLBUTTON_STYLE2)
 				self.selected_row[0]=row
 				self.clear_lateral_panel()
 				self.fill_lateral_panel()
+				self.actualRow.setValue(row+1)
 			except:
 				pass
 					

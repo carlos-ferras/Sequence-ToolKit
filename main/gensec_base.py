@@ -501,7 +501,17 @@ class UI_GenSec_Base(UI_base):
 			
 		def selectRow(self):
 			"""Selecciona un conjunto de filas, recibe por parametro un estrin de la forma: row,row,row...."""					
-			pass
+			row, ok = QtGui.QInputDialog.getInteger(self.form1, QtGui.QApplication.translate('MainWindow','Row Number'), QtGui.QApplication.translate('MainWindow','Row')+':',0,1)		
+			if ok:
+				rows=str(row).split(',')
+				for rw in rows:
+					if str(rw).isdigit():
+						row=int(rw)-1
+						try:
+							item = self.treeWidget.topLevelItem(row)
+							item.setSelected(True)
+						except:
+							pass
 			
 		
 		def generar(self):

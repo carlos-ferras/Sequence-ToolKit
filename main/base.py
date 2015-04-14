@@ -22,13 +22,13 @@ import re
 from PyQt4 import QtCore  
 from PyQt4 import QtGui 
 from functools import partial
-from UI import MainWindows
+from ui import uiMainWindows
 from config import config
-from base_theme import BASE
-from load_theme import LOAD
+from theme.baseTheme import BASE
+from theme.loadTheme import LOAD
 
-from Dialogs.fontSelect import fontS 
-from Dialogs.about import about
+from dialogs.fontSelect import classFontSelect
+from dialogs.about import about
 
 def cursorAction():
 	def decorador(fun):
@@ -49,7 +49,7 @@ def seguro(msg):
 		return interna
 	return decorador
 
-class UI_base(MainWindows.Ui_MainWindow): 
+class classBase(uiMainWindows.classUiMainWindow): 
 	def __init__(self,title,appIcon, parent=None):
 		self.form1 =QtGui.QMainWindow()
 		self.setupUi(self.form1,title,appIcon)		
@@ -88,7 +88,7 @@ class UI_base(MainWindows.Ui_MainWindow):
 		lang.setText('en')
 		lang.triggered.connect(partial(self.changeLang, 'en'))
 		lang.setStatusTip(QtGui.QApplication.translate("MainWindow", "Change the language to ", None, QtGui.QApplication.UnicodeUTF8)+'" en "')
-		for filePath in os.listdir('Locale'):
+		for filePath in os.listdir('locale'):
 		    fileName  = os.path.basename(filePath)
 		    fileMatch = re.match("Sequence_ToolKit_([a-z]{2,}).qm", fileName)
 		    if fileMatch:
@@ -98,19 +98,6 @@ class UI_base(MainWindows.Ui_MainWindow):
 				lang.setText(QtCore.QString.fromUtf8(fileMatch.group(1)))
 				lang.triggered.connect(partial(self.changeLang, QtCore.QString.fromUtf8(fileMatch.group(1))))
 				lang.setStatusTip(QtGui.QApplication.translate("MainWindow", "Change the language to ", None, QtGui.QApplication.UnicodeUTF8)+ '" '+QtCore.QString.fromUtf8(fileMatch.group(1))+' "')
-		
-		for filePath in os.listdir('theme'):
-		    fileName  = os.path.basename(filePath)
-		    if fileName.split('.')[-1]=='stkthm':
-				them= QtGui.QAction(self.form1)
-				self.menuTheme.addAction(them)
-				s=''
-				them.setText(QtCore.QString.fromUtf8(fileName.split('.')[0]))
-				them.triggered.connect(partial(self.changeTheme, QtCore.QString.fromUtf8(fileName.split('.')[0])))
-				
-		
-		
-		self.thereAreCanges=False
 		
 		self.config=config()			
 		self.general_config=self.config.loadGeneral()			
@@ -136,7 +123,22 @@ class UI_base(MainWindows.Ui_MainWindow):
 			self.fileLocation=''
 			self.opacity=1
 			self.lang=''
-			self.theme='default'
+			self.theme='light'		
+		
+		ag = QtGui.QActionGroup(self.form1,exclusive=True)
+		for filePath in os.listdir('theme'):
+		    fileName  = os.path.basename(filePath)
+		    if fileName.split('.')[-1]=='stkthm':
+				them= ag.addAction(QtGui.QAction(self.form1, checkable=True))
+				self.menuTheme.addAction(them)
+				s=''
+				temeName=QtCore.QString.fromUtf8(fileName.split('.')[0])
+				if temeName==self.theme:
+					them.setChecked(True)
+				them.setText(temeName)
+				them.triggered.connect(partial(self.changeTheme, temeName))		
+		
+		self.thereAreCanges=False			
 			
 		if self.gensec_config:
 			self.col1=self.gensec_config[0]
@@ -273,7 +275,7 @@ class UI_base(MainWindows.Ui_MainWindow):
 			self.fontS.form1.close()
 		except:
 			pass
-		self.fontS=fontS(self.form1,self.fuente,self.size)
+		self.fontS=classFontSelect(self.form1,self.fuente,self.size)
 		self.fontS.pushButton.clicked.connect(self.change)
 		
 		
@@ -325,9 +327,10 @@ class UI_base(MainWindows.Ui_MainWindow):
 	#Others--------------------------------------------------------------------------------------------------------------------------
 	def help(self):
 		"""Corre la ayuda de la aplicacion"""
-		self.closeAllDialogs()			
-		if (self.assistant.state() != QtCore.QProcess.Running):
-			self.assistant.start('python asistente.py')
+		self.closeAllDialogs()		
+		#~ if (self.assistant.state() != QtCore.QProcess.Running):
+			#~ self.assistant.start('python assistant.py')
+		self.error(QtGui.QApplication.translate('MainWindow','Assistant is not available'))
 	
 	
 	def error(self,text):

@@ -20,10 +20,10 @@
 import sys
 from PyQt4 import QtCore  
 from PyQt4 import QtGui 
-from main.gensec_main import UI_GenSec
+from main.gensecMain import classGenSec
 from config import config
-from base_theme import BASE
-from load_theme import LOAD
+from theme.baseTheme import BASE
+from theme.loadTheme import LOAD
 
 if __name__ == "__main__": 
 	app = QtGui.QApplication(sys.argv)
@@ -40,7 +40,7 @@ if __name__ == "__main__":
 	if locale=='' or locale=='locale' or locale=='None':	
 		locale =unicode(QtCore.QLocale.system().name())
 	translator=QtCore.QTranslator()
-	translator.load("Locale/Sequence_ToolKit_"+locale)
+	translator.load("locale/Sequence_ToolKit_"+locale)
 	app.installTranslator(translator)
 	
 	qtTranslator=QtCore.QTranslator()
@@ -53,7 +53,7 @@ if __name__ == "__main__":
 	
 	windows =[]
 	for dir in  dirs:
-		w=UI_GenSec(dir)
+		w=classGenSec(dir)
 		windows.append(w)
 	for current_child_window in windows:
 		current_child_window.form1.showMaximized()

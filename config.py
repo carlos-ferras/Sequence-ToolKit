@@ -54,7 +54,7 @@ class config:
 			
 	
 	def loadGeneral(self):
-		config=['Novason',12,'',1,'','default']
+		config=['Novason',12,'',1,'','light']
 		if os.path.exists(self.generalconf):
 			file=open(self.generalconf,'r')
 			try:

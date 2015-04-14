@@ -4,22 +4,25 @@
     <virtualFolder>doc</virtualFolder>
     <filterSection>
         <toc>
-            <section title="GenSec" ref="index.html">
-                <section title="Page1" ref="./page1.html"></section>
+            <section title="Sequence-ToolKit" ref="html/index.html">
+			<section title="GenSec" ref="html/gensec/index.html"></section>
+			<section title="GenRep" ref="html/genrep/index.html"></section>
+			<section title="GenVis" ref="html/genvis/index.html"></section>
 		</section>
             </toc>
         <keywords>
-            <keyword name="Display" ref="./index.html"/>
-            <keyword name="Rich text" ref="./index.html"/>
-            <keyword name="Plain text" ref="./index.html"/>
-            <keyword name="page" ref="./page1.html"/>
+            <keyword name="Display" ref="html/index.html"/>
             </keywords>
         <files>
-            <file>index.html</file>
-            <file>page1.html</file>
-	    <file>img/logo_help.png</file>
-	    <file>img/mainwindow.png</file>
-	    <file>img/logo.png</file>
-            </files>
-        </filterSection>
-    </QtHelpProject>
+            <file>html/index.html</file>
+            <file>html/gensec/index.html</file>
+			<file>html/genrep/index.html</file>
+			<file>html/genvis/index.html</file>
+			<file>img/assistant.png</file>
+			<file>img/Sequence-ToolKit.png</file>
+			<file>img/gensec/gensec.png</file>
+			<file>img/genrep/genrep.png</file>
+			<file>img/genvis/genvis.png</file>
+		</files>
+	</filterSection>
+</QtHelpProject>

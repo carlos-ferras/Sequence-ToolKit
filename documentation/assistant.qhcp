@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QHelpCollectionProject version="1.0">
     <assistant>
-        <title>Asistente</title>
-        <applicationIcon>img/asistente.png</applicationIcon>
-        <cacheDirectory>asistente</cacheDirectory>
-	<homePage>index.html</homePage>
-        <startPage>index.html</startPage>
+        <title>Assistant</title>
+        <applicationIcon>img/assistant.png</applicationIcon>
+        <cacheDirectory>assistant</cacheDirectory>
+	<homePage>qthelp:///html/index.html</homePage>
+        <startPage>qthelp:///html/index.html</startPage>
         <aboutMenuText>
-            <text>Abuout Asistente</text>
-	    <text language="es">Acerca de Asistente</text>
+            <text>Abuout Assistant</text>
+	    <text language="es">Acerca del Asistente</text>
         </aboutMenuText>
         <aboutDialog>
             <file>about.txt</file>
-            <icon>img/asistente.png</icon>
+            <icon>img/assistant.png</icon>
         </aboutDialog>
         <enableDocumentationManager>false</enableDocumentationManager>
         <enableAddressBar>false</enableAddressBar>
@@ -21,12 +21,12 @@
     <docFiles>
         <generate>
             <file>
-                <input>asistente.qhp</input>
-                <output>asistente.qch</output>
+                <input>assistant.qhp</input>
+                <output>assistant.qch</output>
 	    </file>
 	</generate>
         <register>
-            <file>asistente.qch</file>
+            <file>assistant.qch</file>
             </register>
     </docFiles>
 </QHelpCollectionProject>

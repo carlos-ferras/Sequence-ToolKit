@@ -135,7 +135,7 @@ def about(parent,name,title,description,version,appIcon):
 	groupBox_343.setWindowTitle(name)
 	groupBox_343.show()
 	
-	def licencia():
+	def license():
 		groupBox_343.setGeometry(QtCore.QRect(200, 100, 687, 600))
 		groupBox_343.setMinimumSize(QtCore.QSize(687, 600))
 		groupBox_343.setMaximumSize(QtCore.QSize(687, 600))
@@ -361,12 +361,12 @@ def about(parent,name,title,description,version,appIcon):
 		"t:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;\"><br /></p>\n"
 		"</body></html>")
 
-	def contacto():
+	def contact():
 		import webbrowser
 		webbrowser.open('mailto:ceaden@ceaden.edu.cu')
 	
-	pushButton_348.clicked.connect(licencia)
+	pushButton_348.clicked.connect(license)
 	pushButton_349.clicked.connect(credits)
-	pushButton_350.clicked.connect(contacto)
+	pushButton_350.clicked.connect(contact)
 	
 	

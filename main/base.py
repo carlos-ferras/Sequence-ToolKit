@@ -184,6 +184,7 @@ class classBase(uiMainWindows.classUiMainWindow):
 
 	def beforeGenRep(self):
 		pass
+		
 	def afterGenRep(self):
 		pass
 	

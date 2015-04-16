@@ -1875,7 +1875,7 @@ class classGenRep(classTableBase):
 		bh=data[1][1]
 		default=True
 		
-		canvas = Lienzo(X,Y,w,sl,sh,bl,bh,default,self.signal,self.background,self.h_min,self.h_max,20,5,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit,self.fondo_graph,True)
+		canvas = classLienzo(X,Y,w,sl,sh,bl,bh,default,self.signal,self.background,self.h_min,self.h_max,20,5,self.v_min,self.v_max,self.v_great_unit,self.v_small_unit,self.fondo_graph,True)
 		try:
 			if self.v_scale=='log':
 				canvas.allGraphic.set_yscale('log', basey=10)

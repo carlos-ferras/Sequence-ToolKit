@@ -219,7 +219,8 @@ class classBase(uiMainWindows.classUiMainWindow):
 		"""Abre una ventana para cambiar la opacidad de la ventana"""
 		self.closeAllDialogs()
 		dialog=QtGui.QDialog(self.form1)
-		dialog.setGeometry(QtCore.QRect(0, 0, 170, 70));	
+		dialog.setWindowTitle(QtGui.QApplication.translate('MainWindow','Opacity'))
+		dialog.setGeometry(QtCore.QRect(self.W/2-85, 0, 170, 70));	
 		
 		horizontalSlider=QtGui.QSlider(dialog)
 		horizontalSlider.setGeometry(QtCore.QRect(5,5, 160, 20));
@@ -252,7 +253,7 @@ class classBase(uiMainWindows.classUiMainWindow):
 		button.clicked.connect(opacity)
 		
 		button2=QtGui.QPushButton(QtGui.QApplication.translate('MainWindow','Cancel'),dialog)
-		button2.setGeometry(QtCore.QRect(40,30, 60, 25));
+		button2.setGeometry(QtCore.QRect(40,30, 80, 25));
 		button2.clicked.connect(cancel)
 		
 		horizontalSlider.valueChanged.connect(preview)

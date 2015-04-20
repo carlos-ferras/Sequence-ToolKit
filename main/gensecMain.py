@@ -459,10 +459,12 @@ class classGenSec(classTableBase):
 			elif ret==1 :
 				self.limpiar()
 				self.cleanGeneralData()
+				self.thereAreCanges=False
 			else:
 				if self.save():
 					self.limpiar()
 					self.cleanGeneralData()
+					self.thereAreCanges=False
 			self.form1.statusBar().showMessage(QtGui.QApplication.translate('MainWindow',"Ready"))
 		
 		
@@ -896,9 +898,11 @@ class classGenSec(classTableBase):
 			self.form1.statusBar().showMessage("")
 			if len(self.treeWidget.selectedIndexes())>0:
 				self.clipboard=[]
+				texts=''
 				for item in self.treeWidget.selectedIndexes():
 					if item.column():
 						if item.column()>1:
+							self.processClipboard=''
 							try:
 								menor_f,menor_c=self.menores()
 								f=item.row()-menor_f
@@ -908,12 +912,19 @@ class classGenSec(classTableBase):
 								clipboard[0]=(f,c)
 								clipboard[1]=text								
 								clipboard[2]=self.processData[str(item.row())+','+str(item.column())]
-								self.clipboard.append(clipboard)
+								
+								#K COPE EL LOS PROCESOS EN MERGING Y LOS PEGUE ASI
+								
+								self.clipboard.append(clipboard)								
+								texts+='; '+text
 							except:
 								pass
 						elif item.column()==1:
+							self.clipboard=[]
 							self.processClipboard=self.treeWidget.topLevelItem(item.row()).text(item.column())
-		
+							texts+='; '+str(self.treeWidget.topLevelItem(item.row()).text(item.column()))
+				clipboard=QtGui.QApplication.clipboard()
+				clipboard.setText(texts[2:])
 		
 		@cursorAction()
 		def cut(self,temp=False):
@@ -922,6 +933,7 @@ class classGenSec(classTableBase):
 			borrar=[]
 			if len(self.treeWidget.selectedIndexes())>0:
 				self.clipboard=[]
+				texts=''
 				for item in self.treeWidget.selectedIndexes():
 					if item.column():
 						if item.column()>1:
@@ -934,7 +946,8 @@ class classGenSec(classTableBase):
 								clipboard[0]=(f,c)
 								clipboard[1]=text
 								clipboard[2]=self.processData[str(item.row())+','+str(item.column())]				
-								self.clipboard.append(clipboard)														
+								self.clipboard.append(clipboard)
+								texts+='; '+text
 								for group in range(len(self.inMerge)):
 									for poss in self.inMerge[group]:
 										if str(item.row())+','+str(item.column())==poss:
@@ -947,6 +960,9 @@ class classGenSec(classTableBase):
 						elif item.column()==1:
 							self.processClipboard=self.treeWidget.topLevelItem(item.row()).text(item.column())
 							self.setValue(item.row(),item.column(),'')
+							texts+='; '+str(self.treeWidget.topLevelItem(item.row()).text(item.column()))
+				clipboard=QtGui.QApplication.clipboard()
+				clipboard.setText(texts[2:])
 				self.delete()
 				self.thereAreCanges=True
 			

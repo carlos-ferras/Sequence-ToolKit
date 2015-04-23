@@ -176,8 +176,13 @@ class classBase(uiMainWindows.classUiMainWindow):
 		self.closeAllDialogs()
 		try:
 			if (self.processGenRep.state() != QtCore.QProcess.Running):
-				self.beforeGenRep()			
-				self.processGenRep.start('python genrep.py '+self.dirToOpen)
+				self.beforeGenRep()
+				if os.sys.platform=='linux' or os.sys.platform=='linux2':
+					self.processGenRep.start('python genrep.py '+self.dirToOpen)
+				elif os.path.exists('GenRep.exe'):
+					self.processGenRep.start('GenRep.exe '+self.dirToOpen)
+				else:
+					assert()
 				self.afterGenRep()
 		except:
 			self.error(QtGui.QApplication.translate('MainWindow','Unable to launch GenRep'))
@@ -194,7 +199,12 @@ class classBase(uiMainWindows.classUiMainWindow):
 		try:
 			if (self.processGenSec.state() != QtCore.QProcess.Running):
 				self.beforeGenSec()
-				self.processGenSec.start('python gensec.py '+self.dirToOpen)
+				if os.sys.platform=='linux' or os.sys.platform=='linux2':
+					self.processGenSec.start('python gensec.py '+self.dirToOpen)
+				elif os.path.exists('GenSec.exe'):
+					self.processGenRep.start('GenSec.exe '+self.dirToOpen)
+				else:
+					assert()
 				self.afterGenSec()
 		except:
 			self.error(QtGui.QApplication.translate('MainWindow','Unable to launch GenSec'))
@@ -220,10 +230,10 @@ class classBase(uiMainWindows.classUiMainWindow):
 		self.closeAllDialogs()
 		dialog=QtGui.QDialog(self.form1)
 		dialog.setWindowTitle(QtGui.QApplication.translate('MainWindow','Opacity'))
-		dialog.setGeometry(QtCore.QRect(self.W/2-85, 0, 170, 70));	
+		dialog.setGeometry(QtCore.QRect(self.W/2-100, 0, 200, 70));	
 		
 		horizontalSlider=QtGui.QSlider(dialog)
-		horizontalSlider.setGeometry(QtCore.QRect(5,5, 160, 20));
+		horizontalSlider.setGeometry(QtCore.QRect(5,5, 190, 20));
 		horizontalSlider.setOrientation(QtCore.Qt.Horizontal);
 		horizontalSlider.setMinimum(80)
 		horizontalSlider.setValue(self.opacity*100)
@@ -249,11 +259,11 @@ class classBase(uiMainWindows.classUiMainWindow):
 			self.form1.setWindowOpacity(self.opacity)
 		
 		button=QtGui.QPushButton(QtGui.QApplication.translate('MainWindow','Aply'),dialog)
-		button.setGeometry(QtCore.QRect(108,30, 60, 25));
+		button.setGeometry(QtCore.QRect(108,30, 90, 25));
 		button.clicked.connect(opacity)
 		
 		button2=QtGui.QPushButton(QtGui.QApplication.translate('MainWindow','Cancel'),dialog)
-		button2.setGeometry(QtCore.QRect(40,30, 80, 25));
+		button2.setGeometry(QtCore.QRect(20,30, 90, 25));
 		button2.clicked.connect(cancel)
 		
 		horizontalSlider.valueChanged.connect(preview)

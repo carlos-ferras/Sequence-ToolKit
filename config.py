@@ -17,41 +17,21 @@
 #~ You should have received a copy of the GNU General Public License
 #~ along with Sequence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
 
-import commands
 import os
 import pickle
 
 class config:
 	
 	def __init__(self):
-		self.win=False
-		try:
-			a=str(commands.getoutput('$HOME'))
-			b=a.split('/')
-			del b[0]
-			c=b[-1].split()
-			del b[-1]
-			if len(c)>1:
-				d=c[0].split(':')
-				e=d[0]
-			else:
-				e=c[0]
-			self.userRoot=''
-			for i in b:
-				self.userRoot+='/'+i
-			self.userRoot+='/'+e
-			self.dir=self.userRoot+'/'
-		except:
-			self.win=True
-		if not self.win:
-			self.generalconf=self.dir+'.stk.conf'
-			self.gensecconf=self.dir+'.genSec.conf'
-			self.genrepconf=self.dir+'.genRep.conf'
+		if os.sys.platform=='linux' or os.sys.platform=='linux2':
+			self.dir=os.environ['HOME']+'/.Sequence-ToolKit'
 		else:
-			self.generalconf='stk.conf'
-			self.gensecconf='genSec.conf'
-			self.genrepconf='genRep.conf'
-			
+			self.dir=os.environ['LOCALAPPDATA']+'\\Sequence-ToolKit\\'
+		if not os.path.exists(self.dir):
+			os.mkdir(self.dir)
+		self.generalconf=self.dir+'stk.conf'
+		self.gensecconf=self.dir+'genSec.conf'
+		self.genrepconf=self.dir+'genRep.conf'			
 	
 	def loadGeneral(self):
 		config=['Novason',12,'',1,'','light']

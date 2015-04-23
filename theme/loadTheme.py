@@ -20,11 +20,15 @@
 import os
 
 def LOAD(theme):
+	colors=[]
 	if os.path.exists('theme/'+theme+'.stkthm'):
 		theme_values=open('theme/'+theme+'.stkthm')
-		lines=theme_values.readlines()
-		colors=[]
+		lines=theme_values.readlines()		
 		for i in range(len(lines)):
 			colors.append(str(lines[i].split(' ')[1][:-1]))
+	elif len(colors)!=8:
+		colors=['#F5F5F5','#FFFFFF','#F0F0F0','#E8E8E8','#222020','#DEDEDE','#E3E3E3','#000000']
 	return colors
+	
+	
 

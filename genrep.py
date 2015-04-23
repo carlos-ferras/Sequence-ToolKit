@@ -18,13 +18,15 @@
 #~ along with Sequence-ToolKit.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import sys
+import sys,os
 from PyQt4 import QtCore  
 from PyQt4 import QtGui 
 from main.genrepMain import classGenRep
 from config import config
 from theme.baseTheme import BASE
 from theme.loadTheme import LOAD
+if os.path.dirname(sys.argv[0]):
+	os.chdir(os.path.dirname(sys.argv[0]))
 
 if __name__ == '__main__':
 	app = QtGui.QApplication(sys.argv)

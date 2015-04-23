@@ -368,7 +368,6 @@ class classTableBase(classBase):
 											if column>max(filter(lambda n: n<int(comando['column'] ), self.externalIrradiation)):
 												c=column
 												break
-												print c
 										else:
 											c=column
 											break

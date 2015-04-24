@@ -27,12 +27,7 @@ from dialogs.genrep.profile import classProfile
 from dialogs.genrep.association import classAssociation
 from dialogs.genrep.applyTo import classApplyTo
 from xmlDriver import createRLF
-
 import math
-
-#~ import warnings
-#~ import matplotlib.cbook
-#~ warnings.filterwarnings("ignore",category=matplotlib.cbook.mplDeprecation)
 
 class classIndex:
 	def __init__(self,row,column):
@@ -120,7 +115,7 @@ class classGenRep(classTableBase):
 		self.header=self.treeWidget.header()			
 		self.header.setClickable(True)	
 		self.form1.resizeEvent = self.onResize
-		self.actionAcerda_de.triggered.connect(partial(about,self.form1,'GenRep',QtGui.QApplication.translate("MainWindow", 'Report Generator', None, QtGui.QApplication.UnicodeUTF8),QtGui.QApplication.translate("MainWindow", 'Description', None, QtGui.QApplication.UnicodeUTF8),'1.0.0',"pixmaps/genrep.png"))
+		self.actionAcerda_de.triggered.connect(partial(about,self.form1,'GenRep',QtGui.QApplication.translate("MainWindow", 'Report Generator', None, QtGui.QApplication.UnicodeUTF8),QtGui.QApplication.translate("MainWindow", 'The GenRep is intended to produce a report on the basis of the data measured in the LF02 automated luminescence reader stored in a xml file (.SLF). The report may be generated in a xml file (.RLF) or as an exel file (.TXT).', None, QtGui.QApplication.UnicodeUTF8),'1.0.0',"pixmaps/genrep.png"))
 		self.action_setup.triggered.connect(self.data_setup)
 		self.action_profile.triggered.connect(self.data_profile)
 		self.action_group.triggered.connect(self.group)
@@ -1265,6 +1260,7 @@ class classGenRep(classTableBase):
 		frame.setFrameShape(QtGui.QFrame.StyledPanel)
 		frame.setFrameShadow(QtGui.QFrame.Sunken)
 		self.back=QtGui.QPushButton()
+		self.back.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Go to the previous sample'))
 		self.back.setProperty('spacing','False')
 		icon = QtGui.QIcon()
 		icon.addPixmap(QtGui.QPixmap("pixmaps/icons/back.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -1275,16 +1271,19 @@ class classGenRep(classTableBase):
 		self.back.setShortcut("Left")
 		self.back.clicked.connect(self.goBack)
 		self.actualRow=QtGui.QSpinBox()
+		self.actualRow.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Sample to go'))
 		self.actualRow.setMinimum(1)
 		self.actualRow.setMaximum(99999999)
 		self.actualRow.setProperty('spacing','False')
 		self.actualRow.setButtonSymbols(QtGui.QAbstractSpinBox.NoButtons)
 		self.go=QtGui.QPushButton()
+		self.go.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Go to the selected sample'))
 		self.go.setProperty('spacing','False')
 		self.go.setText('go')
 		self.go.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
 		self.go.clicked.connect(self.goThis)
 		self.next=QtGui.QPushButton()
+		self.next.setStatusTip(QtGui.QApplication.translate("MainWindow", 'Go to the next sample'))
 		self.next.setProperty('spacing','False')
 		icon = QtGui.QIcon()
 		icon.addPixmap(QtGui.QPixmap("pixmaps/icons/next.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -1477,7 +1476,7 @@ class classGenRep(classTableBase):
 			data=g.split(',')
 			row=int(data[0])
 			columns.append(int(data[1]))
-		delegate = BackgroundColorDelegate(self.treeWidget,columns,colorear,dejar,color,self.fondo) 
+		delegate = classBackgroundColorDelegate(self.treeWidget,columns,colorear,dejar,color,self.fondo) 
 		self.treeWidget.setItemDelegateForRow(row,delegate)
 		
 	

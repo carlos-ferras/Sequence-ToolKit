@@ -24,7 +24,7 @@ class config:
 	
 	def __init__(self):
 		if os.sys.platform=='linux' or os.sys.platform=='linux2':
-			self.dir=os.environ['HOME']+'/.Sequence-ToolKit'
+			self.dir=os.environ['HOME']+'/.Sequence-ToolKit/'
 		else:
 			self.dir=os.environ['LOCALAPPDATA']+'\\Sequence-ToolKit\\'
 		if not os.path.exists(self.dir):

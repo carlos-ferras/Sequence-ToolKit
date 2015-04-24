@@ -181,8 +181,9 @@ class classBase(uiMainWindows.classUiMainWindow):
 					self.processGenRep.start('python genrep.py '+self.dirToOpen)
 				elif os.path.exists('GenRep.exe'):
 					self.processGenRep.start('GenRep.exe '+self.dirToOpen)
-				else:
-					assert()
+				else:				
+					self.error(QtGui.QApplication.translate('MainWindow','Unable to launch GenRep'))
+					return False
 				self.afterGenRep()
 		except:
 			self.error(QtGui.QApplication.translate('MainWindow','Unable to launch GenRep'))
@@ -230,11 +231,13 @@ class classBase(uiMainWindows.classUiMainWindow):
 		self.closeAllDialogs()
 		dialog=QtGui.QDialog(self.form1)
 		dialog.setWindowTitle(QtGui.QApplication.translate('MainWindow','Opacity'))
-		dialog.setGeometry(QtCore.QRect(self.W/2-100, 0, 200, 70));	
+		widget=QtGui.QDesktopWidget()
+		mainScreenSize = widget.availableGeometry(widget.primaryScreen())
+		dialog.setGeometry(QtCore.QRect(self.W/2-100, mainScreenSize.height()/2-35, 200, 70))
 		
 		horizontalSlider=QtGui.QSlider(dialog)
-		horizontalSlider.setGeometry(QtCore.QRect(5,5, 190, 20));
-		horizontalSlider.setOrientation(QtCore.Qt.Horizontal);
+		horizontalSlider.setGeometry(QtCore.QRect(5,5, 190, 20))
+		horizontalSlider.setOrientation(QtCore.Qt.Horizontal)
 		horizontalSlider.setMinimum(80)
 		horizontalSlider.setValue(self.opacity*100)
 		
@@ -259,11 +262,11 @@ class classBase(uiMainWindows.classUiMainWindow):
 			self.form1.setWindowOpacity(self.opacity)
 		
 		button=QtGui.QPushButton(QtGui.QApplication.translate('MainWindow','Aply'),dialog)
-		button.setGeometry(QtCore.QRect(108,30, 90, 25));
+		button.setGeometry(QtCore.QRect(108,30, 90, 25))
 		button.clicked.connect(opacity)
 		
 		button2=QtGui.QPushButton(QtGui.QApplication.translate('MainWindow','Cancel'),dialog)
-		button2.setGeometry(QtCore.QRect(20,30, 90, 25));
+		button2.setGeometry(QtCore.QRect(20,30, 90, 25))
 		button2.clicked.connect(cancel)
 		
 		horizontalSlider.valueChanged.connect(preview)

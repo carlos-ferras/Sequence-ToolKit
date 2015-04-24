@@ -228,7 +228,7 @@ class classUiMainWindow(object):
 		self.menuOpciones.addAction(self.menuOpciones_de_GenSec.menuAction())
 		self.menuOpciones.addSeparator()
 		self.menuOpciones.addAction(self.actionEjecutar_GenSec)
-		self.menuOpciones.addAction(self.actionEjecutar_Comando)
+		#self.menuOpciones.addAction(self.actionEjecutar_Comando)
 		self.menuOpciones.addAction(self.actionEjecutar_GenRep)		
 		self.menuAyuda.addSeparator()
 		self.menuAyuda.addAction(self.actionAyuda)
@@ -250,7 +250,7 @@ class classUiMainWindow(object):
 		
 		self.Applications_ToolBar= MainWindow.addToolBar(QtGui.QApplication.translate("MainWindow","Applications Bar"))
 		self.Applications_ToolBar.addAction(self.actionEjecutar_GenSec)		
-		self.Applications_ToolBar.addAction(self.actionEjecutar_Comando)
+		#self.Applications_ToolBar.addAction(self.actionEjecutar_Comando)
 		self.Applications_ToolBar.addAction(self.actionEjecutar_GenRep)
 
 		self.retranslateUi(MainWindow)

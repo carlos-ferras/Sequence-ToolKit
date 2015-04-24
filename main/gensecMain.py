@@ -40,7 +40,7 @@ class classGenSec(classTableBase):
 			self.actionDsdsda.triggered.connect(self.previusly)
 			self.actionOrder.triggered.connect(self.orderBySample)
 			self.actionBorrar.triggered.connect(self.delete)
-			self.actionAcerda_de.triggered.connect(partial(about,self.form1,'GenSec',QtGui.QApplication.translate("MainWindow", 'Sequence Generator', None, QtGui.QApplication.UnicodeUTF8),QtGui.QApplication.translate("MainWindow", 'This application generates a xml file with the data used by the LF02 automated luminescence reader to run a measuring sequence.', None, QtGui.QApplication.UnicodeUTF8),'1.0.0',"pixmaps/gensec.png"))
+			self.actionAcerda_de.triggered.connect(partial(about,self.form1,'GenSec',QtGui.QApplication.translate("MainWindow", 'Sequence Generator', None, QtGui.QApplication.UnicodeUTF8),QtGui.QApplication.translate("MainWindow", 'The GenSec generates a xml file (.SLF) with the data used by the LF02 automated luminescence reader to run a measuring sequence.', None, QtGui.QApplication.UnicodeUTF8),'1.0.0',"pixmaps/gensec.png"))
 			self.actionNombre.triggered.connect(self.Nombre)
 			self.actionPropietario.triggered.connect(self.Propietario)
 			self.actionUso_de_Nitr_geno.triggered.connect(self.Nitrogeno)
@@ -270,27 +270,11 @@ class classGenSec(classTableBase):
 		
 		def beforeGenRep(self):
 			if not self.isEmpty():
-				import commands
-				try:
-					a=str(commands.getoutput('$HOME'))
-					b=a.split('/')
-					del b[0]
-					c=b[-1].split()
-					del b[-1]
-					if len(c)>1:
-						d=c[0].split(':')
-						e=d[0]
-					else:
-						e=c[0]
-					userRoot=''
-					for i in b:
-						userRoot+='/'+i
-					userRoot+='/'+e
-					dir=userRoot+'/genSecTmp.slf'
-				
-				except:
-					dir='genSecTmp.slf'
-				
+				if os.sys.platform=='linux' or os.sys.platform=='linux2':
+					dir=os.environ['HOME']+'/.Sequence-ToolKit/'
+				else:
+					dir=os.environ['LOCALAPPDATA']+'\\Sequence-ToolKit\\'
+				dir+='genSecTmp.slf'				
 				self.saveAs(dir)					
 				self.dirToOpen=dir
 		

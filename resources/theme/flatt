@@ -1,0 +1,704 @@
+@font-face {{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 100;
+  src: url(resources/font/Roboto-Thin.ttf);
+}}
+
+@font-face {{
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 100;
+  src: url(resources/font/Roboto-ThinItalic.ttf);
+}}
+
+@font-face {{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 200;
+  src: url(resources/font/Roboto-Light.ttf);
+}}
+
+@font-face {{
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 200;
+  src: url(resources/font/Roboto-LightItalic.ttf);
+}}
+
+
+@font-face {{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  src: url(resources/font/RobotoCondensed-Light.ttf);
+}}
+
+@font-face {{
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 300;
+  src: url(resources/font/RobotoCondensed-LightItalic.ttf);
+}}
+
+@font-face {{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url(resources/font/Roboto-Regular.ttf);
+}}
+
+@font-face {{
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 400;
+  src: url(resources/font/Roboto-RegularItalic.ttf);
+}}
+
+@font-face {{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: url(resources/font/RobotoCondensed-Regular.ttf);
+}}
+
+@font-face {{
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 500;
+  src: url(resources/font/RobotoCondensed-RegularItalic.ttf);
+}}
+
+@font-face {{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 600;
+  src: url(resources/font/Roboto-Medium.ttf);
+}}
+
+@font-face {{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 600;
+  src: url(resources/font/Roboto-MediumItalic.ttf);
+}}
+
+@font-face {{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: url(resources/font/Roboto-Bold.ttf);
+}}
+
+@font-face {{
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 700;
+  src: url(resources/font/Roboto-BoldItalic.ttf);
+}}
+
+@font-face {{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 800;
+  src: url(resources/font/RobotoCondensed-Bold.ttf);
+}}
+
+@font-face {{
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 800;
+  src: url(resources/font/RobotoCondensed-BoldItalic.ttf);
+}}
+
+@font-face {{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 900;
+  src: url(resources/font/Roboto-Black.ttf);
+}}
+
+@font-face {{
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 900;
+  src: url(resources/font/Roboto-BlackItalic.ttf);
+}}
+
+
+*{{
+    font-family: {font_family};
+    font-size: {font_size}px;
+    font-style: {font_style};
+    font-weight: {font_weight};
+}}
+
+QFileDialog {{
+    background: {file_dialog_background};   /*Fondo de las ventanas de abrir guardar y eso*/
+    color: {file_dialog_color}; /*Color del texto */
+}}
+
+QWidget {{
+    background: {widget_background} ;   /* Fondo de las ventanas y de la barra de estado*/
+    color: {widget_color};  /*Color del texto de las ventanas*/
+}}
+
+QMainWindow {{
+    background: {main_window_background};   /*Fondo de la barra detras de las pestannas*/
+}}
+
+QTreeWidget {{
+    show-decoration-selected: 1;
+    background: {tree_widget_background};   /*Fondo del tree*/
+}}
+
+*[spacing="False"] {{
+    padding: 0px ;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}}
+
+QTreeWidget::item:hover {{
+    background: {tree_item_hover_background}; /*Fondo de la casilla en hover*/
+    border-radius: 0;
+}}
+
+QTreeWidget::item:selected:active {{
+    background: {tree_item_selected_background}; /*Fondo de la casilla seleccionada*/
+    color: {tree_item_selected_color};  /*Color texto casilla seleccionada*/
+    border: 0;
+}}
+
+QTreeWidget::item:selected:!active {{
+    background: {tree_item_active_background}; /*Fondo de la casilla cuando esta activa, debe ser la misma k cuando esta seleccionada*/
+    border: 0;
+}}
+
+QHeaderView::section {{
+    background: {header_view_background}; /*Fondo del header*/
+    color: {header_view_color}; /*Texto del header*/
+    font-size: {font_size_plus}px;
+    padding: 8px;
+    border: 0px;
+}}
+
+QHeaderView::section:hover {{
+    background: {header_view_item_hover_background}; /*Fondo de la casilla del header en hover*/
+}}
+
+QTreeWidget QToolButton {{
+    background: {vertical_header_background}; /*Fondo de las casillas de la primera columna*/
+    color: {vertical_header_color};  /*Color del texto en dichas casillas*/
+    font-size: {font_size_plus}px;
+    border: 0;
+    margin:0;
+    padding: 4px
+}}
+
+QTreeWidget QToolButton:hover {{
+    background: {vertical_header_hover_background};  /*Fondo de las casillas de la primera columna en hover*/
+}}
+
+QMenuBar {{
+    background: {menubar_background};   /* Fondo de la barra de menu*/
+    border-top: 1px solid {menubar_border_top_color};    /*Linea k separa a la barra de menu de la de titulo*/
+}}
+
+QMenuBar::item {{
+    background: transparent;
+    color: {menubar_item_color}; /*Color de texto en la barra de menu*/
+    padding: 6px 8px;
+}}
+
+QMenuBar::item:selected {{
+    background: {menubar_item_selected_background}; /*Fondo de la barra de menu en hover*/
+    color: {menubar_item_selected_color};   /*El texto en hover de la barra de menu*/
+}}
+
+QMenuBar::item:pressed {{
+    background: {menubar_item_pressed_background}; /*Fondo de la barra de menu en el menu seleccionado*/
+    color: {menubar_item_pressed_color};   /*Texto del menu seleccionado en la barra de menu*/
+}}
+
+QMenu {{
+    background-color: {menu_background};    /*Fondo del panel de cada menu*/
+    color: {menu_color};  /*Color del texto en los paneles de los menu*/
+}}
+
+QMenu::item {{
+    background-color: transparent;
+}}
+
+QMenu::item:selected {{
+    background-color: {menu_item_selected_background};   /*Fondo del submenu en hover*/
+    color: {menu_item_selected_color};
+}}
+
+QMenu::item:disabled{{
+    text-decoration: line-through;
+}}
+
+QToolBar {{
+    background-color: {tool_bar_background};
+    border: 0;
+}}
+
+QToolButton {{
+    background-color: transparent;
+    border-radius: 0px;
+}}
+
+QToolButton:hover {{
+    border: 3px solid transparent;
+}}
+
+QToolButton:pressed {{
+    border: 4px solid transparent;
+}}
+
+QToolBar QToolButton{{
+    margin-right: 10px;
+    margin-top: 3px;
+    margin-bottom: 2px;
+}}
+
+QPushButton  {{
+    border-radius: 0px;
+    padding: 4px 14px;
+    text-align: left;
+    background: {button_background}; /*Fondo de los botones*/
+    border: 0;   /*Borde de los botones*/
+    text-transform: uppercase;
+    height: 32px;
+}}
+
+QPushButton:hover {{
+    background: {button_hover_background}; /*Fondo del boton en hover*/
+    border: 0;   /*Borde del boton en hover*/
+    color: {button_hover_color};   /*Color del texto del boton en hover*/
+}}
+
+QPushButton:pressed {{
+    background: {button_pressed_background}; /*Fondo del boton en el momento en k se presiona*/
+    border: 0;   /*Borde del boton en el momento k se presiona*/
+    color: {button_pressed_color};   /*Texto del boton en el momento k se presiona*/
+}}
+
+QComboBox {{
+    border-radius: 0px;
+    background: {combobox_background}; /*Fondo del combobox y de sus items en hover*/
+    border: 1px solid {combobox_border_color};   /*Borde del combobox*/
+}}
+
+QComboBox:editable {{
+    background: {combobox_font_select_background}; /*Fondo del combobox para escoger la fuente*/
+    border: 1px solid {combobox_font_select_border_color};   /*borde del combobox para escoger la fuente*/
+}}
+
+QComboBox::drop-down {{
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    border-left: 1px solid {combobox_line_midel_color};/*ralla k separa el combobox de la flecha para escoger*/
+    border-radius: 0px;
+}}
+
+QComboBox::down-arrow {{
+    width: 10px;
+    image: url(resources/img/style/down.svg);
+}}
+
+QComboBox::down-arrow:hover {{
+    image: url(resources/img/style/down_hover.svg);
+}}
+
+QComboBox QAbstractItemView {{
+    background: {combobox_panel_background};  /*Fondo del panel del combobox*/
+    selection-background-color: {combobox_font_select_item_hover_background}; /*Fondo de cada item en el panel en hover para el combobox de la fuente*/
+    selection-color: {combobox_font_select_item_hover_color}; /*Color del item del combobox de las fuentes en hover*/
+    border-radius: 0px;
+}}
+
+QSpinBox,QDoubleSpinBox {{
+    padding-right: 15px;
+    background: {spinbox_background}; /*Fondo de los spin*/
+    border: 1px solid {spinbox_border_color};   /*borde de los spin*/
+    border-radius: 0px;
+}}
+
+QSpinBox::up-button, QDoubleSpinBox::up-button {{
+    subcontrol-origin: border;
+    subcontrol-position: top right;
+    width: 10px;
+    margin-right: 4px;
+    image: url(resources/img/style/up.svg) 1;
+    border-width: 1px;
+}}
+
+QSpinBox::down-button, QDoubleSpinBox::down-button {{
+    subcontrol-origin: border;
+    subcontrol-position: bottom right;
+    width: 10px;
+    margin-right: 4px;
+    image: url(resources/img/style/down.svg) 1;
+    border-width: 1px;
+    border-top-width: 0;
+}}
+
+QSpinBox::up-button:hover , QDoubleSpinBox::up-button:hover  {{
+    subcontrol-origin: border;
+    subcontrol-position: top right;
+    width: 10px;
+    margin-right: 4px;
+    image: url(resources/img/style/up_hover.svg) 1;
+    border-width: 1px;
+}}
+
+QSpinBox::down-button:hover , QDoubleSpinBox::down-button:hover {{
+    subcontrol-origin: border;
+    subcontrol-position: bottom right;
+    width: 10px;
+    margin-right: 4px;
+    image: url(resources/img/style/down_hover.svg) 1;
+    border-width: 1px;
+    border-top-width: 0;
+}}
+
+QCheckBox {{
+    spacing: 5px;
+}}
+
+QListWidget::indicator:unchecked,QCheckBox::indicator:unchecked {{
+    image: url(resources/img/style/checkbox_unchecked.svg)
+}}
+
+QListWidget::indicator:unchecked:hover, QCheckBox::indicator:unchecked:hover {{
+    image: url(resources/img/style/checkbox_unchecked_hover.svg)
+}}
+
+QListWidget::indicator:unchecked:pressed , QCheckBox::indicator:unchecked:pressed {{
+    image: url(resources/img/style/checkbox_unchecked.svg)
+}}
+
+QListWidget::indicator:checked , QCheckBox::indicator:checked {{
+    image: url(resources/img/style/checkbox_checked.svg)
+}}
+
+QListWidget::indicator:checked:hover , QCheckBox::indicator:checked:hover {{
+    image: url(resources/img/style/checkbox_checked_hover.svg)
+}}
+
+QListWidget::indicator:checked:pressed , QCheckBox::indicator:checked:pressed {{
+    image: url(resources/img/style/checkbox_checked.svg)
+}}
+
+QRadioButton {{
+    spacing: 5px;
+}}
+
+QRadioButton::indicator::unchecked {{
+    image: url(resources/img/style/radiobutton_unchecked.svg)
+}}
+
+QRadioButton::indicator:unchecked:hover {{
+    image: url(resources/img/style/radiobutton_unchecked_hover.svg)
+}}
+
+QRadioButton::indicator:unchecked:pressed {{
+    image: url(resources/img/style/radiobutton_unchecked.svg)
+}}
+
+QRadioButton::indicator::checked {{
+    image: url(resources/img/style/radiobutton_checked.svg)
+}}
+
+QRadioButton::indicator:checked:hover {{
+    image: url(resources/img/style/radiobutton_checked_hover.svg)
+}}
+
+QRadioButton::indicator:checked:pressed {{
+    image: url(resources/img/style/radiobutton_checked.svg)
+}}
+
+QTextEdit{{
+    background: {text_edit_background};  /*Fondo de los textEdit, hay uno en el about y otro en el preview, debe ser el mismo k el de las ventanas*/
+}}
+
+QLineEdit{{
+    border-radius: 0px;
+    background: {line_edit_background}; /*Fondo de los lineedit*/
+    border: 1px solid {line_edit_border_color};   /*borde de los lineedit*/
+    height: 28px;
+}}
+
+#setup #group,
+#setup #group_1,
+#setup #group_2,
+#setup #group_3,
+#setup #group_4,
+#setup #group_5,
+#setup #group_6,
+#setup #group_7 {{
+    padding: 0px;
+    border: 0;
+}}
+
+QTabBar {{
+    background: {tabbar_background};
+}}
+
+QTabBar::tab {{
+    background: {tabbar_header_background}; /*Fondo del encabezado de los tab*/
+    border-top: 1px solid {tabbar_header_border_top_color};   /*Borde superior del encabezado de los tabs*/
+    border-right: 1px solid {tabbar_header_border_right_color}; /*Borde derecho del encabezado de los tabs*/
+    border-radius: 0px;
+    min-width: 8ex;
+    padding: 2px;
+}}
+
+QTabWidget::pane {{
+}}
+
+QTabWidget::tab-bar {{
+}}
+
+QTabBar::close-button {{
+    image: url(resources/img/style/close.svg);
+}}
+
+QTabBar::close-button:hover {{
+    image: url(resources/img/style/close_hover.svg);
+}}
+
+QTabBar QToolButton {{ /* the scroll buttons are tool buttons */
+    background: {tabbar_tool_buttons_background};
+    border: 2px solid transparent;
+}}
+
+QTabBar::scroller {{ /* the width of the scroll buttons */
+    width: 25px;
+}}
+
+QTabBar::tear {{
+    background: {tabbar_header_selected_border_bottom_color};
+    width: 5px;
+}}
+
+QTabBar QToolButton::right-arrow {{ /* the arrow mark in the tool buttons */
+    image: url(resources/img/style/right.svg);
+}}
+
+QTabBar QToolButton::right-arrow:hover {{ /* the arrow mark in the tool buttons */
+    image: url(resources/img/style/right_hover.svg);
+}}
+
+QTabBar QToolButton::left-arrow {{
+    image: url(resources/img/style/left.svg);
+}}
+
+QTabBar QToolButton::left-arrow:hover  {{
+    image: url(resources/img/style/left_hover.svg);
+}}
+
+QTabBar::tab:selected {{
+    background: {tabbar_header_selected_background}; /*borde de abajo del tab seleccionado*/
+    border-bottom: 3px solid {tabbar_header_selected_border_bottom_color}; /*borde de abajo del tab seleccionado*/
+}}
+
+QTabBar::tab:hover {{
+
+}}
+
+QScrollBar:vertical {{
+    border-left:1px solid {scrollbar_space_border_color};
+    background-color: {scrollbar_space_background};
+    width: 15px;
+    margin: 21px 0 21px 0;
+}}
+
+QScrollBar::handle:vertical {{
+    background-color: {scrollbar_background};
+}}
+
+QScrollBar::add-line:vertical {{
+    border: 0px;
+    background-color: {scrollbar_arrow_background};
+    border-left: 1px solid {scrollbar_space_border_color};
+    height: 20px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}}
+
+QScrollBar::sub-line:vertical {{
+    border: 0px;
+    background-color: {scrollbar_arrow_background};
+    border-left: 1px solid {scrollbar_space_border_color};
+    height: 20px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}}
+
+QScrollBar::up-arrow:vertical {{
+    width: 10px;
+    image: url(resources/img/style/up.svg);
+}}
+
+QScrollBar::up-arrow:vertical:hover {{
+    width: 10px;
+    image: url(resources/img/style/up_hover.svg);
+}}
+
+QScrollBar::down-arrow:vertical {{
+    width: 10px;
+    image: url(resources/img/style/down.svg);
+}}
+
+QScrollBar::down-arrow:vertical:hover {{
+    width: 10px;
+    image: url(resources/img/style/down_hover.svg);
+}}
+
+QScrollBar:horizontal {{
+    border-top: 1px solid {scrollbar_space_border_color};
+    background-color: {scrollbar_space_background};
+    height: 15px;
+    margin: 0px 21px 0 21px;
+}}
+
+QScrollBar::handle:horizontal {{
+    background-color: {scrollbar_background};
+}}
+
+QScrollBar::add-line:horizontal {{
+    border: 0px;
+    background-color: {scrollbar_arrow_background};
+    border-top: 1px solid {scrollbar_space_border_color};
+    width: 20px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+}}
+
+QScrollBar::sub-line:horizontal {{
+    border: 0px;
+    background-color: {scrollbar_arrow_background};
+    border-top:1px solid {scrollbar_space_border_color};
+    width: 20px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;
+}}
+
+QScrollBar:left-arrow:horizontal {{
+    height: 10px;
+    image: url(resources/img/style/left.svg);
+}}
+
+QScrollBar:left-arrow:horizontal:hover {{
+    height: 10px;
+    image: url(resources/img/style/left_hover.svg);
+}}
+
+QScrollBar::right-arrow:horizontal {{
+    height: 10px;
+    image: url(resources/img/style/right.svg);
+}}
+
+QScrollBar::right-arrow:horizontal:hover {{
+    height: 10px;
+    image: url(resources/img/style/right_hover.svg);
+}}
+
+#about_buttons_area {{
+    background: {about_buttons_area_background};
+}}
+
+#push_button_license,
+#push_button_contact,
+#push_button_credits {{
+    text-align: center;
+}}
+
+#animation_handler {{
+    background: {control_background};
+    image: url(resources/img/style/drag.svg);
+    border: 0;
+}}
+
+#signal_low_label,
+#signal_high_label,
+#signal_label {{
+    color: {plot_signal_area_color};
+}}
+
+#background_low_label,
+#background_high_label,
+#background_label {{
+    color: {plot_background_area_color};
+}}
+
+#stk_left_panel {{
+    background: {stk_left_panel_background};
+}}
+
+#stk_left_panel #push_button_open_file,
+#stk_left_panel #push_button_gensec,
+#stk_left_panel #push_button_genrep,
+#stk_left_panel #push_button_genvis {{
+    background: transparent;
+    border-right: 5px solid transparent;
+}}
+
+#stk_left_panel #push_button_open_file:hover,
+#stk_left_panel #push_button_gensec:hover,
+#stk_left_panel #push_button_genrep:hover,
+#stk_left_panel #push_button_genvis:hover {{
+    border-right: 5px solid {stk_buttons_hover_border_color};
+}}
+
+#stk_left_panel #push_button_open_file:pressed,
+#stk_left_panel #push_button_gensec:pressed,
+#stk_left_panel #push_button_genrep:pressed,
+#stk_left_panel #push_button_genvis:pressed {{
+    border-right: 5px solid {stk_buttons_pressed_border_color};
+}}
+
+#stk_left_panel #push_button_settings,
+#stk_left_panel #push_button_help,
+#stk_left_panel #push_button_about {{
+    background: transparent;
+    border-bottom: 3px solid transparent;
+    text-align: center;
+}}
+
+#stk_left_panel #push_button_settings:hover,
+#stk_left_panel #push_button_help:hover,
+#stk_left_panel #push_button_about:hover {{
+    border-bottom: 3px solid {stk_buttons_hover_border_color};
+}}
+
+#stk_left_panel #push_button_settings:pressed,
+#stk_left_panel #push_button_help:pressed,
+#stk_left_panel #push_button_about:pressed {{
+    border-bottom: 3px solid {stk_buttons_pressed_border_color};
+}}
+
+#stk_right_area {{
+    border-top: 2px solid {stk_right_area_border_color};
+    border-bottom: 2px solid {stk_right_area_border_color};
+    border-right: 2px solid {stk_right_area_border_color};
+}}
+
+#stk_right_area QLabel {{
+    color: {stk_right_area_label_color};
+}}
+
+#background_image {{
+    background: url(resources/img/background/bg_boxes.svg);
+    background-position: bottom;
+    background-repeat: no-repeat
+
+}}
+
+#scroll_area #line {{
+    color: {stk_right_area_label_color}
+}}

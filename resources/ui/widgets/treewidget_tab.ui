@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>tree_widget_tab</class>
+ <widget class="QWidget" name="tree_widget_tab">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>662</width>
+    <height>386</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QTreeWidget" name="tree_widget">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="lineWidth">
+      <number>0</number>
+     </property>
+     <property name="tabKeyNavigation">
+      <bool>true</bool>
+     </property>
+     <property name="showDropIndicator" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="defaultDropAction">
+      <enum>Qt::MoveAction</enum>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::ExtendedSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectItems</enum>
+     </property>
+     <property name="horizontalScrollMode">
+      <enum>QAbstractItemView::ScrollPerItem</enum>
+     </property>
+     <property name="indentation">
+      <number>0</number>
+     </property>
+     <property name="uniformRowHeights">
+      <bool>true</bool>
+     </property>
+     <property name="itemsExpandable">
+      <bool>false</bool>
+     </property>
+     <property name="animated">
+      <bool>true</bool>
+     </property>
+     <property name="expandsOnDoubleClick">
+      <bool>false</bool>
+     </property>
+     <attribute name="headerDefaultSectionSize">
+      <number>125</number>
+     </attribute>
+     <attribute name="headerHighlightSections">
+      <bool>true</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Group</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Sample</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+  </layout>
+  <action name="action_copy">
+   <property name="icon">
+    <iconset resource="../../img/img.qrc">
+     <normaloff>:/resources/img/icons/copy.svg</normaloff>:/resources/img/icons/copy.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Copy</string>
+   </property>
+   <property name="statusTip">
+    <string>Copy the current selection content to the clipboard.</string>
+   </property>
+  </action>
+  <action name="action_paste">
+   <property name="icon">
+    <iconset resource="../../img/img.qrc">
+     <normaloff>:/resources/img/icons/paste.svg</normaloff>:/resources/img/icons/paste.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Paste</string>
+   </property>
+   <property name="statusTip">
+    <string>Paste the clipboard content into the current selection.</string>
+   </property>
+  </action>
+  <action name="action_cut">
+   <property name="icon">
+    <iconset resource="../../img/img.qrc">
+     <normaloff>:/resources/img/icons/cut.svg</normaloff>:/resources/img/icons/cut.svg</iconset>
+   </property>
+   <property name="text">
+    <string>C&amp;ut</string>
+   </property>
+   <property name="statusTip">
+    <string>Cut the current selection content to the clipboard.</string>
+   </property>
+  </action>
+  <action name="action_delete">
+   <property name="icon">
+    <iconset resource="../../img/img.qrc">
+     <normaloff>:/resources/img/icons/delete.svg</normaloff>:/resources/img/icons/delete.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Delete</string>
+   </property>
+   <property name="statusTip">
+    <string>Remove the current selection.</string>
+   </property>
+  </action>
+  <action name="action_merge">
+   <property name="icon">
+    <iconset resource="../../img/img.qrc">
+     <normaloff>:/resources/img/icons/merge.svg</normaloff>:/resources/img/icons/merge.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Merge</string>
+   </property>
+   <property name="statusTip">
+    <string>Merge several commands in the same process order.</string>
+   </property>
+  </action>
+  <action name="action_split">
+   <property name="icon">
+    <iconset resource="../../img/img.qrc">
+     <normaloff>:/resources/img/icons/split.svg</normaloff>:/resources/img/icons/split.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Split</string>
+   </property>
+   <property name="statusTip">
+    <string>Split the selected merges.</string>
+   </property>
+  </action>
+  <action name="action_select_row">
+   <property name="icon">
+    <iconset resource="../../img/img.qrc">
+     <normaloff>:/resources/img/icons/select_row.svg</normaloff>:/resources/img/icons/select_row.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Select row</string>
+   </property>
+  </action>
+  <action name="action_group">
+   <property name="icon">
+    <iconset resource="../../img/img.qrc">
+     <normaloff>:/resources/img/icons/group.svg</normaloff>:/resources/img/icons/group.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Group</string>
+   </property>
+   <property name="toolTip">
+    <string>Group</string>
+   </property>
+  </action>
+  <action name="action_ungroup">
+   <property name="icon">
+    <iconset resource="../../img/img.qrc">
+     <normaloff>:/resources/img/icons/ungroup.svg</normaloff>:/resources/img/icons/ungroup.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Ungroup</string>
+   </property>
+   <property name="toolTip">
+    <string>Ungroup</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="../../img/img.qrc"/>
+ </resources>
+ <connections/>
+</ui>

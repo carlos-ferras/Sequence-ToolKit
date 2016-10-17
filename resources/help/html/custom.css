@@ -1,0 +1,22 @@
+a,
+a:hover,
+a:active,
+a:focus,
+button,
+button:hover,
+button:active,
+button:focus,
+input,
+input:active,
+input:hover,
+input:focus{
+    outline: none;
+}
+
+.f-img-brand{
+    height: 30px;
+}
+
+.f-dark-font-color {
+    color: #263238 !important;
+}

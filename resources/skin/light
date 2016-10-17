@@ -1,0 +1,150 @@
+
+file_dialog_background = '#ffffff'
+
+file_dialog_color = '#333333'
+
+widget_background = '#fafafa'
+
+widget_color = '#3e3e3e'
+
+main_window_background = '#fafafa'
+
+tree_widget_background = '#fafafa'
+
+tree_widget_item_background = '#ffffff'
+
+tree_widget_item_alternate_background = '#fafafa'
+
+tree_item_hover_background = '#ececec'
+
+tree_item_selected_background = '#d1d1d1'
+
+tree_item_selected_color = '#3e3e3e'
+
+tree_item_active_background = '#d1d1d1'
+
+header_view_background = '#eeeeee'
+
+header_view_color = '#3e3e3e'
+
+header_view_item_hover_background = '#dbdbdb'
+
+vertical_header_background = '#eeeeee'
+
+vertical_header_color = '#3e3e3e'
+
+vertical_header_hover_background = '#dbdbdb'
+
+menubar_background = '#fafafa'
+
+menubar_border_top_color = '#d1d1d1'
+
+menubar_item_color = '#3a3a3a'
+
+menubar_item_selected_background = '#eeeeee'
+
+menubar_item_selected_color = '#2e2e2e'
+
+menubar_item_pressed_background = '#eeeeee'
+
+menubar_item_pressed_color = '#2e2e2e'
+
+menu_background = '#fafafa'
+
+menu_color = '#3a3a3a'
+
+menu_item_selected_background = '#eeeeee'
+
+menu_item_selected_color = '#2e2e2e'
+
+tool_bar_background = '#fafafa'
+
+button_background = '#fafafa'
+
+button_hover_background = '#ececec'
+
+button_hover_color = '#3e3e3e'
+
+button_pressed_background = '#d1d1d1'
+
+button_pressed_color = '#3e3e3e'
+
+combobox_background = '#ffffff'
+
+combobox_border_color = '#d1d1d1'
+
+combobox_font_select_background = '#ffffff'
+
+combobox_font_select_border_color = '#d1d1d1'
+
+combobox_line_midel_color = '#d1d1d1'
+
+combobox_panel_background = '#ffffff'
+
+combobox_font_select_item_hover_background = '#ececec'
+
+combobox_font_select_item_hover_color = '#3e3e3e'
+
+spinbox_background = '#ffffff'
+
+spinbox_border_color = '#d1d1d1'
+
+text_edit_background = '#ffffff'
+
+line_edit_background = '#ffffff'
+
+line_edit_border_color = '#d1d1d1'
+
+tabbar_background = '#fafafa'
+
+tabbar_header_background = '#d3d3d3'
+
+tabbar_tool_buttons_background = '#ffffff'
+
+tabbar_header_border_top_color = '#eeeeee'
+
+tabbar_header_border_right_color = '#eeeeee'
+
+tabbar_header_selected_background = '#ffffff'
+
+tabbar_header_selected_border_bottom_color = '#3e3e3e'
+
+scrollbar_space_border_color = '#d1d1d1'
+
+scrollbar_space_background = '#ffffff'
+
+scrollbar_background = '#dbdbdb'
+
+scrollbar_arrow_background = '#ffffff'
+
+control_background = '#dedede'
+
+about_buttons_area_background = '#aaaaaa'
+
+plot_main_color = '#263238'
+
+plot_signal_area_color = '#37953b'
+
+plot_background_area_color = '#00619a'
+
+plot_color = '#3e3e3e'
+
+plot_background = '#ffffff'
+
+plot_span_selector = '#c0c0c0'
+
+plot_tool_bar_background = '#dedede'
+
+plot_tooltip_color = '#ffffff'
+
+plot_tooltip_background = '#444444'
+
+stk_left_panel_background = '#f0f0f0'
+
+stk_buttons_hover_border_color = '#828282'
+
+stk_buttons_pressed_border_color = '#a5a5a5'
+
+stk_right_area_border_color = '#f0f0f0'
+
+stk_right_area_label_color = '#a0a0a0'

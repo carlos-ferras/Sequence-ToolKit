@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QtHelpProject version="1.0">
+    <namespace>com.sequence-toolkit.help-assistant</namespace>
+    <virtualFolder>doc</virtualFolder>
+    <filterSection>
+    	<toc>
+    		<section title="Sequence-ToolKit" ref="./html/stk.html">
+        		<section title="GenSec" ref="./html/gensec.html">
+        			
+        		</section>
+        		<section title="GenRep" ref="./html/genrep.html">
+        			
+        		</section>
+        		<section title="GenVis" ref="./html/genvis.html">
+        			
+        		</section>
+        	</section>
+    	</toc>
+        <keywords>
+        	<keyword name="gensec" ref="./html/gensec.html"/>
+        </keywords>
+        <files>
+        	<file>lib/css/bootstrap.css</file>
+        	<file>lib/css/bootstrap-material-design.css</file>
+        	<file>lib/css/material_icons.css</file>
+        	<file>lib/css/roboto_family.css</file>
+        	<file>lib/fonts/material-icons.woff</file>
+        	<file>lib/fonts/roboto/hMqPNLsu_dywMa4C_DEpY4bN6UDyHWBl620a-IRfuBk.woff</file>
+        	<file>lib/fonts/roboto/N4duVc9C58uwPiY8_59FzyqHEX2q--o2so14pIEl08w.woff</file>
+        	<file>lib/fonts/roboto/N4duVc9C58uwPiY8_59FzzqR_3kx9_hJXbbyU8S6IN0.woff</file>
+        	<file>html/custom.css</file>
+        	<file>html/stk.html</file>
+        	<file>html/gensec.html</file>
+        	<file>html/genrep.html</file>
+        	<file>html/genvis.html</file>
+        	<file>img/sequence_toolkit.svg</file>
+        	<file>img/gensec.svg</file>
+        	<file>img/genrep.svg</file>
+        	<file>img/genvis.svg</file>
+        	<file>img/CEADEN.svg</file>
+        	<file>img/UCI.svg</file>
+        	<file>img/CESOL.svg</file>
+        </files>
+    </filterSection>
+</QtHelpProject>

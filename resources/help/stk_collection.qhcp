@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<QHelpCollectionProject version="1.0">
+	<assistant>
+        <title>Sequence-ToolKit Assistant</title>
+        <applicationIcon>img/assistant.svg</applicationIcon>
+        <cacheDirectory>stk_assistant</cacheDirectory>
+		<homePage>qthelp://com.sequence-toolkit.help-assistant/doc/html/stk.html</homePage>
+        <startPage>qthelp://com.sequence-toolkit.help-assistant/doc/html/stk.html</startPage>
+        <aboutMenuText>
+            <text>About Sequence-ToolKit Assistant</text>
+        </aboutMenuText>
+        <aboutDialog>
+            <file>about</file>
+            <icon>img/assistant.svg</icon>
+        </aboutDialog>
+        <enableDocumentationManager>false</enableDocumentationManager>
+        <enableAddressBar>false</enableAddressBar>
+        <enableFilterFunctionality>false</enableFilterFunctionality>
+    </assistant>
+    <docFiles>
+	    <generate>
+	        <file>
+	            <input>doc.qhp</input>
+	            <output>doc.qch</output>
+	        </file>
+	    </generate>
+	    <register>
+	        <file>doc.qch</file>
+	    </register>
+	</docFiles>
+</QHelpCollectionProject>

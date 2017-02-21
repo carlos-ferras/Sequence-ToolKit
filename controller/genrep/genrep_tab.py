@@ -784,6 +784,16 @@ class GenRepTab(TreeWidgetTab):
         hs = self.tree_widget.horizontalScrollBar()
         hs.setValue(hs.maximum())
         self.column_count += 1
+
+        for i in range(self.tree_widget.topLevelItemCount()):
+            item = self.tree_widget.topLevelItem(i)
+            if i % 2 == 0:
+                color = self.getConfiguration('tree_widget_item_background', 'COMMON')
+            else:
+                color = self.getConfiguration('tree_widget_item_alternate_background',
+                                              'COMMON')
+            item.setBackground(self.column_count - 1, QtGui.QColor(color))
+
         return self.column_count
 
     def selectRow(self, index):

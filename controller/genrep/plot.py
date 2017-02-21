@@ -6,7 +6,6 @@ from __future__ import unicode_literals
 
 from PyQt5 import QtGui, QtCore, QtWidgets
 import pyqtgraph as pg
-import pyqtgraph.exporters
 import numpy as np
 from pyqtgraph.Point import Point
 from functools import partial
@@ -179,7 +178,8 @@ class PlotWidget(pg.GraphicsView):
                 data = self.signal_plot.listDataItems()
                 if data:
                     xdata, ydata = data[0].getData()
-                    if tuple(xdata) == tuple(current_xdata):
+                    if tuple(xdata) == tuple(current_xdata) and \
+                                    tuple(ydata) == tuple(current_ydata):
                         return
             self.updatePlot(current_xdata, current_ydata, self.signal_plot)
 
@@ -206,7 +206,8 @@ class PlotWidget(pg.GraphicsView):
                 data = self.background_plot.listDataItems()
                 if data:
                     xdata, ydata = data[0].getData()
-                    if tuple(xdata) == tuple(current_xdata):
+                    if tuple(xdata) == tuple(current_xdata) and \
+                                    tuple(ydata) == tuple(current_ydata):
                         return
             self.updatePlot(current_xdata, current_ydata, self.background_plot)
 

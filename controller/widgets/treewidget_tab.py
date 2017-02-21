@@ -183,11 +183,16 @@ class TreeWidgetTab(QtWidgets.QWidget, Ui_tree_widget_tab):
         before = self.getConfiguration('widget_color', 'COMMON')
         after = self.getConfiguration('widget_color', 'COMMON')
 
+
         for row in table:
             if current_row > last_row:
-                self.addGroup()
+                self.addRow()
             self.setValue(current_row, 1, row[0])
+            current_column = 2
             for command_set in row[1]:
+                if not command_set:
+                    current_column += 1
+                    continue
                 if len(command_set) > 1:
                     process_order_id = 0
                     in_merge = []
@@ -195,34 +200,9 @@ class TreeWidgetTab(QtWidgets.QWidget, Ui_tree_widget_tab):
                     before = after
                     after = color
                 for command in command_set:
-                    if (not self.sampleExist(int(row[0]))) or (command['id'] == 0):
-                        current_column = command['column']
-                    else:
-                        current_column = -1
-                        i = self.sampleExist(int(row[0])) - 1
-                        item = self.tree_widget.topLevelItem(i)
-                        for column in range(self.column_count + 1)[2:]:
-                            data = item.text(column)
-                            if data == '' and not (column in self.external_irradiation):
-                                if len(list(
-                                        filter(lambda n: n < int(command['column']),
-                                               self.external_irradiation))
-                                ) > 0:
-                                    if column > max(
-                                            filter(lambda n: n < int(command['column']),
-                                                   self.external_irradiation)
-                                    ):
-                                        current_column = column
-                                        break
-                                else:
-                                    current_column = column
-                                    break
-                        if current_column == -1:
-                            current_column = self.column_count
                     if current_column >= self.column_count:
-                        self.addComand()
+                        self.addColumn()
                     id_ = command['id']
-                    del command['column']
                     status = command['status']
                     if id_ == 0 and current_row == 0:
                         self.setValue(current_row, current_column, 'External Irradiation, ' +
@@ -255,7 +235,7 @@ class TreeWidgetTab(QtWidgets.QWidget, Ui_tree_widget_tab):
                     elif id_ == 9:
                         self.setValue(current_row, current_column, 'Pause, ' + str(command['time']) + 's')
 
-                    if id_ != 0 or (id_ == 0 and current_row == 0):
+                    if (id_ != 0 or (id_ == 0 and current_row == 0)) and id_!=-1:
                         self.process_data[str(current_row) + ',' + str(current_column)] = command
                         self.setIcon(current_row, current_column, status)
 
@@ -267,7 +247,7 @@ class TreeWidgetTab(QtWidgets.QWidget, Ui_tree_widget_tab):
                             process_order_id = self.process_data[str(current_row) + ',' + str(current_column)]['process_order_id']
                         else:
                             self.process_data[str(current_row) + ',' + str(current_column)]['process_order_id'] = process_order_id
-
+                    current_column += 1
                 if len(command_set) > 1:
                     self.in_merge.append(in_merge)
             current_row += 1

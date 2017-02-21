@@ -50,90 +50,90 @@ class ProcessOrder(TagBase):
 
 
 class Process(TagBase):
-    def __init__(self, id_, parameters, data, column):
+    def __init__(self, id_, parameters, data):
         self.parameters = parameters
 
         self.xml = Document()
         self.process = self.xml.createElement("process_id")
-        self.process.setAttribute("column", str(column))
         self.process.setAttribute("id", str(id_))
 
-        self.param = self.xml.createElement("param")
-        self.info = self.xml.createElement("info")
-        self.data = self.xml.createElement("data")
+        if self.parameters is not None:
+            self.param = self.xml.createElement("param")
+            self.info = self.xml.createElement("info")
+            self.data = self.xml.createElement("data")
 
-        self.process.appendChild(self.param)
-        self.process.appendChild(self.info)
-        self.process.appendChild(self.data)
+            self.process.appendChild(self.param)
+            self.process.appendChild(self.info)
+            self.process.appendChild(self.data)
 
-        if id_ in [3, 4, 5, 6, 8]:
-            self.light_source = self.xml.createElement("light_source")
-            self.setTextNode(self.light_source, 'light_source')
+            if id_ in [3, 4, 5, 6, 8]:
+                self.light_source = self.xml.createElement("light_source")
+                self.setTextNode(self.light_source, 'light_source')
 
-            self.start_optical_power = self.xml.createElement("start_optical_power")
-            self.setTextNode(self.start_optical_power, 'start_optical_power')
-        if id_ == 5:
-            self.end_optical_power = self.xml.createElement("end_optical_power")
-            self.setTextNode(self.end_optical_power, 'end_optical_power')
-        if id_ in [0, 1, 3, 4, 5, 6, 8, 9]:
-            self.time = self.xml.createElement("time")
-            self.setTextNode(self.time, 'time')
-        if id_ in [3, 4]:
-            self.datapoints1 = self.xml.createElement("datapoints1")
-            self.setTextNode(self.datapoints1, 'datapoints1')
-        if id_ in [2, 3, 4, 5, 6]:
-            self.datapoints2 = self.xml.createElement("datapoints2")
-            self.setTextNode(self.datapoints2, 'datapoints2')
-        if id_ in [3, 4]:
-            self.datapoints3 = self.xml.createElement("datapoints3")
-            self.setTextNode(self.datapoints3, 'datapoints3')
-        if id_ == 4:
-            self.number_of_scans = self.xml.createElement("number_of_scans")
-            self.setTextNode(self.number_of_scans, 'number_scan')
-        if id_ == 2:
-            self.save_temp = self.xml.createElement("save_temp")
-            self.setTextNode(self.save_temp, 'save_temp')
-        if id_ in [1, 2, 3, 4, 5, 6, 7, 8]:
-            self.heating_rate = self.xml.createElement("heating_rate")
-            self.setTextNode(self.heating_rate, 'heating_rate')
+                self.start_optical_power = self.xml.createElement("start_optical_power")
+                self.setTextNode(self.start_optical_power, 'start_optical_power')
+            if id_ == 5:
+                self.end_optical_power = self.xml.createElement("end_optical_power")
+                self.setTextNode(self.end_optical_power, 'end_optical_power')
+            if id_ in [0, 1, 3, 4, 5, 6, 8, 9]:
+                self.time = self.xml.createElement("time")
+                self.setTextNode(self.time, 'time')
+            if id_ in [3, 4]:
+                self.datapoints1 = self.xml.createElement("datapoints1")
+                self.setTextNode(self.datapoints1, 'datapoints1')
+            if id_ in [2, 3, 4, 5, 6]:
+                self.datapoints2 = self.xml.createElement("datapoints2")
+                self.setTextNode(self.datapoints2, 'datapoints2')
+            if id_ in [3, 4]:
+                self.datapoints3 = self.xml.createElement("datapoints3")
+                self.setTextNode(self.datapoints3, 'datapoints3')
+            if id_ == 4:
+                self.number_of_scans = self.xml.createElement("number_of_scans")
+                self.setTextNode(self.number_of_scans, 'number_scan')
+            if id_ == 2:
+                self.save_temp = self.xml.createElement("save_temp")
+                self.setTextNode(self.save_temp, 'save_temp')
+            if id_ in [1, 2, 3, 4, 5, 6, 7, 8]:
+                self.heating_rate = self.xml.createElement("heating_rate")
+                self.setTextNode(self.heating_rate, 'heating_rate')
 
-            self.final_temp = self.xml.createElement("T1")
-            self.setTextNode(self.final_temp, 'final_temp')
-        if id_ in [0, 1, 2, 3, 4, 5, 6, 7, 8]:
-            self.time_final_temp = self.xml.createElement("tT1")
-            self.setTextNode(self.time_final_temp, 'time_final_temp')
-        if id_ in [1, 3, 4, 5, 6, 8]:
-            self.stabilization = self.xml.createElement("dT1")
-            self.setTextNode(self.stabilization, 'stabilization')
-        if id_ == 6:
-            self.exc_v = self.xml.createElement("ExcV")
-            self.setTextNode(self.exc_v, 'excV')
+                self.final_temp = self.xml.createElement("T1")
+                self.setTextNode(self.final_temp, 'final_temp')
+            if id_ in [0, 1, 2, 3, 4, 5, 6, 7, 8]:
+                self.time_final_temp = self.xml.createElement("tT1")
+                self.setTextNode(self.time_final_temp, 'time_final_temp')
+            if id_ in [1, 3, 4, 5, 6, 8]:
+                self.stabilization = self.xml.createElement("dT1")
+                self.setTextNode(self.stabilization, 'stabilization')
+            if id_ == 6:
+                self.exc_v = self.xml.createElement("ExcV")
+                self.setTextNode(self.exc_v, 'excV')
 
-            self.exc_f = self.xml.createElement("ExcF")
-            self.setTextNode(self.exc_f, 'excF')
+                self.exc_f = self.xml.createElement("ExcF")
+                self.setTextNode(self.exc_f, 'excF')
 
-        self.data_type = self.xml.createElement("data_type")
-        super(Process, self).setTextNode(self.data_type, self.parameters['date_type'])
-        self.info.appendChild(self.data_type)
+            self.data_type = self.xml.createElement("data_type")
+            super(Process, self).setTextNode(self.data_type, self.parameters['date_type'])
+            self.info.appendChild(self.data_type)
 
-        self.comment = self.xml.createElement("comment")
-        super(Process, self).setTextNode(self.comment, self.parameters['comments'])
-        self.info.appendChild(self.comment)
+            self.comment = self.xml.createElement("comment")
+            super(Process, self).setTextNode(self.comment, self.parameters['comments'])
+            self.info.appendChild(self.comment)
 
-        self.curve_1 = self.xml.createElement("curve_1")
-        self.data.appendChild(self.curve_1)
+            self.curve_1 = self.xml.createElement("curve_1")
+            self.data.appendChild(self.curve_1)
 
-        self.curve_2 = self.xml.createElement("curve_2")
-        self.data.appendChild(self.curve_2)
+            self.curve_2 = self.xml.createElement("curve_2")
+            self.data.appendChild(self.curve_2)
 
-        self.curve_3 = self.xml.createElement("curve_3")
-        self.data.appendChild(self.curve_3)
+            self.curve_3 = self.xml.createElement("curve_3")
+            self.data.appendChild(self.curve_3)
 
-        self.time_1 = self.xml.createElement("time_1")
-        self.data.appendChild(self.time_1)
+            self.time_1 = self.xml.createElement("time_1")
+            self.data.appendChild(self.time_1)
 
-        self.time_2 = self.xml.createElement("time_2")
-        self.data.appendChild(self.time_2)
+            self.time_2 = self.xml.createElement("time_2")
+            self.data.appendChild(self.time_2)
 
     def setTextNode(self, tag, key):
         if key in self.parameters:
@@ -214,9 +214,9 @@ class CreateSLF(TagBase):
         self.seq.appendChild(new_sample)
         return new_sample
 
-    def createProcess(self, id_, parameters, data, column):
+    def createProcess(self, id_, parameters, data):
         self.refreshDateMod()
-        process = Process(id_, parameters, data, column).process
+        process = Process(id_, parameters, data).process
         return process
 
     def createProcessOrder(self, sample_id, id_, type_, status, processes):
@@ -318,103 +318,102 @@ class LoadSLF:
         for seq in tree[1][11:]:
             for sample in seq[1]:
                 tuple_ = ['', []]
+                process_order_id = 1
                 for process_order in sample[1]:
                     status = self.getCleanData(process_order[1][0][1])
                     type_ = self.getCleanData(process_order[1][1][1])
-                    process_order_id = int(process_order[2]['number'])
+                    # process_order_id = int(process_order[2]['number'])
 
                     merge = []
                     for process_id in process_order[1][2:]:
                         command = {'status': status}
-
-                        for param in process_id[1][0][1]:
-                            parameter_key = str(param[0]).split('\'')[1]
-                            parameter_value = param[1]
-                            if parameter_value is not None:
-                                if parameter_key == 'T1':
-                                    parameter_key = 'final_temp'
-                                elif parameter_key == 'dT1':
-                                    parameter_key = 'stabilization'
-                                elif parameter_key == 'tT1':
-                                    parameter_key = 'time_final_temp'
-                                elif parameter_key == 'ExcV':
-                                    parameter_key = 'excV'
-                                elif parameter_key == 'ExcF':
-                                    parameter_key = 'excF'
-
-                                if parameter_key == 'stabilization' or \
-                                                    parameter_key == 'excV' or \
-                                                    parameter_key == 'excF' or \
-                                                    parameter_key == 'final_temp' or \
-                                                    parameter_key == 'time_final_temp' or \
-                                                    parameter_key == 'heating_rate' or \
-                                                    parameter_key == 'time':
-                                    parameter_value = float(parameter_value)
-                                elif parameter_key == 'datapoints1' or \
-                                                        parameter_key == 'datapoints2' or \
-                                                        parameter_key == 'datapoints3' or \
-                                                        parameter_key == 'start_optical_power' or \
-                                                        parameter_key == 'end_optical_power' or \
-                                                        parameter_key == 'number_of_scans' or \
-                                                        parameter_key == 'save_temp':
-                                    parameter_value = int(parameter_value)
-
-                                command[parameter_key] = parameter_value
-                                command['time_unit'] = 's'
-
-                        command['date_type'] = self.getCleanData(process_id[1][1][1][0][1])
-                        command['comments'] = self.getCleanData(process_id[1][1][1][1][1])
-
-                        command['curve1'] = self.getCleanData(process_id[1][2][1][0][1])
-                        command['curve2'] = self.getCleanData(process_id[1][2][1][1][1])
-                        command['curve3'] = self.getCleanData(process_id[1][2][1][2][1])
-                        command['time1'] = self.getCleanData(process_id[1][2][1][3][1])
-                        command['time2'] = self.getCleanData(process_id[1][2][1][4][1])
-
                         command['id'] = int(process_id[2]['id'])
-                        command['column'] = int(process_id[2]['column'])
+                        if command['id'] != -1:
+                            for param in process_id[1][0][1]:
+                                parameter_key = str(param[0]).split('\'')[1]
+                                parameter_value = param[1]
+                                if parameter_value is not None:
+                                    if parameter_key == 'T1':
+                                        parameter_key = 'final_temp'
+                                    elif parameter_key == 'dT1':
+                                        parameter_key = 'stabilization'
+                                    elif parameter_key == 'tT1':
+                                        parameter_key = 'time_final_temp'
+                                    elif parameter_key == 'ExcV':
+                                        parameter_key = 'excV'
+                                    elif parameter_key == 'ExcF':
+                                        parameter_key = 'excF'
 
-                        command['process_order_id'] = process_order_id
+                                    if parameter_key == 'stabilization' or \
+                                                        parameter_key == 'excV' or \
+                                                        parameter_key == 'excF' or \
+                                                        parameter_key == 'final_temp' or \
+                                                        parameter_key == 'time_final_temp' or \
+                                                        parameter_key == 'heating_rate' or \
+                                                        parameter_key == 'time':
+                                        parameter_value = float(parameter_value)
+                                    elif parameter_key == 'datapoints1' or \
+                                                            parameter_key == 'datapoints2' or \
+                                                            parameter_key == 'datapoints3' or \
+                                                            parameter_key == 'start_optical_power' or \
+                                                            parameter_key == 'end_optical_power' or \
+                                                            parameter_key == 'number_of_scans' or \
+                                                            parameter_key == 'save_temp':
+                                        parameter_value = int(parameter_value)
 
-                        if command['id'] == 1:
-                            command['source'] = 'Beta'
-                        if command['id'] == 0:
-                            command['source'] = 'External'
-                        if command['id'] == 3 or command['id'] == 4:
-                            command['channels'] = command['datapoints1'] + \
-                                                  command['datapoints2'] + \
-                                                  command['datapoints3']
-                            try:
-                                command['timePerChannel'] = float(command['time']) / float(command['channels'])
-                            except:
-                                command['timePerChannel'] = 0
-                        if command['id'] == 4:
-                            try:
-                                command['number_scan'] = command['number_of_scans']
-                            except:
-                                command['number_scan'] = 0
-                        if command['id'] == 5:
-                            try:
-                                command['timePerChannel'] = float(command['time']) / float(command['datapoints2'])
-                            except:
-                                command['timePerChannel'] = 0
-                        if command['id'] == 6:
-                            command['record_during'] = 0
-                            command['light_co_stimulation'] = 0
-                            if 'datapoints2' in command:
-                                command['record_during'] = 1
-                            if 'light_source' in command:
-                                command['light_co_stimulation'] = 1
-                            try:
-                                command['timePerChannel'] = float(command['time']) / float(command['datapoints2'])
-                            except:
-                                command['timePerChannel'] = 0
-                        if command['id'] == 2:
-                            try:
-                                command['timePerChannel'] = float(command['final_temp']) / float(command['heating_rate']) + float(command['time_final_temp'])
-                            except:
-                                command['timePerChannel'] = 0
+                                    command[parameter_key] = parameter_value
+                                    command['time_unit'] = 's'
 
+                            command['date_type'] = self.getCleanData(process_id[1][1][1][0][1])
+                            command['comments'] = self.getCleanData(process_id[1][1][1][1][1])
+
+                            command['curve1'] = self.getCleanData(process_id[1][2][1][0][1])
+                            command['curve2'] = self.getCleanData(process_id[1][2][1][1][1])
+                            command['curve3'] = self.getCleanData(process_id[1][2][1][2][1])
+                            command['time1'] = self.getCleanData(process_id[1][2][1][3][1])
+                            command['time2'] = self.getCleanData(process_id[1][2][1][4][1])
+
+                            command['process_order_id'] = process_order_id
+
+                            if command['id'] == 1:
+                                command['source'] = 'Beta'
+                            if command['id'] == 0:
+                                command['source'] = 'External'
+                            if command['id'] == 3 or command['id'] == 4:
+                                command['channels'] = command['datapoints1'] + \
+                                                      command['datapoints2'] + \
+                                                      command['datapoints3']
+                                try:
+                                    command['timePerChannel'] = float(command['time']) / float(command['channels'])
+                                except:
+                                    command['timePerChannel'] = 0
+                            if command['id'] == 4:
+                                try:
+                                    command['number_scan'] = command['number_of_scans']
+                                except:
+                                    command['number_scan'] = 0
+                            if command['id'] == 5:
+                                try:
+                                    command['timePerChannel'] = float(command['time']) / float(command['datapoints2'])
+                                except:
+                                    command['timePerChannel'] = 0
+                            if command['id'] == 6:
+                                command['record_during'] = 0
+                                command['light_co_stimulation'] = 0
+                                if 'datapoints2' in command:
+                                    command['record_during'] = 1
+                                if 'light_source' in command:
+                                    command['light_co_stimulation'] = 1
+                                try:
+                                    command['timePerChannel'] = float(command['time']) / float(command['datapoints2'])
+                                except:
+                                    command['timePerChannel'] = 0
+                            if command['id'] == 2:
+                                try:
+                                    command['timePerChannel'] = float(command['final_temp']) / float(command['heating_rate']) + float(command['time_final_temp'])
+                                except:
+                                    command['timePerChannel'] = 0
+                        process_order_id += 1
                         merge.append(command)
                     tuple_[1].append(merge)
                 # sample

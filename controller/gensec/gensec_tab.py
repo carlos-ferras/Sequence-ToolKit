@@ -304,7 +304,7 @@ class GenSecTab(TreeWidgetTab):
             reader_id=self.reader_id,
             datecrea=self.creation_date
         )
-        process_order_by_sample = {}
+
         for row in sample_commands:
             samples = row[0]
             sample_list = samples.split(',')
@@ -315,50 +315,46 @@ class GenSecTab(TreeWidgetTab):
                     sample_range = sample.split('-')
                     samples_ids = range(int(sample_range[0]), int(sample_range[-1]) + 1)
                 for id_ in samples_ids:
-                    commands = {}
                     sample_id = sequence.createSample(id_)
+                    po_id = 1
 
-                    for command in row[1]:
-                        status = command['status']
-                        group = []
-                        try:
-                            group[:] = commands[command['process_order_id']][1][:]
-                        except:
-                            pass
-
-                        data = {
-                            'curve1': str(command['curve1']),
-                            'curve2': str(command['curve2']),
-                            'curve3': str(command['curve3']),
-                            'time1': str(command['time1']),
-                            'time2': str(command['time2'])
-                        }
-
-                        group.append(sequence.createProcess(command['id'], command, data, command['column']))
-                        commands[command['process_order_id']] = [status, group[:]]
-
-                    for group in commands:
-                        try:
-                            last = process_order_by_sample[str(id_)]
-                            process_order_by_sample[str(id_)] += 1
-                        except:
-                            last = 1
-                            process_order_by_sample[str(id_)] = 2
-                        if commands[group][1][0].getAttribute('id') == '0' or commands[group][1][0].getAttribute(
-                                'id') == '1':
-                            command_type = 'irrad'
-                        elif commands[group][1][0].getAttribute('id') == '9':
-                            command_type = 'pc'
+                    for commands in row[1]:
+                        if commands is None:
+                            sequence.createProcessOrder(
+                                sample_id,
+                                po_id,
+                                type_='pc',
+                                status='pend',
+                                processes=[sequence.createProcess(-1, None, None)]
+                            )
                         else:
-                            command_type = 'meas'
-                        status = commands[group][0]
-                        sequence.createProcessOrder(
-                            sample_id,
-                            last,
-                            type_=command_type,
-                            status=status,
-                            processes=commands[group][1]
-                        )
+                            group = []
+                            for command in commands:
+                                data = {
+                                    'curve1': str(command['curve1']),
+                                    'curve2': str(command['curve2']),
+                                    'curve3': str(command['curve3']),
+                                    'time1': str(command['time1']),
+                                    'time2': str(command['time2'])
+                                }
+
+                                group.append(sequence.createProcess(command['id'], command, data))
+
+                            if commands[0]['id'] == '0' or commands[0]['id'] == '1':
+                                command_type = 'irrad'
+                            elif commands[0]['id'] == '9':
+                                command_type = 'pc'
+                            else:
+                                command_type = 'meas'
+
+                            sequence.createProcessOrder(
+                                    sample_id,
+                                    po_id,
+                                    type_=command_type,
+                                    status='pend',
+                                    processes=group
+                                )
+                        po_id += 1
         return sequence
 
     def getSampleCommands(self):
@@ -375,19 +371,28 @@ class GenSecTab(TreeWidgetTab):
                             process_data['doserate'] = process_data['time'] * self.dose_rate
                         elif process_data['id'] == 1:
                             process_data['doserate'] = process_data['time'] * self.external_dose_rate
+                        added = False
+                        for group in self.in_merge:
+                            if str(str(row) + ',' + str(column)) in group:
+                                if str(str(row) + ',' + str(column - 1)) in group:
+                                    sample[1][-1].append(process_data)
+                                    added = True
+                                    break
+                        if not added:
+                            sample[1].append([process_data])
 
-                        if len(self.external_irradiation) > 0:
-                            process_data['process_order_id'] = int(process_data['process_order_id']) + len(
-                                sorted([j for j in self.external_irradiation if j < column]))
-
-                        sample[1].append(process_data)
-                        sample[1][-1]['column'] = column
                     elif column in self.external_irradiation:
                         index = self.external_irradiation.index(column)
                         process_data = self.process_data[str(self.external_irradiation_defined[index]) + ',' + str(column)]
                         process_data['doserate'] = process_data['time'] * self.external_dose_rate
                         sample[1].append(process_data)
-                        sample[1][-1]['column'] = column
+                    else:
+                        sample[1].append(None)
+                for k in range(len(sample[1]))[::-1]:
+                    if sample[1][k] == None:
+                        del sample[1][k]
+                    else:
+                        break
                 if sample[1]:
                     samples.append(sample)
         return samples
@@ -443,6 +448,16 @@ class GenSecTab(TreeWidgetTab):
         hs = self.tree_widget.horizontalScrollBar()
         hs.setValue(hs.maximum())
         self.column_count += 1
+
+        for i in range(self.tree_widget.topLevelItemCount()):
+            item = self.tree_widget.topLevelItem(i)
+            if i % 2 == 0:
+                color = self.getConfiguration('tree_widget_item_background', 'COMMON')
+            else:
+                color = self.getConfiguration('tree_widget_item_alternate_background',
+                                              'COMMON')
+            item.setBackground(self.column_count - 1, QtGui.QColor(color))
+
         return self.column_count
 
     def headerAction(self, logical_index):

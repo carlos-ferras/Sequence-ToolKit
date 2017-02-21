@@ -200,7 +200,7 @@ class UpdateSignalLimits(QtWidgets.QUndoCommand):
                 self.controller.signal_low.setValue(self.old_values[0] - 1)
                 self.controller.signal_high.setValue(self.old_values[1] - 1)
 
-                values = self.old_values
+                values = list(self.old_values)
 
                 if self.controller.getConfiguration('horizontal_scale') == 'log':
                     values[0], values[1] = round(10 ** values[0]), round(10 ** values[1])

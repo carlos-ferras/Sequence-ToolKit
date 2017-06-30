@@ -99,11 +99,11 @@ class STK(Ui_stk):
         if (path is None) or (path is False):
             path = ''
         command = None
-        if os.sys.platform in ('linux', 'linux2'):
-            if os.path.exists('gensec.py'):
-                command = 'python3 gensec.py '
-        elif os.path.exists('GenSec.exe'):
-            command = 'GenSec.exe '
+        # if os.sys.platform in ('linux', 'linux2'):
+        if os.path.exists('gensec.pyw'):
+            command = 'python3 gensec.pyw '
+        # elif os.path.exists('GenSec.exe'):
+        #     command = 'GenSec.exe '
         if command is not None:
             subprocess.Popen(
                 command + path,
@@ -123,11 +123,11 @@ class STK(Ui_stk):
         if (path is None) or (path is False):
             path = ''
         command = None
-        if os.sys.platform in ('linux', 'linux2'):
-            if os.path.exists('genrep.py'):
-                command = 'python3 genrep.py '
-        elif os.path.exists('GenRep.exe'):
-            command = 'GenRep.exe '
+        # if os.sys.platform in ('linux', 'linux2'):
+        if os.path.exists('genrep.pyw'):
+            command = 'python3 genrep.pyw '
+        # elif os.path.exists('GenRep.exe'):
+        #     command = 'GenRep.exe '
         if command is not None:
             subprocess.Popen(
                 command + path,
@@ -147,11 +147,11 @@ class STK(Ui_stk):
         if (path is None) or (path is False):
             path = ''
         command = None
-        if os.sys.platform in ('linux', 'linux2'):
-            if os.path.exists('genvis.py'):
-                command = 'python3 genvis.py '
-        elif os.path.exists('GenVis.exe'):
-            command = 'GenVis.exe '
+        # if os.sys.platform in ('linux', 'linux2'):
+        if os.path.exists('genvis.pyw'):
+            command = 'python3 genvis.pyw '
+        # elif os.path.exists('GenVis.exe'):
+        #     command = 'GenVis.exe '
         if command is not None:
             subprocess.Popen(
                 command + path,
@@ -282,7 +282,7 @@ class STK(Ui_stk):
         dialog.exec_()
 
     def help(self):
-        subprocess.Popen('python3 assistant.py stk', shell=True, stdout=subprocess.PIPE,
+        subprocess.Popen('python3 assistant.pyw stk', shell=True, stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE, stdin=subprocess.PIPE)
 
     def settingTrigger(self):

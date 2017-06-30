@@ -4,13 +4,17 @@
 #define Package "Sequence-ToolKit"
 #define MyAppVersion "2.3.5"
 #define MyAppPublisher "University of Informatic Sciences"
-#define Sequence-ToolKit "Sequence-ToolKit"
+#define SequenceToolKit "Sequence-ToolKit"
 #define GenSec "GenSec"
 #define GenRep "GenRep"
 #define GenVis "GenVis"
-#define STK-Assistant "STK-Assistant"
-#define GenSecExe "GenSec.exe"
-#define GenRepExe "GenRep.exe"
+#define STKAssistant "STK-Assistant"
+#define GenSecExe "gensec.pyw"
+#define GenRepExe "genrep.pyw"
+#define GenVisExe "genvis.pyw"
+#define SequenceToolKitExe "stk.pyw"
+#define STKAssistantExe "assistant.pyw"
+#define currentPath "C:\Users\fox\Desktop\2016"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -24,11 +28,11 @@ DefaultDirName={pf}\{#Package}
 DisableDirPage=yes
 DefaultGroupName={#Package}
 DisableProgramGroupPage=yes
-LicenseFile=C:\Users\yanet\Desktop\dist\LICENSE
-InfoBeforeFile=C:\Users\yanet\Desktop\dist\README.md
-OutputDir=C:\Users\yanet\Desktop
-OutputBaseFilename=Sequence-ToolKit
-SetupIconFile=C:\Users\yanet\Desktop\dist\pixmaps\ico\app\package.ico
+LicenseFile={#currentPath}\LICENSE
+InfoBeforeFile={#currentPath}\README.md
+OutputDir={#currentPath}\dist
+OutputBaseFilename=Sequence-ToolKit-CEADEN
+SetupIconFile={#currentPath}\resources\img\logos\sequence_toolkit.ico
 Compression=lzma
 SolidCompression=yes 
 ChangesAssociations=yes
@@ -42,115 +46,121 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 
 [Components]
+Name: "SequenceToolKit"; Description: "Sequence-ToolKit: Sequence ToolKit"; Types: full compact custom; Flags: checkablealone
 Name: "GenSec"; Description: "GenSec: Sequence Generator"; Types: full compact custom; Flags: checkablealone
 Name: "GenRep"; Description: "GenRep: Report Generator"; Types: full compact custom; Flags: checkablealone
-
+Name: "GenVis"; Description: "GenVis: Report Visualizer"; Types: full compact custom; Flags: checkablealone
+Name: "STKAssistant"; Description: "STK-Assistant: Sequence ToolKit Assistant"; Types: full compact custom; Flags: checkablealone
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
+;SEQUENCE-TOOLKIT
+Source: "{#currentPath}\stk.pyw"; DestDir: "{app}";Components: SequenceToolKit;
+Source: "{#currentPath}\controller\stk\*"; DestDir: "{app}\controller\stk\";Components: SequenceToolKit; Flags:ignoreversion recursesubdirs createallsubdirs
+Source: "{#currentPath}\view\stk\*"; DestDir: "{app}\view\stk\";Components: SequenceToolKit; Flags:ignoreversion recursesubdirs createallsubdirs
 ;GENSEC
-Source: "C:\Users\yanet\Desktop\dist\GenSec.exe"; DestDir: "{app}"; Components: GenSec
-Source: "C:\Users\yanet\Desktop\dist\GenSec.exe.log"; DestDir: "{app}";Permissions: users-full; Components: GenSec  
+Source: "{#currentPath}\gensec.pyw"; DestDir: "{app}";Components: GenSec;
+Source: "{#currentPath}\controller\gensec\*"; DestDir: "{app}\controller\gensec\";Components: GenSec; Flags:ignoreversion recursesubdirs createallsubdirs
+Source: "{#currentPath}\view\gensec\*"; DestDir: "{app}\view\gensec\";Components: GenSec; Flags:ignoreversion recursesubdirs createallsubdirs
+Source: "{#currentPath}\controller\dialogs\xml_preview.py"; DestDir: "{app}\controller\dialogs\";Components: GenSec;
+Source: "{#currentPath}\view\dialogs\ui_xml_preview.py"; DestDir: "{app}\view\dialogs\";Components: GenSec;
 ;GENREP
-Source: "C:\Users\yanet\Desktop\dist\GenRep.exe"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\GenRep.exe.log"; DestDir: "{app}";Permissions: users-full; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\mpl-data\*"; DestDir: "{app}\mpl-data\"; Components: GenRep; Flags:ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\yanet\Desktop\dist\tcl\*"; DestDir: "{app}\tcl\"; Components: GenRep; Flags:ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\yanet\Desktop\dist\_hashlib.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\numpy.core.multiarray_tests.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\numpy.random.mtrand.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\pyexpat.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\matplotlib.ttconv.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\sip.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\matplotlib._tri.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\matplotlib.ft2font.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\GenRep.exe"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\matplotlib.backends._backend_gdk.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\numpy.core.umath.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\bz2.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\python27.dll"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\numpy.core.operand_flag_tests.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\PyQt4.QtCore.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\numpy.fft.fftpack_lite.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\unicodedata.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\_elementtree.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\numpy.linalg._umath_linalg.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\numpy.core.umath_tests.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\matplotlib._windowing.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\numpy.core.scalarmath.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\matplotlib._delaunay.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\_socket.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\numpy.core._dummy.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\PyQt4.QtGui.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\matplotlib.backends._tkagg.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\numpy.core.test_rational.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\numpy.lib._compiled_base.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\numpy.core.struct_ufunc_test.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\numpy.linalg.lapack_lite.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\_tkinter.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\matplotlib._png.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\matplotlib._path.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\matplotlib._image.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\select.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\tk85.dll"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\matplotlib._cntr.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\_ctypes.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\libiomp5md.dll"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\tcl85.dll"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\numpy.core._dotblas.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\QtGui4.dll"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\_ssl.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\numpy.core.multiarray.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\matplotlib.backends._gtkagg.pyd"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\QtCore4.dll"; DestDir: "{app}"; Components: GenRep
-Source: "C:\Users\yanet\Desktop\dist\matplotlib.backends._backend_agg.pyd"; DestDir: "{app}"; Components: GenRep
-;BOTH
-Source: "C:\Users\yanet\Desktop\dist\locale\*"; DestDir: "{app}\locale\";Components: GenRep GenSec; Flags:ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\yanet\Desktop\dist\theme\*"; DestDir: "{app}\theme\";Components: GenRep GenSec; Flags:ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\yanet\Desktop\dist\pixmaps\*"; DestDir: "{app}\pixmaps\";Components: GenRep GenSec; Flags:ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\yanet\Desktop\dist\_hashlib.pyd"; DestDir: "{app}"; Components: GenSec GenRep
-Source: "C:\Users\yanet\Desktop\dist\pyexpat.pyd"; DestDir: "{app}"; Components: GenSec GenRep
-Source: "C:\Users\yanet\Desktop\dist\sip.pyd"; DestDir: "{app}"; Components: GenSec GenRep
-Source: "C:\Users\yanet\Desktop\dist\bz2.pyd"; DestDir: "{app}"; Components: GenSec GenRep
-Source: "C:\Users\yanet\Desktop\dist\python27.dll"; DestDir: "{app}"; Components: GenSec GenRep
-Source: "C:\Users\yanet\Desktop\dist\PyQt4.QtCore.pyd"; DestDir: "{app}"; Components: GenSec GenRep
-Source: "C:\Users\yanet\Desktop\dist\unicodedata.pyd"; DestDir: "{app}"; Components: GenSec GenRep
-Source: "C:\Users\yanet\Desktop\dist\_elementtree.pyd"; DestDir: "{app}"; Components: GenSec GenRep
-Source: "C:\Users\yanet\Desktop\dist\_socket.pyd"; DestDir: "{app}"; Components: GenSec GenRep
-Source: "C:\Users\yanet\Desktop\dist\PyQt4.QtGui.pyd"; DestDir: "{app}"; Components: GenSec GenRep
-Source: "C:\Users\yanet\Desktop\dist\GenSec.exe"; DestDir: "{app}"; Components: GenSec GenRep
-Source: "C:\Users\yanet\Desktop\dist\select.pyd"; DestDir: "{app}"; Components: GenSec GenRep
-Source: "C:\Users\yanet\Desktop\dist\QtGui4.dll"; DestDir: "{app}"; Components: GenSec GenRep
-Source: "C:\Users\yanet\Desktop\dist\_ssl.pyd"; DestDir: "{app}"; Components: GenSec GenRep
-Source: "C:\Users\yanet\Desktop\dist\QtCore4.dll"; DestDir: "{app}"; Components: GenSec GenRep
+Source: "{#currentPath}\genrep.pyw"; DestDir: "{app}";Components: GenRep;
+Source: "{#currentPath}\controller\genrep\*"; DestDir: "{app}\controller\genrep\";Components: GenRep; Flags:ignoreversion recursesubdirs createallsubdirs
+Source: "{#currentPath}\view\genrep\*"; DestDir: "{app}\view\genrep\";Components: GenRep; Flags:ignoreversion recursesubdirs createallsubdirs
+Source: "{#currentPath}\pyqtgraph\*"; DestDir: "{app}\pyqtgraph\";Components: GenRep; Flags:ignoreversion recursesubdirs createallsubdirs
+;GENSEC+GENREP
+Source: "{#currentPath}\controller\widgets\*"; DestDir: "{app}\controller\widgets\";Components: GenSec GenRep; Flags:ignoreversion recursesubdirs createallsubdirs
+Source: "{#currentPath}\view\widgets\*"; DestDir: "{app}\view\widgets\";Components: GenSec GenRep; Flags:ignoreversion recursesubdirs createallsubdirs
+;GENVIS
+Source: "{#currentPath}\genvis.pyw"; DestDir: "{app}";Components: GenVis;
+Source: "{#currentPath}\controller\genvis\*"; DestDir: "{app}\controller\genvis\";Components: GenVis; Flags:ignoreversion recursesubdirs createallsubdirs
+Source: "{#currentPath}\view\genvis\*"; DestDir: "{app}\view\genvis\";Components: GenVis; Flags:ignoreversion recursesubdirs createallsubdirs
+;STK-ASSISTANT
+Source: "{#currentPath}\assistant.pyw"; DestDir: "{app}";Components: STKAssistant;
+Source: "{#currentPath}\resources\help\*"; DestDir: "{app}\resources\help\";Components: STKAssistant; Flags:ignoreversion recursesubdirs createallsubdirs
+;COMMON
+Source: "{#currentPath}\WinPython-32bit-3.4.4.4Qt5\*"; DestDir: "{app}\WinPython-32bit-3.4.4.4Qt5\";Components: SequenceToolKit GenSec GenRep GenVis STKAssistant; Flags:ignoreversion recursesubdirs createallsubdirs
+Source: "{#currentPath}\resources\font\*"; DestDir: "{app}\resources\font\";Components: SequenceToolKit GenSec GenRep GenVis STKAssistant; Flags:ignoreversion recursesubdirs createallsubdirs
+Source: "{#currentPath}\resources\i18n\*"; DestDir: "{app}\resources\i18n\";Components: SequenceToolKit GenSec GenRep GenVis STKAssistant; Flags:ignoreversion recursesubdirs createallsubdirs
+Source: "{#currentPath}\resources\img\*"; DestDir: "{app}\resources\img\";Components: SequenceToolKit GenSec GenRep GenVis STKAssistant; Flags:ignoreversion recursesubdirs createallsubdirs
+Source: "{#currentPath}\resources\skin\*"; DestDir: "{app}\resources\skin\";Components: SequenceToolKit GenSec GenRep GenVis STKAssistant; Flags:ignoreversion recursesubdirs createallsubdirs
+Source: "{#currentPath}\resources\theme\*"; DestDir: "{app}\resources\theme\";Components: SequenceToolKit GenSec GenRep GenVis STKAssistant; Flags:ignoreversion recursesubdirs createallsubdirs
+Source: "{#currentPath}\controller\dialogs\about\*"; DestDir: "{app}\controller\dialogs\about\";Components: SequenceToolKit GenSec GenRep GenVis STKAssistant; Flags:ignoreversion recursesubdirs createallsubdirs
+Source: "{#currentPath}\controller\dialogs\__init__.py"; DestDir: "{app}\controller\dialogs\";Components: SequenceToolKit GenSec GenRep GenVis STKAssistant;
+Source: "{#currentPath}\view\dialogs\about\*"; DestDir: "{app}\view\dialogs\about\";Components: SequenceToolKit GenSec GenRep GenVis STKAssistant; Flags:ignoreversion recursesubdirs createallsubdirs
+Source: "{#currentPath}\view\dialogs\base_dialog.py"; DestDir: "{app}\view\dialogs\";Components: SequenceToolKit GenSec GenRep GenVis STKAssistant;
+Source: "{#currentPath}\view\dialogs\__init__.py"; DestDir: "{app}\view\dialogs\";Components: SequenceToolKit GenSec GenRep GenVis STKAssistant;
+Source: "{#currentPath}\view\__init__.py"; DestDir: "{app}\view\";Components: SequenceToolKit GenSec GenRep GenVis STKAssistant;
+Source: "{#currentPath}\controller\decorators.py"; DestDir: "{app}\controller\";Components: SequenceToolKit GenSec GenRep GenVis STKAssistant;
+Source: "{#currentPath}\controller\__init__.py"; DestDir: "{app}\controller\";Components: SequenceToolKit GenSec GenRep GenVis STKAssistant;
+Source: "{#currentPath}\model\*"; DestDir: "{app}\model\";Components: SequenceToolKit GenSec GenRep GenVis STKAssistant; Flags:ignoreversion recursesubdirs createallsubdirs
+Source: "{#currentPath}\img_rc.py"; DestDir: "{app}";Components: SequenceToolKit GenSec GenRep GenVis STKAssistant;
+Source: "{#currentPath}\controller\dialogs\colors.py"; DestDir: "{app}\controller\dialogs\";Components: SequenceToolKit GenSec GenRep GenVis STKAssistant;
+Source: "{#currentPath}\view\dialogs\ui_colors.py"; DestDir: "{app}\view\dialogs\";Components: SequenceToolKit GenSec GenRep GenVis STKAssistant;
 
 [Registry]
+;PYTHON
+Root: HKCR; Subkey: "SOFTWARE\Python"; Flags: uninsdeletekey; ValueType: none
+Root: HKCR; Subkey: "SOFTWARE\Python\PythonCore"; Flags: uninsdeletekey; ValueType: none
+Root: HKCR; Subkey: "SOFTWARE\Python\PythonCore\3.4"; Flags: uninsdeletekey; ValueType: none
+Root: HKCR; Subkey: "SOFTWARE\Python\PythonCore\3.4\Help"; Flags: uninsdeletekey; ValueType: none
+Root: HKCR; Subkey: "SOFTWARE\Python\PythonCore\3.4\Help\Main Python Documentation"; Flags: uninsdeletekey; ValueType: string; ValueName: ""; ValueData: "{app}\\WinPython-32bit-3.4.4.4Qt5\\python-3.4.4\\Doc\\python344.chm";
+Root: HKCR; Subkey: "SOFTWARE\Python\PythonCore\3.4\InstallPath"; Flags: uninsdeletekey; ValueType: string; ValueName: ""; ValueData: "{app}\\WinPython-32bit-3.4.4.4Qt5\\python-3.4.4";
+Root: HKCR; Subkey: "SOFTWARE\Python\PythonCore\3.4\InstallPath\InstallGroup"; Flags: uninsdeletekey; ValueType: string; ValueName: ""; ValueData: "Python 3.4";
+Root: HKCR; Subkey: "SOFTWARE\Python\PythonCore\3.4\Modules"; Flags: uninsdeletekey; ValueType: string; ValueName: ""; ValueData: "";
+Root: HKCR; Subkey: "SOFTWARE\Python\PythonCore\3.4\PythonPath"; Flags: uninsdeletekey; ValueType: string; ValueName: ""; ValueData: "{app}\\WinPython-32bit-3.4.4.4Qt5\\python-3.4.4\\Lib;{app}\\WinPython-32bit-3.4.4.4Qt5\\python-3.4.4\\DLLs";
+;SEQUENCE-TOOLKIT
+Root: HKCR; Subkey: "{#SequenceToolKit}"; ValueType: string; ValueName: ""; ValueData: "{#SequenceToolKit}"; Components: SequenceToolKit; Flags: uninsdeletekey
+Root: HKCR; Subkey: "{#SequenceToolKit}\shell"; Flags: uninsdeletekey; ValueType: none
+Root: HKCR; Subkey: "{#SequenceToolKit}\shell\open"; Flags: uninsdeletekey; ValueType: none
+Root: HKCR; Subkey: "{#SequenceToolKit}\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#SequenceToolKitExe}"" ""%1"""; Components: SequenceToolKit
 ;GENSEC
 Root: HKCR; Subkey: ".slf"; ValueType: string; ValueName: ""; ValueData: "{#GenSec}"; Components: GenSec; Flags: uninsdeletevalue
 Root: HKCR; Subkey: "{#GenSec}"; ValueType: string; ValueName: ""; ValueData: "{#GenSec}"; Components: GenSec; Flags: uninsdeletekey
-Root: HKCR; Subkey: "{#GenSec}\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\pixmaps\ico\file\slf.ico"; Components: GenSec
+Root: HKCR; Subkey: "{#GenSec}\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\resources\img\file_type\slf.ico"; Components: GenSec
+Root: HKCR; Subkey: "{#GenSec}\shell"; Flags: uninsdeletekey; ValueType: none
+Root: HKCR; Subkey: "{#GenSec}\shell\open"; Flags: uninsdeletekey; ValueType: none
 Root: HKCR; Subkey: "{#GenSec}\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#GenSecExe}"" ""%1"""; Components: GenSec
 ;GENREP
 Root: HKCR; Subkey: ".rlf"; ValueType: string; ValueName: ""; ValueData: "{#GenRep}"; Components: GenRep; Flags: uninsdeletevalue
 Root: HKCR; Subkey: "{#GenRep}"; ValueType: string; ValueName: ""; ValueData: "{#GenRep}"; Components: GenRep; Flags: uninsdeletekey
-Root: HKCR; Subkey: "{#GenRep}\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\pixmaps\ico\file\rlf.ico"; Components: GenRep
+Root: HKCR; Subkey: "{#GenRep}\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\resources\img\file_type\rlf.ico"; Components: GenRep
+Root: HKCR; Subkey: "{#GenRep}\shell"; Flags: uninsdeletekey; ValueType: none
+Root: HKCR; Subkey: "{#GenRep}\shell\open"; Flags: uninsdeletekey; ValueType: none
+Root: HKCR; Subkey: "{#GenRep}\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#GenRepExe}"" ""%1"""; Components: GenRep
+;GENVIS
+Root: HKCR; Subkey: ".alf"; ValueType: string; ValueName: ""; ValueData: "{#GenVis}"; Components: GenVis; Flags: uninsdeletevalue
+Root: HKCR; Subkey: "{#GenVis}"; ValueType: string; ValueName: ""; ValueData: "{#GenVis}"; Components: GenVis; Flags: uninsdeletekey
+Root: HKCR; Subkey: "{#GenVis}\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\resources\img\logos\alf.ico"; Components: GenVis
+Root: HKCR; Subkey: "{#GenVis}\shell"; Flags: uninsdeletekey; ValueType: none
+Root: HKCR; Subkey: "{#GenVis}\shell\open"; Flags: uninsdeletekey; ValueType: none
+Root: HKCR; Subkey: "{#GenVis}\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#GenVisExe}"" ""%1"""; Components: GenVis
+;STK-ASSISTANT
+Root: HKCR; Subkey: "{#STKAssistant}"; ValueType: string; ValueName: ""; ValueData: "{#STKAssistant}"; Components: STKAssistant; Flags: uninsdeletekey
+Root: HKCR; Subkey: "{#STKAssistant}\shell"; Flags: uninsdeletekey; ValueType: none
+Root: HKCR; Subkey: "{#STKAssistant}\shell\open"; Flags: uninsdeletekey; ValueType: none
+Root: HKCR; Subkey: "{#STKAssistant}\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#STKAssistantExe}"" ""%1"""; Components: STKAssistant
 
 [Icons]
+;SEQUENCE-TOOLKIT
+Name: "{group}\{#SequenceToolKit}"; Filename: "{app}\{#SequenceToolKitExe}"; WorkingDir: "{app}"; IconFilename: "{app}\resources\img\logos\sequence_toolkit.ico"; Components: SequenceToolKit
+Name: "{commondesktop}\{#SequenceToolKit}"; Filename: "{app}\{#SequenceToolKitExe}"; IconFilename: "{app}\resources\img\logos\sequence_toolkit.ico"; Tasks: desktopicon; Components: SequenceToolKit
 ;GENSEC
-Name: "{group}\{#GenSec}"; Filename: "{app}\{#GenSecExe}"; WorkingDir: "{app}"; IconFilename: "{app}\pixmaps\ico\app\gensec.ico"; Components: GenSec 
-Name: "{commondesktop}\{#GenSec}"; Filename: "{app}\{#GenSecExe}"; Tasks: desktopicon; Components: GenSec 
+Name: "{group}\{#GenSec}"; Filename: "{app}\{#GenSecExe}"; WorkingDir: "{app}"; IconFilename: "{app}\resources\img\logos\gensec.ico"; Components: GenSec 
+Name: "{commondesktop}\{#GenSec}"; Filename: "{app}\{#GenSecExe}"; IconFilename: "{app}\resources\img\logos\gensec.ico"; Tasks: desktopicon; Components: GenSec 
 ;GENREP
-Name: "{group}\{#GenRep}"; Filename: "{app}\{#GenRepExe}"; WorkingDir: "{app}"; IconFilename: "{app}\pixmaps\ico\app\genrep.ico"; Components: GenRep
-Name: "{commondesktop}\{#GenRep}"; Filename: "{app}\{#GenRepExe}"; Tasks: desktopicon; Components: GenRep
-;UNINSTALL
+Name: "{group}\{#GenRep}"; Filename: "{app}\{#GenRepExe}"; WorkingDir: "{app}"; IconFilename: "{app}\resources\img\logos\genrep.ico"; Components: GenRep 
+Name: "{commondesktop}\{#GenRep}"; Filename: "{app}\{#GenRepExe}"; IconFilename: "{app}\resources\img\logos\genrep.ico"; Tasks: desktopicon; Components: GenRep 
+;GENVIS
+Name: "{group}\{#GenVis}"; Filename: "{app}\{#GenVisExe}"; WorkingDir: "{app}"; IconFilename: "{app}\resources\img\logos\genvis.ico"; Components: GenVis 
+Name: "{commondesktop}\{#GenVis}"; Filename: "{app}\{#GenVisExe}"; IconFilename: "{app}\resources\img\logos\genvis.ico"; Tasks: desktopicon; Components: GenVis 
+;STK-ASSISTANT
+Name: "{group}\{#STKAssistant}"; Filename: "{app}\{#STKAssistantExe}"; WorkingDir: "{app}"; IconFilename: "{app}\resources\img\logos\assistant.ico"; Components: STKAssistant 
+Name: "{commondesktop}\{#STKAssistant}"; Filename: "{app}\{#STKAssistantExe}"; IconFilename: "{app}\resources\img\logos\assistant.ico"; Tasks: desktopicon; Components: STKAssistant
+
+;UNINSTALL                                          
 Name: "{group}\{cm:UninstallProgram,{#Package}}"; Filename: "{uninstallexe}"
-
-
-
-
-
-
-

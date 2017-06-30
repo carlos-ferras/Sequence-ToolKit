@@ -26,18 +26,18 @@ class TagBase:
 class Sample(TagBase):
     def __init__(self, id_):
         self.xml = Document()
-        self.sample_id = self.xml.createElement("sample_id")
+        self.sample_id = self.xml.createElement("Sample_ID")
         self.sample_id.setAttribute("sample", str(id_))
 
 
 class ProcessOrder(TagBase):
     def __init__(self, id_, type_, status, processes):
         self.xml = Document()
-        self.process_order = self.xml.createElement("process_order")
+        self.process_order = self.xml.createElement("Process_order")
         self.process_order.setAttribute("number", str(id_))
 
-        self.status = self.xml.createElement("status")
-        self.type_ = self.xml.createElement("type")
+        self.status = self.xml.createElement("Status")
+        self.type_ = self.xml.createElement("Type")
 
         self.setTextNode(self.status, status)
         self.setTextNode(self.type_, type_)
@@ -54,11 +54,11 @@ class Process(TagBase):
         self.parameters = parameters
 
         self.xml = Document()
-        self.process = self.xml.createElement("process_id")
+        self.process = self.xml.createElement("Process_ID")
         self.process.setAttribute("id", str(id_))
 
         if self.parameters is not None:
-            self.param = self.xml.createElement("param")
+            self.param = self.xml.createElement("Param")
             self.info = self.xml.createElement("info")
             self.data = self.xml.createElement("data")
 
@@ -112,7 +112,7 @@ class Process(TagBase):
                 self.exc_f = self.xml.createElement("ExcF")
                 self.setTextNode(self.exc_f, 'excF')
 
-            self.data_type = self.xml.createElement("data_type")
+            self.data_type = self.xml.createElement("Datatype")
             super(Process, self).setTextNode(self.data_type, self.parameters['date_type'])
             self.info.appendChild(self.data_type)
 
@@ -120,19 +120,19 @@ class Process(TagBase):
             super(Process, self).setTextNode(self.comment, self.parameters['comments'])
             self.info.appendChild(self.comment)
 
-            self.curve_1 = self.xml.createElement("curve_1")
+            self.curve_1 = self.xml.createElement("Curva1")
             self.data.appendChild(self.curve_1)
 
-            self.curve_2 = self.xml.createElement("curve_2")
+            self.curve_2 = self.xml.createElement("Curva2")
             self.data.appendChild(self.curve_2)
 
-            self.curve_3 = self.xml.createElement("curve_3")
+            self.curve_3 = self.xml.createElement("Curva3")
             self.data.appendChild(self.curve_3)
 
-            self.time_1 = self.xml.createElement("time_1")
+            self.time_1 = self.xml.createElement("Tiempo1")
             self.data.appendChild(self.time_1)
 
-            self.time_2 = self.xml.createElement("time_2")
+            self.time_2 = self.xml.createElement("Tiempo2")
             self.data.appendChild(self.time_2)
 
     def setTextNode(self, tag, key):
@@ -151,20 +151,20 @@ class CreateSLF(TagBase):
     def __init__(self, samples_amount, name, owner, nitrogen_use, dose_rate,
                  external_dose_rate, protocol, reader_id, datecrea):
         self.xml = Document()
-        self.slf = self.xml.createElement("slf")
+        self.slf = self.xml.createElement("SEQ")
         self.xml.appendChild(self.slf)
 
-        self.name = self.xml.createElement("name")
-        self.status = self.xml.createElement("status")
-        self.datecrea = self.xml.createElement("date_crea")
-        self.datemod = self.xml.createElement("date_mod")
-        self.owner = self.xml.createElement("owner")
-        self.samples_amount = self.xml.createElement("samples_amount")
-        self.reader_id = self.xml.createElement("reader_id")
-        self.nitrogen_use = self.xml.createElement("N2_flow")
-        self.dose_rate = self.xml.createElement("dose_rate")
-        self.external_dose_rate = self.xml.createElement("external_dose_rate")
-        self.protocol = self.xml.createElement("protocol")
+        self.name = self.xml.createElement("Name")
+        self.status = self.xml.createElement("STATUS")
+        self.datecrea = self.xml.createElement("Datecrea")
+        self.datemod = self.xml.createElement("Datemod")
+        self.owner = self.xml.createElement("Owner")
+        self.samples_amount = self.xml.createElement("NMuestras")
+        self.reader_id = self.xml.createElement("Reader_ID")
+        self.nitrogen_use = self.xml.createElement("N2Flow")
+        self.dose_rate = self.xml.createElement("Doserate")
+        self.external_dose_rate = self.xml.createElement("ExtDoserate")
+        self.protocol = self.xml.createElement("Protocol")
         self.seq = self.xml.createElement("seq")
 
         datemod = datetime.now()
@@ -201,7 +201,7 @@ class CreateSLF(TagBase):
 
     def createSample(self, id_):
         self.refreshDateMod()
-        samples_ids = self.xml.getElementsByTagName("seq")[0].getElementsByTagName('sample_id')
+        samples_ids = self.xml.getElementsByTagName("seq")[0].getElementsByTagName('Sample_ID')
         new_sample = Sample(id_).sample_id
         if len(samples_ids) > 0:
             for sample_id in samples_ids:

@@ -154,11 +154,11 @@ class GenRep(Ui_main_window):
 
     def execGenSec(self):
         command = None
-        if os.sys.platform in ('linux', 'linux2'):
-            if os.path.exists('gensec.py'):
-                command = 'python3 gensec.py '
-        elif os.path.exists('GenSec.exe'):
-            command = 'GenSec.exe '
+        # if os.sys.platform in ('linux', 'linux2'):
+        if os.path.exists('gensec.pyw'):
+            command = 'python3 gensec.pyw '
+        # elif os.path.exists('GenSec.exe'):
+        #     command = 'GenSec.exe '
         if command is not None:
             subprocess.Popen(
                 command,
@@ -176,11 +176,11 @@ class GenRep(Ui_main_window):
 
     def execGenVis(self):
         command = None
-        if os.sys.platform in ('linux', 'linux2'):
-            if os.path.exists('genvis.py'):
-                command = 'python3 genvis.py '
-        elif os.path.exists('GenVis.exe'):
-            command = 'GenVis.exe '
+        # if os.sys.platform in ('linux', 'linux2'):
+        if os.path.exists('genvis.pyw'):
+            command = 'python3 genvis.pyw '
+        # elif os.path.exists('GenVis.exe'):
+        #     command = 'GenVis.exe '
         if command is not None:
             subprocess.Popen(
                 command,
@@ -748,7 +748,7 @@ class GenRep(Ui_main_window):
         self.runCommand('ApplyTo', self, filters)
 
     def help(self):
-        subprocess.Popen('python3 assistant.py genrep', shell=True, stdout=subprocess.PIPE,
+        subprocess.Popen('python3 assistant.pyw genrep', shell=True, stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE, stdin=subprocess.PIPE)
 
     def aboutGenRep(self):

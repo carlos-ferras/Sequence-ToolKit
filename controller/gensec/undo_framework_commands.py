@@ -111,16 +111,18 @@ class Paste(QtWidgets.QUndoCommand):
         self.merge_to_delete = []
         self.merge_groups = []
 
+        self.index = None
+
     def redo(self):
         clipboard = QtWidgets.QApplication.clipboard()
         mime_data = clipboard.mimeData()
 
         if mime_data.hasFormat('custom_data_type'):
             data_set = pickle.loads(mime_data.data('custom_data_type').data())
-
             if len(self.current_tab.tree_widget.selectedIndexes()) > 0:
-                index = self.current_tab.tree_widget.selectedIndexes()[0]
-                if index.column() > 1:
+                if self.index is None:
+                    self.index = self.current_tab.tree_widget.selectedIndexes()[0]
+                if self.index.column() > 1:
                     for group in data_set.custom_data_set:
                         merge_group = []
 
@@ -130,8 +132,8 @@ class Paste(QtWidgets.QUndoCommand):
                             process_data = mime.process_data
                             process_data['status'] = 'pend'
 
-                            current_row = position.row() + index.row()
-                            current_column = position.column() + index.column()
+                            current_row = position.row() + self.index.row()
+                            current_column = position.column() + self.index.column()
                             last_row = self.current_tab.tree_widget.topLevelItemCount() - 1
 
                             process_data['process_order_id'] = current_column - 1
@@ -161,9 +163,9 @@ class Paste(QtWidgets.QUndoCommand):
                                 self.current_tab.external_irradiation.append(current_column)
                                 self.current_tab.external_irradiation_defined(current_row)
                             else:
-                                if index.column() in self.current_tab.external_irradiation:
-                                    irradiation_position = self.current_tab.external_irradiation.index(index.column())
-                                    if index.row() == \
+                                if self.index.column() in self.current_tab.external_irradiation:
+                                    irradiation_position = self.current_tab.external_irradiation.index(self.index.column())
+                                    if self.index.row() == \
                                             self.current_tab.external_irradiation_defined[irradiation_position]:
                                         self.in_irradiation.append((
                                             self.current_tab.external_irradiation[irradiation_position],
@@ -174,13 +176,12 @@ class Paste(QtWidgets.QUndoCommand):
 
                             if self.first:
                                 self.current_tab.setValue(current_row, current_column, text)
-                                self.first = False
                             self.current_tab.setIcon(current_row, current_column, 'pend')
                             self.current_tab.process_data[str(current_row) + ',' + str(current_column)] = process_data
 
                             for current_merge_group in range(len(self.current_tab.in_merge)):
                                 for poss in self.current_tab.in_merge[current_merge_group]:
-                                    if str(index.row()) + ',' + str(index.column()) == poss:
+                                    if str(self.index.row()) + ',' + str(self.index.column()) == poss:
                                         self.current_tab.clearGroupMerge(current_merge_group)
                                         if current_merge_group not in self.merge_to_delete:
                                             self.merge_to_delete.insert(
@@ -194,6 +195,7 @@ class Paste(QtWidgets.QUndoCommand):
                             self.current_tab.merge(merge_group)
                             self.merge_groups.append(merge_group)
                     self.current_tab.deleteInMerge(self.merge_to_delete)
+        self.first = False
 
     def undo(self):
         for process in self.in_irradiation:

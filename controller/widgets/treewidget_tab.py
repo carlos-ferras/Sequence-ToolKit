@@ -281,9 +281,10 @@ class TreeWidgetTab(QtWidgets.QWidget, Ui_tree_widget_tab):
         for i in range(self.tree_widget.topLevelItemCount()):
             item = self.tree_widget.topLevelItem(i)
             if item.text(1):
-                if len(list(set(all_samples) and set(self.getSamplesList(item.text(1))))) > 0:
+                sample_list = self.getSamplesList(item.text(1))
+                if len(list(set(all_samples) & set(sample_list))) > 0:
                     return True
-                all_samples += self.getSamplesList(item.text(1))
+                all_samples += sample_list
         return False
 
     def areConsecutive(self):

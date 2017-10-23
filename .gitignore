@@ -9,7 +9,7 @@ env/
 bin/
 build/
 develop-eggs/
-dist/*
+dist/
 eggs/
 lib/
 lib64/
@@ -42,7 +42,3 @@ coverage.xml
 *.pot
 # Sphinx documentation
 docs/_build/
-WinPython-32bit-3.4.4.4Qt5/*
-scripts/*
-.idea/*
-setup_*

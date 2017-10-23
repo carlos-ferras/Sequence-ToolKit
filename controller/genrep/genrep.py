@@ -603,7 +603,10 @@ class GenRep(Ui_main_window):
                             else:
                                 if len(to_associate) > 1:
                                     self.tab_widget.currentWidget().group(to_associate)
-                                to_associate = []
+                                if item.text(column - 1):
+                                    to_associate = [CustomIndex(row, column - 1)]
+                                else:
+                                    to_associate = []
                         data = self.tab_widget.currentWidget().process_data[str(row) + ',' + str(column)]
                         match = True
                         for filter_ in filters:

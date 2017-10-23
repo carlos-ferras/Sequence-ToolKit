@@ -127,6 +127,7 @@
 
 
 *{{
+    outline: none !important;
     font-family: {font_family};
     font-size: {font_size}px;
     font-style: {font_style};

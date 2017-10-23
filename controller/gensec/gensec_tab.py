@@ -339,10 +339,9 @@ class GenSecTab(TreeWidgetTab):
                                 }
 
                                 group.append(sequence.createProcess(command['id'], command, data))
-
-                            if commands[0]['id'] == '0' or commands[0]['id'] == '1':
+                            if commands[0]['id'] in (0, 1, '0', '1'):
                                 command_type = 'irrad'
-                            elif commands[0]['id'] == '9':
+                            elif commands[0]['id'] in (9, '9',):
                                 command_type = 'pc'
                             else:
                                 command_type = 'meas'
